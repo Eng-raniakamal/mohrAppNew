@@ -1,7 +1,5 @@
 
-import 'package:mohr_hr/domain/usecase/user_usecase.dart';
 
-import '../../data/response/responses.dart';
 
 class DeviceInfo {
   String name;
@@ -40,7 +38,6 @@ class UserDataModel
    this.LocationVerificationMode,
    this.SupportGroupAttendance)  ;
 }
-
 class RequestModel
 {
   String url;
@@ -49,7 +46,6 @@ class RequestModel
   BodyModel? body;
   RequestModel(this. url,this.method,this.headers,this.body);
 }
-
 class BodyModel
 {
   String email;
@@ -57,7 +53,6 @@ class BodyModel
   String deviceId;
   BodyModel(this.email,this.password,this.deviceId);
 }
-
 class AuthenticationModel
 {
   RequestModel requestModel;
@@ -66,13 +61,11 @@ class AuthenticationModel
       this.requestModel,
        this.userDataModel);
 }
-
 class EmployeeDataModel
 {
   UserDataModel userDataModel;
   EmployeeDataModel(this.userDataModel);
 }
-
 class EmployeeBasicDataModel
 {
   String? userId;
@@ -80,61 +73,148 @@ class EmployeeBasicDataModel
   AddressModel? address;
   EmployeeBasicDataModel(this.userId,this.employee,this.address);
 }
-class EmployeeModel {
+class EmployeeModel
+{
+  int? empId ;
   String? arabicName ;
   String? englishName;
-  String? birthDate;
+  String? birthdate;
   String? nationalId;
   String? socialId;
   String? email;
   String? phone;
   String? emergency_Number;
-
-  EmployeeModel(this.arabicName,this.englishName,this.birthDate,this.nationalId,this.socialId,this.email,this.phone,this.emergency_Number);
+  AddressModel? address;
+  EmployeeModel(this.empId,this.arabicName,this.englishName,this.birthdate,this.nationalId,this.socialId,
+      this.email,this.phone,this.emergency_Number,this.address);
 }
-
-class AddressModel {
+class AddressModel
+{
   String? addressText ;
   int? districtId;
-  String? poBox;
   String? zipCode;
-  AddressModel(this.addressText,this.districtId,this.poBox,this.zipCode);
+  AddressModel(this.addressText,this.districtId,this.zipCode);
+}
+class CountryModel {
+  int? countryId;
+  String? countryName;
+  CountryModel(this.countryId,this.countryName);
+}
+class GovernorateModel {
+  int? governorateId;
+  String? governorateName;
+  GovernorateModel(this.governorateId,this.governorateName);
 }
 
+class DistrictsModel {
+  int? districtId;
+  String? districtName;
+  DistrictsModel (this.districtId,this.districtName);
+}
 
+class BasicDataModel{
 
-//  "Date": "2006",
-//   "GradeId": 2,
-//   "QualificationTypeId": 1,
-//   "EmployeeId": 1
-class EmployeeSkillsModel
-{
+  EmployeeModel? employee;
+  bool? allowEdit;
+  List <CountryModel>? country;
+  int? selectedcountry;
+  List <GovernorateModel>? governorate;
+  int? selectedgovernorate;
+  List <DistrictsModel>? district;
+  int? selecteddistrict;
+  Map<String,dynamic>? address;
+  BasicDataModel(this.employee,this.allowEdit,this.country,this.selectedcountry
+      ,this.governorate,this.selectedgovernorate,this.district,this.selecteddistrict,
+      this.address);
+}
+//__________Skills--------------------------------
+
+class GradeItem {
+  int? value;
+  String? text;
+  GradeItem(this.value, this.text);
+}
+
+class GradesObject {
+List<GradeItem> grades;
+GradesObject(this.grades);
+}
+
+class QualificationItem {
+  int? value;
+  String? text;
+  QualificationItem(this.value, this.text);
+}
+
+class QualificationsObject {
+  List<QualificationItem> qualifications;
+  QualificationsObject(this.qualifications);
+}
+
+class skillsModel{
+  int? id;
+  String? typeName;
+  String? gradeName;
+  int? qualificationTypeId;
+  String? date;
+  int? gradeId;
+  skillsModel(this.id, this.typeName,this.gradeName,this.qualificationTypeId,
+      this.date,this.gradeId);
+}
+
+class SaveEmpSkillsModel {
   String userId;
   String date;
   int gradeId;
   int qualificationTypeId;
   int employeeId;
-  EmployeeSkillsModel(this.userId,this.date,this.gradeId,this.qualificationTypeId,this.employeeId);
+  SaveEmpSkillsModel(this.userId,this.date,this.gradeId,this.qualificationTypeId,this.employeeId);
 }
 
-// "employeeName": "منه خالد فتحى",
-// "employeeId": 13397,
-// "employeeCode": "1002",
-// "JobTitle": "مدير الدعم الفنى",
-// "VacationTypeName": "اجازة test",
-// "VacationTypeId": 1421,
-// "VacationTypeDuration": 10.0,
-// "Transferred": 0.0,
-// "Total": 27.17,
-// "Consumed": 0.0,
-// "Pending": 0.0,
-// "PostConsumed": 0.0,
-// "Available": 27.17,
-// "TotalView": 27.17,
-// "Type": 2,
-// "IsAnnual": true,
-// "HideBalance": true
+class getEmpSkillsModel {
+  List<skillsModel>? skills;
+  bool? allowEdit;
+  getEmpSkillsModel(this.skills,this.allowEdit);
+}
 
+///////////////////academic Degree/////////////////////////
+
+
+class AcademicDegreeModel{
+  int? id;
+  String? typeName;
+  String? gradeName;
+  int? academicDegreeTypeId;
+  String? degreeDate;
+  int? gradeId;
+  String? major;
+  String? university;
+  AcademicDegreeModel(this.id, this.typeName,this.gradeName,this.academicDegreeTypeId,
+      this.degreeDate,this.gradeId,this.major,this.university);
+}
+
+class SaveAcademicDegreeModel {
+  String userId;
+  int id;
+  String major;
+  String university;
+  String notes;
+  int employeeId;
+  int academicDegreeTypeId;
+  int gradeId;
+  String degreeDate;
+  SaveAcademicDegreeModel(this.userId,this.id,this.major,this.university,this.notes,
+      this.employeeId,this.academicDegreeTypeId,this.gradeId,this.degreeDate);
+}
+
+class getAcademicDegreeModel {
+  List<AcademicDegreeModel>? academicDegree;
+  bool? allowEdit;
+  getAcademicDegreeModel(this.academicDegree,this.allowEdit);
+}
+
+
+///////////////////////vactions////////////////////////////
 class Vacation
 {
   String employeeName;
@@ -150,16 +230,73 @@ class Vacation
   Vacation(this.employeeName,this.employeeId,this.employeeCode,this.vacationTypeName,this.vacationTypeDuration,
       this.transferred,this.total,this.consumed,this.available,this.pending);
 }
-
-  class  VacationsData
-  {
+class  VacationsData
+{
     List<Vacation> vactions;
     VacationsData(this.vactions);
    }
-
 class VacationsObject
 {
   VacationsData vacationsData;
   VacationsObject(this.vacationsData);
+}
+///////////////Salary/////////////////////
+class SalaryItems
+{int id;
+  String Month;
+  double Value;
+  SalaryItems(this.id,this.Month,this.Value);
+}
+
+class  SalaryData
+{
+  List<SalaryItems> salary;
+  SalaryData(this.salary);
+}
+
+class SalaryObject
+{
+  SalaryData salaryData;
+  SalaryObject(this.salaryData);
+}
+//---------------------------------------------------
+class Benefit
+{
+  double? value;
+  String? ItemName;
+  bool? ShowOnPaySlip;
+  Benefit(this.value,this.ItemName,this.ShowOnPaySlip);
+}
+
+class Deducted
+{
+  double? value;
+  String? ItemName;
+  bool? ShowOnPaySlip;
+  Deducted(this.value,this.ItemName,this.ShowOnPaySlip);
+}
+
+class SalaryDetails
+{
+  String? employeeName;
+  String? month;
+  List<Benefit>? benefitItems;
+  List<Deducted>? deductedItems;
+  double? totalBenefits;
+  double? totalDeductions;
+  List<dynamic>? paySlipItems;
+  double? NetSalary;
+  double? Max;
+  bool? hideNetSalary;
+  SalaryDetails(this.employeeName,this.month,this.benefitItems,
+      this.deductedItems,this.totalBenefits,this.totalDeductions,
+      this.paySlipItems,this.NetSalary,this.Max,this.hideNetSalary);
+
+}
+
+class SalaryDetailsObject
+{
+ SalaryDetails data;
+ SalaryDetailsObject(this.data);
 }
 

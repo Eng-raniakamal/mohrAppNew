@@ -104,107 +104,85 @@ class _userViewState extends State<userView> {
                   StreamBuilder<EmployeeDataModel>(
                       stream: _viewModel.outputUserData,
                       builder: (context, snapshot) {
-                        return  Column(
-                            children: [
-                              Stack(
-                                  children: [
-                                    const SizedBox(width: 10,height: 10,),
-                                         clipPathWidgets(),
-                                    const SizedBox(width: 10,height: 10,),
-                                      Padding(
-                                         padding: const EdgeInsets.all(12.0),
-                                         child: Row(
-                                           mainAxisAlignment: MainAxisAlignment.start,
-                                           children: [
-                                             const SizedBox(width: 20,height: 10,),
-                                             _getEmployeeDataWidget(snapshot.data),
-                                             const SizedBox(width: 20,height: 10,),
-                                             _getImageWidget(snapshot.data),
-                                             //const SizedBox(width: 5),
+                        return
+                           Column(
+                                children: [
+                                  Stack(
+                                      children: [
+                                        const SizedBox(width: 10, height: 10,),
+                                        const clipPathWidgets(),
+                                        const SizedBox(width: 10, height: 10,),
+                                        Padding(
+                                          padding: const EdgeInsets.all(12.0),
+                                          child: Row(
+                                            mainAxisAlignment: MainAxisAlignment
+                                                .start,
+                                            children: [
+                                              Expanded(
+                                                  flex: 2,
 
-                                           ],
-                                         ),
-                                       ),
-                                       //const SizedBox(width: 10),
-                                     //_getEmployeeDataWidget(snapshot.data),
-                                   ]),
-                         const SizedBox(height: 20),
+                                                  child: Padding(
+                                                    padding: const EdgeInsets
+                                                        .only(
+                                                        left: 30.0, bottom: 10),
+                                                      child: _getEmployeeDataWidget(
+                                                        snapshot.data),
+                                                  )
+
+                                              ),
+                                              Expanded(
+                                                  flex: 1,
+                                                  child:
+                                                  SizedBox(width: 20, child:
+                                                  _getImageWidget(
+                                                      snapshot.data),
+                                                  ))
+                                            ],
+                                          ),
+                                        ),
+                                      ]),
+                                  const SizedBox(height: 20),
+                                ]
+                            )
+                          ;
+                      }),
+                      const SizedBox(height: 10,),
+                      Container(
+                            child: Column(children:[
+
+                             Row(children:[
+                            //SizedBox(width:5),
+                              Center(child:SizedBox(width: 200,
+                                child:
+                               buildUpgradeButton(AppStrings.Vacation.tr(),colorManager.greywithOpacity))),
+                              Center(child:SizedBox(width: 200,
+                                child:
+                                buildUpgradeButton(AppStrings.Salary.tr(),colorManager.lightprimary),
+                            ))]),
+                              const SizedBox(height: 70),
+                             Row(children:[
+                              Center(child:SizedBox(width: 200,
+                                  child:
+
+                                  buildUpgradeButton(AppStrings.Attendance.tr(),colorManager.lightprimary))),
+
+                              Center(child:SizedBox(width: 200,
+                                  child:
+
+                                  buildUpgradeButton(AppStrings.Request.tr(),colorManager.lightprimary),
+
+                              )
+                              )
+                             ]),
+
+    ]),
 
 
-                        ]);}),
-                 // const SizedBox(width: 30,),
-                 //   const Padding(
-                 //      padding: EdgeInsets.all(10),
-                 //      child: Text("Add Request",
-                 //        style:
-                 //       TextStyle(fontWeight: FontWeight.bold,
-                 //                  fontSize:18,
-                 //       color:colorManager.primary)),
-                 //    ),
+                        ),
 
-                  const SizedBox(height: 10,),
-
-                  SingleChildScrollView(
-                    scrollDirection: Axis.vertical,
-                    child:Column(children:[
-
-                    Row(children:[
-                    //SizedBox(width:5),
-                    Center(child:SizedBox(width: 200,height: 70,
-                        child:
-                       buildUpgradeButton(AppStrings.Vacation.tr(),colorManager.greywithOpacity))),
-                     //const SizedBox(width: 10),
-                      Center(child:SizedBox(width: 200,height: 70,
-                        child:
-                      //SizedBox(width:5),
-                        buildUpgradeButton(AppStrings.Salary.tr(),colorManager.lightprimary),
-                    ))]),
-                      const SizedBox(height: 90),
-                    Row(children:[
-                     Center(child:SizedBox(width: 200,height: 70,
-                          child:
-                      //SizedBox(width:5),
-                          buildUpgradeButton(AppStrings.Attendance.tr(),colorManager.lightprimary))),
-                      //const SizedBox(width: 10),
-                     // Center(child:SizedBox(width: 200,height: 70,
-                     //    child:
-                     //  //SizedBox(width:5),
-                     //      buildUpgradeButton(AppStrings.Alerts.tr(),colorManager.greywithOpacity),
-                     // ))]),
-                     //  const SizedBox(height: 10),
-                    // Row(children:[
-                    //   Center(child:SizedBox(width: 200,height: 70,
-                    //      child:
-                    //   //SizedBox(width:5),
-                    //       buildUpgradeButton(AppStrings.Notifications.tr(),colorManager.greywithOpacity),)),
-                      //const SizedBox(width: 10),
-
-                      Center(child:SizedBox(width: 200,height: 70,
-                          child:
-                      //SizedBox(width:5),
-                          buildUpgradeButton(AppStrings.Request.tr(),colorManager.lightprimary),
-
-                      ))]),
-
-    ])
-                                // ,SingleChildScrollView(
-                                //   scrollDirection: Axis.vertical,
-                                //   child:GridView.count(crossAxisCount: 2,
-                                //   children: List.generate(2, (index) {
-                                //     return Card(
-                                //
-                                //       child: Center(child:Text("$index")),
-                                //
-                                //     );
-                                //   }
-                                //   ),    )
-                                //
-                                // )
-                  )])
+    ]),
     );
 
-       //           )]),
-      //    );
 
   }
 
@@ -213,46 +191,63 @@ class _userViewState extends State<userView> {
     switch (ReqName) {
       case "Vacation Request":
         return Hero(
-            tag: ReqName,
-            transitionOnUserGestures: true,
-            child: InkWell(
-                onTap: () {
-                  Navigator.of(context).pushReplacementNamed(Routes.Vacations);
-                  // Navigator.of(context).push(
-                  //     MaterialPageRoute(builder: (context) => vacationsView()));
-                },
-                child: const Image(image: AssetImage(ImageAssets.Vacation),
-                  fit: BoxFit.contain,
-                )
-            )
-        );
+              tag: ReqName,
+              transitionOnUserGestures: true,
+              child: InkWell(
+                  onTap: () {
+                    Navigator.of(context).pushReplacementNamed(Routes.Vacations);
+                  },
+                  child: Column(
+                    children: const [
+                      SizedBox(width: 70,height: 70,
+                        child: Image(image: AssetImage(ImageAssets.Vacation),
+                          fit: BoxFit.contain,
+                        ),
+                      ),
+                      Text("Vacation")
+                    ],
+                  )
+              )
 
+        );
       case "Salary":
         return Hero(
             tag: ReqName,
             transitionOnUserGestures: true,
             child: InkWell(
                 onTap: () {
-                  Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => vacationsView()));
+                  Navigator.of(context).pushReplacementNamed(Routes.salary);
                 },
-                child: const Image(image: AssetImage(ImageAssets.salary),
-                  fit: BoxFit.contain,
+                child: Column(
+                  children:const [
+                     SizedBox(width: 70,height: 70,
+                       child: Image(image: AssetImage(ImageAssets.salary),
+                        fit: BoxFit.contain,
+                    ),
+                     ),
+                    Text("Salary")
+                  ],
                 )
             )
         );
-
       case "Attendance":
         return Hero(
             tag: ReqName,
             transitionOnUserGestures: true,
             child: InkWell(
                 onTap: () {
-                  Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => vacationsView()));
+
                 },
-                child: const Image(image: AssetImage(ImageAssets.attendance),
-                  fit: BoxFit.contain,
+                child: Column(mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children:const [
+                     SizedBox(width: 70,height: 70,
+                       child: Image(image: AssetImage(ImageAssets.attendance),
+                       fit: BoxFit.contain,
+                    ),
+                     ),
+                    SizedBox(width: 80,height: 70,child: Text("Attendance"))
+                  ],
                 )
             )
         );
@@ -262,11 +257,16 @@ class _userViewState extends State<userView> {
             transitionOnUserGestures: true,
             child: InkWell(
                 onTap: () {
-                  Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => vacationsView()));
                 },
-                child: const Image(image: AssetImage(ImageAssets.requests),
-                  fit: BoxFit.contain,
+                child: Column(
+                  children:const [
+                    SizedBox(width: 70,height: 70,
+                      child: Image(image: AssetImage(ImageAssets.requests),
+                        fit: BoxFit.contain,
+                      ),
+                    ),
+                  SizedBox(width:70,height: 70,child: Text("Requests"))
+                  ],
                 )
             )
         );
@@ -278,9 +278,6 @@ class _userViewState extends State<userView> {
 
   Widget? buildcountanir(String reqName) {
     Container(
-      //color:colorManager.lightprimary,
-      padding: EdgeInsets.symmetric(horizontal: 48),
-
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -290,8 +287,7 @@ class _userViewState extends State<userView> {
             ButtonWidget(buttonBgColor: colorManager.lightprimary,
               text: reqName,
               onClicked: () {
-                Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => vacationsView()));
+
               },
             ),
 
@@ -337,22 +333,21 @@ class _userViewState extends State<userView> {
      var empData = userData.userDataModel.masterImage;
     String? URLimage= empData?["Url"].toString();
     Constants.imagePath=URLimage!;
+    //Constants.canUpload!=empData?["CanUploadMasterImage"];
     bool canEditImage=empData?["CanUploadMasterImage"];
      // String imagePath=" ";
      return ProfileWidget(
-          imagePath: URLimage,
+          imagePath: URLimage!,
           onClicked: () {
-            if(canEditImage)
-            {
-              displayDialoge();
-            }
-            else
-              {
+            // if(canEditImage == true)
+            // {
+            //   displayDialoge();
+            // }
+            // else
+            //   {
                 resetModules();
                 Navigator.of(context).pushReplacementNamed(Routes.editProfileRoute);
-                // Navigator.of(context).push(
-                //        MaterialPageRoute(builder: (context) => EmployeeSkillsView()));
-              }
+             // }
           }
         // Navigator.of(context).push(
         //   MaterialPageRoute(builder: (context) => editProfileScreen()),
@@ -366,11 +361,6 @@ class _userViewState extends State<userView> {
 
   Widget _buildItemList(BuildContext context, int index)
   {
-   // if(index== Constants.Rlist.length){
-   //    return Center(
-   //        child:CircularProgressIndicator()
-   //    );
-   //  }
     return Container(
 
         child:Column(
@@ -383,7 +373,6 @@ class _userViewState extends State<userView> {
                   child:Center(
                       child:Text("${Constants.Rlist[index]}")
                   )
-
               )
             ]
         )
@@ -397,25 +386,21 @@ class _userViewState extends State<userView> {
   }
   Widget? displayDialoge()
   {
-
     showAnimatedDialog(
-
       context: context,
       barrierDismissible: true,
-
       builder: (BuildContext context) {
         return ClassicGeneralDialogWidget(
           titleText: 'Information',
-          contentText: 'Sorry,You do not have a permission to change your Photo',
+          contentText: 'Sorry,You do not have  permission to change your Photo',
           onPositiveClick: () {
             Navigator.of(context).pop();
           },
-
         );
       },
-      animationType: DialogTransitionType.fadeRotate,
-      curve: Curves.linear,
-      duration: Duration(seconds: 1),
+      animationType: DialogTransitionType.fade
+      ,curve: Curves.linear,
+      duration: const Duration(seconds: 1),
     );
   }
 

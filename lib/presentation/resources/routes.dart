@@ -1,6 +1,10 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:mohr_hr/application/di.dart';
+import 'package:mohr_hr/presentation/Requests/Salary/Layout/salaryLayout.dart';
+import 'package:mohr_hr/presentation/Requests/Salary/View/salaryDetailsDialog.dart';
+import 'package:mohr_hr/presentation/Requests/Salary/View/salaryDetailsView.dart';
+import 'package:mohr_hr/presentation/Requests/Salary/View/salary_View.dart';
 import 'package:mohr_hr/presentation/User/user_view.dart';
 //import 'package:mohr_hr/presentation/home/home_Screen.dart';
 import 'package:mohr_hr/presentation/home/Home.dart';
@@ -11,6 +15,7 @@ import 'package:mohr_hr/presentation/resources/strings_manager.dart';
 import 'package:mohr_hr/presentation/splash/splashScreen.dart';
 //import 'package:mohr_hr/presentation/profile/editProfileScreen.dart';
 
+import '../Requests/Vacations/Layout/vacationLayout.dart';
 import '../Requests/Vacations/view/vactions_view.dart';
 import '../User/layout/employeeLayout.dart';
 import '../editEmployee/View/editEmployee.dart';
@@ -26,11 +31,13 @@ class Routes
   static const String loginRoute="/login";
   static const String profileRoute="/user";
   static const String HomeRoute="/home/Home.dart";
-  static const String editProfileRoute="/profile/editProfileScreen";
+  static const String editProfileRoute="/editEmployee/editEmployee.dart";
   static const String main="/main";
   static const String settings="/settings";
   static const String employee="/user/layout";
   static const String Vacations="/Requests/Vacations";
+  static const String salary="/Requests/Salary/View/salary_View.dart";
+  static const String salaryDetails="/Requests/Salary/View/salaryDetailsDialog.dart";
 }
 
 
@@ -56,20 +63,40 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_)=>  Home());
 
         case Routes.editProfileRoute:
-          initEmployeeSkillsModule();
           initEmployeeBasicDataModule();
-        return MaterialPageRoute(builder: (_)=> const EmployeeEditView ());
+          //initSaveEmpBasicDataModule();
+          initEmployeeSkillsModule();
+          initQualificationModule();
+          initDisplayEmployeeSkillsModule();
+
+        return MaterialPageRoute(builder: (_)=> const EmployeeEditView());
 
       case Routes.settings:
           return MaterialPageRoute(builder: (_)=>  Settings());
 
       case Routes.Vacations:
         initVacationModule();
-        return MaterialPageRoute(builder: (_)=>  vacationsView());
+        return MaterialPageRoute(builder: (_)=> VacationScreen());
+
+      case Routes.salary:
+        initSalaryModule();
+        return MaterialPageRoute(builder: (_)=>  SalaryScreen());
+
+
+      case Routes.salaryDetails:
+        initSalaryDetailsModule();
+        return MaterialPageRoute(builder: (_)=>  salaryDetailsView());
 
       case Routes.employee:
         initEmployeeSkillsModule();
+        initDisplayEmployeeSkillsModule();
         initEmployeeBasicDataModule();
+        //initSaveEmpBasicDataModule();
+        initDisplayAcademicDegreesModule();
+        initSaveAcademicDegreesModule();
+        initQualificationModule();
+        initGradeModule();
+
         return MaterialPageRoute(builder: (_)=>  Employee());
           default:
           return unDefinedRoute();

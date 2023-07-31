@@ -10,12 +10,6 @@ import '../../resources/routes.dart';
 import '../../widgets/navigator_bar.dart';
 import '../editProfileScreen.dart';
 
-
-
-
-
-
-
 class Employee extends StatelessWidget with NavigationStates{
 
   @override
@@ -56,9 +50,9 @@ class Employee extends StatelessWidget with NavigationStates{
     );
   }
   final item=<Widget>
-  [ const Icon(Icons.person,size: 30,),
-    const Icon(Icons.home,size: 30,),
-    const Icon(Icons.notifications,size: 30,),
+  [ const Icon(Icons.person,size: 30,color: colorManager.white,),
+    const Icon(Icons.home,size: 30,color: colorManager.white),
+    const Icon(Icons.notifications,size: 30,color: colorManager.white),
 
   ];
 }

@@ -8,7 +8,6 @@ import 'package:mohr_hr/presentation/Base/baseviewmodel.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:mohr_hr/presentation/common/state_renderer/state_render_impl.dart';
 import 'package:mohr_hr/presentation/common/state_renderer/state_renderer.dart';
-
 import '../../../common/freezed_data_classes.dart';
 
 
@@ -37,7 +36,6 @@ class VacationViewModel extends BaseViewModel with
   @override
   void dispose()
   {
-    //_UserIdStreamController.close();
     _VacationsStreamController.close();
     super.dispose();
   }
@@ -64,8 +62,6 @@ class VacationViewModel extends BaseViewModel with
             inputState.add(ContentState());
             inputVacation.add(VacationViewObject(
                 vacationdata.vacationsData.vactions));
-               // vacationsData.vactions,
-            //VacationData.add(VacationObject);
           }
       );}
     else
@@ -93,9 +89,6 @@ class VacationViewModel extends BaseViewModel with
 
   @override
   Sink get VacationData => _VacationsStreamController.sink;
-  Snik get VacationsData => _VacationsStreamController;
-  
-
 
   @override
   Sink get inputVacation => _VacationsStreamController.sink;
@@ -112,12 +105,10 @@ abstract class VacationViewModelInputs{
 }
 
 abstract class VacationViewModelOutputs{
- // Stream<VacationsData> get outputVacationsData;
   Stream<VacationViewObject> get outputVacations;
 
 }
 class  VacationViewObject {
  List<Vacation > vacations;
-
   VacationViewObject(this.vacations);
 }

@@ -151,6 +151,7 @@ Map<String, dynamic> _$ResultResponseToJson(ResultResponse instance) =>
 
 EmployeeResponse _$EmployeeResponseFromJson(Map<String, dynamic> json) {
   return EmployeeResponse(
+    json['Id'] as int?,
     json['ArabicName'] as String?,
     json['EnglishName'] as String?,
     json['BirthDate'] as String?,
@@ -159,11 +160,15 @@ EmployeeResponse _$EmployeeResponseFromJson(Map<String, dynamic> json) {
     json['Email'] as String?,
     json['Phone'] as String?,
     json['EmergencyNumber'] as String?,
+    json['Address'] == null
+        ? null
+        : AddressResponse.fromJson(json['Address'] as Map<String, dynamic>),
   );
 }
 
 Map<String, dynamic> _$EmployeeResponseToJson(EmployeeResponse instance) =>
     <String, dynamic>{
+      'Id': instance.empId,
       'ArabicName': instance.arabicName,
       'EnglishName': instance.englishName,
       'BirthDate': instance.birthDate,
@@ -172,13 +177,13 @@ Map<String, dynamic> _$EmployeeResponseToJson(EmployeeResponse instance) =>
       'Email': instance.email,
       'Phone': instance.phone,
       'EmergencyNumber': instance.emergencyNumber,
+      'Address': instance.Address,
     };
 
 AddressResponse _$AddressResponseFromJson(Map<String, dynamic> json) {
   return AddressResponse(
     json['AddressText'] as String?,
     json['DistrictId'] as int?,
-    json['POBox'] as String?,
     json['ZipCode'] as String?,
   );
 }
@@ -187,8 +192,95 @@ Map<String, dynamic> _$AddressResponseToJson(AddressResponse instance) =>
     <String, dynamic>{
       'AddressText': instance.addressText,
       'DistrictId': instance.districtId,
-      'POBox': instance.pOBox,
       'ZipCode': instance.zipCode,
+    };
+
+CountriesResponse _$CountriesResponseFromJson(Map<String, dynamic> json) {
+  return CountriesResponse(
+    json['Id'] as int?,
+    json['Name'] as String?,
+  );
+}
+
+Map<String, dynamic> _$CountriesResponseToJson(CountriesResponse instance) =>
+    <String, dynamic>{
+      'Id': instance.countryId,
+      'Name': instance.countryname,
+    };
+
+GovernoratyResponse _$GovernoratyResponseFromJson(Map<String, dynamic> json) {
+  return GovernoratyResponse(
+    json['Id'] as int?,
+    json['Name'] as String?,
+  );
+}
+
+Map<String, dynamic> _$GovernoratyResponseToJson(
+        GovernoratyResponse instance) =>
+    <String, dynamic>{
+      'Id': instance.governoratyId,
+      'Name': instance.governoratyname,
+    };
+
+DistrictResponse _$DistrictResponseFromJson(Map<String, dynamic> json) {
+  return DistrictResponse(
+    json['Id'] as int?,
+    json['Name'] as String?,
+  );
+}
+
+Map<String, dynamic> _$DistrictResponseToJson(DistrictResponse instance) =>
+    <String, dynamic>{
+      'Id': instance.districtId,
+      'Name': instance.districtname,
+    };
+
+DisplayBasicDataResponse _$DisplayBasicDataResponseFromJson(
+    Map<String, dynamic> json) {
+  return DisplayBasicDataResponse(
+    BasicDataResponse.fromJson(json['data'] as Map<String, dynamic>),
+  );
+}
+
+Map<String, dynamic> _$DisplayBasicDataResponseToJson(
+        DisplayBasicDataResponse instance) =>
+    <String, dynamic>{
+      'data': instance.data,
+    };
+
+BasicDataResponse _$BasicDataResponseFromJson(Map<String, dynamic> json) {
+  return BasicDataResponse(
+    json['employee'] == null
+        ? null
+        : EmployeeResponse.fromJson(json['employee'] as Map<String, dynamic>),
+    json['allowEdit'] as bool?,
+    (json['countries'] as List<dynamic>?)
+        ?.map((e) => CountriesResponse.fromJson(e as Map<String, dynamic>))
+        .toList(),
+    json['selectedCountry'] as int?,
+    (json['governorates'] as List<dynamic>?)
+        ?.map((e) => GovernoratyResponse.fromJson(e as Map<String, dynamic>))
+        .toList(),
+    json['selectedGovernorate'] as int?,
+    (json['districts'] as List<dynamic>?)
+        ?.map((e) => DistrictResponse.fromJson(e as Map<String, dynamic>))
+        .toList(),
+    json['selecteddistrict'] as int?,
+    json['address'] as Map<String, dynamic>?,
+  );
+}
+
+Map<String, dynamic> _$BasicDataResponseToJson(BasicDataResponse instance) =>
+    <String, dynamic>{
+      'employee': instance.employeeData,
+      'allowEdit': instance.allowEdit,
+      'countries': instance.countries,
+      'selectedCountry': instance.selectedCountry,
+      'governorates': instance.governorates,
+      'selectedGovernorate': instance.selectedGovernorate,
+      'districts': instance.districts,
+      'selecteddistrict': instance.selecteddistrict,
+      'address': instance.address,
     };
 
 EmployeeBasicDataResponse _$EmployeeBasicDataResponseFromJson(
@@ -216,9 +308,34 @@ Map<String, dynamic> _$EmployeeBasicDataResponseToJson(
       'Address': instance.Address?.toJson(),
     };
 
-EmployeeSkillsResponse _$EmployeeSkillsResponseFromJson(
+SaveBasicDataResponse _$SaveBasicDataResponseFromJson(
     Map<String, dynamic> json) {
-  return EmployeeSkillsResponse(
+  return SaveBasicDataResponse(
+    json['UserId'] as String?,
+    json['Employee'] == null
+        ? null
+        : EmployeeResponse.fromJson(json['Employee'] as Map<String, dynamic>),
+    json['Address'] == null
+        ? null
+        : AddressResponse.fromJson(json['Address'] as Map<String, dynamic>),
+  )
+    ..isValid = json['IsValid'] as bool?
+    ..message = json['Message'] as String?;
+}
+
+Map<String, dynamic> _$SaveBasicDataResponseToJson(
+        SaveBasicDataResponse instance) =>
+    <String, dynamic>{
+      'IsValid': instance.isValid,
+      'Message': instance.message,
+      'UserId': instance.UserId,
+      'Employee': instance.Employee?.toJson(),
+      'Address': instance.Address?.toJson(),
+    };
+
+saveEmpSkillsResponse _$saveEmpSkillsResponseFromJson(
+    Map<String, dynamic> json) {
+  return saveEmpSkillsResponse(
     json['UserId'] as String?,
     json['Date'] as String?,
     json['GradeId'] as int?,
@@ -229,8 +346,8 @@ EmployeeSkillsResponse _$EmployeeSkillsResponseFromJson(
     ..message = json['Message'] as String?;
 }
 
-Map<String, dynamic> _$EmployeeSkillsResponseToJson(
-        EmployeeSkillsResponse instance) =>
+Map<String, dynamic> _$saveEmpSkillsResponseToJson(
+        saveEmpSkillsResponse instance) =>
     <String, dynamic>{
       'IsValid': instance.isValid,
       'Message': instance.message,
@@ -239,6 +356,177 @@ Map<String, dynamic> _$EmployeeSkillsResponseToJson(
       'GradeId': instance.gradeId,
       'QualificationTypeId': instance.qualificationTypeId,
       'EmployeeId': instance.employeeId,
+    };
+
+SkillsResponse _$SkillsResponseFromJson(Map<String, dynamic> json) {
+  return SkillsResponse(
+    json['Id'] as int?,
+    json['TypeName'] as String?,
+    json['GradeName'] as String?,
+    json['QualificationTypeId'] as int?,
+    json['Date'] as String?,
+    json['GradeId'] as int?,
+  );
+}
+
+Map<String, dynamic> _$SkillsResponseToJson(SkillsResponse instance) =>
+    <String, dynamic>{
+      'Id': instance.id,
+      'TypeName': instance.typeName,
+      'GradeName': instance.gradeName,
+      'QualificationTypeId': instance.qualificationTypeId,
+      'Date': instance.date,
+      'GradeId': instance.gradeId,
+    };
+
+GetEmpSkillsResponse _$GetEmpSkillsResponseFromJson(Map<String, dynamic> json) {
+  return GetEmpSkillsResponse(
+    (json['skills'] as List<dynamic>?)
+        ?.map((e) => SkillsResponse.fromJson(e as Map<String, dynamic>))
+        .toList(),
+    json['allowEdit'] as bool?,
+  );
+}
+
+Map<String, dynamic> _$GetEmpSkillsResponseToJson(
+        GetEmpSkillsResponse instance) =>
+    <String, dynamic>{
+      'skills': instance.skillData,
+      'allowEdit': instance.allowEdit,
+    };
+
+saveAcademicDegreeResponse _$saveAcademicDegreeResponseFromJson(
+    Map<String, dynamic> json) {
+  return saveAcademicDegreeResponse(
+    json['UserId'] as String?,
+    json['Id'] as int?,
+    json['Major'] as String?,
+    json['University'] as String?,
+    json['Notes'] as String?,
+    json['EmployeeId'] as int?,
+    json['AcademicDegreeTypeId'] as int?,
+    json['GradeId'] as int?,
+    json['DegreeDate'] as String?,
+  )
+    ..isValid = json['IsValid'] as bool?
+    ..message = json['Message'] as String?;
+}
+
+Map<String, dynamic> _$saveAcademicDegreeResponseToJson(
+        saveAcademicDegreeResponse instance) =>
+    <String, dynamic>{
+      'IsValid': instance.isValid,
+      'Message': instance.message,
+      'UserId': instance.userId,
+      'Id': instance.id,
+      'Major': instance.major,
+      'University': instance.university,
+      'Notes': instance.notes,
+      'EmployeeId': instance.EmployeeId,
+      'AcademicDegreeTypeId': instance.academicDegreeTypeId,
+      'GradeId': instance.gradeId,
+      'DegreeDate': instance.degreeDate,
+    };
+
+GetAcademicDegreeResponse _$GetAcademicDegreeResponseFromJson(
+    Map<String, dynamic> json) {
+  return GetAcademicDegreeResponse(
+    (json['AcademicDegree'] as List<dynamic>?)
+        ?.map((e) => AcademicDegreeResponse.fromJson(e as Map<String, dynamic>))
+        .toList(),
+    json['allowEdit'] as bool?,
+  );
+}
+
+Map<String, dynamic> _$GetAcademicDegreeResponseToJson(
+        GetAcademicDegreeResponse instance) =>
+    <String, dynamic>{
+      'AcademicDegree': instance.academicDegreeData,
+      'allowEdit': instance.allowEdit,
+    };
+
+AcademicDegreeResponse _$AcademicDegreeResponseFromJson(
+    Map<String, dynamic> json) {
+  return AcademicDegreeResponse(
+    json['Id'] as int?,
+    json['TypeName'] as String?,
+    json['GradeName'] as String?,
+    json['AcademicDegreeTypeId'] as int?,
+    json['DegreeDate'] as String?,
+    json['GradeId'] as int?,
+    json['Major'] as String?,
+    json['University'] as String?,
+  );
+}
+
+Map<String, dynamic> _$AcademicDegreeResponseToJson(
+        AcademicDegreeResponse instance) =>
+    <String, dynamic>{
+      'Id': instance.id,
+      'TypeName': instance.typeName,
+      'GradeName': instance.gradeName,
+      'AcademicDegreeTypeId': instance.academicDegreeTypeId,
+      'DegreeDate': instance.degreeDate,
+      'GradeId': instance.gradeId,
+      'Major': instance.major,
+      'University': instance.universitye,
+    };
+
+GradeItemResponse _$GradeItemResponseFromJson(Map<String, dynamic> json) {
+  return GradeItemResponse(
+    json['Value'] as int?,
+    json['Text'] as String?,
+  );
+}
+
+Map<String, dynamic> _$GradeItemResponseToJson(GradeItemResponse instance) =>
+    <String, dynamic>{
+      'Value': instance.value,
+      'Text': instance.text,
+    };
+
+GradesResponse _$GradesResponseFromJson(Map<String, dynamic> json) {
+  return GradesResponse(
+    (json['data'] as List<dynamic>?)
+        ?.map((e) => GradeItemResponse.fromJson(e as Map<String, dynamic>))
+        .toList(),
+  );
+}
+
+Map<String, dynamic> _$GradesResponseToJson(GradesResponse instance) =>
+    <String, dynamic>{
+      'data': instance.data,
+    };
+
+QualificationItemResponse _$QualificationItemResponseFromJson(
+    Map<String, dynamic> json) {
+  return QualificationItemResponse(
+    json['Value'] as int?,
+    json['Text'] as String?,
+  );
+}
+
+Map<String, dynamic> _$QualificationItemResponseToJson(
+        QualificationItemResponse instance) =>
+    <String, dynamic>{
+      'Value': instance.value,
+      'Text': instance.text,
+    };
+
+QualificationsResponse _$QualificationsResponseFromJson(
+    Map<String, dynamic> json) {
+  return QualificationsResponse(
+    (json['data'] as List<dynamic>?)
+        ?.map((e) =>
+            QualificationItemResponse.fromJson(e as Map<String, dynamic>))
+        .toList(),
+  );
+}
+
+Map<String, dynamic> _$QualificationsResponseToJson(
+        QualificationsResponse instance) =>
+    <String, dynamic>{
+      'data': instance.data,
     };
 
 VacationItemResponse _$VacationItemResponseFromJson(Map<String, dynamic> json) {
@@ -283,4 +571,99 @@ VacationsResponse _$VacationsResponseFromJson(Map<String, dynamic> json) {
 Map<String, dynamic> _$VacationsResponseToJson(VacationsResponse instance) =>
     <String, dynamic>{
       'data': instance.data,
+    };
+
+SalaryItemResponse _$SalaryItemResponseFromJson(Map<String, dynamic> json) {
+  return SalaryItemResponse(
+    json['Id'] as int?,
+    json['Month'] as String?,
+    (json['Value'] as num?)?.toDouble(),
+  );
+}
+
+Map<String, dynamic> _$SalaryItemResponseToJson(SalaryItemResponse instance) =>
+    <String, dynamic>{
+      'Id': instance.id,
+      'Month': instance.monthName,
+      'Value': instance.salaryValue,
+    };
+
+SalaryResponse _$SalaryResponseFromJson(Map<String, dynamic> json) {
+  return SalaryResponse(
+    (json['data'] as List<dynamic>?)
+        ?.map((e) => SalaryItemResponse.fromJson(e as Map<String, dynamic>?))
+        .toList(),
+  );
+}
+
+Map<String, dynamic> _$SalaryResponseToJson(SalaryResponse instance) =>
+    <String, dynamic>{
+      'data': instance.data,
+    };
+
+BenefitItemResponse _$BenefitItemResponseFromJson(Map<String, dynamic> json) {
+  return BenefitItemResponse(
+    (json['Value'] as num?)?.toDouble(),
+    json['ItemName'] as String?,
+    json['ShowOnPaySlip'] as bool?,
+  );
+}
+
+Map<String, dynamic> _$BenefitItemResponseToJson(
+        BenefitItemResponse instance) =>
+    <String, dynamic>{
+      'Value': instance.value,
+      'ItemName': instance.ItemName,
+      'ShowOnPaySlip': instance.showOnPaySlip,
+    };
+
+DeductedItemResponse _$DeductedItemResponseFromJson(Map<String, dynamic> json) {
+  return DeductedItemResponse(
+    (json['Value'] as num?)?.toDouble(),
+    json['ItemName'] as String?,
+    json['ShowOnPaySlip'] as bool?,
+  );
+}
+
+Map<String, dynamic> _$DeductedItemResponseToJson(
+        DeductedItemResponse instance) =>
+    <String, dynamic>{
+      'Value': instance.value,
+      'ItemName': instance.ItemName,
+      'ShowOnPaySlip': instance.showOnPaySlip,
+    };
+
+SalaryDetailsResponse _$SalaryDetailsResponseFromJson(
+    Map<String, dynamic> json) {
+  return SalaryDetailsResponse(
+    json['EmployeeName'] as String?,
+    json['Month'] as String?,
+    (json['BenefitItems'] as List<dynamic>?)
+        ?.map((e) => BenefitItemResponse.fromJson(e as Map<String, dynamic>?))
+        .toList(),
+    (json['DeductedItems'] as List<dynamic>?)
+        ?.map((e) => DeductedItemResponse.fromJson(e as Map<String, dynamic>?))
+        .toList(),
+    (json['TotalBenefits'] as num?)?.toDouble(),
+    (json['TotalDeductions'] as num?)?.toDouble(),
+    json['payslipItems'] as List<dynamic>?,
+    (json['NetSalary'] as num?)?.toDouble(),
+    (json['Max'] as num?)?.toDouble(),
+    json['HideNetSalary'] as bool?,
+  );
+}
+
+Map<String, dynamic> _$SalaryDetailsResponseToJson(
+        SalaryDetailsResponse instance) =>
+    <String, dynamic>{
+      'EmployeeName': instance.employeeName,
+      'Month': instance.month,
+      'BenefitItems': instance.benefitItems,
+      'DeductedItems': instance.deductedItems,
+      'TotalBenefits': instance.totalBenefits,
+      'TotalDeductions': instance.totalDeducted,
+      'payslipItems': instance.paysLipItems,
+      'NetSalary': instance.netSalary,
+      'Max': instance.max,
+      'HideNetSalary': instance.hideNetSalary,
     };

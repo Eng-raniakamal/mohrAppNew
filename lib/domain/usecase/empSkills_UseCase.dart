@@ -8,23 +8,21 @@ import 'package:mohr_hr/domain/repository/repository.dart';
 import 'package:mohr_hr/domain/usecase/base_usecase.dart';
 import 'package:dartz/dartz.dart';
 
-class EmployeeSkillsUseCase implements BaseUseCase<EmployeeSkillsUseCaseInput, EmployeeSkillsModel> {
+class EmployeeSkillsUseCase implements BaseUseCase<EmployeeSkillsUseCaseInput, SaveEmpSkillsModel> {
 
   final Repository _repository;
   EmployeeSkillsUseCase(this._repository);
 
   @override
-  Future<Either<Failure, EmployeeSkillsModel>> execute(
+  Future<Either<Failure, SaveEmpSkillsModel>> execute(
       EmployeeSkillsUseCaseInput input) async {
-    return await _repository.getEmployeeSkills(EmployeeSkillsRequest(
+    return await _repository.saveEmployeeSkills(EmployeeSkillsRequest(
         input.userId,input.date,input.gradeId,input.qualificationTypeId,input.employeeId));
   }
 }
-//  "GradeId": 2,
-//   "QualificationTypeId": 1,
-//   "EmployeeId
+
 class EmployeeSkillsUseCaseInput {
-  String userId="b64f7a02-b625-46b7-8126-d3a20defdff8";
+  String userId;
   String date;
   int gradeId;
   int qualificationTypeId;

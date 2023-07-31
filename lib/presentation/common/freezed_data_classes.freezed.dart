@@ -308,6 +308,133 @@ abstract class _UserObject implements UserObject {
 }
 
 /// @nodoc
+class _$gradeObjectTearOff {
+  const _$gradeObjectTearOff();
+
+  _gradeObject call(String userID) {
+    return _gradeObject(
+      userID,
+    );
+  }
+}
+
+/// @nodoc
+const $gradeObject = _$gradeObjectTearOff();
+
+/// @nodoc
+mixin _$gradeObject {
+  String get userID => throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $gradeObjectCopyWith<gradeObject> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $gradeObjectCopyWith<$Res> {
+  factory $gradeObjectCopyWith(
+          gradeObject value, $Res Function(gradeObject) then) =
+      _$gradeObjectCopyWithImpl<$Res>;
+  $Res call({String userID});
+}
+
+/// @nodoc
+class _$gradeObjectCopyWithImpl<$Res> implements $gradeObjectCopyWith<$Res> {
+  _$gradeObjectCopyWithImpl(this._value, this._then);
+
+  final gradeObject _value;
+  // ignore: unused_field
+  final $Res Function(gradeObject) _then;
+
+  @override
+  $Res call({
+    Object? userID = freezed,
+  }) {
+    return _then(_value.copyWith(
+      userID: userID == freezed
+          ? _value.userID
+          : userID // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+abstract class _$gradeObjectCopyWith<$Res>
+    implements $gradeObjectCopyWith<$Res> {
+  factory _$gradeObjectCopyWith(
+          _gradeObject value, $Res Function(_gradeObject) then) =
+      __$gradeObjectCopyWithImpl<$Res>;
+  @override
+  $Res call({String userID});
+}
+
+/// @nodoc
+class __$gradeObjectCopyWithImpl<$Res> extends _$gradeObjectCopyWithImpl<$Res>
+    implements _$gradeObjectCopyWith<$Res> {
+  __$gradeObjectCopyWithImpl(
+      _gradeObject _value, $Res Function(_gradeObject) _then)
+      : super(_value, (v) => _then(v as _gradeObject));
+
+  @override
+  _gradeObject get _value => super._value as _gradeObject;
+
+  @override
+  $Res call({
+    Object? userID = freezed,
+  }) {
+    return _then(_gradeObject(
+      userID == freezed
+          ? _value.userID
+          : userID // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_gradeObject implements _gradeObject {
+  _$_gradeObject(this.userID);
+
+  @override
+  final String userID;
+
+  @override
+  String toString() {
+    return 'gradeObject(userID: $userID)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is _gradeObject &&
+            (identical(other.userID, userID) ||
+                const DeepCollectionEquality().equals(other.userID, userID)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(userID);
+
+  @JsonKey(ignore: true)
+  @override
+  _$gradeObjectCopyWith<_gradeObject> get copyWith =>
+      __$gradeObjectCopyWithImpl<_gradeObject>(this, _$identity);
+}
+
+abstract class _gradeObject implements gradeObject {
+  factory _gradeObject(String userID) = _$_gradeObject;
+
+  @override
+  String get userID => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(ignore: true)
+  _$gradeObjectCopyWith<_gradeObject> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
 class _$VacationsObjectsTearOff {
   const _$VacationsObjectsTearOff();
 
@@ -437,270 +564,87 @@ abstract class _VacationObjects implements VacationsObjects {
 }
 
 /// @nodoc
-class _$empBasicDataObjectTearOff {
-  const _$empBasicDataObjectTearOff();
+class _$SalaryObjectsTearOff {
+  const _$SalaryObjectsTearOff();
 
-  _empBasicDataObject call(
-      String userID,
-      String ArabicName,
-      String EnglishName,
-      String BirthDate,
-      String NationalId,
-      String SocialId,
-      String Email,
-      String Phone,
-      String Emergency_Number,
-      String AddressText,
-      int DistrictId,
-      String PoBox,
-      String ZipCode) {
-    return _empBasicDataObject(
+  _SalaryObjects call(String userID) {
+    return _SalaryObjects(
       userID,
-      ArabicName,
-      EnglishName,
-      BirthDate,
-      NationalId,
-      SocialId,
-      Email,
-      Phone,
-      Emergency_Number,
-      AddressText,
-      DistrictId,
-      PoBox,
-      ZipCode,
     );
   }
 }
 
 /// @nodoc
-const $empBasicDataObject = _$empBasicDataObjectTearOff();
+const $SalaryObjects = _$SalaryObjectsTearOff();
 
 /// @nodoc
-mixin _$empBasicDataObject {
+mixin _$SalaryObjects {
   String get userID => throw _privateConstructorUsedError;
-  String get ArabicName => throw _privateConstructorUsedError;
-  String get EnglishName => throw _privateConstructorUsedError;
-  String get BirthDate => throw _privateConstructorUsedError;
-  String get NationalId => throw _privateConstructorUsedError;
-  String get SocialId => throw _privateConstructorUsedError;
-  String get Email => throw _privateConstructorUsedError;
-  String get Phone => throw _privateConstructorUsedError;
-  String get Emergency_Number => throw _privateConstructorUsedError;
-  String get AddressText => throw _privateConstructorUsedError;
-  int get DistrictId => throw _privateConstructorUsedError;
-  String get PoBox => throw _privateConstructorUsedError;
-  String get ZipCode => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
-  $empBasicDataObjectCopyWith<empBasicDataObject> get copyWith =>
+  $SalaryObjectsCopyWith<SalaryObjects> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $empBasicDataObjectCopyWith<$Res> {
-  factory $empBasicDataObjectCopyWith(
-          empBasicDataObject value, $Res Function(empBasicDataObject) then) =
-      _$empBasicDataObjectCopyWithImpl<$Res>;
-  $Res call(
-      {String userID,
-      String ArabicName,
-      String EnglishName,
-      String BirthDate,
-      String NationalId,
-      String SocialId,
-      String Email,
-      String Phone,
-      String Emergency_Number,
-      String AddressText,
-      int DistrictId,
-      String PoBox,
-      String ZipCode});
+abstract class $SalaryObjectsCopyWith<$Res> {
+  factory $SalaryObjectsCopyWith(
+          SalaryObjects value, $Res Function(SalaryObjects) then) =
+      _$SalaryObjectsCopyWithImpl<$Res>;
+  $Res call({String userID});
 }
 
 /// @nodoc
-class _$empBasicDataObjectCopyWithImpl<$Res>
-    implements $empBasicDataObjectCopyWith<$Res> {
-  _$empBasicDataObjectCopyWithImpl(this._value, this._then);
+class _$SalaryObjectsCopyWithImpl<$Res>
+    implements $SalaryObjectsCopyWith<$Res> {
+  _$SalaryObjectsCopyWithImpl(this._value, this._then);
 
-  final empBasicDataObject _value;
+  final SalaryObjects _value;
   // ignore: unused_field
-  final $Res Function(empBasicDataObject) _then;
+  final $Res Function(SalaryObjects) _then;
 
   @override
   $Res call({
     Object? userID = freezed,
-    Object? ArabicName = freezed,
-    Object? EnglishName = freezed,
-    Object? BirthDate = freezed,
-    Object? NationalId = freezed,
-    Object? SocialId = freezed,
-    Object? Email = freezed,
-    Object? Phone = freezed,
-    Object? Emergency_Number = freezed,
-    Object? AddressText = freezed,
-    Object? DistrictId = freezed,
-    Object? PoBox = freezed,
-    Object? ZipCode = freezed,
   }) {
     return _then(_value.copyWith(
       userID: userID == freezed
           ? _value.userID
           : userID // ignore: cast_nullable_to_non_nullable
               as String,
-      ArabicName: ArabicName == freezed
-          ? _value.ArabicName
-          : ArabicName // ignore: cast_nullable_to_non_nullable
-              as String,
-      EnglishName: EnglishName == freezed
-          ? _value.EnglishName
-          : EnglishName // ignore: cast_nullable_to_non_nullable
-              as String,
-      BirthDate: BirthDate == freezed
-          ? _value.BirthDate
-          : BirthDate // ignore: cast_nullable_to_non_nullable
-              as String,
-      NationalId: NationalId == freezed
-          ? _value.NationalId
-          : NationalId // ignore: cast_nullable_to_non_nullable
-              as String,
-      SocialId: SocialId == freezed
-          ? _value.SocialId
-          : SocialId // ignore: cast_nullable_to_non_nullable
-              as String,
-      Email: Email == freezed
-          ? _value.Email
-          : Email // ignore: cast_nullable_to_non_nullable
-              as String,
-      Phone: Phone == freezed
-          ? _value.Phone
-          : Phone // ignore: cast_nullable_to_non_nullable
-              as String,
-      Emergency_Number: Emergency_Number == freezed
-          ? _value.Emergency_Number
-          : Emergency_Number // ignore: cast_nullable_to_non_nullable
-              as String,
-      AddressText: AddressText == freezed
-          ? _value.AddressText
-          : AddressText // ignore: cast_nullable_to_non_nullable
-              as String,
-      DistrictId: DistrictId == freezed
-          ? _value.DistrictId
-          : DistrictId // ignore: cast_nullable_to_non_nullable
-              as int,
-      PoBox: PoBox == freezed
-          ? _value.PoBox
-          : PoBox // ignore: cast_nullable_to_non_nullable
-              as String,
-      ZipCode: ZipCode == freezed
-          ? _value.ZipCode
-          : ZipCode // ignore: cast_nullable_to_non_nullable
-              as String,
     ));
   }
 }
 
 /// @nodoc
-abstract class _$empBasicDataObjectCopyWith<$Res>
-    implements $empBasicDataObjectCopyWith<$Res> {
-  factory _$empBasicDataObjectCopyWith(
-          _empBasicDataObject value, $Res Function(_empBasicDataObject) then) =
-      __$empBasicDataObjectCopyWithImpl<$Res>;
+abstract class _$SalaryObjectsCopyWith<$Res>
+    implements $SalaryObjectsCopyWith<$Res> {
+  factory _$SalaryObjectsCopyWith(
+          _SalaryObjects value, $Res Function(_SalaryObjects) then) =
+      __$SalaryObjectsCopyWithImpl<$Res>;
   @override
-  $Res call(
-      {String userID,
-      String ArabicName,
-      String EnglishName,
-      String BirthDate,
-      String NationalId,
-      String SocialId,
-      String Email,
-      String Phone,
-      String Emergency_Number,
-      String AddressText,
-      int DistrictId,
-      String PoBox,
-      String ZipCode});
+  $Res call({String userID});
 }
 
 /// @nodoc
-class __$empBasicDataObjectCopyWithImpl<$Res>
-    extends _$empBasicDataObjectCopyWithImpl<$Res>
-    implements _$empBasicDataObjectCopyWith<$Res> {
-  __$empBasicDataObjectCopyWithImpl(
-      _empBasicDataObject _value, $Res Function(_empBasicDataObject) _then)
-      : super(_value, (v) => _then(v as _empBasicDataObject));
+class __$SalaryObjectsCopyWithImpl<$Res>
+    extends _$SalaryObjectsCopyWithImpl<$Res>
+    implements _$SalaryObjectsCopyWith<$Res> {
+  __$SalaryObjectsCopyWithImpl(
+      _SalaryObjects _value, $Res Function(_SalaryObjects) _then)
+      : super(_value, (v) => _then(v as _SalaryObjects));
 
   @override
-  _empBasicDataObject get _value => super._value as _empBasicDataObject;
+  _SalaryObjects get _value => super._value as _SalaryObjects;
 
   @override
   $Res call({
     Object? userID = freezed,
-    Object? ArabicName = freezed,
-    Object? EnglishName = freezed,
-    Object? BirthDate = freezed,
-    Object? NationalId = freezed,
-    Object? SocialId = freezed,
-    Object? Email = freezed,
-    Object? Phone = freezed,
-    Object? Emergency_Number = freezed,
-    Object? AddressText = freezed,
-    Object? DistrictId = freezed,
-    Object? PoBox = freezed,
-    Object? ZipCode = freezed,
   }) {
-    return _then(_empBasicDataObject(
+    return _then(_SalaryObjects(
       userID == freezed
           ? _value.userID
           : userID // ignore: cast_nullable_to_non_nullable
-              as String,
-      ArabicName == freezed
-          ? _value.ArabicName
-          : ArabicName // ignore: cast_nullable_to_non_nullable
-              as String,
-      EnglishName == freezed
-          ? _value.EnglishName
-          : EnglishName // ignore: cast_nullable_to_non_nullable
-              as String,
-      BirthDate == freezed
-          ? _value.BirthDate
-          : BirthDate // ignore: cast_nullable_to_non_nullable
-              as String,
-      NationalId == freezed
-          ? _value.NationalId
-          : NationalId // ignore: cast_nullable_to_non_nullable
-              as String,
-      SocialId == freezed
-          ? _value.SocialId
-          : SocialId // ignore: cast_nullable_to_non_nullable
-              as String,
-      Email == freezed
-          ? _value.Email
-          : Email // ignore: cast_nullable_to_non_nullable
-              as String,
-      Phone == freezed
-          ? _value.Phone
-          : Phone // ignore: cast_nullable_to_non_nullable
-              as String,
-      Emergency_Number == freezed
-          ? _value.Emergency_Number
-          : Emergency_Number // ignore: cast_nullable_to_non_nullable
-              as String,
-      AddressText == freezed
-          ? _value.AddressText
-          : AddressText // ignore: cast_nullable_to_non_nullable
-              as String,
-      DistrictId == freezed
-          ? _value.DistrictId
-          : DistrictId // ignore: cast_nullable_to_non_nullable
-              as int,
-      PoBox == freezed
-          ? _value.PoBox
-          : PoBox // ignore: cast_nullable_to_non_nullable
-              as String,
-      ZipCode == freezed
-          ? _value.ZipCode
-          : ZipCode // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }
@@ -708,162 +652,322 @@ class __$empBasicDataObjectCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_empBasicDataObject implements _empBasicDataObject {
-  _$_empBasicDataObject(
-      this.userID,
-      this.ArabicName,
-      this.EnglishName,
-      this.BirthDate,
-      this.NationalId,
-      this.SocialId,
-      this.Email,
-      this.Phone,
-      this.Emergency_Number,
-      this.AddressText,
-      this.DistrictId,
-      this.PoBox,
-      this.ZipCode);
+class _$_SalaryObjects implements _SalaryObjects {
+  _$_SalaryObjects(this.userID);
 
   @override
   final String userID;
-  @override
-  final String ArabicName;
-  @override
-  final String EnglishName;
-  @override
-  final String BirthDate;
-  @override
-  final String NationalId;
-  @override
-  final String SocialId;
-  @override
-  final String Email;
-  @override
-  final String Phone;
-  @override
-  final String Emergency_Number;
-  @override
-  final String AddressText;
-  @override
-  final int DistrictId;
-  @override
-  final String PoBox;
-  @override
-  final String ZipCode;
 
   @override
   String toString() {
-    return 'empBasicDataObject(userID: $userID, ArabicName: $ArabicName, EnglishName: $EnglishName, BirthDate: $BirthDate, NationalId: $NationalId, SocialId: $SocialId, Email: $Email, Phone: $Phone, Emergency_Number: $Emergency_Number, AddressText: $AddressText, DistrictId: $DistrictId, PoBox: $PoBox, ZipCode: $ZipCode)';
+    return 'SalaryObjects(userID: $userID)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _empBasicDataObject &&
+        (other is _SalaryObjects &&
+            (identical(other.userID, userID) ||
+                const DeepCollectionEquality().equals(other.userID, userID)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(userID);
+
+  @JsonKey(ignore: true)
+  @override
+  _$SalaryObjectsCopyWith<_SalaryObjects> get copyWith =>
+      __$SalaryObjectsCopyWithImpl<_SalaryObjects>(this, _$identity);
+}
+
+abstract class _SalaryObjects implements SalaryObjects {
+  factory _SalaryObjects(String userID) = _$_SalaryObjects;
+
+  @override
+  String get userID => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(ignore: true)
+  _$SalaryObjectsCopyWith<_SalaryObjects> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+class _$SalaryDetailsObjectsTearOff {
+  const _$SalaryDetailsObjectsTearOff();
+
+  _SalaryDetailsObjects call(String userID) {
+    return _SalaryDetailsObjects(
+      userID,
+    );
+  }
+}
+
+/// @nodoc
+const $SalaryDetailsObjects = _$SalaryDetailsObjectsTearOff();
+
+/// @nodoc
+mixin _$SalaryDetailsObjects {
+  String get userID => throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $SalaryDetailsObjectsCopyWith<SalaryDetailsObjects> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $SalaryDetailsObjectsCopyWith<$Res> {
+  factory $SalaryDetailsObjectsCopyWith(SalaryDetailsObjects value,
+          $Res Function(SalaryDetailsObjects) then) =
+      _$SalaryDetailsObjectsCopyWithImpl<$Res>;
+  $Res call({String userID});
+}
+
+/// @nodoc
+class _$SalaryDetailsObjectsCopyWithImpl<$Res>
+    implements $SalaryDetailsObjectsCopyWith<$Res> {
+  _$SalaryDetailsObjectsCopyWithImpl(this._value, this._then);
+
+  final SalaryDetailsObjects _value;
+  // ignore: unused_field
+  final $Res Function(SalaryDetailsObjects) _then;
+
+  @override
+  $Res call({
+    Object? userID = freezed,
+  }) {
+    return _then(_value.copyWith(
+      userID: userID == freezed
+          ? _value.userID
+          : userID // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+abstract class _$SalaryDetailsObjectsCopyWith<$Res>
+    implements $SalaryDetailsObjectsCopyWith<$Res> {
+  factory _$SalaryDetailsObjectsCopyWith(_SalaryDetailsObjects value,
+          $Res Function(_SalaryDetailsObjects) then) =
+      __$SalaryDetailsObjectsCopyWithImpl<$Res>;
+  @override
+  $Res call({String userID});
+}
+
+/// @nodoc
+class __$SalaryDetailsObjectsCopyWithImpl<$Res>
+    extends _$SalaryDetailsObjectsCopyWithImpl<$Res>
+    implements _$SalaryDetailsObjectsCopyWith<$Res> {
+  __$SalaryDetailsObjectsCopyWithImpl(
+      _SalaryDetailsObjects _value, $Res Function(_SalaryDetailsObjects) _then)
+      : super(_value, (v) => _then(v as _SalaryDetailsObjects));
+
+  @override
+  _SalaryDetailsObjects get _value => super._value as _SalaryDetailsObjects;
+
+  @override
+  $Res call({
+    Object? userID = freezed,
+  }) {
+    return _then(_SalaryDetailsObjects(
+      userID == freezed
+          ? _value.userID
+          : userID // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_SalaryDetailsObjects implements _SalaryDetailsObjects {
+  _$_SalaryDetailsObjects(this.userID);
+
+  @override
+  final String userID;
+
+  @override
+  String toString() {
+    return 'SalaryDetailsObjects(userID: $userID)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is _SalaryDetailsObjects &&
+            (identical(other.userID, userID) ||
+                const DeepCollectionEquality().equals(other.userID, userID)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(userID);
+
+  @JsonKey(ignore: true)
+  @override
+  _$SalaryDetailsObjectsCopyWith<_SalaryDetailsObjects> get copyWith =>
+      __$SalaryDetailsObjectsCopyWithImpl<_SalaryDetailsObjects>(
+          this, _$identity);
+}
+
+abstract class _SalaryDetailsObjects implements SalaryDetailsObjects {
+  factory _SalaryDetailsObjects(String userID) = _$_SalaryDetailsObjects;
+
+  @override
+  String get userID => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(ignore: true)
+  _$SalaryDetailsObjectsCopyWith<_SalaryDetailsObjects> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+class _$EmpBasicDataObjectTearOff {
+  const _$EmpBasicDataObjectTearOff();
+
+  _EmpBasicDataObject call(String userID, int empId) {
+    return _EmpBasicDataObject(
+      userID,
+      empId,
+    );
+  }
+}
+
+/// @nodoc
+const $EmpBasicDataObject = _$EmpBasicDataObjectTearOff();
+
+/// @nodoc
+mixin _$EmpBasicDataObject {
+  String get userID => throw _privateConstructorUsedError;
+  int get empId => throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $EmpBasicDataObjectCopyWith<EmpBasicDataObject> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $EmpBasicDataObjectCopyWith<$Res> {
+  factory $EmpBasicDataObjectCopyWith(
+          EmpBasicDataObject value, $Res Function(EmpBasicDataObject) then) =
+      _$EmpBasicDataObjectCopyWithImpl<$Res>;
+  $Res call({String userID, int empId});
+}
+
+/// @nodoc
+class _$EmpBasicDataObjectCopyWithImpl<$Res>
+    implements $EmpBasicDataObjectCopyWith<$Res> {
+  _$EmpBasicDataObjectCopyWithImpl(this._value, this._then);
+
+  final EmpBasicDataObject _value;
+  // ignore: unused_field
+  final $Res Function(EmpBasicDataObject) _then;
+
+  @override
+  $Res call({
+    Object? userID = freezed,
+    Object? empId = freezed,
+  }) {
+    return _then(_value.copyWith(
+      userID: userID == freezed
+          ? _value.userID
+          : userID // ignore: cast_nullable_to_non_nullable
+              as String,
+      empId: empId == freezed
+          ? _value.empId
+          : empId // ignore: cast_nullable_to_non_nullable
+              as int,
+    ));
+  }
+}
+
+/// @nodoc
+abstract class _$EmpBasicDataObjectCopyWith<$Res>
+    implements $EmpBasicDataObjectCopyWith<$Res> {
+  factory _$EmpBasicDataObjectCopyWith(
+          _EmpBasicDataObject value, $Res Function(_EmpBasicDataObject) then) =
+      __$EmpBasicDataObjectCopyWithImpl<$Res>;
+  @override
+  $Res call({String userID, int empId});
+}
+
+/// @nodoc
+class __$EmpBasicDataObjectCopyWithImpl<$Res>
+    extends _$EmpBasicDataObjectCopyWithImpl<$Res>
+    implements _$EmpBasicDataObjectCopyWith<$Res> {
+  __$EmpBasicDataObjectCopyWithImpl(
+      _EmpBasicDataObject _value, $Res Function(_EmpBasicDataObject) _then)
+      : super(_value, (v) => _then(v as _EmpBasicDataObject));
+
+  @override
+  _EmpBasicDataObject get _value => super._value as _EmpBasicDataObject;
+
+  @override
+  $Res call({
+    Object? userID = freezed,
+    Object? empId = freezed,
+  }) {
+    return _then(_EmpBasicDataObject(
+      userID == freezed
+          ? _value.userID
+          : userID // ignore: cast_nullable_to_non_nullable
+              as String,
+      empId == freezed
+          ? _value.empId
+          : empId // ignore: cast_nullable_to_non_nullable
+              as int,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_EmpBasicDataObject implements _EmpBasicDataObject {
+  _$_EmpBasicDataObject(this.userID, this.empId);
+
+  @override
+  final String userID;
+  @override
+  final int empId;
+
+  @override
+  String toString() {
+    return 'EmpBasicDataObject(userID: $userID, empId: $empId)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is _EmpBasicDataObject &&
             (identical(other.userID, userID) ||
                 const DeepCollectionEquality().equals(other.userID, userID)) &&
-            (identical(other.ArabicName, ArabicName) ||
-                const DeepCollectionEquality()
-                    .equals(other.ArabicName, ArabicName)) &&
-            (identical(other.EnglishName, EnglishName) ||
-                const DeepCollectionEquality()
-                    .equals(other.EnglishName, EnglishName)) &&
-            (identical(other.BirthDate, BirthDate) ||
-                const DeepCollectionEquality()
-                    .equals(other.BirthDate, BirthDate)) &&
-            (identical(other.NationalId, NationalId) ||
-                const DeepCollectionEquality()
-                    .equals(other.NationalId, NationalId)) &&
-            (identical(other.SocialId, SocialId) ||
-                const DeepCollectionEquality()
-                    .equals(other.SocialId, SocialId)) &&
-            (identical(other.Email, Email) ||
-                const DeepCollectionEquality().equals(other.Email, Email)) &&
-            (identical(other.Phone, Phone) ||
-                const DeepCollectionEquality().equals(other.Phone, Phone)) &&
-            (identical(other.Emergency_Number, Emergency_Number) ||
-                const DeepCollectionEquality()
-                    .equals(other.Emergency_Number, Emergency_Number)) &&
-            (identical(other.AddressText, AddressText) ||
-                const DeepCollectionEquality()
-                    .equals(other.AddressText, AddressText)) &&
-            (identical(other.DistrictId, DistrictId) ||
-                const DeepCollectionEquality()
-                    .equals(other.DistrictId, DistrictId)) &&
-            (identical(other.PoBox, PoBox) ||
-                const DeepCollectionEquality().equals(other.PoBox, PoBox)) &&
-            (identical(other.ZipCode, ZipCode) ||
-                const DeepCollectionEquality().equals(other.ZipCode, ZipCode)));
+            (identical(other.empId, empId) ||
+                const DeepCollectionEquality().equals(other.empId, empId)));
   }
 
   @override
   int get hashCode =>
       runtimeType.hashCode ^
       const DeepCollectionEquality().hash(userID) ^
-      const DeepCollectionEquality().hash(ArabicName) ^
-      const DeepCollectionEquality().hash(EnglishName) ^
-      const DeepCollectionEquality().hash(BirthDate) ^
-      const DeepCollectionEquality().hash(NationalId) ^
-      const DeepCollectionEquality().hash(SocialId) ^
-      const DeepCollectionEquality().hash(Email) ^
-      const DeepCollectionEquality().hash(Phone) ^
-      const DeepCollectionEquality().hash(Emergency_Number) ^
-      const DeepCollectionEquality().hash(AddressText) ^
-      const DeepCollectionEquality().hash(DistrictId) ^
-      const DeepCollectionEquality().hash(PoBox) ^
-      const DeepCollectionEquality().hash(ZipCode);
+      const DeepCollectionEquality().hash(empId);
 
   @JsonKey(ignore: true)
   @override
-  _$empBasicDataObjectCopyWith<_empBasicDataObject> get copyWith =>
-      __$empBasicDataObjectCopyWithImpl<_empBasicDataObject>(this, _$identity);
+  _$EmpBasicDataObjectCopyWith<_EmpBasicDataObject> get copyWith =>
+      __$EmpBasicDataObjectCopyWithImpl<_EmpBasicDataObject>(this, _$identity);
 }
 
-abstract class _empBasicDataObject implements empBasicDataObject {
-  factory _empBasicDataObject(
-      String userID,
-      String ArabicName,
-      String EnglishName,
-      String BirthDate,
-      String NationalId,
-      String SocialId,
-      String Email,
-      String Phone,
-      String Emergency_Number,
-      String AddressText,
-      int DistrictId,
-      String PoBox,
-      String ZipCode) = _$_empBasicDataObject;
+abstract class _EmpBasicDataObject implements EmpBasicDataObject {
+  factory _EmpBasicDataObject(String userID, int empId) = _$_EmpBasicDataObject;
 
   @override
   String get userID => throw _privateConstructorUsedError;
   @override
-  String get ArabicName => throw _privateConstructorUsedError;
-  @override
-  String get EnglishName => throw _privateConstructorUsedError;
-  @override
-  String get BirthDate => throw _privateConstructorUsedError;
-  @override
-  String get NationalId => throw _privateConstructorUsedError;
-  @override
-  String get SocialId => throw _privateConstructorUsedError;
-  @override
-  String get Email => throw _privateConstructorUsedError;
-  @override
-  String get Phone => throw _privateConstructorUsedError;
-  @override
-  String get Emergency_Number => throw _privateConstructorUsedError;
-  @override
-  String get AddressText => throw _privateConstructorUsedError;
-  @override
-  int get DistrictId => throw _privateConstructorUsedError;
-  @override
-  String get PoBox => throw _privateConstructorUsedError;
-  @override
-  String get ZipCode => throw _privateConstructorUsedError;
+  int get empId => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$empBasicDataObjectCopyWith<_empBasicDataObject> get copyWith =>
+  _$EmpBasicDataObjectCopyWith<_EmpBasicDataObject> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -1086,5 +1190,339 @@ abstract class _empSkillsObject implements empSkillsObject {
   @override
   @JsonKey(ignore: true)
   _$empSkillsObjectCopyWith<_empSkillsObject> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+class _$empAcademicDegreeObjectTearOff {
+  const _$empAcademicDegreeObjectTearOff();
+
+  _empAcademicDegreeObject call(
+      String userID,
+      int Id,
+      String Major,
+      String University,
+      String Notes,
+      int EmployeeId,
+      int AcademicDegreeTypeId,
+      int GradeId,
+      String DegreeDate) {
+    return _empAcademicDegreeObject(
+      userID,
+      Id,
+      Major,
+      University,
+      Notes,
+      EmployeeId,
+      AcademicDegreeTypeId,
+      GradeId,
+      DegreeDate,
+    );
+  }
+}
+
+/// @nodoc
+const $empAcademicDegreeObject = _$empAcademicDegreeObjectTearOff();
+
+/// @nodoc
+mixin _$empAcademicDegreeObject {
+  String get userID => throw _privateConstructorUsedError;
+  int get Id => throw _privateConstructorUsedError;
+  String get Major => throw _privateConstructorUsedError;
+  String get University => throw _privateConstructorUsedError;
+  String get Notes => throw _privateConstructorUsedError;
+  int get EmployeeId => throw _privateConstructorUsedError;
+  int get AcademicDegreeTypeId => throw _privateConstructorUsedError;
+  int get GradeId => throw _privateConstructorUsedError;
+  String get DegreeDate => throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $empAcademicDegreeObjectCopyWith<empAcademicDegreeObject> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $empAcademicDegreeObjectCopyWith<$Res> {
+  factory $empAcademicDegreeObjectCopyWith(empAcademicDegreeObject value,
+          $Res Function(empAcademicDegreeObject) then) =
+      _$empAcademicDegreeObjectCopyWithImpl<$Res>;
+  $Res call(
+      {String userID,
+      int Id,
+      String Major,
+      String University,
+      String Notes,
+      int EmployeeId,
+      int AcademicDegreeTypeId,
+      int GradeId,
+      String DegreeDate});
+}
+
+/// @nodoc
+class _$empAcademicDegreeObjectCopyWithImpl<$Res>
+    implements $empAcademicDegreeObjectCopyWith<$Res> {
+  _$empAcademicDegreeObjectCopyWithImpl(this._value, this._then);
+
+  final empAcademicDegreeObject _value;
+  // ignore: unused_field
+  final $Res Function(empAcademicDegreeObject) _then;
+
+  @override
+  $Res call({
+    Object? userID = freezed,
+    Object? Id = freezed,
+    Object? Major = freezed,
+    Object? University = freezed,
+    Object? Notes = freezed,
+    Object? EmployeeId = freezed,
+    Object? AcademicDegreeTypeId = freezed,
+    Object? GradeId = freezed,
+    Object? DegreeDate = freezed,
+  }) {
+    return _then(_value.copyWith(
+      userID: userID == freezed
+          ? _value.userID
+          : userID // ignore: cast_nullable_to_non_nullable
+              as String,
+      Id: Id == freezed
+          ? _value.Id
+          : Id // ignore: cast_nullable_to_non_nullable
+              as int,
+      Major: Major == freezed
+          ? _value.Major
+          : Major // ignore: cast_nullable_to_non_nullable
+              as String,
+      University: University == freezed
+          ? _value.University
+          : University // ignore: cast_nullable_to_non_nullable
+              as String,
+      Notes: Notes == freezed
+          ? _value.Notes
+          : Notes // ignore: cast_nullable_to_non_nullable
+              as String,
+      EmployeeId: EmployeeId == freezed
+          ? _value.EmployeeId
+          : EmployeeId // ignore: cast_nullable_to_non_nullable
+              as int,
+      AcademicDegreeTypeId: AcademicDegreeTypeId == freezed
+          ? _value.AcademicDegreeTypeId
+          : AcademicDegreeTypeId // ignore: cast_nullable_to_non_nullable
+              as int,
+      GradeId: GradeId == freezed
+          ? _value.GradeId
+          : GradeId // ignore: cast_nullable_to_non_nullable
+              as int,
+      DegreeDate: DegreeDate == freezed
+          ? _value.DegreeDate
+          : DegreeDate // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+abstract class _$empAcademicDegreeObjectCopyWith<$Res>
+    implements $empAcademicDegreeObjectCopyWith<$Res> {
+  factory _$empAcademicDegreeObjectCopyWith(_empAcademicDegreeObject value,
+          $Res Function(_empAcademicDegreeObject) then) =
+      __$empAcademicDegreeObjectCopyWithImpl<$Res>;
+  @override
+  $Res call(
+      {String userID,
+      int Id,
+      String Major,
+      String University,
+      String Notes,
+      int EmployeeId,
+      int AcademicDegreeTypeId,
+      int GradeId,
+      String DegreeDate});
+}
+
+/// @nodoc
+class __$empAcademicDegreeObjectCopyWithImpl<$Res>
+    extends _$empAcademicDegreeObjectCopyWithImpl<$Res>
+    implements _$empAcademicDegreeObjectCopyWith<$Res> {
+  __$empAcademicDegreeObjectCopyWithImpl(_empAcademicDegreeObject _value,
+      $Res Function(_empAcademicDegreeObject) _then)
+      : super(_value, (v) => _then(v as _empAcademicDegreeObject));
+
+  @override
+  _empAcademicDegreeObject get _value =>
+      super._value as _empAcademicDegreeObject;
+
+  @override
+  $Res call({
+    Object? userID = freezed,
+    Object? Id = freezed,
+    Object? Major = freezed,
+    Object? University = freezed,
+    Object? Notes = freezed,
+    Object? EmployeeId = freezed,
+    Object? AcademicDegreeTypeId = freezed,
+    Object? GradeId = freezed,
+    Object? DegreeDate = freezed,
+  }) {
+    return _then(_empAcademicDegreeObject(
+      userID == freezed
+          ? _value.userID
+          : userID // ignore: cast_nullable_to_non_nullable
+              as String,
+      Id == freezed
+          ? _value.Id
+          : Id // ignore: cast_nullable_to_non_nullable
+              as int,
+      Major == freezed
+          ? _value.Major
+          : Major // ignore: cast_nullable_to_non_nullable
+              as String,
+      University == freezed
+          ? _value.University
+          : University // ignore: cast_nullable_to_non_nullable
+              as String,
+      Notes == freezed
+          ? _value.Notes
+          : Notes // ignore: cast_nullable_to_non_nullable
+              as String,
+      EmployeeId == freezed
+          ? _value.EmployeeId
+          : EmployeeId // ignore: cast_nullable_to_non_nullable
+              as int,
+      AcademicDegreeTypeId == freezed
+          ? _value.AcademicDegreeTypeId
+          : AcademicDegreeTypeId // ignore: cast_nullable_to_non_nullable
+              as int,
+      GradeId == freezed
+          ? _value.GradeId
+          : GradeId // ignore: cast_nullable_to_non_nullable
+              as int,
+      DegreeDate == freezed
+          ? _value.DegreeDate
+          : DegreeDate // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_empAcademicDegreeObject implements _empAcademicDegreeObject {
+  _$_empAcademicDegreeObject(
+      this.userID,
+      this.Id,
+      this.Major,
+      this.University,
+      this.Notes,
+      this.EmployeeId,
+      this.AcademicDegreeTypeId,
+      this.GradeId,
+      this.DegreeDate);
+
+  @override
+  final String userID;
+  @override
+  final int Id;
+  @override
+  final String Major;
+  @override
+  final String University;
+  @override
+  final String Notes;
+  @override
+  final int EmployeeId;
+  @override
+  final int AcademicDegreeTypeId;
+  @override
+  final int GradeId;
+  @override
+  final String DegreeDate;
+
+  @override
+  String toString() {
+    return 'empAcademicDegreeObject(userID: $userID, Id: $Id, Major: $Major, University: $University, Notes: $Notes, EmployeeId: $EmployeeId, AcademicDegreeTypeId: $AcademicDegreeTypeId, GradeId: $GradeId, DegreeDate: $DegreeDate)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is _empAcademicDegreeObject &&
+            (identical(other.userID, userID) ||
+                const DeepCollectionEquality().equals(other.userID, userID)) &&
+            (identical(other.Id, Id) ||
+                const DeepCollectionEquality().equals(other.Id, Id)) &&
+            (identical(other.Major, Major) ||
+                const DeepCollectionEquality().equals(other.Major, Major)) &&
+            (identical(other.University, University) ||
+                const DeepCollectionEquality()
+                    .equals(other.University, University)) &&
+            (identical(other.Notes, Notes) ||
+                const DeepCollectionEquality().equals(other.Notes, Notes)) &&
+            (identical(other.EmployeeId, EmployeeId) ||
+                const DeepCollectionEquality()
+                    .equals(other.EmployeeId, EmployeeId)) &&
+            (identical(other.AcademicDegreeTypeId, AcademicDegreeTypeId) ||
+                const DeepCollectionEquality().equals(
+                    other.AcademicDegreeTypeId, AcademicDegreeTypeId)) &&
+            (identical(other.GradeId, GradeId) ||
+                const DeepCollectionEquality()
+                    .equals(other.GradeId, GradeId)) &&
+            (identical(other.DegreeDate, DegreeDate) ||
+                const DeepCollectionEquality()
+                    .equals(other.DegreeDate, DegreeDate)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(userID) ^
+      const DeepCollectionEquality().hash(Id) ^
+      const DeepCollectionEquality().hash(Major) ^
+      const DeepCollectionEquality().hash(University) ^
+      const DeepCollectionEquality().hash(Notes) ^
+      const DeepCollectionEquality().hash(EmployeeId) ^
+      const DeepCollectionEquality().hash(AcademicDegreeTypeId) ^
+      const DeepCollectionEquality().hash(GradeId) ^
+      const DeepCollectionEquality().hash(DegreeDate);
+
+  @JsonKey(ignore: true)
+  @override
+  _$empAcademicDegreeObjectCopyWith<_empAcademicDegreeObject> get copyWith =>
+      __$empAcademicDegreeObjectCopyWithImpl<_empAcademicDegreeObject>(
+          this, _$identity);
+}
+
+abstract class _empAcademicDegreeObject implements empAcademicDegreeObject {
+  factory _empAcademicDegreeObject(
+      String userID,
+      int Id,
+      String Major,
+      String University,
+      String Notes,
+      int EmployeeId,
+      int AcademicDegreeTypeId,
+      int GradeId,
+      String DegreeDate) = _$_empAcademicDegreeObject;
+
+  @override
+  String get userID => throw _privateConstructorUsedError;
+  @override
+  int get Id => throw _privateConstructorUsedError;
+  @override
+  String get Major => throw _privateConstructorUsedError;
+  @override
+  String get University => throw _privateConstructorUsedError;
+  @override
+  String get Notes => throw _privateConstructorUsedError;
+  @override
+  int get EmployeeId => throw _privateConstructorUsedError;
+  @override
+  int get AcademicDegreeTypeId => throw _privateConstructorUsedError;
+  @override
+  int get GradeId => throw _privateConstructorUsedError;
+  @override
+  String get DegreeDate => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(ignore: true)
+  _$empAcademicDegreeObjectCopyWith<_empAcademicDegreeObject> get copyWith =>
       throw _privateConstructorUsedError;
 }

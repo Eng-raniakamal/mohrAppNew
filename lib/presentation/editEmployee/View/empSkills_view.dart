@@ -1,17 +1,16 @@
 
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:mohr_hr/application/di.dart';
+import 'package:mohr_hr/domain/model/model.dart';
+import 'package:mohr_hr/presentation/editEmployee/ViewModel/displayEmpSkills_viewModel.dart';
 import 'package:mohr_hr/presentation/editEmployee/ViewModel/empSkills_viewModel.dart';
+import 'package:mohr_hr/presentation/editEmployee/ViewModel/qualification_viewModel.dart';
+import 'package:mohr_hr/presentation/editEmployee/ViewModel/grade_viewModel.dart';
 import 'package:mohr_hr/presentation/resources/colors.dart';
 import '../../../application/app_prefs.dart';
-import '../../../application/constants.dart';
 import '../../common/state_renderer/state_render_impl.dart';
-import '../../resources/strings_manager.dart';
-import '../../widgets/appbarMain.dart';
-import '../../widgets/appbar_widget.dart';
-import '../../widgets/profile_widget.dart';
+
 
 class EmployeeSkillsView extends StatefulWidget {
   const EmployeeSkillsView({Key? key}) : super(key: key);
@@ -22,40 +21,41 @@ class EmployeeSkillsView extends StatefulWidget {
 
 class _EmployeeSkillsViewState extends State<EmployeeSkillsView> {
 
-  final EmployeeSkillsViewModel _viewModel=instance<EmployeeSkillsViewModel>();
-  final AppPreferences _appPreferences = instance<AppPreferences>();
+  final DisplayEmpSkillsViewModel _displayViewModel=instance<DisplayEmpSkillsViewModel>();
+  final EmployeeSkillsViewModel _saveviewModel=instance<EmployeeSkillsViewModel>();
+  final QualificationViewModel _QualificationviewModel = instance<QualificationViewModel>();
+  final GradeViewModel _GradeviewModel = instance<GradeViewModel>();
+  //inal AppPreferences _appPreferences = instance<AppPreferences>();
   final _Formkey= GlobalKey<FormState>();
-
+  DateTime date= DateTime(2022);
   final TextEditingController _DateEditingController= TextEditingController();
   final TextEditingController _GradeIdEditingController=TextEditingController();
   final TextEditingController _QualificationIdEditingController=TextEditingController();
   final TextEditingController _EmployeeIdEditingController=TextEditingController();
-
   _blind() {
-    _viewModel.start();
+    _saveviewModel.start();
+    _displayViewModel.start();
+    _QualificationviewModel.start();
+    _GradeviewModel.start();
     _DateEditingController.addListener(() {
-      _viewModel.setDate(_DateEditingController.text);
+      _saveviewModel.setDate(_DateEditingController.text);
     });
     _GradeIdEditingController.addListener(() {
-      _viewModel.setGradeId(int.parse(_GradeIdEditingController.text));
+      _saveviewModel.setGradeId(int.parse(_GradeIdEditingController.text));
     });
     _QualificationIdEditingController.addListener(() {
-      _viewModel.setQualificationId(int.parse(_QualificationIdEditingController.text));
+      _saveviewModel.setQualificationId(int.parse(_QualificationIdEditingController.text));
     });
     _EmployeeIdEditingController.addListener(() {
-      _viewModel.setEmployeeId(int.parse(_EmployeeIdEditingController.text));
-
-
+      _saveviewModel.setEmployeeId(int.parse(_EmployeeIdEditingController.text));
     });
   }
-
   @override
   void initState()
   {
-    _blind();
     super.initState();
+    _blind();
   }
-
   @override
   Widget build(BuildContext context) {
     return
@@ -66,11 +66,11 @@ class _EmployeeSkillsViewState extends State<EmployeeSkillsView> {
                     //appBar: buildAppBarMain(context),
                     backgroundColor: colorManager.white,
                     body: StreamBuilder<FlowState>(
-                      stream: _viewModel.outputState,
+                      stream: _saveviewModel.outputState,
                       builder: (context, snapshot) {
                         return snapshot.data?.getScreenWidget(context, _getContentWidget(),
                                 () {
-                              _viewModel.addSkills();
+                                  _saveviewModel.addSkills();
                             }) ??
                             _getContentWidget();
                       },
@@ -78,7 +78,6 @@ class _EmployeeSkillsViewState extends State<EmployeeSkillsView> {
                   ))
       );
   }
-
   Widget _getTabWidget(){
     return
     SizedBox(
@@ -87,140 +86,246 @@ class _EmployeeSkillsViewState extends State<EmployeeSkillsView> {
         bottom: const TabBar(
           tabs: [
             Tab(
-              icon: Icon(Icons.account_box),text: "Basic Data"
-            ),
+              icon: Icon(Icons.account_box),text: "Basic Data"),
             Tab(
               icon: Icon(Icons.abc,),text: "Skills"),
           ],
         ),
       ),
     );
-
   }
-
   Widget _getContentWidget() {
-    return Container(
-        padding: EdgeInsets.only(top:30),
-        child: SingleChildScrollView(
-          child: Form(
-            key: _Formkey,
-            child: Column(
-              children: [
-              // ProfileWidget(
-              //  imagePath: Constants.imagePath,
-              //  isEdit: true,
-              // onClicked: () async {},
-              // ),
-//                const SizedBox(height: 24),
-                SizedBox(height: 24),
-                Padding(
-                  padding: const EdgeInsets.only(
-                      left: 28, right: 28),
-                  child: StreamBuilder<String?>(
-                    stream: _viewModel.outputErrorDate,
-                    builder: (context, snapshot) {
-                      return TextFormField(
-                          keyboardType: TextInputType.text,
-                          controller: _DateEditingController,
-                          decoration: InputDecoration(
-                              hintText: AppStrings.date.tr(),
-                              labelText: AppStrings.date.tr(),
-                              errorText: snapshot.data));
-                    },
-                  ),
-                ),
-                Center(
-                  child: Padding(
-                    padding: const EdgeInsets.only(
-                        top: 20,
-                        left: 28,
-                        right: 28,
-                        bottom: 12
+    return
+      SingleChildScrollView(
+        scrollDirection: Axis.vertical,
+        child: Column(
+          children: [
+            Container(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height*1.3,
+              padding: EdgeInsets.only(top:30),
+              child: SingleChildScrollView(
+                child: Form(
+                  key: _Formkey,
+                  child:  Container(
+                    child: Column(
+                      children: [
+                        // qualification
+                        Container(
+                          alignment: AlignmentDirectional.topStart,
+                            padding: const EdgeInsets.only(
+                                top: 12,
+                                left: 28,
+                                right: 28),
+                            child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text("Qualification", textAlign: TextAlign.start,),
+                                  StreamBuilder<QualificationsObject>(
+                                    stream: _QualificationviewModel.outputQualifications,
+                                    // stream: _saveViewModel.outputErrorPassword,
+                                    builder: (context, snapshot) {
+                                      List<QualificationItem>? qualifications = snapshot.data?.qualifications;
+                                      return _getQualification(qualifications);
+                                    },
+                                  ),
+                                ])),
+                        //Grade
+                        Container(
+                            alignment: AlignmentDirectional.topStart,
+                            padding: const EdgeInsets.only(
+                                top: 12,
+                                left: 28,
+                                right: 28),
+                            child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text("Grade", textAlign: TextAlign.start,),
+                                  StreamBuilder<GradesObject>(
+                                    stream: _GradeviewModel.outputGrades,
+                                    // stream: _saveViewModel.outputErrorPassword,
+                                    builder: (context, snapshot) {
+                                      List<GradeItem>? grades = snapshot.data?.grades;
+                                      return _getGrade(grades);
+                                    },
+                                  ),
+                                ])),
+                        //date
+                        Container(
+                          padding: const EdgeInsets.only(
+                              top: 12,
+                              left: 28,
+                              right: 28),
+                          child: Column(crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text("Date", textAlign: TextAlign.start,),
+
+                                  TextFormField(onTap: () async {
+
+                                    await showDatePicker
+                                      (context: context,
+                                        initialDate: date,
+                                        firstDate: DateTime(1900),
+                                        lastDate: DateTime(2100)
+                                      );
+                                  },
+                                      keyboardType: TextInputType.text,
+                                      controller: _DateEditingController,
+                                      decoration: InputDecoration(
+                                          hintText:
+                                          date.day.toString() +
+                                               "/" + date.month.toString() +
+                                              "/" + date.year.toString()
+                                        //labelText: AppStrings.nationalId.tr(),
+                                        //errorText: snapshot.data
+    ))
+                            //  ),
+  ],
+                          ),
+                        ),
+                        // Container(
+                        //   padding: const EdgeInsets.only(
+                        //       left: 28, right: 28),
+                        //   child: StreamBuilder<String?>(
+                        //     stream: _saveviewModel.outputErrorDate,
+                        //     builder: (context, snapshot) {
+                        //       return TextFormField(
+                        //           keyboardType: TextInputType.text,
+                        //           controller: _DateEditingController,
+                        //           decoration: InputDecoration(
+                        //               hintText: AppStrings.date.tr(),
+                        //               labelText: AppStrings.date.tr(),
+                        //               errorText: snapshot.data));
+                        //     },
+                        //   ),
+                        // ),
+                        // Container(
+                        //     padding: const EdgeInsets.only(
+                        //         left: 28, right: 28),
+                        //     child: StreamBuilder<bool>(
+                        //       //stream: _viewModel.outputIsAllInputsValid,
+                        //       builder: (context, snapshot) {
+                        //         return SizedBox(
+                        //           width: double.infinity,
+                        //           height:40,
+                        //           child: ElevatedButton(
+                        //
+                        //                onPressed: () {
+                        //                 _saveviewModel.addSkills();
+                        //               },
+                        //                  // : null,
+                        //               child: const Text(AppStrings.addSkills).tr()),
+                        //         );
+                        //       },
+                        //     )),
+
+
+  //Save bottun
+                        // save bottum
+                        Container(
+                            padding: EdgeInsets.all(20),
+                            child: StreamBuilder<bool>(
+                              //stream: _saveViewModel.outputIsAllInputsValid,
+                                builder: (context, snapshot)
+                                {
+                                  return ElevatedButton(
+                                      child: Text("Save"),
+                                      onPressed: () {
+                                        _saveviewModel.addSkills();
+                                      }
+                                    // : null,
+
+                                  );
+                                }
+                            )
+                        ),
+                       //skills data table
+                        Container(padding: EdgeInsets.fromLTRB(20,30,10,30),
+                           child:SingleChildScrollView(scrollDirection: Axis.horizontal,
+                                child:StreamBuilder<getEmpSkillsModel>(
+                                stream: _displayViewModel.outputEmpSkill,
+    // stream: _saveViewModel.outputErrorPassword,
+                                builder: (context, snapshot) {
+                                  List<skillsModel>? skills = snapshot.data
+                                      ?.skills;
+                                  return _createSkillsTable(skills);
+                                }
+                            )
+                           ))],
                     ),
-
-                            child: StreamBuilder<String?>(
-                             // stream: _viewModel.outputErrorMobileNumber,
-                              builder: (context, snapshot) {
-                                return TextFormField(
-                                    keyboardType: TextInputType.number,
-                                    controller:
-                                    _GradeIdEditingController,
-                                    decoration: InputDecoration(
-                                        hintText: AppStrings.grade.tr(),
-                                        labelText: AppStrings.grade.tr(),
-                                        errorText: snapshot.data));
-                              },
-                            ))
-
-
-                ),
-                SizedBox(height: 12),
-                Padding(
-                  padding: const EdgeInsets.only(
-                      left: 28, right: 28),
-                  child: StreamBuilder<String?>(
-                   // stream: _viewModel.outputErrorEmail,
-                    builder: (context, snapshot) {
-                      return TextFormField(
-                          keyboardType: TextInputType.number,
-                          controller: _QualificationIdEditingController,
-                          decoration: InputDecoration(
-                              hintText: AppStrings.qualification.tr(),
-                              labelText: AppStrings.qualification.tr(),
-                              errorText: snapshot.data));
-                    },
                   ),
                 ),
-                SizedBox(height: 12),
-                Padding(
-                  padding: const EdgeInsets.only(
-                      top: 12,
-                      left: 28,
-                      right:28),
-                  child: StreamBuilder<String?>(
-                   // stream: _viewModel.outputErrorPassword,
-                    builder: (context, snapshot) {
-                      return TextFormField(
-                          keyboardType: TextInputType.number,
-                          controller: _EmployeeIdEditingController,
-                          decoration: InputDecoration(
-                              hintText: AppStrings.employee.tr(),
-                              labelText: AppStrings.employee.tr(),
-                              errorText: snapshot.data));
-                    },
-                  ),
-                ),
-                const SizedBox(height:28),
-                Padding(
-                    padding: const EdgeInsets.only(
-                        left: 28, right: 28),
-                    child: StreamBuilder<bool>(
-                      //stream: _viewModel.outputIsAllInputsValid,
-                      builder: (context, snapshot) {
-                        return SizedBox(
-                          width: double.infinity,
-                          height:40,
-                          child: ElevatedButton(
-                              // onPressed: (snapshot.data ?? false)
-                              //     ? () {
-    onPressed: () {
-                                _viewModel.addSkills();
-                              },
-                                 // : null,
-                              child: const Text(AppStrings.addSkills).tr()),
-                        );
-                      },
-                    )),
-
-              ],
-            ),
-          ),
-        ));
+              )),
+          ],
+        ),
+      );
   }
-
-
   void dispose(){
-    _viewModel.dispose();
+    _saveviewModel.dispose();
     super.dispose();
   }
+  Widget _getQualification(List<QualificationItem>? qualification)
+  {
+    var dropdownvalue;
+    return DropdownButton(
+      hint: Text("Choose a Qualification"),
+      items: qualification?.map(
+              (qualificationItem) {
+            return DropdownMenuItem(
+              value: dropdownvalue,
+              child: Text(qualificationItem.text.toString()),);
+          }).toList(),
+      onChanged: (newvalue) {
+        setState(() {
+          dropdownvalue = newvalue;
+        });
+      },
+      value: dropdownvalue,
+    );
+  }
+  Widget _getGrade(List<GradeItem>? grade)
+  {
+    var dropdownvalue;
+    return DropdownButton(
+      hint: Text("Choose grade"),
+      items:  grade?.map(
+              (gradeItem) {
+            return DropdownMenuItem(
+              value: dropdownvalue,
+              child: Text(gradeItem.text.toString()),);
+          }).toList(),
+      onChanged: (newvalue) {
+        setState(() {
+          dropdownvalue = newvalue;
+        });
+      },
+      value: dropdownvalue,
+    );
+  }
+  DataTable _createSkillsTable(List<skillsModel>? skills) {
+    return DataTable(
+      headingRowColor: MaterialStateColor.resolveWith((states) => colorManager.lightprimary),
+      columns: _createColumns(),
+      rows: _createRows(skills!),
+    );
+  }
+  List<DataColumn> _createColumns() {
+    return [
+      DataColumn(label: Text("Skill",style: TextStyle(color: colorManager.white),)),
+      DataColumn(label: Text("Grade Name",style: TextStyle(color: colorManager.white),)),
+      DataColumn(label: Text("Date",style: TextStyle(color: colorManager.white),)),
+    ];
+
+  }
+  List<DataRow> _createRows(List<skillsModel> skills) {
+    return skills
+        .map((skill) =>
+        DataRow(cells: [
+          DataCell(Text((skill.typeName).toString())),
+          DataCell(Text((skill.gradeName).toString())),
+          DataCell(Text((skill.date).toString()))
+        ]))
+        .toList();
+  }
+
 }

@@ -14,6 +14,7 @@ class ImageAssets {
   static const String solidCircleIc = "$IMAGE_PATH/solid_circle_ic.svg";
   static const String photoCameraIc = "$IMAGE_PATH/photo_camera_ic.svg";
   static const String EarthLangIc = "$IMAGE_PATH/Earth.svg";
+  static const String noPhoto = "$IMAGE_PATH/profile_male.png";
   static const String settingsRightArrowIc =
       "$IMAGE_PATH/settings_right_arrow_ic.svg";
   static const String Vacation = "$ICON_PATH/vacation.png";

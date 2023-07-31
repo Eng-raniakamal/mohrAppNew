@@ -5,21 +5,38 @@ import 'package:mohr_hr/data/networks/appAPIs.dart';
 import 'package:mohr_hr/data/networks/dio_factory.dart';
 import 'package:mohr_hr/data/networks/network_info.dart';
 import 'package:mohr_hr/data/repository/repository_impl.dart';
-import 'package:mohr_hr/domain/model/model.dart';
 import 'package:mohr_hr/domain/repository/repository.dart';
+import 'package:mohr_hr/domain/usecase/displaySkills_useCase.dart';
+import 'package:mohr_hr/domain/usecase/empAcademicDegree_useCase.dart';
+import 'package:mohr_hr/domain/usecase/grade_useCase.dart';
+import 'package:mohr_hr/domain/usecase/qualification_useCase.dart';
+import 'package:mohr_hr/domain/usecase/salaryDetails_UseCase.dart';
+import 'package:mohr_hr/domain/usecase/salary_UseCase.dart';
 import 'package:mohr_hr/domain/usecase/empBD_useCase.dart';
 import 'package:mohr_hr/domain/usecase/employee_UseCase.dart';
 import 'package:mohr_hr/domain/usecase/login_usecase.dart';
+import 'package:mohr_hr/domain/usecase/saveAcademicDegree_UseCase.dart';
+import 'package:mohr_hr/domain/usecase/saveEmpBD_useCase.dart';
+import 'package:mohr_hr/presentation/Requests/Salary/ViewModel/salaryDetailsViewModel.dart';
+
 import 'package:mohr_hr/presentation/User/User_viewModel.dart';
+import 'package:mohr_hr/presentation/editEmployee/ViewModel/displayEmpAcademicDegree_ViewModel.dart';
+import 'package:mohr_hr/presentation/editEmployee/ViewModel/displayEmpSkills_viewModel.dart';
+import 'package:mohr_hr/presentation/editEmployee/ViewModel/qualification_viewModel.dart';
+import 'package:mohr_hr/presentation/editEmployee/ViewModel/grade_viewModel.dart';
+import 'package:mohr_hr/presentation/editEmployee/ViewModel/saveEmpAcademicDegree_ViewModel.dart';
+import 'package:mohr_hr/presentation/editEmployee/ViewModel/saveEmpBD_viewModel.dart';
 import 'package:mohr_hr/presentation/login/loginviewmodel.dart';
 import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../domain/usecase/empSkills_UseCase.dart';
 import '../domain/usecase/vacation_UseCase.dart';
+import '../presentation/Requests/Salary/ViewModel/salaryViewModel.dart';
 import '../presentation/Requests/Vacations/viewModel/vacationViewModel.dart';
+import '../presentation/editEmployee/ViewModel/displayEmpBasicData_viewModel.dart';
 import '../presentation/editEmployee/ViewModel/empSkills_viewModel.dart';
-import '../presentation/editEmployee/ViewModel/employeeBD_viewModel.dart';
+//import '../presentation/editEmployee/ViewModel/saveEmpBD_viewModel.dart';
 import 'app_prefs.dart';
 
 
@@ -54,7 +71,7 @@ Future<void> initAppModule() async {
 
   // repository
   instance.registerLazySingleton<Repository>(
-          () => RepositoryImpl(instance(), instance(), instance(),instance()));
+          () => RepositoryImpl(instance(), instance(), instance()));
 
 
   // local data source
@@ -62,6 +79,8 @@ Future<void> initAppModule() async {
           () => LocalDataSourceImplementer());
 
 }
+
+
 initLoginModule() {
   if (!GetIt.I.isRegistered<LoginUseCase>()) {
     instance.registerFactory<LoginUseCase>(() => LoginUseCase(instance()));
@@ -78,14 +97,25 @@ initLoginModule() {
    }
 }
 initEmployeeBasicDataModule() {
-  if (!GetIt.I.isRegistered<EmployeeBasicDataUseCase>()) {
-    instance.registerFactory<EmployeeBasicDataUseCase>(() => EmployeeBasicDataUseCase(instance()));
-    instance.registerFactory<EmployeeBDViewModel>(() {
-      var item = instance<EmployeeBasicDataUseCase>();
-      return EmployeeBDViewModel(item);
+  if (!GetIt.I.isRegistered<BasicDataUseCase>()) {
+    instance.registerFactory<BasicDataUseCase>(() => BasicDataUseCase(instance()));
+    instance.registerFactory<EmployeeBasicDataViewModel>(() {
+      var item = instance<BasicDataUseCase>();
+      return EmployeeBasicDataViewModel(item);
     });
   }
   }
+
+// initSaveEmpBasicDataModule() {
+//   if (!GetIt.I.isRegistered<saveEmpBasicDataUseCase>()) {
+//     instance.registerFactory<saveEmpBasicDataUseCase>(() => saveEmpBasicDataUseCase(instance()));
+//     instance.registerFactory<saveBDViewModel >(() {
+//       var item = instance<saveEmpBasicDataUseCase>();
+//       return saveBDViewModel(item);
+//     });
+//   }
+// }
+
 initEmployeeSkillsModule() {
   if (!GetIt.I.isRegistered<EmployeeSkillsUseCase>()) {
     instance.registerFactory<EmployeeSkillsUseCase>(() =>
@@ -96,22 +126,113 @@ initEmployeeSkillsModule() {
     });
   }
 }
-    initVacationModule() {
-      if (!GetIt.I.isRegistered<VacationUseCase>()) {
-        instance.registerFactory<VacationUseCase>(() =>
-            VacationUseCase(instance()));
-        instance.registerFactory<VacationViewModel>(() {
-          var item = instance<VacationUseCase>();
-          return VacationViewModel(item);
-        }
-        );
-      }
+
+initDisplayEmployeeSkillsModule() {
+  if (!GetIt.I.isRegistered<displaySkillsUseCase>()) {
+    instance.registerFactory<displaySkillsUseCase>(() =>
+        displaySkillsUseCase(instance()));
+    instance.registerFactory<DisplayEmpSkillsViewModel>(() {
+      var item = instance<displaySkillsUseCase>();
+      return DisplayEmpSkillsViewModel(item);
+    });
+  }
+}
+initDisplayAcademicDegreesModule() {
+  if (!GetIt.I.isRegistered<GetAcademicDegreeUseCase>()) {
+    instance.registerFactory<GetAcademicDegreeUseCase>(() =>
+        GetAcademicDegreeUseCase(instance()));
+    instance.registerFactory<DisplayAcademicDegreeViewModel>(() {
+      var item = instance<GetAcademicDegreeUseCase>();
+      return DisplayAcademicDegreeViewModel(item);
+    });
+  }
+}
+
+initSaveAcademicDegreesModule() {
+  if (!GetIt.I.isRegistered<saveAcademicDegreeUseCase>()) {
+    instance.registerFactory<saveAcademicDegreeUseCase>(() =>
+        saveAcademicDegreeUseCase(instance()));
+    instance.registerFactory<SaveAcademicDegreeViewModel >(() {
+      var item = instance<saveAcademicDegreeUseCase>();
+      return SaveAcademicDegreeViewModel (item);
+    });
+  }
+}
+
+initSalaryModule() {
+  if (!GetIt.I.isRegistered<SalaryUseCase>()) {
+    instance.registerFactory<SalaryUseCase>(() => SalaryUseCase(instance()));
+    instance.registerFactory<SalaryViewModel>(() {
+      var item = instance<SalaryUseCase>();
+      return SalaryViewModel(item);
     }
-      resetModules() {
-        instance.reset(dispose: false);
-        initAppModule();
-        initLoginModule();
-        initUserModule();
-        initVacationModule();
+    );
+  }
+}
+  initSalaryDetailsModule() {
+    if (!GetIt.I.isRegistered<SalaryDetailsUseCase>()) {
+      instance.registerFactory<SalaryDetailsUseCase>(() =>
+          SalaryDetailsUseCase(instance()));
+      instance.registerFactory<SalaryDetailsViewModel>(() {
+        var item = instance<SalaryDetailsUseCase>();
+        return SalaryDetailsViewModel(item);
       }
+      );
+    }
+  }
+
+  initVacationModule() {
+    if (!GetIt.I.isRegistered<VacationUseCase>()) {
+      instance.registerFactory<VacationUseCase>(() =>
+          VacationUseCase(instance()));
+      instance.registerFactory<VacationViewModel>(() {
+        var item = instance<VacationUseCase>();
+        return VacationViewModel(item);
+      }
+      );
+    }
+  }
+
+initQualificationModule() {
+  if (!GetIt.I.isRegistered<QualificationUseCase>()) {
+    instance.registerFactory<QualificationUseCase>(() =>
+        QualificationUseCase(instance()));
+    instance.registerFactory<QualificationViewModel>(() {
+      var item = instance<QualificationUseCase>();
+      return QualificationViewModel(item);
+    }
+    );
+  }
+}
+
+
+initGradeModule() {
+  if (!GetIt.I.isRegistered<GradeUseCase>()) {
+    instance.registerFactory<GradeUseCase>(() =>
+        GradeUseCase(instance()));
+    instance.registerFactory<GradeViewModel>(() {
+      var item = instance<GradeUseCase>();
+      return GradeViewModel(item);
+    }
+    );
+  }
+}
+
+  resetModules() {
+    instance.reset(dispose: false);
+    initAppModule();
+    initLoginModule();
+    initUserModule();
+    initEmployeeBasicDataModule();
+    //initSaveEmpBasicDataModule();
+    initDisplayEmployeeSkillsModule();
+    initEmployeeSkillsModule();
+    initDisplayAcademicDegreesModule();
+    initSaveAcademicDegreesModule();
+    initVacationModule();
+    initSalaryModule();
+    initSalaryDetailsModule();
+    initQualificationModule();
+    initGradeModule();
+  }
 

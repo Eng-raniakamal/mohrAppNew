@@ -14,7 +14,6 @@ import '../../application/di.dart';
 
 class OnboadingScreen extends StatefulWidget {
   const OnboadingScreen({super.key});
-
   @override
   State<OnboadingScreen> createState() => _OnboadingScreenState();
 }
@@ -28,7 +27,6 @@ class _OnboadingScreenState extends State<OnboadingScreen> {
   _bind()
   {
     _appPreferences.setOnBoardingScreenViewed();
-
 
   }
 
@@ -71,7 +69,7 @@ class _OnboadingScreenState extends State<OnboadingScreen> {
             ),
           ),
           AnimatedPositioned(
-            top: isShowSignInDialog ? -50 : 0,
+            //top: isShowSignInDialog ? -50 : 0,
             height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width,
             duration: const Duration(milliseconds: 260),
@@ -88,15 +86,7 @@ class _OnboadingScreenState extends State<OnboadingScreen> {
                         children:  const [
 
                            Center(child: Image(image: AssetImage(ImageAssets.startLogo)))
-                          // Text(
-                          //   "MOHR",
-                          //   style: TextStyle(
-                          //     fontSize: 60,
-                          //     fontWeight: FontWeight.w700,
-                          //     fontFamily: "Poppins",
-                          //     height: 1.2,
-                          //   ),
-                          // ),
+
                           ,SizedBox(height: 16),
                           Text(AppStrings.spalshText
                            ,
@@ -115,7 +105,7 @@ class _OnboadingScreenState extends State<OnboadingScreen> {
                           const Duration(milliseconds: 800),
                               () {
                             setState(() {
-                              isShowSignInDialog = true;
+                             // isShowSignInDialog = true;
                             });
                             _appPreferences.isUserLoggedIn().then
                               ((isUserLoggedIn)=>{

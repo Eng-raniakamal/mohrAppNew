@@ -7,6 +7,7 @@ const String PREFS_KEY_LANG = "PREFS_KEY_LANG";
 const String PREFS_KEY_ONBOARDING_SCREEN = "PREFS_KEY_ONBOARDING_SCREEN";
 const String PREFS_KEY_IS_USER_LOGGED_IN = "PREFS_KEY_IS_USER_LOGGED_IN";
 final String PREFS_KEY_TOKEN ="PREFS_KEY_TOKEN";
+final String PREFS_ID_TOKEN ="PREFS_ID_TOKEN";
 
 class AppPreferences {
   final SharedPreferences _sharedPreferences;
@@ -64,7 +65,7 @@ class AppPreferences {
       return ENGLISH_LOCAL;
     }
   }
-
+/////////////user Id//////////////////////////
 
   Future<void> setUserToken(String token) async {
     _sharedPreferences.setString(PREFS_KEY_TOKEN,token);
@@ -73,7 +74,16 @@ class AppPreferences {
   Future<String> getUserToken() async {
     return _sharedPreferences.getString(PREFS_KEY_TOKEN) ?? "";
   }
-///////////////////////////////////////////////////
+////////////////////////////////////////////////
+//////////////////////empId////////////////////
+  Future<void> setEmpIdToken(int? token) async {
+    _sharedPreferences.setInt(PREFS_ID_TOKEN,token!);
+  }
+
+  Future<int> getEmpIdToken() async {
+    return _sharedPreferences.getInt(PREFS_ID_TOKEN) ?? 0;
+  }
+  /////////////////////////////////////////////////
   //login screen
  //  ///////////////////////////
   Future<void> setIsUserLoggedIn() async {

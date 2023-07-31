@@ -71,12 +71,146 @@ class _AppServiceClient implements AppServiceClient {
   }
 
   @override
+  Future<BasicDataResponse> DisplayBasicData(
+    userId,
+    empId,
+  ) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
+    final _data = {
+      'UserId': userId,
+      'Id': empId,
+    };
+    _data.removeWhere((k, v) => v == null);
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<BasicDataResponse>(Options(
+      method: 'GET',
+      headers: <String, dynamic>{},
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              'https://mohrapi.azurewebsites.net/api/Employee/GetPersonellData',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = BasicDataResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<GetEmpSkillsResponse> DisplaySkills(
+    userId,
+    empId,
+  ) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
+    final _data = {
+      'UserId': userId,
+      'Id': empId,
+    };
+    _data.removeWhere((k, v) => v == null);
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<GetEmpSkillsResponse>(Options(
+      method: 'GET',
+      headers: <String, dynamic>{},
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              'https://mohrapi.azurewebsites.net/api/Employee/GetEmployeeSkills',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = GetEmpSkillsResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<GetAcademicDegreeResponse> DisplayAcademicDegree(
+    userId,
+    empId,
+  ) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
+    final _data = {
+      'UserId': userId,
+      'Id': empId,
+    };
+    _data.removeWhere((k, v) => v == null);
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<GetAcademicDegreeResponse>(Options(
+      method: 'GET',
+      headers: <String, dynamic>{},
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              'https://mohrapi.azurewebsites.net/api/Employee/GetEmployeeAcademicDegrees',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = GetAcademicDegreeResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<QualificationsResponse> getQualifications(userId) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = {'UserId': userId};
+    final _result = await _dio.fetch<List< dynamic>>(
+        _setStreamType<QualificationsResponse>(Options(
+      method: 'GET',
+      headers: <String, dynamic>{},
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              'https://mohrapi.azurewebsites.net/api/Employee/GetQualificationsLookup',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = QualificationsResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<GradesResponse> getGrades(userId) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = {'UserId': userId};
+    final _result = await _dio
+        .fetch<List< dynamic> >(_setStreamType<GradesResponse>(Options(
+      method: 'GET',
+      headers: <String, dynamic>{},
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              'https://mohrapi.azurewebsites.net/api/Employee/GetGradesLookup',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = GradesResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
   Future<VacationsResponse> getVacations(userId) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _data = {'UserId': userId};
     final _result = await _dio
-        .fetch<List<dynamic>>(_setStreamType<VacationsResponse>(Options(
+        .fetch<List< dynamic>>(_setStreamType<VacationsResponse>(Options(
       method: 'GET',
       headers: <String, dynamic>{},
       extra: _extra,
@@ -93,37 +227,61 @@ class _AppServiceClient implements AppServiceClient {
   }
 
   @override
-  Future<EmployeeBasicDataResponse> getEmployeBasicDataResponse(
+  Future<SalaryResponse> getSalary(userId) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = {'UserId': userId};
+    final _result = await _dio
+        .fetch<List< dynamic>>(_setStreamType<SalaryResponse>(Options(
+      method: 'GET',
+      headers: <String, dynamic>{},
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              'https://mohrapi.azurewebsites.net/api/Employee/GetSalaries',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = SalaryResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<SalaryDetailsResponse> getSalaryDetails(userId) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = {'UserId': userId};
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<SalaryDetailsResponse>(Options(
+      method: 'GET',
+      headers: <String, dynamic>{},
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              'https://mohrapi.azurewebsites.net/api/Employee/GetSalary/'+ Constants.salaryDetailsId ,
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = SalaryDetailsResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<EmployeeBasicDataResponse> SaveEmployeBasicData(
     userId,
-    ArabicName,
-    EnglishName,
-    BirthDate,
-    NationalId,
-    SocialId,
-    Email,
-    Phone,
-    Emergency_Number,
-    AddressText,
-    DistrictId,
-    PoBox,
-    ZipCode,
+    employee,
+    address,
   ) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _data = {
       'UserId': userId,
-      'ArabicName': ArabicName,
-      'EnglishName': EnglishName,
-      'BirthDate': BirthDate,
-      'NationalId': NationalId,
-      'SocialId': SocialId,
-      'Email': Email,
-      'Phone': Phone,
-      'EmergencyNumber': Emergency_Number,
-      'AddressText': AddressText,
-      'DistrictId': DistrictId,
-      'PoBox': PoBox,
-      'ZipCode': ZipCode,
+      'Employee': employee,
+      'Address': address,
     };
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<EmployeeBasicDataResponse>(Options(
@@ -143,7 +301,7 @@ class _AppServiceClient implements AppServiceClient {
   }
 
   @override
-  Future<EmployeeSkillsResponse> getEmployeeSkillResponse(
+  Future<saveEmpSkillsResponse> saveEmployeeSkillResponse(
     userId,
     date,
     gradeId,
@@ -160,7 +318,7 @@ class _AppServiceClient implements AppServiceClient {
       'EmployeeId': employeeId,
     };
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<EmployeeSkillsResponse>(Options(
+        _setStreamType<saveEmpSkillsResponse>(Options(
       method: 'POST',
       headers: <String, dynamic>{},
       extra: _extra,
@@ -172,7 +330,49 @@ class _AppServiceClient implements AppServiceClient {
               data: _data,
             )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = EmployeeSkillsResponse.fromJson(_result.data!);
+    final value = saveEmpSkillsResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<saveAcademicDegreeResponse> saveAcademicDegree(
+    userId,
+    id,
+    major,
+    university,
+    notes,
+    employeeId,
+    academicDegreeTypeId,
+    gradeId,
+    degreeDate,
+  ) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = {
+      'UserId': userId,
+      'Id': id,
+      'Major': major,
+      'University': university,
+      'Notes': notes,
+      'EmployeeId': employeeId,
+      'AcademicDegreeTypeId': academicDegreeTypeId,
+      'GradeId': gradeId,
+      'DegreeDate': degreeDate,
+    };
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<saveAcademicDegreeResponse>(Options(
+      method: 'POST',
+      headers: <String, dynamic>{},
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              'https://mohrapi.azurewebsites.net/api/Employee/AcademicDegrees',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = saveAcademicDegreeResponse.fromJson(_result.data!);
     return value;
   }
 

@@ -7,7 +7,17 @@ class LoginRequest {
   LoginRequest(this.email, this.password,this.deviceId);
 }
 
-class UserRequest
+class qualificationRequest
+{
+  String userId;
+  qualificationRequest(this.userId);
+}
+class GradeRequest
+{
+  String userId;
+  GradeRequest(this.userId);
+
+}class UserRequest
 {
   String userId;
   UserRequest(this.userId);
@@ -16,6 +26,8 @@ class UserRequest
 
 
 class EmployeeRequest {
+  String? userId;
+  int? empId;
   String? arabicName ;
   String? englishName;
   String? birthDate;
@@ -24,45 +36,141 @@ class EmployeeRequest {
   String? email;
   String? phone;
   String? emergency_Number;
+  AddressRequest? addressRequest;
+  EmployeeRequest(this.userId,this.empId,this.arabicName,this.englishName,this.birthDate,this.nationalId,
+      this.socialId,this.email,this.phone,this.emergency_Number,this.addressRequest);
 
 }
 
 class AddressRequest {
   String? addressText ;
   int? districtId;
-  String? poBox;
   String? zipCode;
+  AddressRequest(this.addressText,this.districtId,this.zipCode);
 }
+
+class CountryRequest{
+  int? countryId;
+  String? countryName;
+  CountryRequest(this.countryId,this.countryName);
+}
+
+class GovernorateRequest{
+  int? governorateId;
+  String? governorateName;
+  GovernorateRequest(this.governorateId,this.governorateName);
+}
+
+class DistrictRequest{
+  int? districtId;
+  String? districtName;
+  DistrictRequest(this.districtId,this.districtName);
+}
+
+class BasicDataRequest {
+  String? userId;
+  int? empId;
+  BasicDataRequest(this.userId, this.empId);
+}
+
+
+class displaySkillsRequest {
+  String? userId;
+  int? empId;
+  displaySkillsRequest(this.userId, this.empId);
+}
+
+class getEmployeeBasicDataRequest
+{
+  String? userId;
+  int? empId;
+  EmployeeRequest? empData;
+  bool? allowEdit;
+  CountryRequest? country;
+  int? selectedCountry;
+  GovernorateRequest? governorate;
+  int? selectedGovernorate;
+  DistrictRequest? district;
+  int? selecteddistrict;
+  Map<String,dynamic>? address;
+  getEmployeeBasicDataRequest(this.userId,this.empId,this.empData,this.allowEdit,this.country,this.selectedCountry,this.governorate
+      ,this.selectedGovernorate,this.district,this.selecteddistrict,this.address);
+}
+
+class Employee
+{
+  int empId;
+  String arabicName;
+  String englishName;
+  String birthDate;
+  String nationalId;
+  String socialId;
+  String email;
+  String phone;
+  String emergency_Number;
+  Employee(this.empId,this.arabicName,this.englishName,
+      this.birthDate,
+      this.nationalId,
+      this.socialId,
+      this.email,
+      this.phone,
+      this.emergency_Number);
+
+}
+
+class Address
+{
+  String addressText;
+int districtId;
+String poBox;
+String zipCode;
+  Address(
+      this.addressText,
+      this.districtId,
+      this.poBox,
+      this.zipCode);
+}
+
+
+
+
 
 class EmployeeBasicDataRequest
 {
   String userId;
-  String ArabicName;
-  String EnglishName;
-  String BirthDate;
-  String NationalId;
-  String SocialId;
-  String Email;
-  String Phone;
-  String Emergency_Number;
-  String AddressText;
-  int DistrictId;
-  String PoBox;
-  String ZipCode;
+  Employee employee;
+  Address address;
+  // int empId;
+  // String arabicName;
+  // String englishName;
+  // String birthDate;
+  // String nationalId;
+  // String socialId;
+  // String email;
+  // String phone;
+  // String emergency_Number;
+  // String addressText;
+  // int districtId;
+  // String poBox;
+  // String zipCode;
   EmployeeBasicDataRequest(
       this.userId,
-      this.ArabicName,
-      this.EnglishName,
-      this.BirthDate,
-      this.NationalId,
-      this.SocialId,
-      this.Email,
-      this.Phone,
-      this.Emergency_Number,
-      this.AddressText,
-      this.DistrictId,
-      this.PoBox,
-      this.ZipCode);
+      this.employee,
+      this.address
+      // this.empId,
+      // this.arabicName,
+      // this.englishName,
+      // this.birthDate,
+      // this.nationalId,
+      // this.socialId,
+      // this.email,
+      // this.phone,
+      // this.emergency_Number,
+      // this.addressText,
+      // this.districtId,
+      // this.poBox,
+      // this.zipCode
+);
 }
 
 //  "Date": "2006",
@@ -79,6 +187,33 @@ class EmployeeSkillsRequest
   EmployeeSkillsRequest(this.userId,this.date,this.gradeId,
       this.qualificationTypeId,this.employeeId);
 }
+
+class SaveAcademicDegreeRequest
+{
+  String userId;
+  int id;
+  String major;
+  String university;
+  String notes;
+  int employeeId;
+  int academicDegreeTypeId;
+  int gradeId;
+  String date;
+  SaveAcademicDegreeRequest(this.userId,this.id,this.major,this.university,
+      this.notes,this.employeeId,this.academicDegreeTypeId,
+      this.gradeId,this.date);
+}
+
+
+class displayAcademicDegreeRequest {
+  String? userId;
+  int? empId;
+  displayAcademicDegreeRequest(this.userId, this.empId);
+}
+
+
+
+
 class  displayVacationRequest
 {
   String userId;
@@ -99,4 +234,16 @@ class VacationRequest
 {
   String UserId;
   VacationRequest(this.UserId);
+}
+
+class SalaryRequest
+{
+  String UserId;
+  SalaryRequest(this.UserId);
+}
+
+class SalaryDetailsRequest
+{
+  String userId;
+  SalaryDetailsRequest(this.userId);
 }

@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:mohr_hr/application/constants.dart';
+
 import 'package:mohr_hr/presentation/Base/baseviewmodel.dart';
 import 'package:mohr_hr/presentation/common/state_renderer/state_render_impl.dart';
 import 'package:mohr_hr/data/networks/dio_factory.dart';
@@ -133,6 +133,7 @@ else{
   addSkills() async{
 
     EmployeeSkillsObject.userID;
+    EmployeeSkillsObject.EmployeeId;
 
    inputState.add(
        LoadingState(stateRendererType: StateRendererType.POPUP_LOADING_STATE));

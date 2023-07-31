@@ -194,6 +194,8 @@ class ResultResponse{
 
 @JsonSerializable()
 class EmployeeResponse {
+  @JsonKey(name: "Id")
+  int? empId;
   @JsonKey(name: "ArabicName")
   String? arabicName;
   @JsonKey(name: "EnglishName")
@@ -210,9 +212,12 @@ class EmployeeResponse {
   String? phone;
   @JsonKey(name: "EmergencyNumber")
   String? emergencyNumber;
-
-  EmployeeResponse(this.arabicName, this.englishName, this.birthDate,
-      this.nationalId,this.socialId,this.email,this.phone,this.emergencyNumber);
+  @JsonKey(name: "Address")
+  AddressResponse? Address;
+  EmployeeResponse(this.empId,this.arabicName, this.englishName,
+      this.birthDate,
+      this.nationalId,this.socialId,this.email,this.phone,
+      this.emergencyNumber,this.Address);
 
 // from json
   factory EmployeeResponse.fromJson(Map<String, dynamic> json) =>
@@ -228,15 +233,9 @@ class AddressResponse {
   String? addressText;
   @JsonKey(name: "DistrictId")
   int? districtId;
-  @JsonKey(name: "POBox")
-  String? pOBox;
   @JsonKey(name: "ZipCode")
   String? zipCode;
-
-
-  AddressResponse (this.addressText, this.districtId,
-      this.pOBox,
-      this.zipCode);
+  AddressResponse (this.addressText, this.districtId, this.zipCode);
 
 // from json
   factory  AddressResponse.fromJson(Map<String, dynamic> json) =>
@@ -244,6 +243,108 @@ class AddressResponse {
 
 // to json
   Map<String, dynamic> toJson() => _$AddressResponseToJson(this);
+}
+
+@JsonSerializable()
+class CountriesResponse {
+  @JsonKey(name: "Id")
+  int? countryId;
+  @JsonKey(name: "Name")
+  String? countryname;
+
+  CountriesResponse (this.countryId, this.countryname);
+
+// from json
+  factory  CountriesResponse.fromJson(Map<String, dynamic> json) =>
+      _$CountriesResponseFromJson(json);
+
+// to json
+  Map<String, dynamic> toJson() => _$CountriesResponseToJson(this);
+}
+
+@JsonSerializable()
+class GovernoratyResponse {
+  @JsonKey(name: "Id")
+  int? governoratyId;
+  @JsonKey(name: "Name")
+  String? governoratyname;
+
+  GovernoratyResponse (this.governoratyId, this.governoratyname);
+
+// from json
+  factory  GovernoratyResponse.fromJson(Map<String, dynamic> json) =>
+      _$GovernoratyResponseFromJson(json);
+
+// to json
+  Map<String, dynamic> toJson() => _$GovernoratyResponseToJson(this);
+}
+
+@JsonSerializable()
+class DistrictResponse {
+  @JsonKey(name: "Id")
+  int? districtId;
+  @JsonKey(name: "Name")
+  String? districtname;
+
+  DistrictResponse (this.districtId, this.districtname);
+
+// from json
+  factory  DistrictResponse.fromJson(Map<String, dynamic> json) =>
+      _$DistrictResponseFromJson(json);
+
+// to json
+  Map<String, dynamic> toJson() => _$DistrictResponseToJson(this);
+}
+//-----------------------------------------------------------
+//Basic Data
+//__________________________________________________________
+@JsonSerializable()
+class DisplayBasicDataResponse {
+  //@JsonKey(name:"")
+  BasicDataResponse data;
+  DisplayBasicDataResponse (this.data);
+
+// toJson
+  Map<String, dynamic> toJson() => _$DisplayBasicDataResponseToJson(this);
+
+//fromJson
+  factory DisplayBasicDataResponse.fromJson(Map<String, dynamic> json) =>
+      _$DisplayBasicDataResponseFromJson(json);
+}
+////////////////////////////////////////////////////////////////
+@JsonSerializable()
+class BasicDataResponse
+{
+  @JsonKey(name: "employee")
+  EmployeeResponse? employeeData;
+  @JsonKey(name: "allowEdit")
+  bool? allowEdit;
+  @JsonKey(name: "countries")
+  List<CountriesResponse>? countries;
+  @JsonKey(name: "selectedCountry")
+  int? selectedCountry;
+  @JsonKey(name: "governorates")
+  List<GovernoratyResponse>? governorates;
+  @JsonKey(name: "selectedGovernorate")
+  int? selectedGovernorate;
+  @JsonKey(name: "districts")
+  List<DistrictResponse>? districts;
+  @JsonKey(name: "selecteddistrict")
+  int? selecteddistrict;
+  @JsonKey(name: "address")
+  Map<String,dynamic>? address;
+  BasicDataResponse(this.employeeData,this.allowEdit,this.countries,
+      this.selectedCountry,this.governorates,this.selectedGovernorate,
+      this.districts,this.selecteddistrict,this.address);
+
+// from json
+  factory  BasicDataResponse.fromJson(Map<String, dynamic> json) =>
+      _$BasicDataResponseFromJson(json);
+
+// to json
+  Map<String, dynamic> toJson() => _$BasicDataResponseToJson(this);
+
+
 }
 
 @JsonSerializable(explicitToJson: true)
@@ -262,10 +363,29 @@ class EmployeeBasicDataResponse  extends ResultResponse
 // // I will send data from the class to api
   Map<String,dynamic> toJson() => _$EmployeeBasicDataResponseToJson (this);
 }
-//-end of basic data of employee -----------------------------------------------------------------------------
-
+// -----------------------------------------------------------------------------
 @JsonSerializable(explicitToJson: true)
-class EmployeeSkillsResponse  extends ResultResponse
+class SaveBasicDataResponse  extends ResultResponse
+{
+  @JsonKey(name: "UserId")
+  String? UserId;
+  @JsonKey(name: "Employee")
+  EmployeeResponse?  Employee;
+  @JsonKey(name: "Address")
+  AddressResponse?  Address;
+  SaveBasicDataResponse (this.UserId,this.Employee,this.Address) ;
+  factory SaveBasicDataResponse .fromJson(Map<String,dynamic>json)=>
+      _$SaveBasicDataResponseFromJson (json);
+// //to json
+// // I will send data from the class to api
+  Map<String,dynamic> toJson() => _$SaveBasicDataResponseToJson (this);
+}
+
+//----------------------------------------------------------------
+//Skills
+//_____________________________________________________________
+@JsonSerializable(explicitToJson: true)
+class saveEmpSkillsResponse  extends ResultResponse
 {
   @JsonKey(name: "UserId")
   String? userId;
@@ -277,15 +397,204 @@ class EmployeeSkillsResponse  extends ResultResponse
   int?  qualificationTypeId;
   @JsonKey(name: "EmployeeId")
   int?  employeeId;
-  EmployeeSkillsResponse (this.userId,this.date,this.gradeId,this.qualificationTypeId,this.employeeId) ;
-  factory EmployeeSkillsResponse .fromJson(Map<String,dynamic>json)=>
-      _$EmployeeSkillsResponseFromJson (json);
+  saveEmpSkillsResponse (this.userId,this.date,this.gradeId,this.qualificationTypeId,this.employeeId) ;
+  factory saveEmpSkillsResponse.fromJson(Map<String,dynamic>json)=>
+      _$saveEmpSkillsResponseFromJson(json);
 // //to json
 // // I will send data from the class to api
-  Map<String,dynamic> toJson() => _$EmployeeSkillsResponseToJson (this);
+  Map<String,dynamic> toJson() => _$saveEmpSkillsResponseToJson (this);
 }
 
 //_______________________________________________________________
+@JsonSerializable()
+class SkillsResponse
+{
+  @JsonKey(name: "Id")
+  int? id;
+  @JsonKey(name: "TypeName")
+  String?  typeName;
+  @JsonKey(name: "GradeName")
+  String?  gradeName;
+  @JsonKey(name: "QualificationTypeId")
+  int?  qualificationTypeId;
+  @JsonKey(name: "Date")
+  String?  date;
+  @JsonKey(name: "GradeId")
+  int?  gradeId;
+
+ SkillsResponse (this.id,this.typeName,this.gradeName,this.qualificationTypeId,this.date,this.gradeId) ;
+  factory SkillsResponse.fromJson(Map<String,dynamic>json)=>
+      _$SkillsResponseFromJson (json);
+// //to json
+// // I will send data from the class to api
+  Map<String,dynamic> toJson() => _$SkillsResponseToJson (this);
+}
+//_______________________________________________________________
+@JsonSerializable()
+class GetEmpSkillsResponse {
+  @JsonKey(name: "skills")
+  List<SkillsResponse>? skillData;
+  @JsonKey(name: "allowEdit")
+  bool? allowEdit;
+
+  GetEmpSkillsResponse(this.skillData, this.allowEdit);
+
+// from json
+  factory GetEmpSkillsResponse.fromJson(Map<String, dynamic> json) =>
+      _$GetEmpSkillsResponseFromJson(json);
+
+// to json
+  Map<String, dynamic> toJson() => _$GetEmpSkillsResponseToJson(this);
+}
+
+//---------------------------------------------------------------
+// AcademicDegree
+//_______________________________________________________________
+
+@JsonSerializable(explicitToJson: true)
+class saveAcademicDegreeResponse  extends ResultResponse
+{
+  @JsonKey(name: "UserId")
+  String? userId;
+  @JsonKey(name: "Id")
+  int? id;
+  @JsonKey(name: "Major")
+  String?  major;
+  @JsonKey(name: "University")
+  String?  university;
+  @JsonKey(name: "Notes")
+  String?  notes;
+  @JsonKey(name: "EmployeeId")
+  int?  EmployeeId;
+  @JsonKey(name: "AcademicDegreeTypeId")
+  int?  academicDegreeTypeId;
+  @JsonKey(name: "GradeId")
+  int?  gradeId;
+  @JsonKey(name: "DegreeDate")
+  String?  degreeDate;
+
+
+  saveAcademicDegreeResponse (this.userId,this.id,this.major,this.university,this.notes,this.EmployeeId,
+      this.academicDegreeTypeId,this.gradeId,this.degreeDate) ;
+  factory saveAcademicDegreeResponse.fromJson(Map<String,dynamic>json)=>
+      _$saveAcademicDegreeResponseFromJson(json);
+// //to json
+// // I will send data from the class to api
+  Map<String,dynamic> toJson() => _$saveAcademicDegreeResponseToJson (this);
+}
+//---------------------------------------------------------------------
+@JsonSerializable()
+class GetAcademicDegreeResponse {
+  @JsonKey(name: "AcademicDegree")
+  List<AcademicDegreeResponse>? academicDegreeData;
+  @JsonKey(name: "allowEdit")
+  bool? allowEdit;
+
+  GetAcademicDegreeResponse(this.academicDegreeData, this.allowEdit);
+
+// from json
+  factory GetAcademicDegreeResponse.fromJson(Map<String, dynamic> json) =>
+      _$GetAcademicDegreeResponseFromJson(json);
+
+// to json
+  Map<String, dynamic> toJson() => _$GetAcademicDegreeResponseToJson(this);
+}
+//------------------------------------------------------------
+@JsonSerializable()
+class AcademicDegreeResponse
+{
+  @JsonKey(name: "Id")
+  int? id;
+  @JsonKey(name: "TypeName")
+  String?  typeName;
+  @JsonKey(name: "GradeName")
+  String?  gradeName;
+  @JsonKey(name: "AcademicDegreeTypeId")
+  int?  academicDegreeTypeId;
+  @JsonKey(name: "DegreeDate")
+  String?  degreeDate;
+  @JsonKey(name: "GradeId")
+  int?  gradeId;
+  @JsonKey(name: "Major")
+  String?  major;
+  @JsonKey(name: "University")
+  String?  universitye;
+
+  AcademicDegreeResponse (this.id,this.typeName,this.gradeName,this.academicDegreeTypeId,this.degreeDate
+      ,this.gradeId,this.major,this.universitye) ;
+  factory  AcademicDegreeResponse.fromJson(Map<String,dynamic>json)=>
+      _$AcademicDegreeResponseFromJson (json);
+// //to json
+// // I will send data from the class to api
+  Map<String,dynamic> toJson() => _$AcademicDegreeResponseToJson (this);
+}
+//_______________________________________________________________
+//Grade
+//_______________________________________________________________
+@JsonSerializable()
+class GradeItemResponse {
+  @JsonKey(name: "Value")
+  int? value;
+  @JsonKey(name: "Text")
+  String? text;
+
+  GradeItemResponse (this.value, this.text);
+
+// from json
+  factory  GradeItemResponse.fromJson(Map<String, dynamic> json) =>
+      _$GradeItemResponseFromJson(json);
+
+// to json
+  Map<String, dynamic> toJson() => _$GradeItemResponseToJson(this);
+}
+//______________________________________________________________
+@JsonSerializable()
+class GradesResponse
+{
+  List<GradeItemResponse>? data;
+  GradesResponse  (this.data) ;
+  factory GradesResponse.fromJson(List<dynamic> items)
+  {
+    var listOfGrade=items.map((grade) => _$GradeItemResponseFromJson(grade)).toList();
+    return GradesResponse(listOfGrade);
+  }
+  Map<String,dynamic> toJson() => _$GradesResponseToJson (this);
+}
+
+//---------------------------------------------------------------
+//qualification
+//________________________________________________________________
+@JsonSerializable()
+class QualificationItemResponse {
+  @JsonKey(name: "Value")
+  int? value;
+  @JsonKey(name: "Text")
+  String? text;
+
+  QualificationItemResponse (this.value, this.text);
+
+// from json
+  factory  QualificationItemResponse.fromJson(Map<String, dynamic> json) =>
+      _$QualificationItemResponseFromJson(json);
+
+// to json
+  Map<String, dynamic> toJson() => _$QualificationItemResponseToJson(this);
+}
+
+@JsonSerializable()
+class QualificationsResponse
+{
+  List<QualificationItemResponse>? data;
+  QualificationsResponse  (this.data) ;
+  factory QualificationsResponse.fromJson(List<dynamic> items)
+  {
+    var listOfQualification=items.map((qualification) => _$QualificationItemResponseFromJson(qualification)).toList();
+    return QualificationsResponse(listOfQualification);
+  }
+  Map<String,dynamic> toJson() => _$QualificationsResponseToJson (this);
+}
+//_______________________________________________________________
+
 
 @JsonSerializable(explicitToJson: true)
 class VacationItemResponse
@@ -321,42 +630,134 @@ class VacationItemResponse
 // // I will send data from the class to api
   Map<String,dynamic> toJson() => _$VacationItemResponseToJson (this);
 }
-
-// @JsonSerializable()
-// class VacationDataResponse
-// {
-  // //@JsonKey(name: "")
-  // List <VacationResponse>? vacations;
-  // VacationDataResponse (this.vacations) ;
-
-//   factory VacationDataResponse .fromJson(List<dynamic>?json){
-//     _$VacationDataResponseFromJson(json!);
-//     return VacationDataResponse();
-//   }
-// // //to json
-// // // I will send data from the class to api
-//  Map<String,dynamic> toJson() => _$VacationDataResponseToJson (this);
-// }
-
 @JsonSerializable()
 class VacationsResponse
 {
  List<VacationItemResponse>? data;
   VacationsResponse  (this.data) ;
-
   factory VacationsResponse.fromJson(List<dynamic> items)
   {
-
     var listOfVacation=items.map((vacation) => _$VacationItemResponseFromJson(vacation)).toList();
     return VacationsResponse(listOfVacation);
   }
-
   Map<String,dynamic> toJson() => _$VacationsResponseToJson (this);
+}
+//_________________________Salary______________________________________
+@JsonSerializable(explicitToJson: true)
+class SalaryItemResponse
+{
+  @JsonKey(name: "Id")
+  int? id;
+  @JsonKey(name: "Month")
+  String? monthName;
+  @JsonKey(name: "Value")
+  double? salaryValue;
+
+  SalaryItemResponse (this.id,this.monthName,this.salaryValue) ;
+  factory SalaryItemResponse .fromJson(Map<String,dynamic>?json)=>
+      _$SalaryItemResponseFromJson (json!);
+// //to json
+// // I will send data from the class to api
+  Map<String,dynamic> toJson() => _$SalaryItemResponseToJson (this);
+}
+//-----------------------------------------------------------------
+@JsonSerializable()
+class SalaryResponse
+{
+  List<SalaryItemResponse>? data;
+  SalaryResponse  (this.data) ;
+  factory SalaryResponse.fromJson(List<dynamic> items)
+  {
+    var listOfSalary=items.map((salary) => _$SalaryItemResponseFromJson(salary)).toList();
+    return SalaryResponse(listOfSalary);
+  }
+  Map<String,dynamic> toJson() => _$SalaryResponseToJson (this);
+}
+//_________________________________________________________________
+// SalaryDetails
+//-----------------------------------------------------------------
+
+@JsonSerializable(explicitToJson: true)
+class BenefitItemResponse
+{
+  @JsonKey(name: "Value")
+  double? value;
+  @JsonKey(name: "ItemName")
+  String? ItemName;
+  @JsonKey(name:"ShowOnPaySlip")
+  bool? showOnPaySlip;
+
+  BenefitItemResponse (this.value,this.ItemName,this.showOnPaySlip) ;
+  factory BenefitItemResponse .fromJson(Map<String,dynamic>?json)=>
+      _$BenefitItemResponseFromJson (json!);
+// //to json
+// // I will send data from the class to api
+  Map<String,dynamic> toJson() => _$BenefitItemResponseToJson (this);
 }
 
 
+@JsonSerializable(explicitToJson: true)
+class DeductedItemResponse
+{
+  @JsonKey(name: "Value")
+  double? value;
+  @JsonKey(name: "ItemName")
+  String? ItemName;
+  @JsonKey(name:"ShowOnPaySlip")
+  bool? showOnPaySlip;
+
+  DeductedItemResponse (this.value,this.ItemName,this.showOnPaySlip) ;
+  factory DeductedItemResponse .fromJson(Map<String,dynamic>?json)=>
+      _$DeductedItemResponseFromJson (json!);
+// //to json
+// // I will send data from the class to api
+  Map<String,dynamic> toJson() => _$DeductedItemResponseToJson (this);
+}
+
+
+@JsonSerializable()
+class SalaryDetailsResponse
+{
+  @JsonKey(name: "EmployeeName")
+  String? employeeName;
+  @JsonKey(name: "Month")
+  String? month;
+  @JsonKey(name:"BenefitItems")
+  List<BenefitItemResponse>? benefitItems;
+  @JsonKey(name:"DeductedItems")
+  List<DeductedItemResponse>? deductedItems;
+  @JsonKey(name: "TotalBenefits")
+  double? totalBenefits;
+  @JsonKey(name: "TotalDeductions")
+  double? totalDeducted;
+  @JsonKey(name: "payslipItems")
+  List<dynamic>? paysLipItems;
+  @JsonKey(name: "NetSalary")
+  double? netSalary;
+  @JsonKey(name: "Max")
+  double? max;
+  @JsonKey(name: "HideNetSalary")
+  bool? hideNetSalary;
+
+  SalaryDetailsResponse (this.employeeName,this.month,this.benefitItems,
+      this.deductedItems,this.totalBenefits,this.totalDeducted,this.paysLipItems,
+      this.netSalary,this.max,this.hideNetSalary) ;
+  factory SalaryDetailsResponse.fromJson(Map<String,dynamic>?json)=>
+      _$SalaryDetailsResponseFromJson (json!);
+// //to json
+// // I will send data from the class to api
+  Map<String,dynamic> toJson() => _$SalaryDetailsResponseToJson (this);
+}
+// @JsonSerializable()
+// class SalaryDetailsObjectResponse  {
+//   @JsonKey(name:'' )
+//   SalaryDetailsResponse ? data;
+//   SalaryDetailsObjectResponse (this.data);
 //
-
-
-
-
+// // toJson
+//   Map<String, dynamic> toJson() => _$SalaryDetailsObjectResponseToJson(this);
+//
+// //fromJson
+//   factory SalaryDetailsObjectResponse .fromJson(Map<String, dynamic> json) =>
+//       _$SalaryDetailsObjectResponse FromJson(json);
+// }

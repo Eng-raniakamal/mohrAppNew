@@ -1,3 +1,35 @@
+//
+// import 'package:mohr_hr/data/networks/failure.dart';
+// import 'package:mohr_hr/data/request/request.dart';
+// import 'package:mohr_hr/data/response/responses.dart';
+// import 'package:mohr_hr/domain/model/model.dart';
+//
+// import 'package:mohr_hr/domain/repository/repository.dart';
+// import 'package:mohr_hr/domain/usecase/base_usecase.dart';
+// import 'package:dartz/dartz.dart';
+//
+//
+//
+// class EmployeeBasicDataUseCase implements BaseUseCase<EmployeeBasicInput ,BasicDataModel> {
+//
+//   final Repository _repository;
+//
+//   EmployeeBasicDataUseCase (this._repository);
+//   @override
+//   Future<Either<Failure,BasicDataModel>> execute(
+//       EmployeeBasicInput input,) async {
+//     return await _repository.DisplayEmployeeBasicData(BasicDataRequest(input.userId, input.empId));
+//   }
+// }
+//
+// class EmployeeBasicInput {
+//   String userId;
+//   int empId;
+//   EmployeeBasicInput(this.userId,this.empId);
+// }
+//
+//
+
 
 import 'package:mohr_hr/data/networks/failure.dart';
 import 'package:mohr_hr/data/request/request.dart';
@@ -8,49 +40,24 @@ import 'package:mohr_hr/domain/repository/repository.dart';
 import 'package:mohr_hr/domain/usecase/base_usecase.dart';
 import 'package:dartz/dartz.dart';
 
-class EmployeeBasicDataUseCase implements BaseUseCase<EmployeeBasicDataUseCaseInput, EmployeeBasicDataModel> {
+
+
+class BasicDataUseCase implements BaseUseCase<BasicdataInput ,BasicDataModel> {
 
   final Repository _repository;
-  EmployeeBasicDataUseCase(this._repository);
 
+ BasicDataUseCase (this._repository);
   @override
-  Future<Either<Failure, EmployeeBasicDataModel>> execute(
-      EmployeeBasicDataUseCaseInput input) async {
-    return await _repository.getEmployeeBasicData(
-        EmployeeBasicDataRequest(
-        input.userId,input.ArabicName,input.EnglishName,
-        input.BirthDate,input.NationalId,input.SocialId,
-        input.Email,input.Phone,input.Emergency_Number,
-        input.AddressText,input.DistrictId,input.PoBox,
-        input.ZipCode));
+  Future<Either<Failure,BasicDataModel>> execute(
+      BasicdataInput input,) async {
+    return await _repository.displayEmployeeBasicData(BasicDataRequest(input.userId, input.empId));
   }
 }
 
-class EmployeeBasicDataUseCaseInput
-{
+class BasicdataInput {
   String userId;
-  String ArabicName;
-  String EnglishName;
-  String BirthDate;
-  String NationalId;
-  String SocialId;
-  String Email;
-  String Phone;
-  String Emergency_Number;
-  String AddressText;
-  int DistrictId;
-  String PoBox;
-  String ZipCode;
-  EmployeeBasicDataUseCaseInput(this.userId,
-      this.ArabicName,this.EnglishName,
-      this.BirthDate,
-      this.NationalId,
-      this.SocialId,
-      this.Email,
-      this.Phone,
-      this.Emergency_Number,
-      this.AddressText,
-      this.DistrictId,
-      this.PoBox,
-      this.ZipCode);
+  int empId;
+  BasicdataInput(this.userId,this.empId);
 }
+
+

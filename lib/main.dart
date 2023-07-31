@@ -24,6 +24,11 @@ Future<void> main() async {
        child:MyApp()))
     //  MyApp()
   );
+  ErrorWidget.builder=(FlutterErrorDetails details){
+    return Container(
+      //child: Text("no value here"),
+    );
+  };
 }
 //
 // class MohrHR1 extends StatelessWidget {

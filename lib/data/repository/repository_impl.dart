@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+
 import 'package:mohr_hr/application/app_prefs.dart';
 import 'package:mohr_hr/application/constants.dart';
 import 'package:mohr_hr/data/data_source/local_data_source.dart';
@@ -7,28 +7,27 @@ import 'package:mohr_hr/data/networks/error_handler.dart';
 import 'package:mohr_hr/data/networks/failure.dart';
 import 'package:mohr_hr/data/networks/network_info.dart';
 import 'package:mohr_hr/data/request/request.dart';
+//import 'package:mohr_hr/data/response/responses.dart';
 import 'package:mohr_hr/domain/model/model.dart';
 import 'package:mohr_hr/domain/repository/repository.dart';
 import 'package:dartz/dartz.dart';
 import 'package:mohr_hr/data/mapper/mapper.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
+//import 'package:shared_preferences/shared_preferences.dart';
 import '../../application/di.dart';
-import '../response/responses.dart';
+
 
 class RepositoryImpl extends Repository {
-  RemoteDataSource _remoteDataSource;
-  LocalDataSource _localDataSource;
-  NetworkInfo _networkInfo;
-  SharedPreferences _sharedPreferences;
-  AppPreferences _appPreferences = instance <AppPreferences>();
+ final RemoteDataSource _remoteDataSource;
+ final  LocalDataSource _localDataSource;
+ final  NetworkInfo _networkInfo;
+ final  AppPreferences _appPreferences = instance <AppPreferences>();
 
   RepositoryImpl(this._remoteDataSource, this._localDataSource,
-      this._networkInfo, this._sharedPreferences);
+      this._networkInfo);
 
   @override
-  Future<Either<Failure, AuthenticationModel>> login(
-      LoginRequest loginRequest) async {
+  Future<Either<Failure, AuthenticationModel>> login(LoginRequest loginRequest)
+  async {
     //CHECK if internet is active or not
     if (await _networkInfo.isConnected) {
       try {
@@ -36,10 +35,11 @@ class RepositoryImpl extends Repository {
         final response = await _remoteDataSource.login(loginRequest);
         //if (response.code != ApiInternalStatus.SUCCESS)
         String? TokenUserID = response.userdata?.UserId;
+        int? TokenEmpId=response.userdata?.EmployeeId;
         if (TokenUserID != null) {
           Constants.token = TokenUserID;
           _appPreferences.setUserToken(TokenUserID);
-
+          _appPreferences.setEmpIdToken(TokenEmpId);
           // return data (success)
           //save user data response to cache
           return Right(response.toDomain());
@@ -60,18 +60,20 @@ class RepositoryImpl extends Repository {
       //return Left(Failure(501, "please check your internet connection"));
     }
   }
-
 //---------------------------------------------------------
   @override
-  Future<Either<Failure, EmployeeDataModel>> getUserData(
-      UserRequest userRequest) async {
+  Future<Either<Failure, EmployeeDataModel>> getUserData(UserRequest userRequest)
+  async {
     try {
       if (userRequest.userId == null) {
+
         userRequest.userId = await _appPreferences.getUserToken();
+
       }
       // get from cache
+
       final response = await _remoteDataSource.getUserData(userRequest);
-      // final response = await _localDataSource.getUserData();
+      //final response2 = await _localDataSource.getUserData();
       return Right(response.toDomain());
     } catch (cacheError) {
       // we have cache error so we should call API
@@ -100,49 +102,86 @@ class RepositoryImpl extends Repository {
       }
     }
   }
-
 ////////////////////////////////////////////////////////////////////////////////
-  @override
-  Future<Either<Failure, EmployeeBasicDataModel>> getEmployeeBasicData(
-      EmployeeBasicDataRequest empBDReq) async {
-    if (await _networkInfo.isConnected) {
-      try {
-        // its safe to call the API
-        final response = await _remoteDataSource.getEmployeeBasicData(empBDReq);
+  //@override
+  // Future<Either<Failure, EmployeeBasicDataModel>> getEmployeeBasicData(
+  //     EmployeeBasicDataRequest empBDReq) async {
+  //   if (await _networkInfo.isConnected) {
+  //     try {
+  //       // its safe to call the API
+  //       final response = await _remoteDataSource.getEmployeeBasicData(empBDReq);
+  //
+  //       if (response.isValid == ApiInternalStatus.SUCCESS) // success
+  //           {
+  //         // return data (success)
+  //         // return right
+  //         return Right(response.toDomain());
+  //       } else {
+  //         // return biz logic error
+  //         // return left
+  //         int status = 0;
+  //         if (response.isValid == false) {
+  //           status = 0;
+  //         }
+  //         return Left(Failure(status,
+  //             response.message ?? ResponseMessage.DEFAULT));
+  //       }
+  //     } catch (error) {
+  //       return (Left(ErrorHandler
+  //           .handle(error)
+  //           .failure!));
+  //     }
+  //   } else {
+  //     // return connection error
+  //     return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
+  //   }
+  // }
 
-        if (response.isValid == ApiInternalStatus.SUCCESS) // success
-            {
-          // return data (success)
-          // return right
-          return Right(response.toDomain());
-        } else {
-          // return biz logic error
-          // return left
-          int status = 0;
-          if (response.isValid == false) {
-            status = 0;
-          }
-          return Left(Failure(status,
-              response.message ?? ResponseMessage.DEFAULT));
-        }
-      } catch (error) {
-        return (Left(ErrorHandler
-            .handle(error)
-            .failure!));
+  @override
+  Future<Either<Failure, BasicDataModel>> displayEmployeeBasicData(BasicDataRequest getEmpBDReq)
+  async {
+    try {
+      if (getEmpBDReq.userId == null) {
+        getEmpBDReq.userId = await _appPreferences.getUserToken();
       }
-    } else {
-      // return connection error
-      return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
+      if ( getEmpBDReq.empId == 0) {
+        getEmpBDReq.empId = await _appPreferences.getEmpIdToken();
+      }
+
+      final response = await _remoteDataSource.getBasicData(getEmpBDReq);
+      return Right(response.toDomain());
+    } catch (cacheError) {
+      if (await _networkInfo.isConnected) {
+        try {
+          // its safe to call the API
+          final response = await _remoteDataSource.getBasicData(getEmpBDReq);
+          if (response.employeeData?.empId == getEmpBDReq.empId ) // success
+              {
+            // _localDataSource.saveUserToCache(response);
+
+            return Right(response.toDomain());
+          } else {
+            // return left
+            return Left(Failure(700, ResponseMessage.DEFAULT));
+          }
+        } catch (error) {
+          return (Left(ErrorHandler.handle(error).failure!));
+        }
+      } else {
+        // return connection error
+        return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
+      }
     }
   }
 
   @override
-  Future<Either<Failure, EmployeeSkillsModel>> getEmployeeSkills(
-      EmployeeSkillsRequest empSkillsReq) async {
+  Future<Either<Failure, SaveEmpSkillsModel>> saveEmployeeSkills(
+  EmployeeSkillsRequest empSkillsReq)
+  async {
     if (await _networkInfo.isConnected) {
       try {
         // its safe to call the API
-        final response = await _remoteDataSource.getEmployeeSkills(
+        final response = await _remoteDataSource.saveEmployeeSkills(
             empSkillsReq);
 
         if (response.isValid == ApiInternalStatus.SUCCESS) // success
@@ -170,10 +209,9 @@ class RepositoryImpl extends Repository {
       return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
     }
   }
-
   @override
   Future<Either<Failure,VacationsObject>> getVacations(VacationRequest vacationReq)
-    async {
+  async {
       try {
         if (vacationReq.UserId == null) {
           vacationReq.UserId = await _appPreferences.getUserToken();
@@ -204,47 +242,281 @@ class RepositoryImpl extends Repository {
     }
   }
 }
+  @override
+  Future<Either<Failure,SalaryObject>> getSalary(SalaryRequest salaryReq)
+  async {
+  try {
+    if (salaryReq.UserId == null) {
+      salaryReq.UserId = await _appPreferences.getUserToken();
+    }
+    final response = await _remoteDataSource.getSalary(salaryReq);
+    return Right(response.toDomain());
+  } catch (cacheError) {
+    // we have cache error so we should call API
+
+    if (await _networkInfo.isConnected) {
+      try {
+        // its safe to call the API
+        final response = await _remoteDataSource.getSalary(salaryReq);
+        if (response.data != null) // success
+            {
+          //_localDataSource.saveUserToCache( );
+          return Right(response.toDomain());
+        } else {
+          // return left
+          return Left(Failure(700, ResponseMessage.DEFAULT));
+        }
+      } catch (error) {
+        return (Left(ErrorHandler.handle(error).failure!));
+      }
+    } else {
+      // return connection error
+      return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
+    }
+  }
+}
+  @override
+  Future<Either<Failure, SalaryDetailsObject>> getSalaryDetails(SalaryDetailsRequest salaryDetailsReq)
+  async {
+    try {
+      if (salaryDetailsReq.userId == null) {
+        salaryDetailsReq.userId = await _appPreferences.getUserToken();
+      }
+      final response = await _remoteDataSource.getSalaryDetails(salaryDetailsReq);
+      return Right(response.toDomain());
+    } catch (cacheError) {
+      // we have cache error so we should call API
+
+      if (await _networkInfo.isConnected) {
+        try {
+          // its safe to call the API
+          final response = await _remoteDataSource.getSalaryDetails(salaryDetailsReq);
+          if (response.netSalary != null) // success
+              {
+            //_localDataSource.saveUserToCache( );
+            return Right(response.toDomain());
+          } else {
+            // return left
+            return Left(Failure(700, ResponseMessage.DEFAULT));
+          }
+        } catch (error) {
+          return (Left(ErrorHandler.handle(error).failure!));
+        }
+      } else {
+        // return connection error
+        return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
+      }
+    }
+  }
+
+  @override
+  Future<Either<Failure, EmployeeBasicDataModel>> saveEmployeeBasicData(EmployeeBasicDataRequest empBDReq)
+    async {
+      if (await _networkInfo.isConnected) {
+        try {
+          // its safe to call the API
+          final response = await _remoteDataSource.saveBasicData(empBDReq);
+
+          if (response.isValid == ApiInternalStatus.SUCCESS) // success
+              {
+            // return data (success)
+            // return right
+            return Right(response.toDomain());
+          } else {
+            // return big logic error
+            // return left
+            int status = 0;
+            if (response.isValid == false) {
+              status = 0;
+            }
+            return Left(Failure(status,
+                response.message ?? ResponseMessage.DEFAULT));
+          }
+        } catch (error) {
+          return (Left(ErrorHandler
+              .handle(error)
+              .failure!));
+        }
+      } else {
+        // return connection error
+        return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
+      }
+  }
+
+  @override
+  Future<Either<Failure, getEmpSkillsModel>> displayEmployeeSkills(displaySkillsRequest empSkillsReq)
+    async {
+      try {
+        if (empSkillsReq.userId == null) {
+          empSkillsReq.userId = await _appPreferences.getUserToken();
+        }
+        if ( empSkillsReq.empId == 0) {
+          empSkillsReq.empId = await _appPreferences.getEmpIdToken();
+        }
+
+        final response = await _remoteDataSource.getEmployeeSkills(empSkillsReq);
+        return Right(response.toDomain());
+      } catch (cacheError) {
+        if (await _networkInfo.isConnected) {
+          try {
+            // its safe to call the API
+            final response = await _remoteDataSource.getEmployeeSkills(empSkillsReq);
+            // success
+
+              // _localDataSource.saveUserToCache(response);
+
+              return Right(response.toDomain());
+
+          } catch (error) {
+            return (Left(ErrorHandler.handle(error).failure!));
+          }
+        } else {
+          // return connection error
+          return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
+        }
+      }
+  }
+
+  @override
+  Future<Either<Failure, QualificationsObject>> getQualification(qualificationRequest userRequest)
+    async {
+      try {
+        if (userRequest.userId == null) {
+
+          userRequest.userId = await _appPreferences.getUserToken();
+
+        }
+        // get from cache
+
+        final response = await _remoteDataSource.getQualification(userRequest);
+        return Right(response.toDomain());
+      } catch (cacheError) {
+        if (await _networkInfo.isConnected) {
+          try {
+            // its safe to call the API
+            final response = await _remoteDataSource.getQualification(userRequest);
+               return Right(response.toDomain());
+          } catch (error) {
+            return (Left(ErrorHandler
+                .handle(error)
+                .failure!));
+          }
+        } else {
+          // return connection error
+          return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
+        }
+      }
+    }
+
+  @override
+  Future<Either<Failure, GradesObject>> getGrade(GradeRequest userRequest)
+  async {
+    try {
+      if (userRequest.userId == null) {
+
+        userRequest.userId = await _appPreferences.getUserToken();
+
+      }
+      // get from cache
+      final response = await _remoteDataSource.getGrades(userRequest);
+      return Right(response.toDomain());
+    } catch (cacheError) {
+      // we have cache error so we should call API
+
+      if (await _networkInfo.isConnected) {
+        try {
+          // its safe to call the API
+          final response = await _remoteDataSource.getGrades(userRequest);
+          return Right(response.toDomain());
+        } catch (error) {
+          return (Left(ErrorHandler
+              .handle(error)
+              .failure!));
+        }
+      } else {
+        // return connection error
+        return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
+      }
+    }
+  }
+
+
+
+  @override
+  Future<Either<Failure, SaveAcademicDegreeModel>>
+  saveAcademicDegree(SaveAcademicDegreeRequest empAcademicDegreeReq) async {
+    try {
+      if (empAcademicDegreeReq.userId == null) {
+        empAcademicDegreeReq.userId = await _appPreferences.getUserToken();
+      }
+      if ( empAcademicDegreeReq.employeeId == 0) {
+        empAcademicDegreeReq.employeeId  = await _appPreferences.getEmpIdToken();
+      }
+
+      final response = await _remoteDataSource.saveAcademicDegree(empAcademicDegreeReq);
+      return Right(response.toDomain());
+    } catch (cacheError) {
+      if (await _networkInfo.isConnected) {
+        try {
+          // its safe to call the API
+          final response = await _remoteDataSource.saveAcademicDegree(empAcademicDegreeReq);
+          // success
+
+          // _localDataSource.saveUserToCache(response);
+
+          return Right(response.toDomain());
+
+        } catch (error) {
+          return (Left(ErrorHandler.handle(error).failure!));
+        }
+      } else {
+        // return connection error
+        return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
+      }
+    }
+  }
+
+  @override
+  Future<Either<Failure, getAcademicDegreeModel>>
+  getAcademicDegree(displayAcademicDegreeRequest empAcademicDegreeReq)
+  async {
+    try {
+      if (empAcademicDegreeReq.userId == null) {
+        empAcademicDegreeReq.userId = await _appPreferences.getUserToken();
+      }
+      if ( empAcademicDegreeReq.empId == 0) {
+        empAcademicDegreeReq.empId = await _appPreferences.getEmpIdToken();
+      }
+
+      final response = await _remoteDataSource.getAcademicDegree(empAcademicDegreeReq);
+      return Right(response.toDomain());
+    } catch (cacheError) {
+      if (await _networkInfo.isConnected) {
+        try {
+          // its safe to call the API
+          final response = await _remoteDataSource.getAcademicDegree(empAcademicDegreeReq);
+          // success
+
+          // _localDataSource.saveUserToCache(response);
+
+          return Right(response.toDomain());
+
+        } catch (error) {
+          return (Left(ErrorHandler.handle(error).failure!));
+        }
+      } else {
+        // return connection error
+        return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
+      }
+    }
+  }
   }
 
 
 
 
-//  @override
-// Future<Either<Failure, VactionsModel>> getVacations(VacationRequest vacationRequest)
-//  async {
-//   try {
-//     if(vacationRequest.UserId == null)
-//     {
-//       vacationRequest.UserId= await _appPreferences.getUserToken() ;
-//     }
-//     // get from cache
-//     final response = await _remoteDataSource.getEmployeeVacations(vacationRequest);
-//     return Right(response.toDomain());
-//   } catch (cacheError) {
-//     // we have cache error so we should call API
-//
-//     if (await _networkInfo.isConnected) {
-//       try {
-//         // its safe to call the API
-//         final response = await _remoteDataSource.getEmployeeVacations(vacationRequest);
-//
-//         // if (response.userdata?.UserId.toString() !=null) // success
-//         //     {
-//         //  _localDataSource.saveUserToCache(response);
-//           return Right(response.toDomain());
-//     //    } else {
-//
-//           // return left
-//           return Left(Failure(700, ResponseMessage.DEFAULT));
-//      //   }
-//       } catch (error) {
-//         return (Left(ErrorHandler.handle(error).failure!));
-//       }
-//     } else {
-//       // return connection error
-//       return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
-//     }
-//   }
-// }
-// }
+
+
+
+
 

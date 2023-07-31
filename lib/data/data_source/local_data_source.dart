@@ -17,7 +17,6 @@ abstract class LocalDataSource {
    Future<UserProfileResponse> getUserData();
    Future<void> saveUserToCache(UserProfileResponse UserdataResponse);
    void clearCache();
-
    void removeFromCache(String key);
 
 }

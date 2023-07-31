@@ -76,7 +76,8 @@ class EmployeeViewModel extends BaseViewModel with
               },
                   (data){
                 inputState.add(ContentState());
-                EmployeeData.add(EmployeeDataModel(data.userDataModel));
+                EmployeeData.add(EmployeeDataModel(
+                    data.userDataModel));
               }
           );
 
@@ -84,12 +85,10 @@ class EmployeeViewModel extends BaseViewModel with
   }
 
   @override
-
   Sink get inputUserId => _UserIdStreamController.sink;
 
 
   @override
-
   Sink get EmployeeData => _EmployeeDataStreamController.sink;
 
 

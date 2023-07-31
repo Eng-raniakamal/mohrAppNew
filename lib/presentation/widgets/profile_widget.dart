@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:mohr_hr/presentation/resources/assets_manager.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 
@@ -41,21 +42,45 @@ class ProfileWidget extends StatelessWidget {
   // create the image profile and edit the image
   // from gallary and the camera
   Widget buildImage(BuildContext context) {
-    final image = NetworkImage(imagePath);
-
-    return ClipOval(
-      child: Material(
-        color: Colors.transparent,
-        child: Ink.image(
-          image: image,
-          fit: BoxFit.cover,
-          width: 110,
-          height: 110,
-          child: InkWell(onTap:
-        onClicked),
+    try {
+      final image = NetworkImage(imagePath);
+      return ClipOval(
+        child: Material(
+          color: Colors.transparent,
+          child: Ink.image(
+            //onImageError: AssetImage(ImageAssets.noPhoto) ,
+            // myMarkerThumb != 'noImage' ?
+            // NetworkImage(myMarkerThumb) :
+            // Image.asset('assets/images/noImageAvailable.png').image,
+            image: image,
+            onImageError: ( Object exception, StackTrace? stackTrace) {
+             Image(image: AssetImage(ImageAssets.noPhoto));
+            },
+            fit: BoxFit.cover,
+            width: 110,
+            height: 110,
+            child: InkWell(onTap:
+            onClicked),
+          ),
         ),
-      ),
-    );
+      );
+    }
+    catch (e){
+      return ClipOval(
+        child: Material(
+          color: Colors.transparent,
+          child: Ink.image(
+            image:  const AssetImage(ImageAssets.noPhoto),
+            fit: BoxFit.cover,
+            width: 110,
+            height: 110,
+            child: InkWell(onTap:
+            onClicked),
+          ),
+        ),
+      );
+
+    }
   }
 
   Widget buildEditIcon(Color color) => buildCircle(
@@ -136,6 +161,7 @@ void showImagePicker(BuildContext context) {
                           ),
                         ),
                         onTap: () {
+
                           _imgFromCamera();
                           Navigator.pop(context);
                         },
