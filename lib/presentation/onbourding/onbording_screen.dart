@@ -7,7 +7,10 @@ import 'package:mohr_hr/presentation/widgets/components/animated_btn.dart';
 //import 'package:mohr_hr/presentation/widgets/components/sign_in_dialog.dart';
 import 'package:rive/rive.dart';
 import 'package:mohr_hr/presentation/resources/strings_manager.dart';
-
+import 'package:toggle_switch/toggle_switch.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:easy_localization/easy_localization.dart';
 import '../../application/app_prefs.dart';
 import '../../application/di.dart';
 
@@ -83,18 +86,34 @@ class _OnboadingScreenState extends State<OnboadingScreen> {
                     SizedBox(
                       width: 260,
                       child: Column(
-                        children:  const [
+                        children:   [
 
                            Center(child: Image(image: AssetImage(ImageAssets.startLogo)))
 
-                          ,SizedBox(height: 16),
-                          Text(AppStrings.spalshText
-                           ,
+                          ,Text(AppStrings.spalshText.tr()
+
                           ),
+                          SizedBox(height: 16),
                         ],
                       ),
                     ),
-                    const Spacer(flex: 2),
+
+                    const Spacer(flex: 1),
+                   ToggleSwitch(
+                  minWidth: 90.0,
+                  initialLabelIndex: 1,
+                  cornerRadius: 20.0,
+                  activeFgColor: Colors.white,
+                  inactiveBgColor: Colors.grey,
+                  inactiveFgColor: Colors.white,
+                  totalSwitches: 2,
+                  labels: ['English', 'عربى'],
+                  activeBgColors: [[Colors.blue],[Colors.blue]],
+                  onToggle: (index) {
+                   // print('switched to: $index');
+                    changeLanguage();
+                  },),
+                    const Spacer(flex: 1),
                     AnimatedBtn(
                       btnAnimationController: _btnAnimationController,
                       press: () {
@@ -146,5 +165,10 @@ class _OnboadingScreenState extends State<OnboadingScreen> {
         ],
       ),
     );
+  }
+
+  void changeLanguage() {
+    _appPreferences.setLanguageChanged();
+    Phoenix.rebirth(context);
   }
 }

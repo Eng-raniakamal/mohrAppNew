@@ -7,6 +7,7 @@ import 'package:mohr_hr/presentation/resources/colors.dart';
 import 'package:mohr_hr/presentation/widgets/profile_widget.dart';
 import '../../../../application/constants.dart';
 import '../viewModel/vacationViewModel.dart';
+import 'package:intl/intl.dart';
 
 
 double? allDays;
@@ -38,6 +39,7 @@ class _vacationsViewState extends State<vacationsView> {
   Widget build(BuildContext context) {
     return ThemeSwitchingArea(
         child: SingleChildScrollView(
+          scrollDirection: Axis.vertical,
           child: StreamBuilder<FlowState>(
               stream: _viewModel.outputState,
               builder: (context, snapshot) {
@@ -64,7 +66,7 @@ class _vacationsViewState extends State<vacationsView> {
               children: [
                 Container(
                   width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height,
+                  height: MediaQuery.of(context).size.height*2,
                   child: Column(
                     children: [
                       const Padding(padding: EdgeInsets.only(top:50)),
@@ -73,17 +75,29 @@ class _vacationsViewState extends State<vacationsView> {
                             Column(
                               children: [
                                 _getImageWidget(),
-                                NumbersWidget()
-                              ],
+                                NumbersWidget(),
+                                SizedBox(height: 10),
+                                SizedBox(height: 40,
+                                  width: 150,
+
+                                  child: FloatingActionButton(
+                                    child:Text("Vaction Request",style: TextStyle(color: colorManager.white),),
+                                    backgroundColor: colorManager.primary,//child widget inside this button
+                                    shape:BeveledRectangleBorder(
+                                        borderRadius: BorderRadius.circular(10)), onPressed: () {  },)),
+
+                                ],
                             ),
                           ]),
-
-
                       SingleChildScrollView(
                         scrollDirection: Axis.vertical,
-                        child: Container(
+                        child: Column(
+                          children: [
+                            Container(
 
-                            child: _getVacation(snapshot.data?.vacations)),
+                                child: _getVacation(snapshot.data?.vacations)),
+                          ],
+                        ),
                       ),
                     ],
                   ),
@@ -99,47 +113,50 @@ class _vacationsViewState extends State<vacationsView> {
       allDays=_calculateAllDays(vacations);
       usedDays=_calculateUsedDays(vacations);
       availableDays =_calculateAvailableDays(vacations);
-      return Column(mainAxisAlignment:MainAxisAlignment.start,
-        children: [
-          SingleChildScrollView(
-            child: Container(padding: EdgeInsets.fromLTRB(20,30,10,30),
+      return SingleChildScrollView(
+        scrollDirection: Axis.vertical,
+        child: Column(mainAxisAlignment:MainAxisAlignment.start,
+          children: [
+               Container(padding: EdgeInsets.fromLTRB(20,30,10,30),
+                width: MediaQuery.of(context).size.width,
+                  height:MediaQuery.of(context).size.height,
 
-                child:SingleChildScrollView(scrollDirection: Axis.horizontal,
-                  child: DataTable(
-                      headingRowColor: MaterialStateColor.resolveWith((states) => colorManager.primary),
-                      columns: [
-                        DataColumn(label: Text("VacationType ",style: TextStyle(color: colorManager.white),)),
-                        DataColumn(label: Text("Current",style: TextStyle(color: colorManager.white))),
-                        DataColumn(label: Text("Transferred",style: TextStyle(color: colorManager.white))),
-                        DataColumn(label: Text("Total ",style: TextStyle(color: colorManager.white))),
-                        DataColumn(label: Text("Consumed ",style: TextStyle(color: colorManager.white))),
-                        DataColumn(label: Text(" Available ",style: TextStyle(color: colorManager.white))),
-                        DataColumn(label: Text("Pending",style: TextStyle(color: colorManager.white))),
-                      ],
-                      rows: vacations
-                          .map((vacation) =>
-                          DataRow(cells: [
-                            DataCell(Text(vacation.vacationTypeName)),
-                            DataCell(Text((vacation.vacationTypeDuration).toString())),
-                            DataCell(Text((vacation.transferred).toString())),
-                            DataCell(Text((vacation.total).toString())),
-                            DataCell(Text((vacation.consumed).toString())),
-                            DataCell(Text((vacation.available).toString())),
-                            DataCell(Text((vacation.pending).toString())),
-                          ]))
-                          .toList()
-                  ),
-                )
-            ),
-          ),
-        ],
+                  child:SingleChildScrollView(scrollDirection: Axis.horizontal,
+                    child: DataTable(showBottomBorder: true,
+                        headingRowColor: MaterialStateColor.resolveWith((states) => colorManager.primary),
+                        columns: const [
+                          DataColumn(label: Text("VacationType ",style: TextStyle(color: colorManager.white),)),
+                          DataColumn(label: Text("Current",style: TextStyle(color: colorManager.white))),
+                          DataColumn(label: Text("Transferred",style: TextStyle(color: colorManager.white))),
+                          DataColumn(label: Text("Total ",style: TextStyle(color: colorManager.white))),
+                          DataColumn(label: Text("Consumed ",style: TextStyle(color: colorManager.white))),
+                          DataColumn(label: Text(" Available ",style: TextStyle(color: colorManager.white))),
+                          DataColumn(label: Text("Pending",style: TextStyle(color: colorManager.white))),
+                        ],
+                        rows: vacations
+                            .map((vacation) =>
+                            DataRow(cells: [
+                              DataCell(Text(vacation.vacationTypeName)),
+                              DataCell(Text((vacation.vacationTypeDuration).toString())),
+                              DataCell(Text((vacation.transferred).toString())),
+                              DataCell(Text((vacation.total).toString())),
+                              DataCell(Text((vacation.consumed).toString())),
+                              DataCell(Text((vacation.available).toString())),
+                              DataCell(Text((vacation.pending).toString())),
+                            ]))
+                            .toList()
+                    ),
+                  )
+              ),
+          ],
+        ),
       );
 
 
     }
 
     return Padding(padding: const EdgeInsets.all(25.0),
-    child: Container());
+     child: Container());
   }
 
 
@@ -192,6 +209,12 @@ double _calculateAllDays(List<Vacation> vacations)
  {
  double all=0;
   vacations.map((e)=>(all+= e.total)).toList();
+
+ String inString = all.toStringAsFixed(3);
+ double inDouble = double.parse(inString);
+
+all=inDouble;
+
  return all;
 }
 
@@ -199,12 +222,18 @@ double _calculateUsedDays(List<Vacation> vacations)
 {
   double Used=0.0;
   vacations.map((e)=>(Used+= e.consumed)).toList();
+  String inString = Used.toStringAsFixed(3);
+  double inDouble = double.parse(inString);
+  Used=inDouble;
   return Used;
 }
 double _calculateAvailableDays(List<Vacation> vacations)
 {
   double Available=0.0;
   vacations.map((e)=>(Available+= e.available)).toList();
+  String inString = Available.toStringAsFixed(3);
+  double inDouble = double.parse(inString);
+  Available=inDouble;
   return Available;
 }
 

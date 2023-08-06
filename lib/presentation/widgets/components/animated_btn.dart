@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:rive/rive.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'package:mohr_hr/presentation/resources/strings_manager.dart';
 
 class AnimatedBtn extends StatelessWidget {
   const AnimatedBtn({
@@ -35,10 +37,10 @@ class AnimatedBtn extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  const Icon(CupertinoIcons.arrow_right),
+                  //const Icon(CupertinoIcons.arrow_right),
                   const SizedBox(width: 8),
                   Text(
-                    "Start",
+                    AppStrings.Start.tr(),
                     style: Theme.of(context).textTheme.button,
 
 

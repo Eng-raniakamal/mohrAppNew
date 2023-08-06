@@ -18,7 +18,7 @@ Future<void> main() async {
   ]);
 
   runApp(EasyLocalization
-       (supportedLocales: [ARABIC_LOCAL,ENGLISH_LOCAL],
+       (supportedLocales: const [ARABIC_LOCAL,ENGLISH_LOCAL],
       path: ASSETS_PATH_LOCALISATIONS,
       child: Phoenix(
        child:MyApp()))

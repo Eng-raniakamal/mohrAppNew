@@ -55,8 +55,8 @@ class AppPreferences {
   }
 
   Future<Locale> getLocal() async {
-    String currentLanguage= LanguageType.ENGLISH.getValue();
-    //String currentLanguage = await getAppLanguage();
+    //String currentLanguage= LanguageType.ENGLISH.getValue();
+    String currentLanguage = await getAppLanguage();
     if (currentLanguage == LanguageType.ARABIC.getValue()) {
       // return arabic local
       return ARABIC_LOCAL;

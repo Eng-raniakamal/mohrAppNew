@@ -1,12 +1,16 @@
 import 'dart:async';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rxdart/rxdart.dart';
+import 'package:mohr_hr/presentation/resources/strings_manager.dart';
 import 'package:mohr_hr/presentation/resources/colors.dart';
 import 'package:mohr_hr/domain/model/navigationManu.dart';
 import 'package:mohr_hr/presentation/widgets/sidebar/menu_item.dart';
+import 'package:mohr_hr/presentation/resources/language_manager.dart';
 
+import 'dart:math' as math;
 import '../../../application/di.dart';
 import '../../resources/routes.dart';
 class SideBar extends StatefulWidget {
@@ -42,7 +46,7 @@ class _SideBarState extends State<SideBar> with SingleTickerProviderStateMixin<S
 
     final animationStatus = _animationController.status;
     final isAnimationCompleted = animationStatus == AnimationStatus.completed;
-
+    // if (isRtl()) {
     if (isAnimationCompleted) {
       isSidebarOpenedSink.add(false);
       _animationController.reverse();
@@ -50,11 +54,27 @@ class _SideBarState extends State<SideBar> with SingleTickerProviderStateMixin<S
       isSidebarOpenedSink.add(true);
       _animationController.forward();
     }
+  // }
+  // else{
+  //   if (!isAnimationCompleted) {
+  //   isSidebarOpenedSink.add(false);
+  //   _animationController.reverse();
+  //   } else {
+  //   isSidebarOpenedSink.add(true);
+  //   _animationController.forward();
+  //   }}
   }
-
+  bool isRtl() {
+    // return true;
+    return context.locale == ARABIC_LOCAL; // app is in arabic language
+  }
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
+    // bool isRtl() {
+    //   // return true;
+    //   return context.locale == ARABIC_LOCAL; // app is in arabic language
+    // }
 
      return BlocListener<NavigationBloc, NavigationStates>(
         listener: (BuildContext context, state) {
@@ -65,112 +85,129 @@ class _SideBarState extends State<SideBar> with SingleTickerProviderStateMixin<S
         initialData: false,
         stream: isSidebarOpenedStream,
         builder: (context, isSideBarOpenedAsync) {
-          return AnimatedPositioned(
-            duration: _animationDuration,
-            top: 0,
-            bottom: 0,
-            left: isSideBarOpenedAsync.data! ? 0 : -screenWidth,
-            right: isSideBarOpenedAsync.data! ? 0 : screenWidth - 45,
-            child: Row(
-              children: <Widget>[
-                Expanded(
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    color:colorManager.primary,
-                    child: Column(
-                      children: [
-                        const SizedBox(
-                          height: 100,
-                        ),
-                        const ListTile(
-                          title: Text(
-                            "Welcome To",
-                            style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w800),
+          return
+            // Transform(
+            // //alignment: Alignment.center,
+            // transform: Matrix4.rotationY( isRtl() ? math.pi : 0),
+            //
+            // child:
+            AnimatedPositioned(
+              duration: _animationDuration,
+              top: 0,
+              bottom: 0,
+              left:
+              isRtl() ?
+              isSideBarOpenedAsync.data! ? 0 : screenWidth - 45 :
+              isSideBarOpenedAsync.data! ? 0 : -screenWidth ,
+              right:
+              isRtl() ?
+              isSideBarOpenedAsync.data! ? 0 : -screenWidth :
+              isSideBarOpenedAsync.data! ? 0 : screenWidth - 45,
+              child: Row(
+                children: <Widget>[
+                  Expanded(
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      color:colorManager.primary,
+                      child: Column(
+                        children: [
+                          const SizedBox(
+                            height: 100,
                           ),
-                          subtitle: Text(
-                            "MOHR",
-                            style: TextStyle(
-                              color: Color(0xFF1BB5FD),
-                              fontSize: 20,
+                           ListTile(
+                            title: Text(
+                              AppStrings.Welcome.tr(),
+                              style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w800),
+                            ),
+                            subtitle: Text(
+                              AppStrings.Mohr.tr(),
+                              style: TextStyle(
+                                color: Color(0xFF1BB5FD),
+                                fontSize: 20,
+                              ),
+                            ),
+                            leading: CircleAvatar(
+                              child: Icon(
+                                Icons.perm_identity,
+                                color: Colors.white,
+                              ),
+                              radius: 40,
                             ),
                           ),
-                          leading: CircleAvatar(
-                            child: Icon(
-                              Icons.perm_identity,
-                              color: Colors.white,
-                            ),
-                            radius: 40,
+                          Divider(
+                            height: 64,
+                            thickness: 0.5,
+                            color: Colors.white.withOpacity(0.3),
+                            indent: 32,
+                            endIndent: 32,
                           ),
-                        ),
-                        Divider(
-                          height: 64,
-                          thickness: 0.5,
-                          color: Colors.white.withOpacity(0.3),
-                          indent: 32,
-                          endIndent: 32,
-                        ),
-                        MenuItems(
-                          icon: Icons.home,
-                          title: "Home",
-                          onTap: () {
-                            onIconPressed();
-                            Navigator.of(context).pushReplacementNamed(Routes.HomeRoute);
-                            //BlocProvider.of<NavigationBloc>(context).add(NavigationEvents.HomePageClickedEvent);
-                          },
-                        ),
-                        MenuItems(
-                          icon: Icons.person,
-                          title: "My Profile",
-                          onTap: () {
-                            onIconPressed();
-                           // initEmployeeSkillsModule();
-                           // initEmployeeBasicDataModule();
-                            Navigator.of(context).pushReplacementNamed(Routes.employee);
-                            //BlocProvider.of<NavigationBloc>(context).add(NavigationEvents.MyProfileClickedEvent);
-                          },
-                        ),
-                        MenuItems(
-                          icon: Icons.settings,
-                          title: "Settings",
-                          onTap: () {
-                            onIconPressed();
-                            // initEmployeeSkillsModule();
-                            // initEmployeeBasicDataModule();
-                            Navigator.of(context).pushReplacementNamed(Routes.settings);
-                            //BlocProvider.of<NavigationBloc>(context).add(NavigationEvents.MyProfileClickedEvent);
-                          },
-                        ),
-                      ],
+                          MenuItems(
+                            icon: Icons.home,
+                            title: AppStrings.Home.tr(),
+                            onTap: () {
+                              onIconPressed();
+                              Navigator.of(context).pushReplacementNamed(Routes.HomeRoute);
+                              //BlocProvider.of<NavigationBloc>(context).add(NavigationEvents.HomePageClickedEvent);
+                            },
+                          ),
+                          MenuItems(
+                            icon: Icons.person,
+                            title: AppStrings.profile.tr(),
+                            onTap: () {
+                              onIconPressed();
+                             // initEmployeeSkillsModule();
+                             // initEmployeeBasicDataModule();
+                              Navigator.of(context).pushReplacementNamed(Routes.employee);
+                              //BlocProvider.of<NavigationBloc>(context).add(NavigationEvents.MyProfileClickedEvent);
+                            },
+                          ),
+                          MenuItems(
+                            icon: Icons.settings,
+                            title: AppStrings.Settings.tr(),
+                            onTap: () {
+                              onIconPressed();
+                              // initEmployeeSkillsModule();
+                              // initEmployeeBasicDataModule();
+                              Navigator.of(context).pushReplacementNamed(Routes.settings);
+                              //BlocProvider.of<NavigationBloc>(context).add(NavigationEvents.MyProfileClickedEvent);
+                            },
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-                Align(
-                  alignment: const Alignment(0, -0.9),
-                  child: GestureDetector(
-                    onTap: () {
-                      onIconPressed();
-                    },
-                    child: ClipPath(
-                      clipper: CustomMenuClipper(),
-                      child: Container(
-                        width: 35,
-                        height: 110,
-                       // color: const Color(0xFF262AAA),
-                        color:colorManager.primary,
-                        alignment: Alignment.centerLeft,
-                        child: AnimatedIcon(
-                          progress: _animationController.view,
-                          icon: AnimatedIcons.menu_close,
-                          //color: const Color(0xFF1BB5FD),
-                          color: colorManager.white,
-                          size: 25,
+                  Align(
+                    alignment: Alignment(0, -0.9),
+                    child: GestureDetector(
+                      onTap: () {
+                        onIconPressed();
+                      },
+                       child: Transform(
+                         alignment: Alignment.center,
+                         transform: Matrix4.rotationY(isRtl() ? math.pi : 0),
+                        child: ClipPath(
+                          clipper: CustomMenuClipper(),
+                          child: Container(
+                            width: 35,
+                            height: 110,
+                           // color: const Color(0xFF262AAA),
+                            color:colorManager.primary,
+                            alignment: Alignment.centerLeft,
+                            child: AnimatedIcon(
+                              progress: _animationController.view,
+                              icon: AnimatedIcons.menu_close,
+                              //color: const Color(0xFF1BB5FD),
+                              color: colorManager.white,
+                              size: 25,
+                            ),
+                          ),
                         ),
                       ),
                     ),
                   ),
-                ),
-              ],
-            ),
+                ],
+              ),
+           // ),
           );
         },
       ),

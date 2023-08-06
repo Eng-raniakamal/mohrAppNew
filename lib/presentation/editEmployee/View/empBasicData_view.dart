@@ -1,15 +1,15 @@
 
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
-import 'package:easy_localization/easy_localization.dart';
+
 import 'package:flutter/material.dart';
 import 'package:mohr_hr/application/di.dart';
 import 'package:mohr_hr/domain/model/model.dart';
 import 'package:mohr_hr/presentation/editEmployee/ViewModel/displayEmpBasicData_viewModel.dart';
-import 'package:mohr_hr/presentation/editEmployee/ViewModel/saveEmpBD_viewModel.dart';
+
 import 'package:mohr_hr/presentation/resources/colors.dart';
 import '../../../application/app_prefs.dart';
 import '../../common/state_renderer/state_render_impl.dart';
-import '../../resources/strings_manager.dart';
+
 
 
 class BasicDataView extends StatefulWidget {

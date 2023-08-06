@@ -106,9 +106,9 @@ class _SettingsPageState extends State<SettingsPage> {
   }
 
   void changeLanguage() {
-    // i will apply localisation later
-    //_appPreferences.setLanguageChanged();
-    //Phoenix.rebirth(context);
+
+    _appPreferences.setLanguageChanged();
+    Phoenix.rebirth(context);
     // restart to apply language changes
   }
 

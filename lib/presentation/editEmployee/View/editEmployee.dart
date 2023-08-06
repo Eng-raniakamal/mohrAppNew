@@ -43,78 +43,88 @@ class _EmployeeEditViewState extends State<EmployeeEditView>with TickerProviderS
                     body:
                     Column(
                         children: [
-                          Expanded(
+                      Flexible(
                            flex: 1,
                            child:
-                              Container(
-                                  padding: EdgeInsets.only(top:20),
-                                 width: MediaQuery.of(context).size.width,
-                                   height: MediaQuery.of(context).size.height,
-                                   child: Form(
-                                      key: _Formkey,
-                                     child: Container(
-                                      // height: MediaQuery.of(context).size.height,
-                                       child: Column(
-                                          children: [
-                                            ProfileWidget(
-                                                imagePath: Constants.imagePath,
-                                                isEdit: true,
-                                                onClicked: () {
-                                                  bool canEditImage=Constants.canUpload!;
-                                                  if(canEditImage== false)
-                                                  {
-                                                    displayDialoge();
-                                                  }
-                                                  showImagePicker(context);
-                                                  },
-                                           ),
-                                            //const SizedBox(height: 20),
-                                            Container(//child:Align(
-                                              alignment: Alignment.center,
-                                              padding: EdgeInsets.all(10),
-                                              width: MediaQuery.of(context).size.width,
-                                              decoration: BoxDecoration(
-                                                color: Colors.grey[300],
-                                                  borderRadius: BorderRadius.circular(30.0,)),
-                                              child: Container(
-                                                padding:EdgeInsets.all(5),
-                                                child: TabBar(
-                                                  controller: _tabController,
-                                                  isScrollable: true,
-                                                  labelColor: colorManager.primary,
-                                                  unselectedLabelColor:  colorManager.white,
-                                                  indicator: BoxDecoration(
-                                                    borderRadius: BorderRadius.circular(30.0),
-                                                    color: colorManager.greywithOpacity,
+
+                          Container(
+                                      padding: EdgeInsets.only(top:20),
+                                     width: MediaQuery.of(context).size.width,
+                                       //height: MediaQuery.of(context).size.height,
+                                       child: Form(
+                                          key: _Formkey,
+                                         child: Container(
+                                          // height: MediaQuery.of(context).size.height,
+                                           child: Column(
+                                              children: [
+                                                ProfileWidget(
+                                                    imagePath: Constants.imagePath,
+                                                    isEdit: true,
+                                                    onClicked: () {
+                                                      bool canEditImage=Constants.canUpload!;
+                                                      if(canEditImage== false)
+                                                      {
+                                                        displayDialoge();
+                                                      }
+                                                      showImagePicker(context);
+                                                      },
+                                               ),
+                                                //const SizedBox(height: 20),
+                                                Container(//child:Align(
+                                                  alignment: Alignment.center,
+                                                  padding: EdgeInsets.all(10),
+                                                  width: MediaQuery.of(context).size.width,
+                                                  decoration: BoxDecoration(
+                                                    color: Colors.grey[300],
+                                                      borderRadius: BorderRadius.circular(30.0,)),
+
+                                                    child: TabBar(
+                                                      controller: _tabController,
+                                                      isScrollable: true,
+                                                      labelColor: colorManager.primary,
+                                                      unselectedLabelColor:  colorManager.white,
+                                                      indicator: BoxDecoration(
+                                                        borderRadius: BorderRadius.circular(30.0),
+                                                        color: colorManager.greywithOpacity,
+                                                      ),
+                                                      tabs:[Tab(text:AppStrings.BasicData),
+                                                        Tab(text:AppStrings.Skills),
+                                                        Tab(text: AppStrings.AcadmicDegree,)],
+                                                    ),
                                                   ),
-                                                  tabs:const [Tab(text:"Basic Data"),Tab(text:"Skills"),Tab(text: "AcademicDegrees",)],
-                                                ),
-                                              ),
-                                            ),
-                                   ]
-                                       ),
-                                     )
-                                   )
-                                 )
-                              ),
+
+                                       ]
+                                           ),
+                                         )
+                                       )
+                                     ),
+                          ),
+
+                            //  ),
               // ),
 
-                       Expanded(
+                      Flexible(
                         flex: 2,
-                        child: TabBarView(
-                              controller: _tabController,
-                              children:  [
-                                BasicDataView(),
-                                EmployeeSkillsView(),
-                                EmployeeSkillsView()
-                                 ],
-                            )
+                        child:Container(
+                          width: MediaQuery.of(context).size.width,
+                          //height: MediaQuery.of(context).size.height,
+                          child: TabBarView(
+                                  controller: _tabController,
+                                  children: [
 
-                        )],
-                      ),
+                                    BasicDataView(),
+                                    EmployeeSkillsView(),
+                                    EmployeeSkillsView()
+                                     ],
+                                ),
+                        ),
+
+
+                       ),
+                      ]),
                     ),
-                  )
-          );
+
+          ));
   }
 
 

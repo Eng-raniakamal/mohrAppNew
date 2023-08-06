@@ -100,7 +100,6 @@ class _userViewState extends State<userView> {
           ListView(
                 physics: const BouncingScrollPhysics(),
                 children: [
-
                   StreamBuilder<EmployeeDataModel>(
                       stream: _viewModel.outputUserData,
                       builder: (context, snapshot) {
@@ -169,7 +168,7 @@ class _userViewState extends State<userView> {
                               Center(child:SizedBox(width: 200,
                                   child:
 
-                                  buildUpgradeButton(AppStrings.Request.tr(),colorManager.lightprimary),
+                                  buildUpgradeButton(AppStrings.Requests.tr(),colorManager.lightprimary),
 
                               )
                               )
@@ -187,92 +186,196 @@ class _userViewState extends State<userView> {
   }
 
   Widget buildUpgradeButton(String ReqName,Color bgColor) {
-
-    switch (ReqName) {
-      case "Vacation Request":
-        return Hero(
-              tag: ReqName,
-              transitionOnUserGestures: true,
-              child: InkWell(
-                  onTap: () {
-                    Navigator.of(context).pushReplacementNamed(Routes.Vacations);
-                  },
-                  child: Column(
-                    children: const [
-                      SizedBox(width: 70,height: 70,
-                        child: Image(image: AssetImage(ImageAssets.Vacation),
-                          fit: BoxFit.contain,
-                        ),
-                      ),
-                      Text("Vacation")
-                    ],
-                  )
-              )
-
-        );
-      case "Salary":
-        return Hero(
-            tag: ReqName,
-            transitionOnUserGestures: true,
-            child: InkWell(
-                onTap: () {
-                  Navigator.of(context).pushReplacementNamed(Routes.salary);
-                },
-                child: Column(
-                  children:const [
-                     SizedBox(width: 70,height: 70,
-                       child: Image(image: AssetImage(ImageAssets.salary),
-                        fit: BoxFit.contain,
-                    ),
-                     ),
-                    Text("Salary")
-                  ],
-                )
+if(ReqName==AppStrings.Vacation.tr())
+  {
+    return Hero(
+        tag: ReqName,
+        transitionOnUserGestures: true,
+        child: InkWell(
+            onTap: () {
+              Navigator.of(context).pushReplacementNamed(Routes.Vacations);
+            },
+            child: Column(
+              children: [
+                SizedBox(width: 70,height: 70,
+                  child: Image(image: AssetImage(ImageAssets.Vacation),
+                    fit: BoxFit.contain,
+                  ),
+                ),
+                Text(AppStrings.Vacation.tr())
+              ],
             )
-        );
-      case "Attendance":
-        return Hero(
-            tag: ReqName,
-            transitionOnUserGestures: true,
-            child: InkWell(
-                onTap: () {
+        )
 
-                },
-                child: Column(mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children:const [
-                     SizedBox(width: 70,height: 70,
-                       child: Image(image: AssetImage(ImageAssets.attendance),
-                       fit: BoxFit.contain,
-                    ),
-                     ),
-                    SizedBox(width: 80,height: 70,child: Text("Attendance"))
-                  ],
-                )
-            )
-        );
-      case "Request":
-        return Hero(
-            tag: ReqName,
-            transitionOnUserGestures: true,
-            child: InkWell(
-                onTap: () {
-                },
-                child: Column(
-                  children:const [
-                    SizedBox(width: 70,height: 70,
-                      child: Image(image: AssetImage(ImageAssets.requests),
-                        fit: BoxFit.contain,
-                      ),
-                    ),
-                  SizedBox(width:70,height: 70,child: Text("Requests"))
-                  ],
-                )
-            )
-        );
-      default:
-        return Container();
-    }
+    );
+  }
+if(ReqName==AppStrings.Salary.tr())
+  { return Hero(
+      tag: ReqName,
+      transitionOnUserGestures: true,
+      child: InkWell(
+          onTap: () {
+            Navigator.of(context).pushReplacementNamed(Routes.salary);
+          },
+          child: Column(
+            children:[
+              SizedBox(width: 70,height: 70,
+                child: Image(image: AssetImage(ImageAssets.salary),
+                  fit: BoxFit.contain,
+                ),
+              ),
+              Text(AppStrings.Salary.tr())
+            ],
+          )
+      )
+  );}
+ if(ReqName==AppStrings.Salary.tr())
+  {return Hero(
+      tag: ReqName,
+      transitionOnUserGestures: true,
+      child: InkWell(
+          onTap: () {
+
+          },
+          child: Column(mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children:[
+              SizedBox(width: 70,height: 70,
+                child: Image(image: AssetImage(ImageAssets.attendance),
+                  fit: BoxFit.contain,
+                ),
+              ),
+              SizedBox(width: 80,height: 70,child: Text(AppStrings.Attendance.tr()))
+            ],
+          )
+      )
+  );}
+ if(ReqName==AppStrings.Attendance.tr())
+  {  return Hero(
+      tag: ReqName,
+      transitionOnUserGestures: true,
+      child: InkWell(
+          onTap: () {
+
+          },
+          child: Column(mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children:[
+              SizedBox(width: 70,height: 70,
+                child: Image(image: AssetImage(ImageAssets.attendance),
+                  fit: BoxFit.contain,
+                ),
+              ),
+              SizedBox(width: 80,height: 70,child: Text(AppStrings.Attendance.tr()))
+            ],
+          )
+      )
+  );}
+if(ReqName==AppStrings.Requests.tr())
+  {return Hero(
+      tag: ReqName,
+      transitionOnUserGestures: true,
+      child: InkWell(
+          onTap: () {
+          },
+          child: Column(
+            children: [
+              SizedBox(width: 70,height: 70,
+                child: Image(image: AssetImage(ImageAssets.requests),
+                  fit: BoxFit.contain,
+                ),
+              ),
+              SizedBox(width:70,height: 70,child: Text(AppStrings.Requests.tr()))
+            ],
+          )
+      )
+  );}
+return Container();
+    // switch (ReqName) {
+    //   case "Vacation":
+    //     return Hero(
+    //           tag: ReqName,
+    //           transitionOnUserGestures: true,
+    //           child: InkWell(
+    //               onTap: () {
+    //                 Navigator.of(context).pushReplacementNamed(Routes.Vacations);
+    //               },
+    //               child: Column(
+    //                 children: [
+    //                   SizedBox(width: 70,height: 70,
+    //                     child: Image(image: AssetImage(ImageAssets.Vacation),
+    //                       fit: BoxFit.contain,
+    //                     ),
+    //                   ),
+    //                   Text(AppStrings.Vacation.tr())
+    //                 ],
+    //               )
+    //           )
+    //
+    //     );
+    //   case "Salary":
+    //     return Hero(
+    //         tag: ReqName,
+    //         transitionOnUserGestures: true,
+    //         child: InkWell(
+    //             onTap: () {
+    //               Navigator.of(context).pushReplacementNamed(Routes.salary);
+    //             },
+    //             child: Column(
+    //               children:[
+    //                  SizedBox(width: 70,height: 70,
+    //                    child: Image(image: AssetImage(ImageAssets.salary),
+    //                     fit: BoxFit.contain,
+    //                 ),
+    //                  ),
+    //                 Text(AppStrings.Salary.tr())
+    //               ],
+    //             )
+    //         )
+    //     );
+    //   case "Attendance":
+    //     return Hero(
+    //         tag: ReqName,
+    //         transitionOnUserGestures: true,
+    //         child: InkWell(
+    //             onTap: () {
+    //
+    //             },
+    //             child: Column(mainAxisAlignment: MainAxisAlignment.center,
+    //               crossAxisAlignment: CrossAxisAlignment.center,
+    //               children:[
+    //                  SizedBox(width: 70,height: 70,
+    //                    child: Image(image: AssetImage(ImageAssets.attendance),
+    //                    fit: BoxFit.contain,
+    //                 ),
+    //                  ),
+    //                 SizedBox(width: 80,height: 70,child: Text(AppStrings.Attendance.tr()))
+    //               ],
+    //             )
+    //         )
+    //     );
+    //   case "Requests":
+    //     return Hero(
+    //         tag: ReqName,
+    //         transitionOnUserGestures: true,
+    //         child: InkWell(
+    //             onTap: () {
+    //             },
+    //             child: Column(
+    //               children: [
+    //                 SizedBox(width: 70,height: 70,
+    //                   child: Image(image: AssetImage(ImageAssets.requests),
+    //                     fit: BoxFit.contain,
+    //                   ),
+    //                 ),
+    //               SizedBox(width:70,height: 70,child: Text(AppStrings.Requests.tr()))
+    //               ],
+    //             )
+    //         )
+    //     );
+    //   default:
+    //     return Container();
+    // }
   }
 
 

@@ -1,12 +1,18 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mohr_hr/domain/model/navigationManu.dart';
 
 import 'package:mohr_hr/presentation/widgets/sidebar/slideWidget.dart';
 import 'package:mohr_hr/presentation/resources/colors.dart';
+import 'package:mohr_hr/presentation/resources/language_manager.dart';
+import 'package:mohr_hr/presentation/settings/settings_Screen.dart';
 import '../../editEmployee/View/editEmployee.dart';
 import '../../resources/routes.dart';
+//import 'package:easy_localization/easy_localization.dart';
+
+import 'dart:math' as math;
 import '../../widgets/navigator_bar.dart';
 import '../editProfileScreen.dart';
 
@@ -14,6 +20,7 @@ class Employee extends StatelessWidget with NavigationStates{
 
   @override
   Widget build(BuildContext context) {
+
     //  var initialState;
     return Scaffold(
       bottomNavigationBar:
@@ -43,8 +50,9 @@ class Employee extends StatelessWidget with NavigationStates{
         Stack(
           children: [
             EmployeeEditView() ,
+
             SideBar(),
-          ],
+         ],
         ),
       ),
     );
@@ -55,6 +63,8 @@ class Employee extends StatelessWidget with NavigationStates{
     const Icon(Icons.notifications,size: 30,color: colorManager.white),
 
   ];
+
+
 }
 
 

@@ -45,26 +45,42 @@ class AppStrings {
   static const String Loan = "Loan";
   static const String overTime = "Over Time";
   static const String Administration = "Administration";
-  static const String Vacation = "Vacation";
+
   static const String Permissions = "Permissions";
   static const String Financial = "Financial";
   static const String Mission = "Mission";
 
+  static const String Vacation = "Vacation";
   static const String Salary = "Salary";
   static const String Attendance = "Attendance";
-  static const String Request = "Request";
+  static const String Requests = "Requests";
+
+  static const String BasicData = "Basic Data";
+  static const String Skills = "Skills";
+  static const String AcadmicDegree = "Acadmic Degree";
+
 
 
   static const String details = "details";
   static const String about = "about";
   static const String changeLanguage = "change language";
   static const String logout = "logout";
+  static const String Start = "start";
+  static const String spalshText ="spalshText";
+      //
+      //
+//slide menu
+  static const String Welcome = "Welcome";
+  static const String Mohr = "Mohr";
 
-  static const String spalshText="Welcome to MOHR Employee Self-Service Mobile App."
-      " To use this app, you should have a username and password,"
-      "most probable provided by you HR department or IT department."
-      " For iPhone users, you should have a minimum requirements of IOS version 00.00.00"
-      "For Android users, you should have a minimum requirement of Android version 00.00.00";
+  static const String Home= "Home";
+  static const String profile= "profile";
+  static const String Settings="Settings";
+      // "Welcome to MOHR Employee Self-Service Mobile App."
+      // " To use this app, you should have a username and password,"
+      // "most probable provided by you HR department or IT department."
+      // " For iPhone users, you should have a minimum requirements of IOS version 00.00.00"
+      // "For Android users, you should have a minimum requirement of Android version 00.00.00";
 
   // error handler
   static const String badRequestError = "bad request error";
