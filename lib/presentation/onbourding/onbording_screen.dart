@@ -99,7 +99,7 @@ class _OnboadingScreenState extends State<OnboadingScreen> {
                     ),
 
                     const Spacer(flex: 1),
-                   ToggleSwitch(
+                ToggleSwitch(
                   minWidth: 90.0,
                   initialLabelIndex: 1,
                   cornerRadius: 20.0,

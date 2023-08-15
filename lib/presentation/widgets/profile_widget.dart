@@ -18,7 +18,7 @@ class ProfileWidget extends StatelessWidget {
   const ProfileWidget({
     Key? key,
     required this.imagePath,
-    this.isEdit = false,
+    this.isEdit = true,
     required this.onClicked,
   }) : super(key: key);
 
@@ -42,45 +42,40 @@ class ProfileWidget extends StatelessWidget {
   // create the image profile and edit the image
   // from gallary and the camera
   Widget buildImage(BuildContext context) {
-    try {
+   // try {
       final image = NetworkImage(imagePath);
       return ClipOval(
         child: Material(
           color: Colors.transparent,
           child: Ink.image(
-            //onImageError: AssetImage(ImageAssets.noPhoto) ,
-            // myMarkerThumb != 'noImage' ?
-            // NetworkImage(myMarkerThumb) :
-            // Image.asset('assets/images/noImageAvailable.png').image,
-            image: image,
-            onImageError: ( Object exception, StackTrace? stackTrace) {
-             Image(image: AssetImage(ImageAssets.noPhoto));
-            },
-            fit: BoxFit.cover,
-            width: 110,
-            height: 110,
-            child: InkWell(onTap:
-            onClicked),
-          ),
-        ),
-      );
-    }
-    catch (e){
-      return ClipOval(
-        child: Material(
-          color: Colors.transparent,
-          child: Ink.image(
-            image:  const AssetImage(ImageAssets.noPhoto),
-            fit: BoxFit.cover,
-            width: 110,
-            height: 110,
-            child: InkWell(onTap:
-            onClicked),
-          ),
-        ),
-      );
 
-    }
+            image: image,
+
+            fit: BoxFit.cover,
+            width: 110,
+            height: 110,
+            child: InkWell(onTap:
+            onClicked),
+          ),
+        ),
+      );
+   // }
+    // catch (e){
+    //   return ClipOval(
+    //     child: Material(
+    //       color: Colors.transparent,
+    //       child: Ink.image(
+    //         image:  const AssetImage(ImageAssets.noPhoto),
+    //         fit: BoxFit.cover,
+    //         width: 110,
+    //         height: 110,
+    //         child: InkWell(onTap:
+    //         onClicked),
+    //       ),
+    //     ),
+    //   );
+    //
+    // }
   }
 
   Widget buildEditIcon(Color color) => buildCircle(

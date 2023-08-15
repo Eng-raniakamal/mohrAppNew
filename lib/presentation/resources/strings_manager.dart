@@ -33,8 +33,10 @@ class AppStrings {
   static const String profilePicture = "upload profile picture";
   static const String photoGalley = "gallery";
   static const String photoCamera = "camera";
+  static const String Gallary = "Gallary";
+  static const String Camera = "Camera";
   static const String register = "register";
-  static const String contact_us = "contact us";
+  static const String contact_us = "Contact us";
   static const String home = "home";
   static const String Notifications = "Notification";
   static const String Alerts = "Alerts";
@@ -55,10 +57,24 @@ class AppStrings {
   static const String Attendance = "Attendance";
   static const String Requests = "Requests";
 
-  static const String BasicData = "Basic Data";
+  static const String BasicData = "BasicData";
   static const String Skills = "Skills";
-  static const String AcadmicDegree = "Acadmic Degree";
-
+  static const String AcadmicDegree = "AcadmicDegree";
+//basic data
+  static const String ArabicName = "ArabicName";
+  static const String EnglishName= "EnglishName";
+  static const String BirthData = "BirthData";
+  static const String NationalId = "NationalId";
+  static const String SocialId= "SocialId";
+  static const String Email = "Email";
+  static const String Phone = "Phone";
+  static const String EmergencyNumber = "EmergencyNumber";
+  static const String Country= "Country";
+  static const String Governorate = "Governorate";
+  static const String District = "District";
+  static const String Address = "Address";
+  static const String PoBox = "POBox";
+  static const String ZipCode = "zipCode";
 
 
   static const String details = "details";

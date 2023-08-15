@@ -38,10 +38,12 @@ class _SettingsPageState extends State<SettingsPage> {
         ListView(
           padding: const EdgeInsets.all(AppPadding.p8),
           children: [
+            SizedBox(height: 20,),
             ListTile(
+
               title: Text(
                 AppStrings.changeLanguage,
-                  style: TextStyle(fontSize: 18)
+                  style: TextStyle(fontSize: 20)
                // style: Theme.of(context).textTheme.headline2,
               ).tr(),
               leading: SvgPicture.asset(ImageAssets.changeLangIc),

@@ -51,13 +51,11 @@ class _userViewState extends State<userView> {
   _bind(){
     _viewModel.start();
   }
-
   @override
   void initState() {
     _bind();
     super.initState();
   }
-
   @override
   Widget build(BuildContext context) {
     return ThemeSwitchingArea(
@@ -73,7 +71,6 @@ class _userViewState extends State<userView> {
         )
     );
   }
-
   Widget _getContentWidget() {
     return Scaffold(
       extendBodyBehindAppBar: true,
@@ -117,13 +114,13 @@ class _userViewState extends State<userView> {
                                             mainAxisAlignment: MainAxisAlignment
                                                 .start,
                                             children: [
-                                              Expanded(
+                                              Flexible(
                                                   flex: 2,
 
                                                   child: Padding(
                                                     padding: const EdgeInsets
-                                                        .only(
-                                                        left: 30.0, bottom: 10),
+                                                        .only(right: 10.0,
+                                                        left: 20.0, bottom: 0),
                                                       child: _getEmployeeDataWidget(
                                                         snapshot.data),
                                                   )
@@ -148,9 +145,8 @@ class _userViewState extends State<userView> {
                       const SizedBox(height: 10,),
                       Container(
                             child: Column(children:[
-
                              Row(children:[
-                            //SizedBox(width:5),
+                             //SizedBox(width:5),
                               Center(child:SizedBox(width: 200,
                                 child:
                                buildUpgradeButton(AppStrings.Vacation.tr(),colorManager.greywithOpacity))),
@@ -162,29 +158,19 @@ class _userViewState extends State<userView> {
                              Row(children:[
                               Center(child:SizedBox(width: 200,
                                   child:
-
                                   buildUpgradeButton(AppStrings.Attendance.tr(),colorManager.lightprimary))),
-
                               Center(child:SizedBox(width: 200,
                                   child:
-
                                   buildUpgradeButton(AppStrings.Requests.tr(),colorManager.lightprimary),
-
                               )
                               )
                              ]),
 
     ]),
-
-
-                        ),
-
+    ),
     ]),
     );
-
-
   }
-
   Widget buildUpgradeButton(String ReqName,Color bgColor) {
 if(ReqName==AppStrings.Vacation.tr())
   {
@@ -377,8 +363,6 @@ return Container();
     //     return Container();
     // }
   }
-
-
   Widget? buildcountanir(String reqName) {
     Container(
       child: Row(
@@ -403,26 +387,27 @@ return Container();
     if (userData != null) {
       var empData = userData.userDataModel;
       String Name;
-      if(_appPreferences.getAppLanguage()=="ENGLISH")
+      String? language=_appPreferences.getLanguage();
+      if(language=="en")
         {
        Name=empData.EnglishName.toString();}
       else
         {
-          Name=empData.EnglishName.toString();
+          Name=empData.ArabicName.toString();
         }
       String Email=empData.UserName.toString();
       String Code=empData.EmployeeCode.toString();
      return Column(
           children: [
            Text(Name,
-           style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 24,
+           style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20,
                color: colorManager.white),
     ),
-           const SizedBox(height: 4),
+           const SizedBox(height: 3),
           Text(Email,
            style: const TextStyle(color: colorManager.white),
         ),
-           const SizedBox(height: 4),
+           const SizedBox(height: 3),
           Text(Code,
             style: const TextStyle(color: colorManager.white),)],
      );}
@@ -440,17 +425,17 @@ return Container();
     bool canEditImage=empData?["CanUploadMasterImage"];
      // String imagePath=" ";
      return ProfileWidget(
-          imagePath: URLimage!,
+          imagePath: URLimage,
           onClicked: () {
-            // if(canEditImage == true)
-            // {
-            //   displayDialoge();
-            // }
-            // else
-            //   {
+            if(canEditImage == true)
+            {
+              displayDialoge();
+            }
+            else
+              {
                 resetModules();
                 Navigator.of(context).pushReplacementNamed(Routes.editProfileRoute);
-             // }
+              }
           }
         // Navigator.of(context).push(
         //   MaterialPageRoute(builder: (context) => editProfileScreen()),
@@ -460,10 +445,7 @@ return Container();
       return Container();
     }
   }
-
-
-  Widget _buildItemList(BuildContext context, int index)
-  {
+  Widget _buildItemList(BuildContext context, int index) {
     return Container(
 
         child:Column(
@@ -481,14 +463,12 @@ return Container();
         )
     );
   }
-
   @override
   void dispose() {
     _viewModel.dispose();
     super.dispose();
   }
-  Widget? displayDialoge()
-  {
+  Widget? displayDialoge() {
     showAnimatedDialog(
       context: context,
       barrierDismissible: true,
@@ -506,7 +486,6 @@ return Container();
       duration: const Duration(seconds: 1),
     );
   }
-
 }
 
 

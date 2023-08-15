@@ -30,7 +30,7 @@ class clipPathWidgets extends StatelessWidget {
     child: Container(
     width: MediaQuery.of(context).size.width,
     height: 150,
-    color: colorManager.lightprimary,
+    color: colorManager.primary,
     // decoration:  BoxDecoration(
     // gradient: LinearGradient(
     // colors: [colorManager.primary, colorManager.lightprimary, colorManager.grey],

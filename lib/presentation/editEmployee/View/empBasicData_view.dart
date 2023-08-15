@@ -1,11 +1,12 @@
 
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 import 'package:flutter/material.dart';
 import 'package:mohr_hr/application/di.dart';
 import 'package:mohr_hr/domain/model/model.dart';
 import 'package:mohr_hr/presentation/editEmployee/ViewModel/displayEmpBasicData_viewModel.dart';
-
+import 'package:mohr_hr/presentation/resources/strings_manager.dart';
 import 'package:mohr_hr/presentation/resources/colors.dart';
 import '../../../application/app_prefs.dart';
 import '../../common/state_renderer/state_render_impl.dart';
@@ -151,7 +152,7 @@ class _BasicDataViewState extends State<BasicDataView> {
 
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
-                                      Text("Arabic Name", textAlign: TextAlign.start,),
+                                      Text(AppStrings.ArabicName.tr(), textAlign: TextAlign.start,),
                                       StreamBuilder<BasicDataModel>(
                                         stream: _displayviewModel.outputEmpBasicData,
                                         builder: (context, snapshot) {
@@ -180,7 +181,7 @@ class _BasicDataViewState extends State<BasicDataView> {
                                     child: Column(
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
-                                        Text("EngishName"),
+                                        Text(AppStrings.EnglishName.tr()),
                                         StreamBuilder<BasicDataModel>(
                                           stream: _displayviewModel.outputEmpBasicData,
                                           builder: (context, snapshot) {
@@ -211,7 +212,7 @@ class _BasicDataViewState extends State<BasicDataView> {
                                       right: 28),
                                   child: Column(crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
-                                      Text("BirthDay", textAlign: TextAlign.start,),
+                                      Text(AppStrings.BirthData.tr(), textAlign: TextAlign.start,),
                                       StreamBuilder<BasicDataModel>(
                                         stream: _displayviewModel.outputEmpBasicData,
                                         builder: (context, snapshot) {
@@ -225,7 +226,7 @@ class _BasicDataViewState extends State<BasicDataView> {
                                             }
                                           else
                                           {
-                                            birthDate=DateTime.parse("dd/mm/yyyy");
+                                            //birthDate=DateTime.parse("dd/mm/yyyy");
                                           }
                                           birthDate = DateTime.parse(dateString!);
                                           return TextFormField(onTap: () async {
@@ -267,7 +268,7 @@ class _BasicDataViewState extends State<BasicDataView> {
                                   child: Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
-                                      Text("National Id", textAlign: TextAlign.start,),
+                                      Text(AppStrings.NationalId.tr(), textAlign: TextAlign.start,),
                                       StreamBuilder<BasicDataModel>(
                                         stream: _displayviewModel.outputEmpBasicData,
                                         builder: (context, snapshot) {
@@ -294,7 +295,7 @@ class _BasicDataViewState extends State<BasicDataView> {
                                   child: Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
-                                      Text("social Id", textAlign: TextAlign.start,),
+                                      Text(AppStrings.SocialId.tr(), textAlign: TextAlign.start,),
                                       StreamBuilder<BasicDataModel>(
                                         stream: _displayviewModel.outputEmpBasicData,
                                         builder: (context, snapshot) {
@@ -321,7 +322,7 @@ class _BasicDataViewState extends State<BasicDataView> {
                                     child: Column(
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
-                                          Text("Email", textAlign: TextAlign.start,),
+                                          Text(AppStrings.Email.tr(), textAlign: TextAlign.start,),
                                           StreamBuilder<BasicDataModel>(
                                             stream: _displayviewModel.outputEmpBasicData,
                                             builder: (context, snapshot) {
@@ -346,7 +347,7 @@ class _BasicDataViewState extends State<BasicDataView> {
                                     child: Column(
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
-                                          Text("Phone", textAlign: TextAlign.start,),
+                                          Text(AppStrings.Phone.tr(), textAlign: TextAlign.start,),
                                           StreamBuilder<BasicDataModel>(
                                             stream: _displayviewModel.outputEmpBasicData,
                                             builder: (context, snapshot) {
@@ -372,7 +373,7 @@ class _BasicDataViewState extends State<BasicDataView> {
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
                                           Text(
-                                            "Emergency Number", textAlign: TextAlign.start,),
+                                            AppStrings.EmergencyNumber.tr(), textAlign: TextAlign.start,),
                                           StreamBuilder<BasicDataModel>(
                                             stream: _displayviewModel.outputEmpBasicData,
                                             builder: (context, snapshot) {
@@ -400,8 +401,8 @@ class _BasicDataViewState extends State<BasicDataView> {
                                         child: Column(
                                             crossAxisAlignment: CrossAxisAlignment.start,
                                             children: [
-                                              Text("Country", textAlign: TextAlign.start,),
-                                              StreamBuilder<BasicDataModel>(
+                                              Text(AppStrings.Country.tr(), textAlign: TextAlign.start,),
+                                              StreamBuilder<BasicDataModel?>(
                                                 stream: _displayviewModel.outputEmpBasicData,
                                                 // stream: _saveViewModel.outputErrorPassword,
                                                 builder: (context, snapshot) {
@@ -422,7 +423,7 @@ class _BasicDataViewState extends State<BasicDataView> {
                                             crossAxisAlignment: CrossAxisAlignment.start,
                                             children: [
                                               Text(
-                                                "Governorate", textAlign: TextAlign.start,),
+                                                AppStrings.Governorate.tr(), textAlign: TextAlign.start,),
                                               StreamBuilder<BasicDataModel>(
                                                 stream: _displayviewModel.outputEmpBasicData,
                                                 // stream: _saveViewModel.outputErrorPassword,
@@ -449,7 +450,7 @@ class _BasicDataViewState extends State<BasicDataView> {
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         mainAxisAlignment: MainAxisAlignment.start,
                                         children: [
-                                          Text("District",textAlign: TextAlign.start,),
+                                          Text(AppStrings.District.tr(),textAlign: TextAlign.start,),
                                           StreamBuilder<BasicDataModel>(
                                             stream: _displayviewModel.outputEmpBasicData,
 
@@ -469,8 +470,8 @@ class _BasicDataViewState extends State<BasicDataView> {
                                     child: Column(
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
-                                          Text("Address", textAlign: TextAlign.start,),
-                                          StreamBuilder<BasicDataModel?>(
+                                          Text(AppStrings.Address.tr(), textAlign: TextAlign.start,),
+                                          StreamBuilder<BasicDataModel>(
                                             stream: _displayviewModel.outputEmpBasicData,
                                             // stream: _saveViewModel.outputErrorPassword,
                                             builder: (context, snapshot) {
@@ -498,7 +499,7 @@ class _BasicDataViewState extends State<BasicDataView> {
                                     child: Column(
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
-                                          Text("POBox", textAlign: TextAlign.start,),
+                                          Text(AppStrings.PoBox.tr(), textAlign: TextAlign.start,),
                                           StreamBuilder<BasicDataModel>(
                                             stream: _displayviewModel.outputEmpBasicData,
                                             builder: (context, snapshot) {
@@ -523,7 +524,7 @@ class _BasicDataViewState extends State<BasicDataView> {
                                     child: Column(
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
-                                          const Text("zipCode", textAlign: TextAlign.start,),
+                                           Text(AppStrings.ZipCode.tr(), textAlign: TextAlign.start,),
                                           StreamBuilder<BasicDataModel>(
                                             // stream: _displayviewModel.outputEmpBasicData,
                                             stream: _displayviewModel.outputEmpBasicData,
@@ -569,7 +570,9 @@ class _BasicDataViewState extends State<BasicDataView> {
   }
   Widget _getcountry(List<CountryModel>? country, int? selectedValue) {
     if (selectedValue == null) {
-      selectedValue = country![0].countryId;
+      if( country![0].countryId != null) {
+        selectedValue = country![0].countryId;
+      }
     }
     return DropdownButton(
       value: selectedValue,

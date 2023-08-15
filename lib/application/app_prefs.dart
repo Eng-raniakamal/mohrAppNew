@@ -24,6 +24,15 @@ class AppPreferences {
     }
   }
 
+
+
+   String? getLanguage()  {
+    String? lang = _sharedPreferences.getString(PREFS_KEY_LANG);
+//language=null mean the user didn't save lang in shared preference
+      return lang;
+
+  }
+
   Future <void> changeAppLanguage()async{
     String currentLange= await getAppLanguage();
     if(currentLange==LanguageType.ARABIC.getValue())

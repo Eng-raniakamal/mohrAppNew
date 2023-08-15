@@ -86,11 +86,7 @@ class _SideBarState extends State<SideBar> with SingleTickerProviderStateMixin<S
         stream: isSidebarOpenedStream,
         builder: (context, isSideBarOpenedAsync) {
           return
-            // Transform(
-            // //alignment: Alignment.center,
-            // transform: Matrix4.rotationY( isRtl() ? math.pi : 0),
-            //
-            // child:
+
             AnimatedPositioned(
               duration: _animationDuration,
               top: 0,
@@ -121,7 +117,7 @@ class _SideBarState extends State<SideBar> with SingleTickerProviderStateMixin<S
                             ),
                             subtitle: Text(
                               AppStrings.Mohr.tr(),
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color: Color(0xFF1BB5FD),
                                 fontSize: 20,
                               ),
@@ -155,10 +151,7 @@ class _SideBarState extends State<SideBar> with SingleTickerProviderStateMixin<S
                             title: AppStrings.profile.tr(),
                             onTap: () {
                               onIconPressed();
-                             // initEmployeeSkillsModule();
-                             // initEmployeeBasicDataModule();
                               Navigator.of(context).pushReplacementNamed(Routes.employee);
-                              //BlocProvider.of<NavigationBloc>(context).add(NavigationEvents.MyProfileClickedEvent);
                             },
                           ),
                           MenuItems(
@@ -166,11 +159,8 @@ class _SideBarState extends State<SideBar> with SingleTickerProviderStateMixin<S
                             title: AppStrings.Settings.tr(),
                             onTap: () {
                               onIconPressed();
-                              // initEmployeeSkillsModule();
-                              // initEmployeeBasicDataModule();
                               Navigator.of(context).pushReplacementNamed(Routes.settings);
-                              //BlocProvider.of<NavigationBloc>(context).add(NavigationEvents.MyProfileClickedEvent);
-                            },
+                              },
                           ),
                         ],
                       ),
@@ -188,8 +178,8 @@ class _SideBarState extends State<SideBar> with SingleTickerProviderStateMixin<S
                         child: ClipPath(
                           clipper: CustomMenuClipper(),
                           child: Container(
-                            width: 35,
-                            height: 110,
+                            width: 30,
+                            height: 90,
                            // color: const Color(0xFF262AAA),
                             color:colorManager.primary,
                             alignment: Alignment.centerLeft,

@@ -14,7 +14,15 @@ AppBar buildAppBarMain(BuildContext context) {
 
   return AppBar(
     automaticallyImplyLeading: false,
-    backgroundColor: colorManager.lightprimary,
+    backgroundColor: colorManager.primary,
+
+    shape: ShapeBorder.lerp(
+      RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(0.0),
+      ),
+      null,
+      0,
+    ),
 
 //),
     elevation: 0,

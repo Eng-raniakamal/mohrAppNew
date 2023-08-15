@@ -11,6 +11,7 @@ import 'package:mohr_hr/presentation/editEmployee/ViewModel/saveEmpAcademicDegre
 import 'package:mohr_hr/presentation/resources/colors.dart';
 import '../../../application/app_prefs.dart';
 import '../../common/state_renderer/state_render_impl.dart';
+import '../../resources/strings_manager.dart';
 
 
 class EmployeeAcademicDegreeView extends StatefulWidget {
@@ -86,12 +87,12 @@ class _EmployeeAcademicDegreeViewState extends State<EmployeeAcademicDegreeView>
       SizedBox(
         height: 50,
         child: AppBar(
-          bottom: const TabBar(
+          bottom: TabBar(
             tabs: [
               Tab(
-                  icon: Icon(Icons.account_box),text: "Basic Data"),
+                  icon: Icon(Icons.account_box),text: AppStrings.BasicData),
               Tab(
-                  icon: Icon(Icons.abc,),text: "AcademicDegree"),
+                  icon: Icon(Icons.abc,),text: AppStrings.AcadmicDegree),
             ],
           ),
         ),

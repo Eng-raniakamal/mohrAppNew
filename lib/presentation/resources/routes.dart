@@ -31,7 +31,8 @@ class Routes
   static const String loginRoute="/login";
   static const String profileRoute="/user";
   static const String HomeRoute="/home/Home.dart";
-  static const String editProfileRoute="/editEmployee/editEmployee.dart";
+  static const String editProfileRoute="/user/layout";
+    //  "/editEmployee/editEmployee.dart";
   static const String main="/main";
   static const String settings="/settings";
   static const String employee="/user/layout";
@@ -69,7 +70,7 @@ class RouteGenerator {
           initQualificationModule();
           initDisplayEmployeeSkillsModule();
 
-        return MaterialPageRoute(builder: (_)=> const EmployeeEditView());
+        return MaterialPageRoute(builder: (_)=>  Employee());
 
       case Routes.settings:
           return MaterialPageRoute(builder: (_)=>  Settings());
