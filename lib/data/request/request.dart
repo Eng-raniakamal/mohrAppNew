@@ -1,4 +1,5 @@
 import 'package:mohr_hr/domain/model/model.dart';
+import 'package:mohr_hr/data/response/responses.dart';
 
 class LoginRequest {
   String email;
@@ -17,13 +18,12 @@ class GradeRequest
   String userId;
   GradeRequest(this.userId);
 
-}class UserRequest
+}
+class UserRequest
 {
   String userId;
   UserRequest(this.userId);
 }
-
-
 
 class EmployeeRequest {
   String? userId;
@@ -73,7 +73,6 @@ class BasicDataRequest {
   BasicDataRequest(this.userId, this.empId);
 }
 
-
 class displaySkillsRequest {
   String? userId;
   int? empId;
@@ -122,54 +121,24 @@ class Address
 {
   String addressText;
 int districtId;
-String poBox;
 String zipCode;
   Address(
       this.addressText,
       this.districtId,
-      this.poBox,
       this.zipCode);
 }
 
-
-
-
-
 class EmployeeBasicDataRequest
 {
-  String userId;
-  Employee employee;
-  Address address;
-  // int empId;
-  // String arabicName;
-  // String englishName;
-  // String birthDate;
-  // String nationalId;
-  // String socialId;
-  // String email;
-  // String phone;
-  // String emergency_Number;
-  // String addressText;
-  // int districtId;
-  // String poBox;
-  // String zipCode;
+String userId;
+  EmployeeSaveResponse employee;
+  AddressSaveResponse address;
+
   EmployeeBasicDataRequest(
       this.userId,
       this.employee,
       this.address
-      // this.empId,
-      // this.arabicName,
-      // this.englishName,
-      // this.birthDate,
-      // this.nationalId,
-      // this.socialId,
-      // this.email,
-      // this.phone,
-      // this.emergency_Number,
-      // this.addressText,
-      // this.districtId,
-      // this.poBox,
-      // this.zipCode
+
 );
 }
 
@@ -236,6 +205,13 @@ class VacationRequest
   VacationRequest(this.UserId);
 }
 
+// class VacationTypeRequest
+// {
+//   int id;
+//   String typeName;
+//   VacationTypeRequest(this.id,this.typeName);
+// }
+
 class SalaryRequest
 {
   String UserId;
@@ -246,4 +222,9 @@ class SalaryDetailsRequest
 {
   String userId;
   SalaryDetailsRequest(this.userId);
+}
+class AttendanceRequest
+{
+  String userId;
+  AttendanceRequest(this.userId);
 }

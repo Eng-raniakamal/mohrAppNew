@@ -4,6 +4,7 @@
 import 'package:dio/dio.dart';
 import 'package:mohr_hr/data/response/responses.dart';
 import 'package:mohr_hr/application/constants.dart';
+import 'package:mohr_hr/domain/model/model.dart';
 import 'package:retrofit/http.dart';
 
 import '../request/request.dart';
@@ -24,6 +25,9 @@ abstract class AppServiceClient{
   @GET(Constants.EmployeeUrl)
   Future<UserProfileResponse> getUserDataResponse(@Field("UserId") String userId);
 
+
+  @GET(Constants.getImageUrl)
+  Future<UserImageResponse> getUserImageResponse(@Field("UserId")String userId);
 
   @GET(Constants.DisplayEmployeeBasicData)
   Future<BasicDataResponse> DisplayBasicData
@@ -57,6 +61,10 @@ abstract class AppServiceClient{
   Future<VacationsResponse> getVacations
       (@Field("UserId") String userId);
 
+  @GET(Constants.vacationTypeUrl)
+  Future<VacationTypeResponse> getVacationType();
+
+
   @GET(Constants.salaryUrl)
   Future<SalaryResponse> getSalary
       (@Field("UserId") String userId);
@@ -69,30 +77,24 @@ abstract class AppServiceClient{
   (@Field("UserId") String userId);
 
 
-  @POST(Constants.SaveEmployeeBasicDataUrl)
-  Future<EmployeeBasicDataResponse> SaveEmployeBasicData
-      (@Field("UserId") String userId,
-      @Field("Employee") Employee employee,
-      @Field("Address") Address address,
-      // @Field("ArabicName") String ArabicName,
-      // @Field("EnglishName") String EnglishName,
-      // @Field("BirthDate") String BirthDate,
-      // @Field("NationalId") String NationalId,
-      // @Field("SocialId") String SocialId,
-      // @Field("Email") String Email,
-      // @Field("Phone") String Phone,
-      // @Field("EmergencyNumber") String EmergencyNumber,
-      // @Field("AddressText") String AddressText,
-      // @Field("DistrictId") int DistrictId,
-      // @Field("PoBox") String PoBox,
-      // @Field("ZipCode") String ZipCode,
-      );
+  @GET(Constants.AttendanceUrl)
+  Future<AttendanceResponse> getAttendance
+      (@Field("UserId") String userId);
+  // 'https://mohrapi.azurewebsites.net/api/Attendance?fromDate='+Constants.attendanceFrom.toString()+
+  // '&toDate='+Constants.attendanceTo.toString(),
 
+  @POST(Constants.SaveEmployeeBasicDataUrl)
+  Future<EmployeeBasicDataResponse> SaveEmployeBasicData(
+      @Header("userId") String userId,
+      @Field("Employee") EmployeeSaveResponse employee,
+      @Field("Address") AddressSaveResponse address,
+
+      );
 
 
   @POST(Constants.SaveEmpSkillsUrl)
   Future<saveEmpSkillsResponse> saveEmployeeSkillResponse
-      (@Field("UserId") String userId,
+      (@Header("UserId") String userId,
       @Field("Date") String date,
       @Field("GradeId") int gradeId,
       @Field("QualificationTypeId") int qualificationTypeId,

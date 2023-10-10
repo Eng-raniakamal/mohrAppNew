@@ -4,6 +4,7 @@ import 'package:mohr_hr/application/di.dart';
 import 'package:mohr_hr/domain/model/model.dart';
 import 'package:mohr_hr/presentation/common/state_renderer/state_render_impl.dart';
 import 'package:mohr_hr/presentation/resources/colors.dart';
+import 'package:mohr_hr/presentation/resources/routes.dart';
 import 'package:mohr_hr/presentation/widgets/profile_widget.dart';
 import '../../../../application/constants.dart';
 import '../viewModel/vacationViewModel.dart';
@@ -84,7 +85,11 @@ class _vacationsViewState extends State<vacationsView> {
                                     child:Text("Vaction Request",style: TextStyle(color: colorManager.white),),
                                     backgroundColor: colorManager.primary,//child widget inside this button
                                     shape:BeveledRectangleBorder(
-                                        borderRadius: BorderRadius.circular(10)), onPressed: () {  },)),
+                                        borderRadius: BorderRadius.circular(10)),
+                                    onPressed: ()
+                                     {
+                                      Navigator.of(context).pushReplacementNamed(Routes.VacationRequest);
+                                      },)),
 
                                 ],
                             ),

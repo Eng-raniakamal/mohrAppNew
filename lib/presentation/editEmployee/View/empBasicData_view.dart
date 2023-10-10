@@ -3,9 +3,12 @@ import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
 import 'package:mohr_hr/application/di.dart';
 import 'package:mohr_hr/domain/model/model.dart';
+import 'package:mohr_hr/domain/usecase/saveEmpBD_useCase.dart';
 import 'package:mohr_hr/presentation/editEmployee/ViewModel/displayEmpBasicData_viewModel.dart';
+import 'package:mohr_hr/presentation/editEmployee/ViewModel/saveEmpBD_viewModel.dart';
 import 'package:mohr_hr/presentation/resources/strings_manager.dart';
 import 'package:mohr_hr/presentation/resources/colors.dart';
 import '../../../application/app_prefs.dart';
@@ -22,13 +25,11 @@ class BasicDataView extends StatefulWidget {
 
 class _BasicDataViewState extends State<BasicDataView> {
 
-  final EmployeeBasicDataViewModel _displayviewModel = instance<
-      EmployeeBasicDataViewModel>();
-
- // final saveBDViewModel _saveViewModel=instance<saveBDViewModel>();
+  final EmployeeBasicDataViewModel _displayviewModel = instance<EmployeeBasicDataViewModel>();
+  saveBDViewModel? _saveViewModel;// =instance<saveBDViewModel>();
   final AppPreferences _appPreferences = instance<AppPreferences>();
   final _Formkey = GlobalKey<FormState>();
-
+  DateTime? birthDate;
   //
   final TextEditingController _ArabicNameEditingController = TextEditingController();
   final TextEditingController _EnglishNameEditingController = TextEditingController();
@@ -42,48 +43,58 @@ class _BasicDataViewState extends State<BasicDataView> {
   final TextEditingController _DistrictIdEditingController = TextEditingController();
   final TextEditingController _POBoxEditingController = TextEditingController();
   final TextEditingController _ZipCodeEditingController = TextEditingController();
-
+  int? empId;
   _blind() {
     _displayviewModel.start();
+    _displayviewModel.outputEmpBasicData.listen((data) async {
+      final _useCase = instance<saveEmpBasicDataUseCase>();
+      String userid= await _appPreferences.getUserToken();
+       empId=await _appPreferences.getEmpIdToken();
+      _saveViewModel= saveBDViewModel(_useCase,userid
+      //,data.employee!,data.address!
+       );
+    });
+
     _ArabicNameEditingController.addListener(()
     {
-    //_saveViewModel.setArabicName(_EnglishNameEditingController.text);
+    _saveViewModel!.setArabicName(_ArabicNameEditingController.text);
     }
     );
     _EnglishNameEditingController.addListener(() {
-    //  _saveViewModel.setEnglishName(_EnglishNameEditingController.text);
+     _saveViewModel!.setEnglishName(_EnglishNameEditingController.text);
     });
     _BirthDateEditingController.addListener(() {
-    //  _saveViewModel.setBirthDate(_BirthDateEditingController.text);
+    _saveViewModel!.setBirthDate(_BirthDateEditingController.text);
     });
     _NationalIdEditingController.addListener(() {
-    //  _saveViewModel.setNationalId(_NationalIdEditingController.text);
+     _saveViewModel!.setNationalId(_NationalIdEditingController.text);
     });
     _SocialIdEditingController.addListener(() {
-     // _saveViewModel.setSocialId(_SocialIdEditingController.text);
+     _saveViewModel!.setSocialId(_SocialIdEditingController.text);
     });
     _EmailEditingController.addListener(() {
-    //  _saveViewModel.setEmail(_EmailEditingController.text);
+    _saveViewModel!.setEmail(_EmailEditingController.text);
     });
     _PhoneEditingController.addListener(() {
-    //  _saveViewModel.setPhone(_PhoneEditingController.text);
+    _saveViewModel!.setPhone(_PhoneEditingController.text);
     });
     _EmergencyNumberEditingController.addListener(() {
-    //  _saveViewModel.setEmergencyNumber(_EmergencyNumberEditingController.text);
+     _saveViewModel!.setEmergencyNumber(_EmergencyNumberEditingController.text);
     });
     _AddressTextEditingController.addListener(() {
-     // _saveViewModel.setAddressText(_AddressTextEditingController.text);
+      _saveViewModel!.setAddressText(_AddressTextEditingController.text);
     });
     _DistrictIdEditingController.addListener(() {
-    //  _saveViewModel.setDistrictId(int.parse(_DistrictIdEditingController.text));
+     _saveViewModel!.setDistrictId(int.parse(_DistrictIdEditingController.text));
     });
     _POBoxEditingController.addListener(() {
-    //  _saveViewModel.setPOBox(_POBoxEditingController.text);
+   _saveViewModel!.setPOBox(_POBoxEditingController.text);
     });
     _ZipCodeEditingController.addListener(() {
-     // _saveViewModel.setZipCode(_ZipCodeEditingController.text);
+      _saveViewModel!.setZipCode(_ZipCodeEditingController.text);
     });
   }
+
 
   @override
   void initState() {
@@ -113,10 +124,6 @@ class _BasicDataViewState extends State<BasicDataView> {
                   ))
       );
   }
-
-
-
-
   @override
   void dispose() {
     _displayviewModel.dispose();
@@ -130,7 +137,6 @@ class _BasicDataViewState extends State<BasicDataView> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-
                   Container(
                     width: MediaQuery.of(context).size.width,
                     height: MediaQuery.of(context).size.height*1.3,
@@ -141,11 +147,9 @@ class _BasicDataViewState extends State<BasicDataView> {
                             scrollDirection: Axis.vertical,
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
-
                               children: [
                                 //ArabicName
                                 Container(
-
                                   padding: const EdgeInsets.only(
                                       left: 28, right: 28),
                                   child: Column(
@@ -156,9 +160,7 @@ class _BasicDataViewState extends State<BasicDataView> {
                                       StreamBuilder<BasicDataModel>(
                                         stream: _displayviewModel.outputEmpBasicData,
                                         builder: (context, snapshot) {
-                                          return
-
-                                            TextFormField(
+                                          return TextFormField(
                                                 keyboardType: TextInputType.text,
                                                 controller: _ArabicNameEditingController,
                                                 decoration: InputDecoration(
@@ -186,6 +188,7 @@ class _BasicDataViewState extends State<BasicDataView> {
                                           stream: _displayviewModel.outputEmpBasicData,
                                           builder: (context, snapshot) {
                                             return TextFormField(
+                                                //initialValue:snapshot.data?.employee?.englishName.toString() ,
                                                 keyboardType: TextInputType.text,
                                                 controller:
                                                 _EnglishNameEditingController,
@@ -219,38 +222,37 @@ class _BasicDataViewState extends State<BasicDataView> {
 
                                           String? dateString = snapshot.data?.employee
                                               ?.birthdate.toString();
-                                          DateTime? birthDate;
-                                          if(dateString!=null)
-                                            {
-                                              birthDate = DateTime.parse(dateString);
+                                          if(birthDate == null) {
+                                            if (dateString != null) {
+                                              birthDate =
+                                                  DateTime.parse(dateString);
                                             }
-                                          else
-                                          {
-                                            //birthDate=DateTime.parse("dd/mm/yyyy");
+                                            else {
+                                              // birthDate =
+                                              //     DateTime.parse("dd/mm/yyyy");
+                                            }
                                           }
-                                          birthDate = DateTime.parse(dateString!);
+                                          //birthDate = DateTime.parse(dateString!);
                                           return TextFormField(onTap: () async {
-                                            DateTime? newDate = await showDatePicker
+                                            DateTime? newDate = await
+                                            showDatePicker
                                               (context: context,
                                                 initialDate: birthDate!,
                                                 firstDate: DateTime(1900),
                                                 lastDate: DateTime(2100));
-                                            if (newDate == null) {
-                                              newDate = birthDate;
-                                              //return;
-                                            }
-                                            else {
-                                              birthDate = newDate;
-                                              // return;
-                                            }
+                                            if (newDate == null) return;
+                                            setState(() {
+                                            birthDate = newDate;
+                                            });
+
                                           },
                                               keyboardType: TextInputType.text,
                                               controller: _BirthDateEditingController,
                                               decoration: InputDecoration(
                                                   hintText:
-                                                  birthDate.day.toString() +
-                                                      "/" + birthDate.month.toString() +
-                                                      "/" + birthDate.year.toString()
+                                                  birthDate!.day.toString() +
+                                                      "/" + birthDate!.month.toString() +
+                                                      "/" + birthDate!.year.toString()
                                                 //labelText: AppStrings.nationalId.tr(),
                                                 //errorText: snapshot.data
                                               ));
@@ -424,7 +426,7 @@ class _BasicDataViewState extends State<BasicDataView> {
                                             children: [
                                               Text(
                                                 AppStrings.Governorate.tr(), textAlign: TextAlign.start,),
-                                              StreamBuilder<BasicDataModel>(
+                                              StreamBuilder<BasicDataModel?>(
                                                 stream: _displayviewModel.outputEmpBasicData,
                                                 // stream: _saveViewModel.outputErrorPassword,
                                                 builder: (context, snapshot) {
@@ -455,7 +457,7 @@ class _BasicDataViewState extends State<BasicDataView> {
                                             stream: _displayviewModel.outputEmpBasicData,
 
                                             builder: (context, snapshot) {
-                                              int? selectedValue=snapshot.data?.address?["DistrictId"];
+                                              int? selectedValue=snapshot.data?.selecteddistrict!;
                                               return _getDistrict(snapshot.data?.district,selectedValue);
 
                                             },
@@ -476,14 +478,14 @@ class _BasicDataViewState extends State<BasicDataView> {
                                             // stream: _saveViewModel.outputErrorPassword,
                                             builder: (context, snapshot) {
                                               var x = snapshot.data?.address;
-                                              String? AddressText = x?["AddressText"].toString();
-                                              String a=AddressText!;
+                                              // String? AddressText = x?["AddressText"].toString();
+                                              // String? a=AddressText!;
 
                                               return TextFormField(
                                                   keyboardType: TextInputType.text,
                                                   controller: _AddressTextEditingController,
                                                   decoration: InputDecoration(
-                                                      hintText: snapshot.data?.address?["AddressText"].toString(),
+                                                      hintText: snapshot.data?.address?.addressText.toString(),
                                                     //labelText: AppStrings.addressText.tr(),
                                                     //errorText: snapshot.data
                                                   ));
@@ -508,7 +510,7 @@ class _BasicDataViewState extends State<BasicDataView> {
                                                   controller: _POBoxEditingController,
 
                                                   decoration:InputDecoration(
-                                                    hintText:snapshot.data?.address?["POBox"].toString(),
+                                                    hintText:snapshot.data?.address?.zipCode.toString(),
 
                                                   ));
                                             },
@@ -525,7 +527,7 @@ class _BasicDataViewState extends State<BasicDataView> {
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
                                            Text(AppStrings.ZipCode.tr(), textAlign: TextAlign.start,),
-                                          StreamBuilder<BasicDataModel>(
+                                           StreamBuilder<BasicDataModel?>(
                                             // stream: _displayviewModel.outputEmpBasicData,
                                             stream: _displayviewModel.outputEmpBasicData,
                                             builder: (context, snapshot) {
@@ -533,7 +535,7 @@ class _BasicDataViewState extends State<BasicDataView> {
                                                   keyboardType: TextInputType.text,
                                                   controller: _ZipCodeEditingController,
                                                   decoration: InputDecoration(
-                                                    hintText: snapshot.data?.address?["ZipCode"].toString(),
+                                                    hintText: snapshot.data?.address?.zipCode.toString(),
                                                     //  labelText: AppStrings.zipCode.tr(),
                                                     // errorText: snapshot.data
                                                   ));
@@ -547,31 +549,36 @@ class _BasicDataViewState extends State<BasicDataView> {
                       ),
                   Container(
                     padding: EdgeInsets.all(20),
-                    child: StreamBuilder<bool>(
-                            //stream: _saveViewModel.outputIsAllInputsValid,
-                            builder: (context, snapshot)
-                           {
-                                return ElevatedButton
-                                  (
-                                    child: Text("Save"),
-                                    onPressed: () {
-                                     // _saveViewModel.SaveBasicData();
-                                    }
-                                    // : null,
-                                   );
-                            }
+                      child:ElevatedButton (
+
+                       child: Text("Save"),
+                       onPressed: () async{
+
+
+                      _saveViewModel!.SaveBasicData(empId!,_ArabicNameEditingController.text.toString(),
+                      _EnglishNameEditingController.text.toString(),
+                      _BirthDateEditingController.text.toString(),
+                      _NationalIdEditingController.text.toString(),
+                      _SocialIdEditingController.text.toString(),
+                      _EmailEditingController.text.toString(),
+                      _PhoneEditingController.text.toString(),
+                      _EmergencyNumberEditingController.text.toString(),
+                      _AddressTextEditingController.text.toString(),
+                        1,
+                      _POBoxEditingController.text.toString(),
+                      _ZipCodeEditingController.text.toString());
+                        displayDialoge();
+                      }
+    // : null,
+    )
                                     )
-                                    ),
-
-
-
         ]),
     );
   }
   Widget _getcountry(List<CountryModel>? country, int? selectedValue) {
     if (selectedValue == null) {
       if( country![0].countryId != null) {
-        selectedValue = country![0].countryId;
+        selectedValue = country[0].countryId;
       }
     }
     return DropdownButton(
@@ -579,8 +586,8 @@ class _BasicDataViewState extends State<BasicDataView> {
       items: country?.map(
               (countryItems) {
             return DropdownMenuItem(
-              child: Text(countryItems.countryName.toString()),
-              value: countryItems.countryId,);
+              value: countryItems.countryId,
+              child: Text(countryItems.countryName.toString()),);
           }).toList(),
       onChanged: (Object? value) {
         selectedValue = value as int;
@@ -597,8 +604,8 @@ class _BasicDataViewState extends State<BasicDataView> {
       items: governorate?.map(
               (governorateItems) {
             return DropdownMenuItem(
-              child: Text(governorateItems.governorateName.toString()),
-              value: governorateItems.governorateId,);
+              value: governorateItems.governorateId,
+              child: Text(governorateItems.governorateName.toString()),);
           }).toList(),
       onChanged: (Object? value) {
         selectedValue = value as int;
@@ -625,8 +632,27 @@ class _BasicDataViewState extends State<BasicDataView> {
     );
   }
 
+  Widget? displayDialoge() {
+    showAnimatedDialog(
+      context: context,
 
-
+      // builder: context,
+      barrierDismissible: true,
+      builder: (BuildContext context) {
+        return ClassicGeneralDialogWidget(
+          titleText: 'Success',
+          contentText: 'Was Saved Successfully',
+          onPositiveClick: () {
+            Navigator.of(context).pop();
+          },
+        );
+      },
+      animationType: DialogTransitionType.fade, curve: Curves.linear,
+      duration: const Duration(seconds: 1),
+    );
+  }
 }
+
+
 
 

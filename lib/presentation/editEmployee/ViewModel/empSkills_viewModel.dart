@@ -1,6 +1,7 @@
 import 'dart:async';
 
-
+import 'package:mohr_hr/application/di.dart';
+import 'package:mohr_hr/application/app_prefs.dart';
 import 'package:mohr_hr/presentation/Base/baseviewmodel.dart';
 import 'package:mohr_hr/presentation/common/state_renderer/state_render_impl.dart';
 import 'package:mohr_hr/data/networks/dio_factory.dart';
@@ -11,6 +12,8 @@ import '../../common/state_renderer/state_renderer.dart';
 class EmployeeSkillsViewModel extends BaseViewModel with
     EmployeeSkillsViewModelInput,EmployeeSkillsViewModelOutput
 {
+  final AppPreferences _appPreferences = instance<AppPreferences>();
+  //the steamcontroller has many listener
   StreamController DateStreamController=StreamController<String>.broadcast();
   StreamController GradeIdStreamController=StreamController<int>.broadcast();
   StreamController QualificationIdStreamController=StreamController<int>.broadcast();
@@ -131,7 +134,8 @@ else{
 
   @override
   addSkills() async{
-
+    String userId=await _appPreferences.getUserToken();
+    int empId=await _appPreferences.getEmpIdToken();
     EmployeeSkillsObject.userID;
     EmployeeSkillsObject.EmployeeId;
 
@@ -139,22 +143,19 @@ else{
        LoadingState(stateRendererType: StateRendererType.POPUP_LOADING_STATE));
    (await _employeeSkillsUseCase.execute(
      EmployeeSkillsUseCaseInput(
-         EmployeeSkillsObject.userID,
+        userId,
          EmployeeSkillsObject.Date,
          EmployeeSkillsObject.GradeId,
          EmployeeSkillsObject.QualificationId,
-         EmployeeSkillsObject.EmployeeId)
+         empId)
    ))
    .fold((failure) => {inputState.add(
        ErrorState(StateRendererType.POPUP_ERROR_STATE,failure.message)),
-
   },(data)
     {
       inputState.add(ContentState());
     });
-
   }
-
 }
 
 abstract class EmployeeSkillsViewModelInput{

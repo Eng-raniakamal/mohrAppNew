@@ -84,9 +84,10 @@ class SuccessState extends FlowState {
 extension FlowStateExtension on FlowState {
   Widget getScreenWidget(BuildContext context, Widget contentScreenWidget,
       Function retryActionFunction) {
-    switch (this.runtimeType) {
+    switch (runtimeType) {
       case LoadingState:
         {
+          dismissDialog(context);
           if (getStateRendererType() == StateRendererType.POPUP_LOADING_STATE) {
             // showing popup dialog
             showPopUp(context, getStateRendererType(), getMessage());
@@ -141,20 +142,23 @@ extension FlowStateExtension on FlowState {
         }
       default:
         {
+          dismissDialog(context);
           return contentScreenWidget;
         }
     }
   }
+
+
+
+  _isThereCurrentDialogShowing(BuildContext context) =>
+      ModalRoute.of(context)?.isCurrent != true;
+
 
   dismissDialog(BuildContext context) {
     if (_isThereCurrentDialogShowing(context)) {
       Navigator.of(context, rootNavigator: true).pop(true);
     }
   }
-
-  _isThereCurrentDialogShowing(BuildContext context) =>
-      ModalRoute.of(context)?.isCurrent != true;
-
   showPopUp(BuildContext context, StateRendererType stateRendererType,
       String message,{String title = EMPTY}) {
     WidgetsBinding.instance.addPostFrameCallback((_) => showDialog(

@@ -16,8 +16,13 @@ class EmployeeSkillsUseCase implements BaseUseCase<EmployeeSkillsUseCaseInput, S
   @override
   Future<Either<Failure, SaveEmpSkillsModel>> execute(
       EmployeeSkillsUseCaseInput input) async {
-    return await _repository.saveEmployeeSkills(EmployeeSkillsRequest(
-        input.userId,input.date,input.gradeId,input.qualificationTypeId,input.employeeId));
+    return await _repository.saveEmployeeSkills(
+        EmployeeSkillsRequest(
+        input.userId,
+            input.date,
+            input.gradeId,
+            input.qualificationTypeId,
+            input.employeeId));
   }
 }
 

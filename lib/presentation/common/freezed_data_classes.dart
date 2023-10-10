@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:mohr_hr/data/request/request.dart';
 part 'freezed_data_classes.freezed.dart';
 
 @freezed
@@ -31,31 +32,66 @@ class SalaryDetailsObjects with _$SalaryDetailsObjects {
 }
 
 @freezed
+class AttendanceObjects with _$AttendanceObjects {
+  factory AttendanceObjects(String userID) = _AttendanceObjects;
+}
+
+@freezed
 class EmpBasicDataObject with _$EmpBasicDataObject {
   factory EmpBasicDataObject(String userID, int empId) = _EmpBasicDataObject;
 
 }
-//@freezed
-// class empBasicDataObject with _$empBasicDataObject {
-//   factory empBasicDataObject(
-//   String userID,
-//   int empId,
-//   Employee employee,
-//   Address address,
-//   // String ArabicName ,
-//   // String EnglishName,
-//   // String BirthDate,
-//   // String NationalId,
-//   // String SocialId,
-//   // String Email,
-//   // String Phone,
-//   // String Emergency_Number,
-//   // String AddressText,
-//   // int DistrictId,
-//   // String PoBox,
-//   // String ZipCode
-//       ) = _empBasicDataObject;
-// }
+@freezed
+class EmpBasicDataSaveObject with _$EmpBasicDataSaveObject {
+  factory EmpBasicDataSaveObject(
+  String userID,
+  //int empId,
+  empBasicDataEmployeeObject employee,
+  empBasicDataAddressObject address,
+  // String ArabicName ,
+  // String EnglishName,
+  // String BirthDate,
+  // String NationalId,
+  // String SocialId,
+  // String Email,
+  // String Phone,
+  // String Emergency_Number,
+  // String AddressText,
+  // int DistrictId,
+  // String PoBox,
+  // String ZipCode
+      ) = _EmpBasicDataSaveObject;
+}
+
+
+@freezed
+class empBasicDataEmployeeObject with _$empBasicDataEmployeeObject {
+  factory empBasicDataEmployeeObject(
+      int empId,
+      String ArabicName ,
+      String EnglishName,
+      String BirthDate,
+      String NationalId,
+      String SocialId,
+      String Email,
+      String Phone,
+      String Emergency_Number,
+
+      ) = _empBasicDataEmployeeObject;
+}
+
+@freezed
+class empBasicDataAddressObject with _$empBasicDataAddressObject {
+  factory empBasicDataAddressObject(
+
+      String AddressText,
+      int DistrictId,
+      String PoBox,
+      String ZipCode
+      ) = _empBasicDataAddressObject;
+}
+
+
 
 @freezed
 class empSkillsObject with _$empSkillsObject {

@@ -38,6 +38,12 @@ class UserDataModel
    this.LocationVerificationMode,
    this.SupportGroupAttendance)  ;
 }
+class UserImageModel
+{
+  String userId;
+  String data;
+  UserImageModel(this.userId,this.data);
+}
 class RequestModel
 {
   String url;
@@ -66,13 +72,17 @@ class EmployeeDataModel
   UserDataModel userDataModel;
   EmployeeDataModel(this.userDataModel);
 }
-class EmployeeBasicDataModel
+class EmployeeSaveBasicDataModel
 {
-  String? userId;
-  EmployeeModel? employee;
-  AddressModel? address;
-  EmployeeBasicDataModel(this.userId,this.employee,this.address);
+  //String? userId;
+  EmployeeSaveModel? employee;
+  AddressSaveModel? address;
+  bool? IsValid;
+  String? Message;
+  EmployeeSaveBasicDataModel(this.employee,this.address,this.IsValid,this.Message);
 }
+
+
 class EmployeeModel
 {
   int? empId ;
@@ -87,6 +97,32 @@ class EmployeeModel
   AddressModel? address;
   EmployeeModel(this.empId,this.arabicName,this.englishName,this.birthdate,this.nationalId,this.socialId,
       this.email,this.phone,this.emergency_Number,this.address);
+}
+
+class EmployeeSaveModel
+ {
+
+  int? empId ;
+  String? arabicName ;
+  String? englishName;
+  String? birthdate;
+  String? nationalId;
+  String? socialId;
+  String? email;
+  String? phone;
+  String? emergency_Number;
+
+  EmployeeSaveModel(this.empId,this.arabicName,this.englishName,this.birthdate,this.nationalId,this.socialId,
+      this.email,this.phone,this.emergency_Number);
+}
+
+class AddressSaveModel
+ {
+  String? addressText ;
+  int? districtId;
+  String? zipCode;
+  String? pOBox;
+  AddressSaveModel(this.addressText,this.districtId,this.zipCode,this.pOBox);
 }
 class AddressModel
 {
@@ -122,7 +158,7 @@ class BasicDataModel{
   int? selectedgovernorate;
   List <DistrictsModel>? district;
   int? selecteddistrict;
-  Map<String,dynamic>? address;
+  AddressModel? address;
   BasicDataModel(this.employee,this.allowEdit,this.country,this.selectedcountry
       ,this.governorate,this.selectedgovernorate,this.district,this.selecteddistrict,
       this.address);
@@ -168,7 +204,10 @@ class SaveEmpSkillsModel {
   int gradeId;
   int qualificationTypeId;
   int employeeId;
-  SaveEmpSkillsModel(this.userId,this.date,this.gradeId,this.qualificationTypeId,this.employeeId);
+  bool? IsValid;
+  String? Message;
+  SaveEmpSkillsModel(this.userId,this.date,this.gradeId,
+      this.qualificationTypeId,this.employeeId,this.IsValid,this.Message);
 }
 
 class getEmpSkillsModel {
@@ -240,6 +279,27 @@ class VacationsObject
   VacationsData vacationsData;
   VacationsObject(this.vacationsData);
 }
+
+class VacationTypeItem
+{
+  int id ;
+  String name;
+  VacationTypeItem(this.id,this.name);
+}
+class VacationType
+{
+  List<VacationTypeItem> items;
+  VacationType (this.items);
+}
+class VacationTypeObject
+{
+  VacationType vacationType;
+  VacationTypeObject(this.vacationType);
+}
+
+
+
+
 ///////////////Salary/////////////////////
 class SalaryItems
 {int id;
@@ -259,7 +319,32 @@ class SalaryObject
   SalaryData salaryData;
   SalaryObject(this.salaryData);
 }
-//---------------------------------------------------
+//---------------------------Attendance-----------------------
+// "Id": 17294180,
+// "Mode": "Inflexible",
+// "Action": "CheckIn",
+// "ActionTime": "2022-01-01T11:00:00"
+class Attendance
+{
+  int id;
+  String mode;
+  String action;
+  DateTime actiontime;
+  Attendance(this.id,this.mode,this.action,this.actiontime);
+}
+class AttendanceList
+{
+  List<Attendance> attendanceList;
+  AttendanceList(this.attendanceList);
+}
+class AttendanceObject
+{
+  AttendanceList attendancedata;
+  AttendanceObject(this.attendancedata);
+}
+
+//------------------------------------------------------------
+
 class Benefit
 {
   double? value;

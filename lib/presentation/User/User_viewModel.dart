@@ -43,8 +43,7 @@ class EmployeeViewModel extends BaseViewModel with
   }
 
   @override
-  getuserData()
-    async{
+  getuserData() async{
       uId=await _appPreferences.getUserToken();
       var userObject=UserObject(uId!);
       userObject.userID;

@@ -115,7 +115,24 @@ class UserDataResponse  {
   Map<String, dynamic> toJson() => _$UserDataResponseToJson(this);
 }
 
+//---------------------------------------------------------------------
+@JsonSerializable(explicitToJson: true)
+class UserImageResponse  {
+  @JsonKey(name: "UserId")
+  String? UserId;
+  @JsonKey(name: "data")
+  String? data;
 
+  UserImageResponse(this.UserId, this.data)  ;
+
+  //from json
+  factory UserImageResponse.fromJson(Map<String, dynamic>json)=>
+      _$UserImageResponseFromJson(json);
+
+  //to json
+  Map<String, dynamic> toJson() => _$UserImageResponseToJson(this);
+}
+//_--------------------------------------------------------------------
 // @JsonSerializable(explicitToJson: true)
 // class MasterImage {
 //   @JsonKey(name: "Url")
@@ -227,6 +244,60 @@ class EmployeeResponse {
   Map<String, dynamic> toJson() => _$EmployeeResponseToJson(this);
 }
 
+
+@JsonSerializable()
+class EmployeeSaveResponse {
+  @JsonKey(name: "Id")
+  int? empId;
+  @JsonKey(name: "ArabicName")
+  String? arabicName;
+  @JsonKey(name: "EnglishName")
+  String? englishName;
+  @JsonKey(name: "BirthDate")
+  String? birthDate;
+  @JsonKey(name: "NationalId")
+  String? nationalId;
+  @JsonKey(name: "SocialId")
+  String? socialId;
+  @JsonKey(name: "Email")
+  String? email;
+  @JsonKey(name: "Phone")
+  String? phone;
+  @JsonKey(name: "EmergencyNumber")
+  String? emergencyNumber;
+
+  EmployeeSaveResponse(this.empId,this.arabicName, this.englishName,
+      this.birthDate,
+      this.nationalId,this.socialId,this.email,this.phone,
+      this.emergencyNumber);
+
+// from json
+  factory EmployeeSaveResponse.fromJson(Map<String, dynamic> json) =>
+      _$EmployeeSaveResponseFromJson(json);
+
+// to json
+  Map<String, dynamic> toJson() => _$EmployeeSaveResponseToJson(this);
+}
+@JsonSerializable()
+class AddressSaveResponse {
+  @JsonKey(name: "AddressText")
+  String? addressText;
+  @JsonKey(name: "DistrictId")
+  int? districtId;
+  @JsonKey(name: "ZipCode")
+  String? zipCode;
+  @JsonKey(name: "POBox")
+  String? POBox;
+  AddressSaveResponse (this.addressText, this.districtId, this.zipCode,this.POBox);
+
+// from json
+  factory  AddressSaveResponse.fromJson(Map<String, dynamic> json) =>
+      _$AddressSaveResponseFromJson(json);
+
+// to json
+  Map<String, dynamic> toJson() => _$AddressSaveResponseToJson(this);
+}
+
 @JsonSerializable()
 class AddressResponse {
   @JsonKey(name: "AddressText")
@@ -332,7 +403,7 @@ class BasicDataResponse
   @JsonKey(name: "selecteddistrict")
   int? selecteddistrict;
   @JsonKey(name: "address")
-  Map<String,dynamic>? address;
+  AddressResponse? address;
   BasicDataResponse(this.employeeData,this.allowEdit,this.countries,
       this.selectedCountry,this.governorates,this.selectedGovernorate,
       this.districts,this.selecteddistrict,this.address);
@@ -347,16 +418,37 @@ class BasicDataResponse
 
 }
 
+//
+// class AddressResponse {
+//   @JsonKey(name:"AddressText")
+//  String? addressText;
+//   @JsonKey(name:" DistrictId")
+//   String?  districtId;
+//   @JsonKey(name:"ZipCode")
+//   String?  zipCode;
+//
+//   AddressResponse (this.addressText,this.districtId,this.zipCode);
+//
+// // toJson
+//   Map<String, dynamic> toJson() => _$AddressResponseToJson(this);
+//
+// //fromJson
+//   factory AddressResponse.fromJson(Map<String, dynamic> json) =>
+//       _$AddressResponseFromJson(json);
+// }
+
+
+
+
+
 @JsonSerializable(explicitToJson: true)
 class EmployeeBasicDataResponse  extends ResultResponse
 {
-  @JsonKey(name: "UserId")
-  String? UserId;
   @JsonKey(name: "Employee")
-  EmployeeResponse?  Employee;
+  EmployeeSaveResponse?  Employee;
   @JsonKey(name: "Address")
-  AddressResponse?  Address;
-  EmployeeBasicDataResponse (this.UserId,this.Employee,this.Address) ;
+  AddressSaveResponse?  Address;
+  EmployeeBasicDataResponse (this.Employee,this.Address) ;
   factory EmployeeBasicDataResponse .fromJson(Map<String,dynamic>json)=>
       _$EmployeeBasicDataResponseFromJson (json);
 // //to json
@@ -485,11 +577,10 @@ class saveAcademicDegreeResponse  extends ResultResponse
 //---------------------------------------------------------------------
 @JsonSerializable()
 class GetAcademicDegreeResponse {
-  @JsonKey(name: "AcademicDegree")
+  @JsonKey(name: "academicDegrees")
   List<AcademicDegreeResponse>? academicDegreeData;
   @JsonKey(name: "allowEdit")
   bool? allowEdit;
-
   GetAcademicDegreeResponse(this.academicDegreeData, this.allowEdit);
 
 // from json
@@ -642,6 +733,37 @@ class VacationsResponse
   }
   Map<String,dynamic> toJson() => _$VacationsResponseToJson (this);
 }
+
+
+
+@JsonSerializable(explicitToJson: true)
+class VacationTypeItemResponse
+{
+  @JsonKey(name: "Id")
+  int? id;
+  @JsonKey(name: "Name")
+  String?  name;
+
+  VacationTypeItemResponse (this.id,this.name) ;
+  factory VacationTypeItemResponse .fromJson(Map<String,dynamic>?json)=>
+      _$VacationTypeItemResponseFromJson (json!);
+// //to json
+// // I will send data from the class to api
+  Map<String,dynamic> toJson() => _$VacationTypeItemResponseToJson (this);
+}
+@JsonSerializable()
+class VacationTypeResponse
+{
+  List<VacationTypeItemResponse> data;
+  VacationTypeResponse  (this.data) ;
+  factory VacationTypeResponse.fromJson(List<dynamic> items)
+  {
+    var listOfVacationType=items.map((vacationType) =>
+        _$VacationTypeItemResponseFromJson(vacationType)).toList();
+    return VacationTypeResponse(listOfVacationType);
+  }
+  Map<String,dynamic> toJson() => _$VacationTypeResponseToJson (this);
+}
 //_________________________Salary______________________________________
 @JsonSerializable(explicitToJson: true)
 class SalaryItemResponse
@@ -761,3 +883,42 @@ class SalaryDetailsResponse
 //   factory SalaryDetailsObjectResponse .fromJson(Map<String, dynamic> json) =>
 //       _$SalaryDetailsObjectResponse FromJson(json);
 // }
+
+//---------------------Atendance--------------------------
+@JsonSerializable()
+class AttendanceItemResponse {
+
+  @JsonKey(name: 'Id')
+  int? id;
+  @JsonKey(name: 'Mode')
+  String? mode;
+  @JsonKey(name: 'Action')
+  String? action;
+  @JsonKey(name: 'ActionTime')
+  DateTime? actionTime;
+
+  AttendanceItemResponse(this.id, this.mode, this.action, this.actionTime);
+
+// toJson
+  Map<String, dynamic> toJson() => _$AttendanceItemResponseToJson(this);
+
+//fromJson
+  factory AttendanceItemResponse.fromJson(Map<String, dynamic> json) =>
+      _$AttendanceItemResponseFromJson(json);
+}
+
+@JsonSerializable()
+class AttendanceResponse
+{
+  @JsonKey(name: 'data')
+  List<AttendanceItemResponse>? attendance;
+
+  AttendanceResponse(this.attendance);
+
+// toJson
+  Map<String, dynamic> toJson() => _$AttendanceResponseToJson(this);
+
+//fromJson
+  factory AttendanceResponse.fromJson(Map<String, dynamic> json) =>
+      _$AttendanceResponseFromJson(json);
+}

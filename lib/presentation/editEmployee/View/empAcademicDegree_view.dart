@@ -3,7 +3,7 @@ import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:flutter/material.dart';
 import 'package:mohr_hr/application/di.dart';
 import 'package:mohr_hr/domain/model/model.dart';
-import 'package:mohr_hr/presentation/editEmployee/ViewModel/displayEmpAcademicDegree_viewModel.dart';
+import 'package:mohr_hr/presentation/editEmployee/ViewModel/displayEmpAcademicDegree_ViewModel.dart';
 
 import 'package:mohr_hr/presentation/editEmployee/ViewModel/qualification_viewModel.dart';
 import 'package:mohr_hr/presentation/editEmployee/ViewModel/grade_viewModel.dart';
@@ -27,15 +27,19 @@ class _EmployeeAcademicDegreeViewState extends State<EmployeeAcademicDegreeView>
   final SaveAcademicDegreeViewModel _saveviewModel=instance<SaveAcademicDegreeViewModel>();
 
   final GradeViewModel _GradeviewModel = instance<GradeViewModel>();
-  final AppPreferences _appPreferences = instance<AppPreferences>();
+  //final AppPreferences _appPreferences = instance<AppPreferences>();
   final _Formkey= GlobalKey<FormState>();
   DateTime date= DateTime(2022);
-
+  String? dropdownValue;
+  final TextEditingController _UniversityEditingController= TextEditingController();
+  final TextEditingController _MajorEditingController= TextEditingController();
+  final TextEditingController _NotesEditingController= TextEditingController();
   final TextEditingController _DateEditingController= TextEditingController();
   final TextEditingController _GradeIdEditingController=TextEditingController();
   final TextEditingController _QualificationIdEditingController=TextEditingController();
   final TextEditingController _EmployeeIdEditingController=TextEditingController();
-
+  var gradeId;
+  var datetext;
   _blind() {
     _saveviewModel.start();
     _displayViewModel.start();
@@ -106,8 +110,8 @@ class _EmployeeAcademicDegreeViewState extends State<EmployeeAcademicDegreeView>
         child: Column(
           children: [
             Container(
-                // width: MediaQuery.of(context).size.width,
-                // height: MediaQuery.of(context).size.height*1.3,
+                 width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height*1.3,
                 padding: EdgeInsets.only(top:30),
                 child: SingleChildScrollView(
                   child: Form(
@@ -115,19 +119,7 @@ class _EmployeeAcademicDegreeViewState extends State<EmployeeAcademicDegreeView>
                     child: Container(
                       child: Column(
                         children: [
-                          // // qualification
-                          // Container(
-                          //     alignment: AlignmentDirectional.topStart,
-                          //     padding: const EdgeInsets.only(
-                          //         top: 12,
-                          //         left: 28,
-                          //         right: 28),
-                          //     child: Column(
-                          //         crossAxisAlignment: CrossAxisAlignment.start,
-                          //         children: [
-                          //
-                          //         ])),
-                          //Grade
+                         //AcademicDegree
                           Container(
                               alignment: AlignmentDirectional.topStart,
                               padding: const EdgeInsets.only(
@@ -135,6 +127,18 @@ class _EmployeeAcademicDegreeViewState extends State<EmployeeAcademicDegreeView>
                                   left: 28,
                                   right: 28),
                               child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text("Academic Degree", textAlign: TextAlign.start,),
+                                    _getAcademicDegree()])),
+                          //Grade
+                                Container(
+                              alignment: AlignmentDirectional.topStart,
+                              padding: const EdgeInsets.only(
+                                  top: 12,
+                                  left: 28,
+                                  right: 28),
+                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text("Grade", textAlign: TextAlign.start,),
@@ -148,23 +152,59 @@ class _EmployeeAcademicDegreeViewState extends State<EmployeeAcademicDegreeView>
                                     ),
                                   ])),
                           //date
-                          Container(
+                                Container(
+                                padding: const EdgeInsets.only(
+                                top: 12,
+                                left: 28,
+                                right: 28),
+                                   child: Column(crossAxisAlignment: CrossAxisAlignment.start,
+                                 children: [
+                                     Text("University/Faculty/Institute", textAlign: TextAlign.start,),
+
+                                    TextFormField(
+                                        keyboardType: TextInputType.text,
+                                        controller: _UniversityEditingController,
+                                        ),
+                                   Text("Major", textAlign: TextAlign.start,),
+
+                                   TextFormField(
+                                     keyboardType: TextInputType.text,
+                                     controller: _MajorEditingController,
+                                   ),
+                                   Text("Notes", textAlign: TextAlign.start,),
+
+                                   TextFormField(
+                                     keyboardType: TextInputType.text,
+                                     controller: _NotesEditingController,
+                                   )
+                                //  ),
+                              ],
+                            ),
+                          ),
+                               Container(
                             padding: const EdgeInsets.only(
                                 top: 12,
                                 left: 28,
                                 right: 28),
-                            child: Column(crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text("Date", textAlign: TextAlign.start,),
+                                 child: Column(crossAxisAlignment: CrossAxisAlignment.start,
+                                       children: [
+                                     Text("Date", textAlign: TextAlign.start,),
 
-                                TextFormField(onTap: () async {
+                                      TextFormField(onTap: () async {
 
+                                  DateTime? newDate=
                                   await showDatePicker
                                     (context: context,
                                       initialDate: date,
                                       firstDate: DateTime(1900),
                                       lastDate: DateTime(2100)
                                   );
+                                  //if 'cancel'=>null
+                                  if(newDate==null)return;
+                                  //if 'ok' => DateTime
+                                  setState(() {
+                                    date=newDate;
+                                  });
                                 },
                                     keyboardType: TextInputType.text,
                                     controller: _DateEditingController,
@@ -180,53 +220,16 @@ class _EmployeeAcademicDegreeViewState extends State<EmployeeAcademicDegreeView>
                               ],
                             ),
                           ),
-                          // Container(
-                          //   padding: const EdgeInsets.only(
-                          //       left: 28, right: 28),
-                          //   child: StreamBuilder<String?>(
-                          //     stream: _saveviewModel.outputErrorDate,
-                          //     builder: (context, snapshot) {
-                          //       return TextFormField(
-                          //           keyboardType: TextInputType.text,
-                          //           controller: _DateEditingController,
-                          //           decoration: InputDecoration(
-                          //               hintText: AppStrings.date.tr(),
-                          //               labelText: AppStrings.date.tr(),
-                          //               errorText: snapshot.data));
-                          //     },
-                          //   ),
-                          // ),
-                          // Container(
-                          //     padding: const EdgeInsets.only(
-                          //         left: 28, right: 28),
-                          //     child: StreamBuilder<bool>(
-                          //       //stream: _viewModel.outputIsAllInputsValid,
-                          //       builder: (context, snapshot) {
-                          //         return SizedBox(
-                          //           width: double.infinity,
-                          //           height:40,
-                          //           child: ElevatedButton(
-                          //
-                          //                onPressed: () {
-                          //                 _saveviewModel.addAcademicDegree();
-                          //               },
-                          //                  // : null,
-                          //               child: const Text(AppStrings.addAcademicDegree).tr()),
-                          //         );
-                          //       },
-                          //     )),
-
-
                           //Save bottun
                           // save bottum
-                          Container(
+                                Container(
                               padding: EdgeInsets.all(20),
-                              child: StreamBuilder<bool>(
-                                //stream: _saveViewModel.outputIsAllInputsValid,
+                                 child: StreamBuilder<bool>(
+                                stream: _saveviewModel.outputDateValid,
                                   builder: (context, snapshot)
                                   {
                                     return ElevatedButton(
-                                        child: Text("Save"),
+                                        child: Text("Add"),
                                         onPressed: () {
                                           _saveviewModel.addAcdemicDegree();
                                         }
@@ -237,15 +240,18 @@ class _EmployeeAcademicDegreeViewState extends State<EmployeeAcademicDegreeView>
                               )
                           ),
                           //academicDegree data table
-                          Container(padding: EdgeInsets.fromLTRB(20,30,10,30),
-                              child:SingleChildScrollView(scrollDirection: Axis.horizontal,
+                                Container(padding: EdgeInsets.fromLTRB(20,30,10,30),
+                                    child:SingleChildScrollView(scrollDirection: Axis.horizontal,
                                   child:StreamBuilder<getAcademicDegreeModel>(
                                       stream: _displayViewModel.outputAcademicDegree,
                                       // stream: _saveViewModel.outputErrorPassword,
                                       builder: (context, snapshot) {
                                         List<AcademicDegreeModel>? academicDegree = snapshot.data
                                             ?.academicDegree;
-                                        return _createAcademicDegreeTable(academicDegree);
+                                        if(academicDegree!=null) {
+                                          return _createAcademicDegreeTable(
+                                              academicDegree);
+                                        }else{return Container();}
                                       }
                                   )
                               ))],
@@ -253,7 +259,7 @@ class _EmployeeAcademicDegreeViewState extends State<EmployeeAcademicDegreeView>
                     ),
                   ),
                 )),
-          ],
+                ],
         ),
       );
   }
@@ -265,48 +271,55 @@ class _EmployeeAcademicDegreeViewState extends State<EmployeeAcademicDegreeView>
   }
 
 
-  Widget _getQualification(List<QualificationItem>? qualification)
-  {
-    return DropdownButton(
-      hint: Text("Choose a Qualification"),
-      items: qualification?.map(
-              (qualificationItems) {
-            return DropdownMenuItem(
-              child: Text(qualificationItems.text.toString()),
-              value: qualificationItems.value,);
-          }).toList(),
-      onChanged: (Object? value) {
-        //selectedValue = value as int;
-      },
-
-    );
-  }
-
   Widget _getGrade(List<GradeItem>? grade)
-  {
+  {//var  dropdownvalue;
+    var items=grade?.map(
+            (gradeItem) {
+          return DropdownMenuItem(
+
+            value: gradeItem.value,
+            child: Text(gradeItem.text.toString()),);
+        }).toList();
 
     return DropdownButton(
-      value: 0,
-      hint: Text("Choose a grade"),
-      items: grade?.map(
-              (gradeItems) {
-            return DropdownMenuItem(
-              //hint: Text("Choose an item"),
-              child: Text(gradeItems.text.toString()),
-              value: gradeItems.value,);
-          }).toList(),
-      onChanged: (Object? value) {
-        //selectedValue = value as int;
+      hint: Text("Choose Grade"),
+      items:  items,
+      onChanged: (newvalue) {
+        setState(() {
+          gradeId = newvalue;
+        });
       },
-
+      value: gradeId,
     );
   }
+  Widget _getAcademicDegree()
+  {//var  dropdownvalue;
+    var items=<String>["Bachelor of","Bachelor","Master","PHD","Doblom"]
+    .map((acdemicItem) {
+      return DropdownMenuItem(
+        value: acdemicItem,
+        child: Text(acdemicItem),
+      );
+    }).toList();
 
-  DataTable _createAcademicDegreeTable(List<AcademicDegreeModel>? academicDegree) {
+
+
+    return DropdownButton(
+      hint: Text("Choose Academic Degree"),
+      items:  items,
+      onChanged: (newvalue) {
+        setState(() {
+          dropdownValue = newvalue;
+        });
+      },
+      value: dropdownValue,
+    );
+  }
+  DataTable _createAcademicDegreeTable(List<AcademicDegreeModel> academicDegree) {
     return DataTable(
-
+      headingRowColor: MaterialStateColor.resolveWith((states) => colorManager.lightprimary),
       columns: _createColumns(),
-      rows: _createRows(academicDegree!),
+      rows: _createRows(academicDegree),
     );
   }
   List<DataColumn> _createColumns() {
@@ -324,14 +337,6 @@ class _EmployeeAcademicDegreeViewState extends State<EmployeeAcademicDegreeView>
     return academicDegree
         .map((academicDegree) =>
         DataRow(cells: [
-          // "Id": 5823,
-          // "TypeName": "بكالوريوس",
-          // "GradeName": "جيد جدا",
-          // "AcademicDegreeTypeId": 1,
-          // "DegreeDate": "2014/10/28",
-          // "GradeId": 3,
-          // "Major": "محاسبة",
-          // "University": "عين شمس"
           DataCell(Text((academicDegree.typeName).toString())),
           DataCell(Text((academicDegree.gradeName).toString())),
           DataCell(Text((academicDegree.major).toString())),

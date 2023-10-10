@@ -13,16 +13,19 @@ abstract class Repository
   //We created class Failure in Network folder
   Future<Either<Failure,AuthenticationModel>> login(LoginRequest loginRequest);// Future<Either<Failure,Authentication>> register(RegisterRequest registerRequest);
   Future<Either<Failure,EmployeeDataModel>> getUserData(UserRequest userRequest);
+  Future<Either<Failure,UserImageModel>> getUserImage(UserRequest userRequest);
   Future<Either<Failure,QualificationsObject>> getQualification(qualificationRequest userRequest);
   Future<Either<Failure,GradesObject>> getGrade(GradeRequest userRequest);
   Future<Either<Failure,BasicDataModel>>displayEmployeeBasicData(BasicDataRequest getEmpBDReq);
-  Future<Either<Failure,EmployeeBasicDataModel>> saveEmployeeBasicData(EmployeeBasicDataRequest empBDReq);
+  Future<Either<Failure,EmployeeSaveBasicDataModel>> saveEmployeeBasicData(EmployeeBasicDataRequest empBDReq);
   Future<Either<Failure,SaveEmpSkillsModel>> saveEmployeeSkills(EmployeeSkillsRequest empSkillsReq);
   Future<Either<Failure,getEmpSkillsModel>> displayEmployeeSkills(displaySkillsRequest empSkillsReq);
   Future<Either<Failure,SaveAcademicDegreeModel>> saveAcademicDegree(SaveAcademicDegreeRequest empAcademicDegreeReq);
   Future<Either<Failure,getAcademicDegreeModel>> getAcademicDegree(displayAcademicDegreeRequest empAcademicDegreeReq);
   Future<Either<Failure,VacationsObject>> getVacations(VacationRequest vacationReq);
+  Future<Either<Failure,VacationTypeObject>> getVacationType();
   Future<Either<Failure,SalaryObject>> getSalary(SalaryRequest salaryReq);
   Future<Either<Failure,SalaryDetailsObject>> getSalaryDetails(SalaryDetailsRequest salaryDetailsReq);
+  Future<Either<Failure,AttendanceObject>> getAttendance(AttendanceRequest attendanceReq);
 
 }

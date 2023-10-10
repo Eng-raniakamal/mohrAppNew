@@ -8,6 +8,7 @@ import 'package:mohr_hr/application/di.dart';
 import 'package:mohr_hr/data/data_source/local_data_source.dart';
 import 'package:mohr_hr/domain/model/model.dart';
 import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
+import 'package:mohr_hr/presentation/AddImage/viewModel/GetImage_ViewModel.dart';
 import 'package:mohr_hr/presentation/User/editProfileScreen.dart';
 import 'package:mohr_hr/presentation/common/state_renderer/state_render_impl.dart';
 import 'package:mohr_hr/presentation/User/User_viewModel.dart';
@@ -45,11 +46,14 @@ class userView extends StatefulWidget with NavigationStates{
 
 class _userViewState extends State<userView> {
   final EmployeeViewModel _viewModel = instance<EmployeeViewModel>();
+  final EmployeeImageViewModel _imageViewModel = instance<EmployeeImageViewModel>();
   final AppPreferences _appPreferences = instance<AppPreferences>();
-  LocalDataSource _localDataSource = instance<LocalDataSource>();
+  //LocalDataSource _localDataSource = instance<LocalDataSource>();
+  bool canEditImage=true;
 
   _bind(){
     _viewModel.start();
+    _imageViewModel.start();
   }
   @override
   void initState() {
@@ -94,85 +98,93 @@ class _userViewState extends State<userView> {
           }
       ),
       body:
-          ListView(
-                physics: const BouncingScrollPhysics(),
-                children: [
-                  StreamBuilder<EmployeeDataModel>(
-                      stream: _viewModel.outputUserData,
-                      builder: (context, snapshot) {
-                        return
-                           Column(
-                                children: [
-                                  Stack(
-                                      children: [
-                                        const SizedBox(width: 10, height: 10,),
-                                        const clipPathWidgets(),
-                                        const SizedBox(width: 10, height: 10,),
-                                        Padding(
-                                          padding: const EdgeInsets.all(12.0),
-                                          child: Row(
-                                            mainAxisAlignment: MainAxisAlignment
-                                                .start,
-                                            children: [
-                                              Flexible(
-                                                  flex: 2,
+          Container(
+            child: ListView(
+                  physics:  BouncingScrollPhysics(),
+                  children: [
+                             Column(
+                                  children: [
+                                    Stack(
+                                        children: [
+                                          const SizedBox(width: 10, height: 10,),
+                                          const clipPathWidgets(),
+                                          const SizedBox(width: 10, height: 10,),
+                                          Padding(
+                                            padding: const EdgeInsets.all(12.0),
+                                            child: Row(
+                                              mainAxisAlignment: MainAxisAlignment
+                                                  .start,
+                                              children: [
+                                                Flexible(
+                                                    flex: 2,
 
-                                                  child: Padding(
-                                                    padding: const EdgeInsets
-                                                        .only(right: 10.0,
-                                                        left: 20.0, bottom: 0),
-                                                      child: _getEmployeeDataWidget(
+                                                    child:
+                          StreamBuilder<EmployeeDataModel>(
+                          stream: _viewModel.outputUserData,
+                          builder: (context, snapshot) {
+                          return
+
+                                                    Padding(
+                                                      padding: const EdgeInsets
+                                                          .only(right: 10.0,
+                                                          left: 20.0, bottom: 0),
+                                                        child: _getEmployeeDataWidget(
+                                                          snapshot.data),
+                                                    );})
+
+                                                ),
+                                                Expanded(
+                                                    flex: 1,
+                                                    child:
+                                                    StreamBuilder<UserImageModel>(
+                                                        stream: _imageViewModel.outputUserImage,
+                                                        builder: (context, snapshot) {
+                                                          return
+                                                    SizedBox(width: 20, child:
+                                                    _getImageWidget(
                                                         snapshot.data),
-                                                  )
-
-                                              ),
-                                              Expanded(
-                                                  flex: 1,
-                                                  child:
-                                                  SizedBox(width: 20, child:
-                                                  _getImageWidget(
-                                                      snapshot.data),
-                                                  ))
-                                            ],
+                                                    );}
+                                                    ))],
+                                            ),
                                           ),
-                                        ),
-                                      ]),
-                                  const SizedBox(height: 20),
-                                ]
-                            )
-                          ;
-                      }),
-                      const SizedBox(height: 10,),
-                      Container(
-                            child: Column(children:[
-                             Row(children:[
-                             //SizedBox(width:5),
-                              Center(child:SizedBox(width: 200,
-                                child:
-                               buildUpgradeButton(AppStrings.Vacation.tr(),colorManager.greywithOpacity))),
-                              Center(child:SizedBox(width: 200,
-                                child:
-                                buildUpgradeButton(AppStrings.Salary.tr(),colorManager.lightprimary),
-                            ))]),
-                              const SizedBox(height: 70),
-                             Row(children:[
-                              Center(child:SizedBox(width: 200,
+                                        ]),
+                                    const SizedBox(height: 20),
+                                  ]
+                              ),
+                           // ;
+
+                        const SizedBox(height: 10,),
+                        Container(
+                              child: Column(children:[
+                               Row(children:[
+                               //SizedBox(width:5),
+                                Center(child:SizedBox(width: 200,
                                   child:
-                                  buildUpgradeButton(AppStrings.Attendance.tr(),colorManager.lightprimary))),
-                              Center(child:SizedBox(width: 200,
+                                 buildUpgradeButton(AppStrings.Vacation.tr(),colorManager.greywithOpacity))),
+                                Center(child:SizedBox(width: 200,
                                   child:
-                                  buildUpgradeButton(AppStrings.Requests.tr(),colorManager.lightprimary),
-                              )
-                              )
-                             ]),
+                                  buildUpgradeButton(AppStrings.Salary.tr(),colorManager.lightprimary),
+                              ))]),
+                                const SizedBox(height: 70),
+                               Row(children:[
+                                Center(child:SizedBox(width: 200,
+                                    child:
+                                    buildUpgradeButton(AppStrings.Attendance.tr(),colorManager.lightprimary))),
+                                Center(child:SizedBox(width: 200,
+                                    child:
+                                    buildUpgradeButton(AppStrings.Requests.tr(),colorManager.lightprimary),
+                                )
+                                )
+                               ]),
 
     ]),
     ),
     ]),
+          ),
     );
   }
   Widget buildUpgradeButton(String ReqName,Color bgColor) {
-if(ReqName==AppStrings.Vacation.tr())
+ if(ReqName==AppStrings.Vacation.tr())
   {
     return Hero(
         tag: ReqName,
@@ -183,7 +195,7 @@ if(ReqName==AppStrings.Vacation.tr())
             },
             child: Column(
               children: [
-                SizedBox(width: 70,height: 70,
+                const SizedBox(width: 70,height: 70,
                   child: Image(image: AssetImage(ImageAssets.Vacation),
                     fit: BoxFit.contain,
                   ),
@@ -205,7 +217,7 @@ if(ReqName==AppStrings.Salary.tr())
           },
           child: Column(
             children:[
-              SizedBox(width: 70,height: 70,
+              const SizedBox(width: 70,height: 70,
                 child: Image(image: AssetImage(ImageAssets.salary),
                   fit: BoxFit.contain,
                 ),
@@ -231,7 +243,7 @@ if(ReqName==AppStrings.Salary.tr())
                   fit: BoxFit.contain,
                 ),
               ),
-              SizedBox(width: 80,height: 70,child: Text(AppStrings.Attendance.tr()))
+              SizedBox(width: 90,height: 70,child: Text(AppStrings.Attendance.tr()))
             ],
           )
       )
@@ -252,7 +264,7 @@ if(ReqName==AppStrings.Salary.tr())
                   fit: BoxFit.contain,
                 ),
               ),
-              SizedBox(width: 80,height: 70,child: Text(AppStrings.Attendance.tr()))
+              SizedBox(width: 90,height: 70,child: Text(AppStrings.Attendance.tr()))
             ],
           )
       )
@@ -363,7 +375,8 @@ return Container();
     //     return Container();
     // }
   }
-  Widget? buildcountanir(String reqName) {
+  Widget buildcountaner(String reqName) {
+    return
     Container(
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -386,6 +399,11 @@ return Container();
   Widget _getEmployeeDataWidget(EmployeeDataModel? userData) {
     if (userData != null) {
       var empData = userData.userDataModel;
+      var empImageData = userData.userDataModel.masterImage;
+     String? URLimage= userData.userDataModel.masterImage.toString();
+      Constants.imagePath=URLimage;
+      Constants.canUpload=empData.masterImage?["CanUploadMasterImage"];
+      canEditImage=empData.masterImage?["CanUploadMasterImage"];
       String Name;
       String? language=_appPreferences.getLanguage();
       if(language=="en")
@@ -416,26 +434,27 @@ return Container();
         return Container();
       }
     }
-  Widget _getImageWidget(EmployeeDataModel? userData) {
-    if (userData != null) {
-     var empData = userData.userDataModel.masterImage;
-    String? URLimage= empData?["Url"].toString();
-    Constants.imagePath=URLimage!;
+  Widget _getImageWidget(UserImageModel? userImage) {
+    if (userImage != null) {
+      String? URLimage = userImage.data;
+
+    Constants.imagePath=URLimage;
     //Constants.canUpload!=empData?["CanUploadMasterImage"];
-    bool canEditImage=empData?["CanUploadMasterImage"];
+   // bool canEditImage=empData?["CanUploadMasterImage"];
      // String imagePath=" ";
      return ProfileWidget(
           imagePath: URLimage,
+          isEdit: false,
           onClicked: () {
-            if(canEditImage == true)
-            {
-              displayDialoge();
-            }
-            else
-              {
+            // if(canEditImage == true)
+            // {
+            //   displayDialoge();
+            // }
+            // else
+            //   {
                 resetModules();
                 Navigator.of(context).pushReplacementNamed(Routes.editProfileRoute);
-              }
+              //}
           }
         // Navigator.of(context).push(
         //   MaterialPageRoute(builder: (context) => editProfileScreen()),

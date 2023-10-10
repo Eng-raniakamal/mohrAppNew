@@ -44,25 +44,21 @@ class EmployeeBasicDataViewModel extends BaseViewModel with
   }
 
   @override
-  getEmpBasicData()
-  async{
+  getEmpBasicData() async{
     uId=await _appPreferences.getUserToken();
     empId=await _appPreferences.getEmpIdToken();
     var  empObject=EmpBasicDataObject(uId!,empId!);
-    empObject.userID;
-    empObject.empId;
+
     if(empObject.userID != null && empObject.empId !=0)
     {
       inputState.add(LoadingState(
           stateRendererType:StateRendererType.POPUP_LOADING_STATE)
       );
-      (await _BasicDataUseCase.execute
-        (BasicdataInput(empObject.userID,empObject.empId))).fold(
-              (failure) =>{
+      (await _BasicDataUseCase.execute(BasicdataInput(empObject.userID,empObject.empId)))
+          .fold((failure) =>{
             inputState.add(ErrorState(
                 StateRendererType.POPUP_ERROR_STATE,failure.message))
-          },
-              (data){
+          }, (data){
             inputState.add(ContentState());
             EmpBasicData.add(BasicDataModel(data.employee,data.allowEdit,
                 data.country,data.selectedcountry,data.governorate,data.selectedgovernorate
@@ -107,8 +103,8 @@ class EmployeeBasicDataViewModel extends BaseViewModel with
 
 
   @override
-  Stream<BasicDataModel> get outputEmpBasicData => _BasicDataStreamController.stream.
-  map((data) => data);
+  Stream<BasicDataModel> get outputEmpBasicData => _BasicDataStreamController.stream
+      .map((data) => data);
 }
 
 abstract class EmpBasicDataViewModelInputs{

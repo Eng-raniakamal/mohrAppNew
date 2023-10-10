@@ -40,7 +40,7 @@ class _LoginViewState extends State<LoginView> {
   _bind() {
     _viewModel.start();// tell view model start your job
     _emailController
-        .addListener(() => _viewModel.setemail(_emailController.text));
+        .addListener(() => _viewModel.setEmail(_emailController.text));
     _passwordController
         .addListener(() => _viewModel.setPassword(_passwordController.text));
     _viewModel.isUserLoggedInSuccessfullyStreamController.stream
@@ -54,7 +54,7 @@ class _LoginViewState extends State<LoginView> {
           Navigator.of(context).pushReplacementNamed(Routes.HomeRoute);
         }
         );
-      }
+      }else{Navigator.of(context).pushReplacementNamed(Routes.loginRoute);}
     });
   }
   @override
@@ -245,28 +245,9 @@ class _LoginViewState extends State<LoginView> {
                         );
                       },
                     )
-                ),
-      ]
-               )
+                ),])
 
-
-        // TODO CREATE FORGET PASSWORD
-                // Padding(
-                //   padding: const EdgeInsets.only(
-                //     top: AppPadding.p8,
-                //     left: AppPadding.p28,
-                //     right: AppPadding.p28,
-                //   ),
-                //   // child: Row(
-                //   //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                //   //   children: [
-                //   //
-                //   //   ],
-                )])
-    ),
-                )
-    )
-    ;
+                )])),));
 
   }
 
@@ -274,7 +255,8 @@ class _LoginViewState extends State<LoginView> {
 
   @override
   void dispose() {
-    _viewModel.dispose();
     super.dispose();
+    _viewModel.dispose();
+
   }
 }

@@ -52,16 +52,16 @@ class _MyAppState extends State<MyApp> {
       child: Builder(
         builder: (context) =>
              MaterialApp(
-              localizationsDelegates: context.localizationDelegates,
+               localizationsDelegates: context.localizationDelegates,
                debugShowCheckedModeBanner: false,
                supportedLocales: context.supportedLocales,
                locale: context.locale,
-              onGenerateRoute: RouteGenerator.getRoute,
+               onGenerateRoute: RouteGenerator.getRoute,
               //initialRoute: Routes.splashRoute,
               //home:splashScreen(),
-                 home:  OnboadingScreen(),
-             // theme:Theme.of(context),
-        title: "Mohr")
+                 home:   const OnboadingScreen(),
+              // theme:Theme.of(context),
+                title: "Mohr")
 
             ),
       )

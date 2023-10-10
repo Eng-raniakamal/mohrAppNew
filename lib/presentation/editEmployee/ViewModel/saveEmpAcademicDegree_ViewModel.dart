@@ -1,6 +1,8 @@
 import 'dart:async';
 
 //import 'package:mohr_hr/application/constants.dart';
+import 'package:mohr_hr/application/di.dart';
+import 'package:mohr_hr/application/app_prefs.dart';
 import 'package:mohr_hr/domain/usecase/saveAcademicDegree_UseCase.dart';
 import 'package:mohr_hr/presentation/Base/baseviewmodel.dart';
 import 'package:mohr_hr/presentation/common/state_renderer/state_render_impl.dart';
@@ -12,6 +14,7 @@ import '../../common/state_renderer/state_renderer.dart';
 class SaveAcademicDegreeViewModel extends BaseViewModel with
     AcademicDegreeViewModelInput,AcademicDegreeViewModelOutput
 {
+  final AppPreferences _appPreferences = instance<AppPreferences>();
   StreamController IdStreamController=StreamController<int>.broadcast();
   StreamController MajorStreamController=StreamController<String>.broadcast();
   StreamController UniversityStreamController=StreamController<String>.broadcast();
@@ -138,18 +141,19 @@ class SaveAcademicDegreeViewModel extends BaseViewModel with
 
   @override
   addAcdemicDegree()  async{
-
+    String userId=await _appPreferences.getUserToken();
+    int empId=await _appPreferences.getEmpIdToken();
     EmpAcademicDegreeObject.userID;
     inputState.add(
         LoadingState(stateRendererType: StateRendererType.POPUP_LOADING_STATE));
     (await _empAcademicDegreeUseCase.execute (
         SaveAcademicDegreeUseCaseInput(
-            EmpAcademicDegreeObject.userID,
+            userId,
         EmpAcademicDegreeObject.Id,
         EmpAcademicDegreeObject.Major,
         EmpAcademicDegreeObject.University,
         EmpAcademicDegreeObject.Notes,
-          EmpAcademicDegreeObject.EmployeeId,
+          empId,
         EmpAcademicDegreeObject.AcademicDegreeTypeId,
           EmpAcademicDegreeObject.GradeId,
           EmpAcademicDegreeObject.DegreeDate,)

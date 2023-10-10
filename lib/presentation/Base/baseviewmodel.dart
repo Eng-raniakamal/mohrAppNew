@@ -6,7 +6,7 @@ import 'package:rxdart/rxdart.dart';
 abstract class BaseViewModel extends BaseViewModelInputs
     with BaseViewModelOutputs {
   final StreamController _inputStateStreamController =
-  BehaviorSubject<FlowState>();
+  StreamController<FlowState>.broadcast();
 
   @override
   Sink get inputState => _inputStateStreamController.sink;

@@ -34,25 +34,35 @@ class RepositoryImpl extends Repository {
         //it's connected to internet so its safe to call the API
         final response = await _remoteDataSource.login(loginRequest);
         //if (response.code != ApiInternalStatus.SUCCESS)
+
+        //if (TokenUserID != null )
+
+        // if( response.code==ApiInternalStatus.SUCCESS) {
         String? TokenUserID = response.userdata?.UserId;
-        int? TokenEmpId=response.userdata?.EmployeeId;
+        int? TokenEmpId = response.userdata?.EmployeeId;
         if (TokenUserID != null) {
           Constants.token = TokenUserID;
           _appPreferences.setUserToken(TokenUserID);
           _appPreferences.setEmpIdToken(TokenEmpId);
-          // return data (success)
-          //save user data response to cache
           return Right(response.toDomain());
-        } else {
+        }
+        // return data (success)
+        //save user data response to cache
+
+
+            else {
           // return left
-          return Left(Failure(response.code ?? ApiInternalStatus.FAILURE,
+
+          return Left(Failure(response.code ?? ApiInternalStatus.FAILURE!,
               response.status ?? ResponseMessage.DEFAULT));
+          TokenUserID="";
           //return Left(Failure(409, "error message"));
         }
       } catch (error) {
         return (Left(ErrorHandler
             .handle(error)
-            .failure!));
+            .failure));
+        //return Left(Failure(401, "error message"));
       }
     } else {
       // return internet connection error
@@ -94,7 +104,7 @@ class RepositoryImpl extends Repository {
         } catch (error) {
           return (Left(ErrorHandler
               .handle(error)
-              .failure!));
+              .failure));
         }
       } else {
         // return connection error
@@ -202,7 +212,7 @@ class RepositoryImpl extends Repository {
       } catch (error) {
         return (Left(ErrorHandler
             .handle(error)
-            .failure!));
+            .failure));
       }
     } else {
       // return connection error
@@ -234,7 +244,7 @@ class RepositoryImpl extends Repository {
           return Left(Failure(700, ResponseMessage.DEFAULT));
         }
       } catch (error) {
-        return (Left(ErrorHandler.handle(error).failure!));
+        return (Left(ErrorHandler.handle(error).failure));
       }
     } else {
       // return connection error
@@ -267,7 +277,7 @@ class RepositoryImpl extends Repository {
           return Left(Failure(700, ResponseMessage.DEFAULT));
         }
       } catch (error) {
-        return (Left(ErrorHandler.handle(error).failure!));
+        return (Left(ErrorHandler.handle(error).failure));
       }
     } else {
       // return connection error
@@ -300,7 +310,7 @@ class RepositoryImpl extends Repository {
             return Left(Failure(700, ResponseMessage.DEFAULT));
           }
         } catch (error) {
-          return (Left(ErrorHandler.handle(error).failure!));
+          return (Left(ErrorHandler.handle(error).failure));
         }
       } else {
         // return connection error
@@ -310,7 +320,7 @@ class RepositoryImpl extends Repository {
   }
 
   @override
-  Future<Either<Failure, EmployeeBasicDataModel>> saveEmployeeBasicData(EmployeeBasicDataRequest empBDReq)
+  Future<Either<Failure, EmployeeSaveBasicDataModel>> saveEmployeeBasicData(EmployeeBasicDataRequest empBDReq)
     async {
       if (await _networkInfo.isConnected) {
         try {
@@ -325,17 +335,17 @@ class RepositoryImpl extends Repository {
           } else {
             // return big logic error
             // return left
-            int status = 0;
+           int status = 0;
             if (response.isValid == false) {
-              status = 0;
+             status = 0;
             }
             return Left(Failure(status,
-                response.message ?? ResponseMessage.DEFAULT));
+                response.message!));
           }
         } catch (error) {
           return (Left(ErrorHandler
               .handle(error)
-              .failure!));
+              .failure));
         }
       } else {
         // return connection error
@@ -368,7 +378,7 @@ class RepositoryImpl extends Repository {
               return Right(response.toDomain());
 
           } catch (error) {
-            return (Left(ErrorHandler.handle(error).failure!));
+            return (Left(ErrorHandler.handle(error).failure));
           }
         } else {
           // return connection error
@@ -399,7 +409,7 @@ class RepositoryImpl extends Repository {
           } catch (error) {
             return (Left(ErrorHandler
                 .handle(error)
-                .failure!));
+                .failure));
           }
         } else {
           // return connection error
@@ -431,7 +441,7 @@ class RepositoryImpl extends Repository {
         } catch (error) {
           return (Left(ErrorHandler
               .handle(error)
-              .failure!));
+              .failure));
         }
       } else {
         // return connection error
@@ -444,35 +454,71 @@ class RepositoryImpl extends Repository {
 
   @override
   Future<Either<Failure, SaveAcademicDegreeModel>>
-  saveAcademicDegree(SaveAcademicDegreeRequest empAcademicDegreeReq) async {
-    try {
-      if (empAcademicDegreeReq.userId == null) {
-        empAcademicDegreeReq.userId = await _appPreferences.getUserToken();
-      }
-      if ( empAcademicDegreeReq.employeeId == 0) {
-        empAcademicDegreeReq.employeeId  = await _appPreferences.getEmpIdToken();
-      }
+  saveAcademicDegree(SaveAcademicDegreeRequest empAcademicDegreeReq)
+  // async {
+  //
+  //
+  //
+  //   try {
+  //     if (empAcademicDegreeReq.userId == null) {
+  //       empAcademicDegreeReq.userId = await _appPreferences.getUserToken();
+  //     }
+  //     if ( empAcademicDegreeReq.employeeId == 0) {
+  //       empAcademicDegreeReq.employeeId  = await _appPreferences.getEmpIdToken();
+  //     }
+  //
+  //     final response = await _remoteDataSource.saveAcademicDegree(empAcademicDegreeReq);
+  //     return Right(response.toDomain());
+  //   } catch (cacheError) {
+  //     if (await _networkInfo.isConnected) {
+  //       try {
+  //         // its safe to call the API
+  //         final response = await _remoteDataSource.saveAcademicDegree(empAcademicDegreeReq);
+  //         // success
+  //
+  //         // _localDataSource.saveUserToCache(response);
+  //
+  //         return Right(response.toDomain());
+  //
+  //       } catch (error) {
+  //         return (Left(ErrorHandler.handle(error).failure!));
+  //       }
+  //     } else {
+  //       // return connection error
+  //       return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
+  //     }
+  //   }
+  // }
+  async {
+    if (await _networkInfo.isConnected) {
+      try {
+        // its safe to call the API
+        final response = await _remoteDataSource.saveAcademicDegree(
+            empAcademicDegreeReq);
 
-      final response = await _remoteDataSource.saveAcademicDegree(empAcademicDegreeReq);
-      return Right(response.toDomain());
-    } catch (cacheError) {
-      if (await _networkInfo.isConnected) {
-        try {
-          // its safe to call the API
-          final response = await _remoteDataSource.saveAcademicDegree(empAcademicDegreeReq);
-          // success
-
-          // _localDataSource.saveUserToCache(response);
-
+        if (response.isValid == ApiInternalStatus.SUCCESS) // success
+            {
+          // return data (success)
+          // return right
           return Right(response.toDomain());
-
-        } catch (error) {
-          return (Left(ErrorHandler.handle(error).failure!));
+        } else {
+          // return biz logic error
+          // return left
+          int status = 0;
+          if (response.isValid == false) {
+            status = 0;
+          }
+          return Left(Failure(status,
+              response.message ?? ResponseMessage.DEFAULT));
         }
-      } else {
-        // return connection error
-        return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
+      } catch (error) {
+        return (Left(ErrorHandler
+            .handle(error)
+            .failure));
       }
+    } else {
+      // return connection error
+      return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
     }
   }
 
@@ -510,7 +556,109 @@ class RepositoryImpl extends Repository {
       }
     }
   }
+
+  @override
+  Future<Either<Failure, VacationTypeObject>> getVacationType() async{
+
+
+      // get from cache
+      final response = await _remoteDataSource.getVacationType();
+      // we have cache error so we should call API
+
+      if (await _networkInfo.isConnected) {
+        try {
+          // its safe to call the API
+          final response = await _remoteDataSource.getVacationType();
+          return Right(response.toDomain());
+        } catch (error) {
+          return (Left(ErrorHandler
+              .handle(error)
+              .failure));
+        }
+      } else {
+        // return connection error
+        return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
+      }
+    }
+
+  @override
+  Future<Either<Failure, AttendanceObject>> getAttendance(AttendanceRequest attendanceReq)
+  async {
+    try {
+      if (attendanceReq.userId == null) {
+        attendanceReq.userId = await _appPreferences.getUserToken();
+      }
+      final response = await _remoteDataSource.getAttendance(attendanceReq);
+      return Right(response.toDomain());
+    } catch (cacheError) {
+      // we have cache error so we should call API
+
+      if (await _networkInfo.isConnected) {
+        try {
+          // its safe to call the API
+          final response = await _remoteDataSource.getAttendance(attendanceReq);
+          if (response.attendance!.isNotEmpty) // success
+              {
+            //_localDataSource.saveUserToCache( );
+            return Right(response.toDomain());
+          } else {
+            // return left
+            return Left(Failure(700, ResponseMessage.DEFAULT));
+          }
+        } catch (error) {
+          return (Left(ErrorHandler.handle(error).failure!));
+        }
+      } else {
+        // return connection error
+        return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
+      }
+    }
   }
+
+  @override
+  Future<Either<Failure, UserImageModel>> getUserImage(UserRequest userRequest)
+    async {
+      try {
+        if (userRequest.userId == null) {
+
+          userRequest.userId = await _appPreferences.getUserToken();
+
+        }
+        // get from cache
+
+        final response = await _remoteDataSource.getUserImage(userRequest);
+        //final response2 = await _localDataSource.getUserData();
+        return Right(response.toDomain());
+      } catch (cacheError) {
+        // we have cache error so we should call API
+
+        if (await _networkInfo.isConnected) {
+          try {
+            // its safe to call the API
+            final response = await _remoteDataSource.getUserImage(userRequest);
+
+            if (response.data?.toString() != null) // success
+                {
+             // _localDataSource.saveUserToCache(response);
+              return Right(response.toDomain());
+            } else {
+              // return left
+              return Left(Failure(700, ResponseMessage.DEFAULT));
+            }
+          } catch (error) {
+            return (Left(ErrorHandler
+                .handle(error)
+                .failure));
+          }
+        } else {
+          // return connection error
+          return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
+        }
+      }
+    }
+  }
+
+
 
 
 

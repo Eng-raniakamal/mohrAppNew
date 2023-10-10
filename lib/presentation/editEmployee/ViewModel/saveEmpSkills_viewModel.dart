@@ -18,6 +18,7 @@ class EmployeeSkillsViewModel extends BaseViewModel with
 
 
   final EmployeeSkillsUseCase _employeeSkillsUseCase;
+  //String userId;
   var EmployeeSkillsObject=empSkillsObject(UserId,"",0,0,0);
 
   EmployeeSkillsViewModel(this._employeeSkillsUseCase);
@@ -33,14 +34,9 @@ class EmployeeSkillsViewModel extends BaseViewModel with
   @override
   Sink get inputQualificationId => QualificationIdStreamController.sink;
 
-
-
-
-
   @override
   void start() {
     inputState.add(ContentState());
-
   }
 
   @override

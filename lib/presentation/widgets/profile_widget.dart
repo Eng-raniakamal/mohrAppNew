@@ -10,18 +10,23 @@ import 'package:permission_handler/permission_handler.dart';
 
 File? imageFile;
 
-class ProfileWidget extends StatelessWidget {
+class ProfileWidget extends StatefulWidget {
   final String imagePath;
   final bool isEdit;
   final VoidCallback onClicked;
 
-  const ProfileWidget({
+  const  ProfileWidget({
     Key? key,
     required this.imagePath,
     this.isEdit = true,
     required this.onClicked,
   }) : super(key: key);
 
+  @override
+  State<ProfileWidget> createState() => _ProfileWidgetState();
+}
+
+class _ProfileWidgetState extends State<ProfileWidget> {
   @override
   Widget build(BuildContext context) {
     final color = Theme.of(context).colorScheme.primary;
@@ -39,11 +44,11 @@ class ProfileWidget extends StatelessWidget {
       ),
     );
   }
+
   // create the image profile and edit the image
-  // from gallary and the camera
   Widget buildImage(BuildContext context) {
    // try {
-      final image = NetworkImage(imagePath);
+      final image = NetworkImage(widget.imagePath);
       return ClipOval(
         child: Material(
           color: Colors.transparent,
@@ -55,7 +60,7 @@ class ProfileWidget extends StatelessWidget {
             width: 110,
             height: 110,
             child: InkWell(onTap:
-            onClicked),
+            widget.onClicked),
           ),
         ),
       );
@@ -85,7 +90,7 @@ class ProfileWidget extends StatelessWidget {
           color: color,
           all: 8,
           child: Icon(
-            isEdit ? Icons.add_a_photo : Icons.edit,
+            widget.isEdit ? Icons.add_a_photo : Icons.edit,
             color: Colors.white,
             size: 20,
           ),
@@ -221,9 +226,9 @@ _cropImage(File imgFile) async {
   if (croppedFile != null) {
 
     imageCache.clear();
-   // setState(() {
+    //setState(() {
       imageFile = File(croppedFile.path);
-  //  });
+   // });
     // reload();
   }
 }

@@ -5,6 +5,7 @@ import 'package:mohr_hr/presentation/Requests/Salary/Layout/salaryLayout.dart';
 import 'package:mohr_hr/presentation/Requests/Salary/View/salaryDetailsDialog.dart';
 import 'package:mohr_hr/presentation/Requests/Salary/View/salaryDetailsView.dart';
 import 'package:mohr_hr/presentation/Requests/Salary/View/salary_View.dart';
+import 'package:mohr_hr/presentation/Requests/Vacations/view/vactionRequests_view.dart';
 import 'package:mohr_hr/presentation/User/user_view.dart';
 //import 'package:mohr_hr/presentation/home/home_Screen.dart';
 import 'package:mohr_hr/presentation/home/Home.dart';
@@ -37,6 +38,7 @@ class Routes
   static const String settings="/settings";
   static const String employee="/user/layout";
   static const String Vacations="/Requests/Vacations";
+  static const String VacationRequest="/Requests/Vacations/vacationRequests_view.dart";
   static const String salary="/Requests/Salary/View/salary_View.dart";
   static const String salaryDetails="/Requests/Salary/View/salaryDetailsDialog.dart";
 }
@@ -57,18 +59,30 @@ class RouteGenerator {
 
        case Routes.profileRoute:
         initUserModule();
+        initUserImageModule();
         return MaterialPageRoute(builder: (_)=>  const userView());
 
       case Routes.HomeRoute:
         initUserModule();
+        initUserImageModule();
         return MaterialPageRoute(builder: (_)=>  Home());
 
         case Routes.editProfileRoute:
-          initEmployeeBasicDataModule();
-          //initSaveEmpBasicDataModule();
+           initEmployeeBasicDataModule();
+          // //initSaveEmpBasicDataModule();
+          // initEmployeeSkillsModule();
+          // initQualificationModule();
+          // initGradeModule();
+          // initDisplayEmployeeSkillsModule();
+
           initEmployeeSkillsModule();
-          initQualificationModule();
           initDisplayEmployeeSkillsModule();
+          initEmployeeBasicDataModule();
+          initSaveEmpBasicDataModule();
+          initDisplayAcademicDegreesModule();
+          initSaveAcademicDegreesModule();
+          initQualificationModule();
+          initGradeModule();
 
         return MaterialPageRoute(builder: (_)=>  Employee());
 
@@ -78,6 +92,11 @@ class RouteGenerator {
       case Routes.Vacations:
         initVacationModule();
         return MaterialPageRoute(builder: (_)=> VacationScreen());
+
+
+      case Routes.VacationRequest:
+        initVacationTypeModule();
+        return MaterialPageRoute(builder: (_)=> VacationRequestView());
 
       case Routes.salary:
         initSalaryModule();
@@ -92,7 +111,7 @@ class RouteGenerator {
         initEmployeeSkillsModule();
         initDisplayEmployeeSkillsModule();
         initEmployeeBasicDataModule();
-        //initSaveEmpBasicDataModule();
+        initSaveEmpBasicDataModule();
         initDisplayAcademicDegreesModule();
         initSaveAcademicDegreesModule();
         initQualificationModule();

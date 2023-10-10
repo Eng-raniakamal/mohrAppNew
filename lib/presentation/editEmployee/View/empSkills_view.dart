@@ -22,16 +22,24 @@ class EmployeeSkillsView extends StatefulWidget {
 class _EmployeeSkillsViewState extends State<EmployeeSkillsView> {
 
   final DisplayEmpSkillsViewModel _displayViewModel=instance<DisplayEmpSkillsViewModel>();
-  final EmployeeSkillsViewModel _saveviewModel=instance<EmployeeSkillsViewModel>();
+  final EmployeeSkillsViewModel _saveviewModel =instance<EmployeeSkillsViewModel>();
+   //EmployeeSkillsViewModel? _saveviewModel;
   final QualificationViewModel _QualificationviewModel = instance<QualificationViewModel>();
   final GradeViewModel _GradeviewModel = instance<GradeViewModel>();
-  //inal AppPreferences _appPreferences = instance<AppPreferences>();
+
+  //final AppPreferences _appPreferences = instance<AppPreferences>();
   final _Formkey= GlobalKey<FormState>();
   DateTime date= DateTime(2022);
   final TextEditingController _DateEditingController= TextEditingController();
   final TextEditingController _GradeIdEditingController=TextEditingController();
   final TextEditingController _QualificationIdEditingController=TextEditingController();
   final TextEditingController _EmployeeIdEditingController=TextEditingController();
+
+  var qualificationid;
+  var gradeId;
+  var datetext;
+
+
   _blind() {
     _saveviewModel.start();
     _displayViewModel.start();
@@ -162,12 +170,19 @@ class _EmployeeSkillsViewState extends State<EmployeeSkillsView> {
 
                                   TextFormField(onTap: () async {
 
+                                    DateTime? newDate=
                                     await showDatePicker
                                       (context: context,
                                         initialDate: date,
                                         firstDate: DateTime(1900),
                                         lastDate: DateTime(2100)
                                       );
+                                    //if 'cancel'=>null
+                                    if(newDate==null)return;
+                                    //if 'ok' => DateTime
+                                    setState(() {
+                                      date=newDate;
+                                    });
                                   },
                                       keyboardType: TextInputType.text,
                                       controller: _DateEditingController,
@@ -225,11 +240,10 @@ class _EmployeeSkillsViewState extends State<EmployeeSkillsView> {
                         Container(
                             padding: EdgeInsets.all(20),
                             child: StreamBuilder<bool>(
-                              //stream: _saveViewModel.outputIsAllInputsValid,
+                              stream: _saveviewModel.outputDateValid,
                                 builder: (context, snapshot)
-                                {
-                                  return ElevatedButton(
-                                      child: Text("Save"),
+                                {return ElevatedButton(
+                                      child: Text("Add"),
                                       onPressed: () {
                                         _saveviewModel.addSkills();
                                       }
@@ -266,40 +280,45 @@ class _EmployeeSkillsViewState extends State<EmployeeSkillsView> {
   }
   Widget _getQualification(List<QualificationItem>? qualification)
   {
-    var dropdownvalue;
+    //var dropdownvalue;
+    var items=qualification?.map(
+  (qualificationItem) {
+  return DropdownMenuItem(
+  value:qualificationItem.value ,
+  child: Text(qualificationItem.text.toString()),);
+  }).toList();
+
     return DropdownButton(
       hint: Text("Choose a Qualification"),
-      items: qualification?.map(
-              (qualificationItem) {
-            return DropdownMenuItem(
-              value: dropdownvalue,
-              child: Text(qualificationItem.text.toString()),);
-          }).toList(),
+      items: items,
       onChanged: (newvalue) {
         setState(() {
-          dropdownvalue = newvalue;
+          qualificationid=newvalue;
         });
       },
-      value: dropdownvalue,
+      value: qualificationid,
     );
   }
+
   Widget _getGrade(List<GradeItem>? grade)
-  {
-    var dropdownvalue;
+  {//var  dropdownvalue;
+    var items=grade?.map(
+            (gradeItem) {
+          return DropdownMenuItem(
+
+            value: gradeItem.value,
+            child: Text(gradeItem.text.toString()),);
+        }).toList();
+
     return DropdownButton(
-      hint: Text("Choose grade"),
-      items:  grade?.map(
-              (gradeItem) {
-            return DropdownMenuItem(
-              value: dropdownvalue,
-              child: Text(gradeItem.text.toString()),);
-          }).toList(),
+      hint: Text("Choose Grade"),
+      items:  items,
       onChanged: (newvalue) {
         setState(() {
-          dropdownvalue = newvalue;
+          gradeId = newvalue;
         });
       },
-      value: dropdownvalue,
+      value: gradeId,
     );
   }
   DataTable _createSkillsTable(List<skillsModel>? skills) {

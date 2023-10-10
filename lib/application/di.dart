@@ -6,6 +6,7 @@ import 'package:mohr_hr/data/networks/dio_factory.dart';
 import 'package:mohr_hr/data/networks/network_info.dart';
 import 'package:mohr_hr/data/repository/repository_impl.dart';
 import 'package:mohr_hr/domain/repository/repository.dart';
+import 'package:mohr_hr/domain/usecase/VacatioType_useCase.dart';
 import 'package:mohr_hr/domain/usecase/displaySkills_useCase.dart';
 import 'package:mohr_hr/domain/usecase/empAcademicDegree_useCase.dart';
 import 'package:mohr_hr/domain/usecase/grade_useCase.dart';
@@ -17,7 +18,10 @@ import 'package:mohr_hr/domain/usecase/employee_UseCase.dart';
 import 'package:mohr_hr/domain/usecase/login_usecase.dart';
 import 'package:mohr_hr/domain/usecase/saveAcademicDegree_UseCase.dart';
 import 'package:mohr_hr/domain/usecase/saveEmpBD_useCase.dart';
+import 'package:mohr_hr/domain/usecase/userImage_usecase.dart';
+import 'package:mohr_hr/presentation/AddImage/viewModel/GetImage_ViewModel.dart';
 import 'package:mohr_hr/presentation/Requests/Salary/ViewModel/salaryDetailsViewModel.dart';
+import 'package:mohr_hr/presentation/Requests/Vacations/viewModel/VacationType_ViewModel.dart';
 
 import 'package:mohr_hr/presentation/User/User_viewModel.dart';
 import 'package:mohr_hr/presentation/editEmployee/ViewModel/displayEmpAcademicDegree_ViewModel.dart';
@@ -27,7 +31,8 @@ import 'package:mohr_hr/presentation/editEmployee/ViewModel/grade_viewModel.dart
 import 'package:mohr_hr/presentation/editEmployee/ViewModel/saveEmpAcademicDegree_ViewModel.dart';
 import 'package:mohr_hr/presentation/editEmployee/ViewModel/saveEmpBD_viewModel.dart';
 import 'package:mohr_hr/presentation/login/loginviewmodel.dart';
-import 'package:data_connection_checker/data_connection_checker.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
+//import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../domain/usecase/empSkills_UseCase.dart';
@@ -55,7 +60,7 @@ Future<void> initAppModule() async {
     (() => AppPreferences(instance()));
   // network info
   instance.registerLazySingleton<NetworkInfo>(
-          () => NetworkInfoImpl(DataConnectionChecker()));
+          () => NetworkInfoImpl(InternetConnectionChecker()));
   // dio factory
   instance.registerLazySingleton<DioFactory>(() => DioFactory(instance()));
 
@@ -96,6 +101,17 @@ initLoginModule() {
      });
    }
 }
+
+initUserImageModule() {
+  if (!GetIt.I.isRegistered<UserImageUseCase>()) {
+    instance.registerFactory<UserImageUseCase>(() => UserImageUseCase(instance()));
+    instance.registerFactory<EmployeeImageViewModel>(() {
+      var item = instance<UserImageUseCase>();
+      return EmployeeImageViewModel(item);
+    });
+  }
+}
+
 initEmployeeBasicDataModule() {
   if (!GetIt.I.isRegistered<BasicDataUseCase>()) {
     instance.registerFactory<BasicDataUseCase>(() => BasicDataUseCase(instance()));
@@ -106,15 +122,16 @@ initEmployeeBasicDataModule() {
   }
   }
 
-// initSaveEmpBasicDataModule() {
-//   if (!GetIt.I.isRegistered<saveEmpBasicDataUseCase>()) {
-//     instance.registerFactory<saveEmpBasicDataUseCase>(() => saveEmpBasicDataUseCase(instance()));
-//     instance.registerFactory<saveBDViewModel >(() {
-//       var item = instance<saveEmpBasicDataUseCase>();
-//       return saveBDViewModel(item);
-//     });
-//   }
-// }
+initSaveEmpBasicDataModule() {
+  if (!GetIt.I.isRegistered<saveEmpBasicDataUseCase>()) {
+    instance.registerFactory<saveEmpBasicDataUseCase>(() => saveEmpBasicDataUseCase(instance()));
+    // instance.registerFactory<saveBDViewModel >(() {
+    //   var item = instance<saveEmpBasicDataUseCase>();
+    //   return saveBDViewModel(item);
+  //   }
+  // );
+  }
+}
 
 initEmployeeSkillsModule() {
   if (!GetIt.I.isRegistered<EmployeeSkillsUseCase>()) {
@@ -137,7 +154,7 @@ initDisplayEmployeeSkillsModule() {
     });
   }
 }
-initDisplayAcademicDegreesModule() {
+initDisplayAcademicDegreesModule(){
   if (!GetIt.I.isRegistered<GetAcademicDegreeUseCase>()) {
     instance.registerFactory<GetAcademicDegreeUseCase>(() =>
         GetAcademicDegreeUseCase(instance()));
@@ -193,6 +210,18 @@ initSalaryModule() {
     }
   }
 
+initVacationTypeModule() {
+  if (!GetIt.I.isRegistered<VacationTypeUseCase>()) {
+    instance.registerFactory<VacationTypeUseCase>(() =>
+        VacationTypeUseCase(instance()));
+    instance.registerFactory<VacationTypeViewModel>(() {
+      var item = instance<VacationTypeUseCase>();
+      return VacationTypeViewModel(item);
+    }
+    );
+  }
+}
+
 initQualificationModule() {
   if (!GetIt.I.isRegistered<QualificationUseCase>()) {
     instance.registerFactory<QualificationUseCase>(() =>
@@ -223,6 +252,7 @@ initGradeModule() {
     initAppModule();
     initLoginModule();
     initUserModule();
+    initUserImageModule();
     initEmployeeBasicDataModule();
     //initSaveEmpBasicDataModule();
     initDisplayEmployeeSkillsModule();

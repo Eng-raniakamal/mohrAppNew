@@ -15,7 +15,7 @@ import 'package:mohr_hr/presentation/common/freezed_data_classes.dart';
 
 
 class DisplayAcademicDegreeViewModel extends BaseViewModel with
-    DisplayEmpAcademicDegreeViewModelInputs,DisplayAcademicDegreeViewModelOutputs {
+    DisplayAcademicDegreeViewModelInputs,DisplayAcademicDegreeViewModelOutputs {
 
   final StreamController _UserIdStreamController= StreamController<String>.broadcast();
   final StreamController _EmpIdStreamController= StreamController<int>.broadcast();
@@ -107,7 +107,7 @@ class DisplayAcademicDegreeViewModel extends BaseViewModel with
   map((data) => data);
 }
 
-abstract class DisplayEmpAcademicDegreeViewModelInputs{
+abstract class DisplayAcademicDegreeViewModelInputs{
   Sink get inputUserId;
   Sink get inputEmpId;
 }

@@ -105,13 +105,13 @@ class GradeViewModel extends BaseViewModel with
   Sink get EmployeeData => throw UnimplementedError();
 
   @override
-  // TODO: implement outputgradeData
-  Stream<GradesObject> get outputgradeData => throw UnimplementedError();
+
+  Stream<GradesObject> get outputgradeData =>
+      GradeStreamController.stream.map((data) => data);
 
 }
 
 abstract class GradeViewModelInputs{
-
   Sink get EmployeeData;
 }
 abstract class GradeViewModelOutputs{

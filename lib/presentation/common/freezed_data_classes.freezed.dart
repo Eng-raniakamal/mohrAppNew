@@ -1,5 +1,7 @@
+// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides
+// ignore_for_file: type=lint
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'freezed_data_classes.dart';
 
@@ -10,23 +12,7 @@ part of 'freezed_data_classes.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$LoginObjectTearOff {
-  const _$LoginObjectTearOff();
-
-  _LoginObject call(String email, String password, String deviceId) {
-    return _LoginObject(
-      email,
-      password,
-      deviceId,
-    );
-  }
-}
-
-/// @nodoc
-const $LoginObject = _$LoginObjectTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$LoginObject {
@@ -43,77 +29,81 @@ mixin _$LoginObject {
 abstract class $LoginObjectCopyWith<$Res> {
   factory $LoginObjectCopyWith(
           LoginObject value, $Res Function(LoginObject) then) =
-      _$LoginObjectCopyWithImpl<$Res>;
+      _$LoginObjectCopyWithImpl<$Res, LoginObject>;
+  @useResult
   $Res call({String email, String password, String deviceId});
 }
 
 /// @nodoc
-class _$LoginObjectCopyWithImpl<$Res> implements $LoginObjectCopyWith<$Res> {
+class _$LoginObjectCopyWithImpl<$Res, $Val extends LoginObject>
+    implements $LoginObjectCopyWith<$Res> {
   _$LoginObjectCopyWithImpl(this._value, this._then);
 
-  final LoginObject _value;
   // ignore: unused_field
-  final $Res Function(LoginObject) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? email = freezed,
-    Object? password = freezed,
-    Object? deviceId = freezed,
+    Object? email = null,
+    Object? password = null,
+    Object? deviceId = null,
   }) {
     return _then(_value.copyWith(
-      email: email == freezed
+      email: null == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
               as String,
-      password: password == freezed
+      password: null == password
           ? _value.password
           : password // ignore: cast_nullable_to_non_nullable
               as String,
-      deviceId: deviceId == freezed
+      deviceId: null == deviceId
           ? _value.deviceId
           : deviceId // ignore: cast_nullable_to_non_nullable
               as String,
-    ));
+    ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$LoginObjectCopyWith<$Res>
+abstract class _$$LoginObjectImplCopyWith<$Res>
     implements $LoginObjectCopyWith<$Res> {
-  factory _$LoginObjectCopyWith(
-          _LoginObject value, $Res Function(_LoginObject) then) =
-      __$LoginObjectCopyWithImpl<$Res>;
+  factory _$$LoginObjectImplCopyWith(
+          _$LoginObjectImpl value, $Res Function(_$LoginObjectImpl) then) =
+      __$$LoginObjectImplCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({String email, String password, String deviceId});
 }
 
 /// @nodoc
-class __$LoginObjectCopyWithImpl<$Res> extends _$LoginObjectCopyWithImpl<$Res>
-    implements _$LoginObjectCopyWith<$Res> {
-  __$LoginObjectCopyWithImpl(
-      _LoginObject _value, $Res Function(_LoginObject) _then)
-      : super(_value, (v) => _then(v as _LoginObject));
+class __$$LoginObjectImplCopyWithImpl<$Res>
+    extends _$LoginObjectCopyWithImpl<$Res, _$LoginObjectImpl>
+    implements _$$LoginObjectImplCopyWith<$Res> {
+  __$$LoginObjectImplCopyWithImpl(
+      _$LoginObjectImpl _value, $Res Function(_$LoginObjectImpl) _then)
+      : super(_value, _then);
 
-  @override
-  _LoginObject get _value => super._value as _LoginObject;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? email = freezed,
-    Object? password = freezed,
-    Object? deviceId = freezed,
+    Object? email = null,
+    Object? password = null,
+    Object? deviceId = null,
   }) {
-    return _then(_LoginObject(
-      email == freezed
+    return _then(_$LoginObjectImpl(
+      null == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
               as String,
-      password == freezed
+      null == password
           ? _value.password
           : password // ignore: cast_nullable_to_non_nullable
               as String,
-      deviceId == freezed
+      null == deviceId
           ? _value.deviceId
           : deviceId // ignore: cast_nullable_to_non_nullable
               as String,
@@ -123,8 +113,8 @@ class __$LoginObjectCopyWithImpl<$Res> extends _$LoginObjectCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_LoginObject implements _LoginObject {
-  _$_LoginObject(this.email, this.password, this.deviceId);
+class _$LoginObjectImpl implements _LoginObject {
+  _$LoginObjectImpl(this.email, this.password, this.deviceId);
 
   @override
   final String email;
@@ -141,59 +131,41 @@ class _$_LoginObject implements _LoginObject {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _LoginObject &&
-            (identical(other.email, email) ||
-                const DeepCollectionEquality().equals(other.email, email)) &&
+        (other.runtimeType == runtimeType &&
+            other is _$LoginObjectImpl &&
+            (identical(other.email, email) || other.email == email) &&
             (identical(other.password, password) ||
-                const DeepCollectionEquality()
-                    .equals(other.password, password)) &&
+                other.password == password) &&
             (identical(other.deviceId, deviceId) ||
-                const DeepCollectionEquality()
-                    .equals(other.deviceId, deviceId)));
+                other.deviceId == deviceId));
   }
 
   @override
-  int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(email) ^
-      const DeepCollectionEquality().hash(password) ^
-      const DeepCollectionEquality().hash(deviceId);
+  int get hashCode => Object.hash(runtimeType, email, password, deviceId);
 
   @JsonKey(ignore: true)
   @override
-  _$LoginObjectCopyWith<_LoginObject> get copyWith =>
-      __$LoginObjectCopyWithImpl<_LoginObject>(this, _$identity);
+  @pragma('vm:prefer-inline')
+  _$$LoginObjectImplCopyWith<_$LoginObjectImpl> get copyWith =>
+      __$$LoginObjectImplCopyWithImpl<_$LoginObjectImpl>(this, _$identity);
 }
 
 abstract class _LoginObject implements LoginObject {
-  factory _LoginObject(String email, String password, String deviceId) =
-      _$_LoginObject;
+  factory _LoginObject(
+          final String email, final String password, final String deviceId) =
+      _$LoginObjectImpl;
 
   @override
-  String get email => throw _privateConstructorUsedError;
+  String get email;
   @override
-  String get password => throw _privateConstructorUsedError;
+  String get password;
   @override
-  String get deviceId => throw _privateConstructorUsedError;
+  String get deviceId;
   @override
   @JsonKey(ignore: true)
-  _$LoginObjectCopyWith<_LoginObject> get copyWith =>
+  _$$LoginObjectImplCopyWith<_$LoginObjectImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
-
-/// @nodoc
-class _$UserObjectTearOff {
-  const _$UserObjectTearOff();
-
-  _UserObject call(String userID) {
-    return _UserObject(
-      userID,
-    );
-  }
-}
-
-/// @nodoc
-const $UserObject = _$UserObjectTearOff();
 
 /// @nodoc
 mixin _$UserObject {
@@ -208,56 +180,61 @@ mixin _$UserObject {
 abstract class $UserObjectCopyWith<$Res> {
   factory $UserObjectCopyWith(
           UserObject value, $Res Function(UserObject) then) =
-      _$UserObjectCopyWithImpl<$Res>;
+      _$UserObjectCopyWithImpl<$Res, UserObject>;
+  @useResult
   $Res call({String userID});
 }
 
 /// @nodoc
-class _$UserObjectCopyWithImpl<$Res> implements $UserObjectCopyWith<$Res> {
+class _$UserObjectCopyWithImpl<$Res, $Val extends UserObject>
+    implements $UserObjectCopyWith<$Res> {
   _$UserObjectCopyWithImpl(this._value, this._then);
 
-  final UserObject _value;
   // ignore: unused_field
-  final $Res Function(UserObject) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? userID = freezed,
+    Object? userID = null,
   }) {
     return _then(_value.copyWith(
-      userID: userID == freezed
+      userID: null == userID
           ? _value.userID
           : userID // ignore: cast_nullable_to_non_nullable
               as String,
-    ));
+    ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$UserObjectCopyWith<$Res> implements $UserObjectCopyWith<$Res> {
-  factory _$UserObjectCopyWith(
-          _UserObject value, $Res Function(_UserObject) then) =
-      __$UserObjectCopyWithImpl<$Res>;
+abstract class _$$UserObjectImplCopyWith<$Res>
+    implements $UserObjectCopyWith<$Res> {
+  factory _$$UserObjectImplCopyWith(
+          _$UserObjectImpl value, $Res Function(_$UserObjectImpl) then) =
+      __$$UserObjectImplCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({String userID});
 }
 
 /// @nodoc
-class __$UserObjectCopyWithImpl<$Res> extends _$UserObjectCopyWithImpl<$Res>
-    implements _$UserObjectCopyWith<$Res> {
-  __$UserObjectCopyWithImpl(
-      _UserObject _value, $Res Function(_UserObject) _then)
-      : super(_value, (v) => _then(v as _UserObject));
+class __$$UserObjectImplCopyWithImpl<$Res>
+    extends _$UserObjectCopyWithImpl<$Res, _$UserObjectImpl>
+    implements _$$UserObjectImplCopyWith<$Res> {
+  __$$UserObjectImplCopyWithImpl(
+      _$UserObjectImpl _value, $Res Function(_$UserObjectImpl) _then)
+      : super(_value, _then);
 
-  @override
-  _UserObject get _value => super._value as _UserObject;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? userID = freezed,
+    Object? userID = null,
   }) {
-    return _then(_UserObject(
-      userID == freezed
+    return _then(_$UserObjectImpl(
+      null == userID
           ? _value.userID
           : userID // ignore: cast_nullable_to_non_nullable
               as String,
@@ -267,8 +244,8 @@ class __$UserObjectCopyWithImpl<$Res> extends _$UserObjectCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_UserObject implements _UserObject {
-  _$_UserObject(this.userID);
+class _$UserObjectImpl implements _UserObject {
+  _$UserObjectImpl(this.userID);
 
   @override
   final String userID;
@@ -281,45 +258,31 @@ class _$_UserObject implements _UserObject {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _UserObject &&
-            (identical(other.userID, userID) ||
-                const DeepCollectionEquality().equals(other.userID, userID)));
+        (other.runtimeType == runtimeType &&
+            other is _$UserObjectImpl &&
+            (identical(other.userID, userID) || other.userID == userID));
   }
 
   @override
-  int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(userID);
+  int get hashCode => Object.hash(runtimeType, userID);
 
   @JsonKey(ignore: true)
   @override
-  _$UserObjectCopyWith<_UserObject> get copyWith =>
-      __$UserObjectCopyWithImpl<_UserObject>(this, _$identity);
+  @pragma('vm:prefer-inline')
+  _$$UserObjectImplCopyWith<_$UserObjectImpl> get copyWith =>
+      __$$UserObjectImplCopyWithImpl<_$UserObjectImpl>(this, _$identity);
 }
 
 abstract class _UserObject implements UserObject {
-  factory _UserObject(String userID) = _$_UserObject;
+  factory _UserObject(final String userID) = _$UserObjectImpl;
 
   @override
-  String get userID => throw _privateConstructorUsedError;
+  String get userID;
   @override
   @JsonKey(ignore: true)
-  _$UserObjectCopyWith<_UserObject> get copyWith =>
+  _$$UserObjectImplCopyWith<_$UserObjectImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
-
-/// @nodoc
-class _$gradeObjectTearOff {
-  const _$gradeObjectTearOff();
-
-  _gradeObject call(String userID) {
-    return _gradeObject(
-      userID,
-    );
-  }
-}
-
-/// @nodoc
-const $gradeObject = _$gradeObjectTearOff();
 
 /// @nodoc
 mixin _$gradeObject {
@@ -334,57 +297,61 @@ mixin _$gradeObject {
 abstract class $gradeObjectCopyWith<$Res> {
   factory $gradeObjectCopyWith(
           gradeObject value, $Res Function(gradeObject) then) =
-      _$gradeObjectCopyWithImpl<$Res>;
+      _$gradeObjectCopyWithImpl<$Res, gradeObject>;
+  @useResult
   $Res call({String userID});
 }
 
 /// @nodoc
-class _$gradeObjectCopyWithImpl<$Res> implements $gradeObjectCopyWith<$Res> {
+class _$gradeObjectCopyWithImpl<$Res, $Val extends gradeObject>
+    implements $gradeObjectCopyWith<$Res> {
   _$gradeObjectCopyWithImpl(this._value, this._then);
 
-  final gradeObject _value;
   // ignore: unused_field
-  final $Res Function(gradeObject) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? userID = freezed,
+    Object? userID = null,
   }) {
     return _then(_value.copyWith(
-      userID: userID == freezed
+      userID: null == userID
           ? _value.userID
           : userID // ignore: cast_nullable_to_non_nullable
               as String,
-    ));
+    ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$gradeObjectCopyWith<$Res>
+abstract class _$$gradeObjectImplCopyWith<$Res>
     implements $gradeObjectCopyWith<$Res> {
-  factory _$gradeObjectCopyWith(
-          _gradeObject value, $Res Function(_gradeObject) then) =
-      __$gradeObjectCopyWithImpl<$Res>;
+  factory _$$gradeObjectImplCopyWith(
+          _$gradeObjectImpl value, $Res Function(_$gradeObjectImpl) then) =
+      __$$gradeObjectImplCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({String userID});
 }
 
 /// @nodoc
-class __$gradeObjectCopyWithImpl<$Res> extends _$gradeObjectCopyWithImpl<$Res>
-    implements _$gradeObjectCopyWith<$Res> {
-  __$gradeObjectCopyWithImpl(
-      _gradeObject _value, $Res Function(_gradeObject) _then)
-      : super(_value, (v) => _then(v as _gradeObject));
+class __$$gradeObjectImplCopyWithImpl<$Res>
+    extends _$gradeObjectCopyWithImpl<$Res, _$gradeObjectImpl>
+    implements _$$gradeObjectImplCopyWith<$Res> {
+  __$$gradeObjectImplCopyWithImpl(
+      _$gradeObjectImpl _value, $Res Function(_$gradeObjectImpl) _then)
+      : super(_value, _then);
 
-  @override
-  _gradeObject get _value => super._value as _gradeObject;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? userID = freezed,
+    Object? userID = null,
   }) {
-    return _then(_gradeObject(
-      userID == freezed
+    return _then(_$gradeObjectImpl(
+      null == userID
           ? _value.userID
           : userID // ignore: cast_nullable_to_non_nullable
               as String,
@@ -394,8 +361,8 @@ class __$gradeObjectCopyWithImpl<$Res> extends _$gradeObjectCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_gradeObject implements _gradeObject {
-  _$_gradeObject(this.userID);
+class _$gradeObjectImpl implements _gradeObject {
+  _$gradeObjectImpl(this.userID);
 
   @override
   final String userID;
@@ -408,45 +375,31 @@ class _$_gradeObject implements _gradeObject {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _gradeObject &&
-            (identical(other.userID, userID) ||
-                const DeepCollectionEquality().equals(other.userID, userID)));
+        (other.runtimeType == runtimeType &&
+            other is _$gradeObjectImpl &&
+            (identical(other.userID, userID) || other.userID == userID));
   }
 
   @override
-  int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(userID);
+  int get hashCode => Object.hash(runtimeType, userID);
 
   @JsonKey(ignore: true)
   @override
-  _$gradeObjectCopyWith<_gradeObject> get copyWith =>
-      __$gradeObjectCopyWithImpl<_gradeObject>(this, _$identity);
+  @pragma('vm:prefer-inline')
+  _$$gradeObjectImplCopyWith<_$gradeObjectImpl> get copyWith =>
+      __$$gradeObjectImplCopyWithImpl<_$gradeObjectImpl>(this, _$identity);
 }
 
 abstract class _gradeObject implements gradeObject {
-  factory _gradeObject(String userID) = _$_gradeObject;
+  factory _gradeObject(final String userID) = _$gradeObjectImpl;
 
   @override
-  String get userID => throw _privateConstructorUsedError;
+  String get userID;
   @override
   @JsonKey(ignore: true)
-  _$gradeObjectCopyWith<_gradeObject> get copyWith =>
+  _$$gradeObjectImplCopyWith<_$gradeObjectImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
-
-/// @nodoc
-class _$VacationsObjectsTearOff {
-  const _$VacationsObjectsTearOff();
-
-  _VacationObjects call(String userID) {
-    return _VacationObjects(
-      userID,
-    );
-  }
-}
-
-/// @nodoc
-const $VacationsObjects = _$VacationsObjectsTearOff();
 
 /// @nodoc
 mixin _$VacationsObjects {
@@ -461,59 +414,61 @@ mixin _$VacationsObjects {
 abstract class $VacationsObjectsCopyWith<$Res> {
   factory $VacationsObjectsCopyWith(
           VacationsObjects value, $Res Function(VacationsObjects) then) =
-      _$VacationsObjectsCopyWithImpl<$Res>;
+      _$VacationsObjectsCopyWithImpl<$Res, VacationsObjects>;
+  @useResult
   $Res call({String userID});
 }
 
 /// @nodoc
-class _$VacationsObjectsCopyWithImpl<$Res>
+class _$VacationsObjectsCopyWithImpl<$Res, $Val extends VacationsObjects>
     implements $VacationsObjectsCopyWith<$Res> {
   _$VacationsObjectsCopyWithImpl(this._value, this._then);
 
-  final VacationsObjects _value;
   // ignore: unused_field
-  final $Res Function(VacationsObjects) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? userID = freezed,
+    Object? userID = null,
   }) {
     return _then(_value.copyWith(
-      userID: userID == freezed
+      userID: null == userID
           ? _value.userID
           : userID // ignore: cast_nullable_to_non_nullable
               as String,
-    ));
+    ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$VacationObjectsCopyWith<$Res>
+abstract class _$$VacationObjectsImplCopyWith<$Res>
     implements $VacationsObjectsCopyWith<$Res> {
-  factory _$VacationObjectsCopyWith(
-          _VacationObjects value, $Res Function(_VacationObjects) then) =
-      __$VacationObjectsCopyWithImpl<$Res>;
+  factory _$$VacationObjectsImplCopyWith(_$VacationObjectsImpl value,
+          $Res Function(_$VacationObjectsImpl) then) =
+      __$$VacationObjectsImplCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({String userID});
 }
 
 /// @nodoc
-class __$VacationObjectsCopyWithImpl<$Res>
-    extends _$VacationsObjectsCopyWithImpl<$Res>
-    implements _$VacationObjectsCopyWith<$Res> {
-  __$VacationObjectsCopyWithImpl(
-      _VacationObjects _value, $Res Function(_VacationObjects) _then)
-      : super(_value, (v) => _then(v as _VacationObjects));
+class __$$VacationObjectsImplCopyWithImpl<$Res>
+    extends _$VacationsObjectsCopyWithImpl<$Res, _$VacationObjectsImpl>
+    implements _$$VacationObjectsImplCopyWith<$Res> {
+  __$$VacationObjectsImplCopyWithImpl(
+      _$VacationObjectsImpl _value, $Res Function(_$VacationObjectsImpl) _then)
+      : super(_value, _then);
 
-  @override
-  _VacationObjects get _value => super._value as _VacationObjects;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? userID = freezed,
+    Object? userID = null,
   }) {
-    return _then(_VacationObjects(
-      userID == freezed
+    return _then(_$VacationObjectsImpl(
+      null == userID
           ? _value.userID
           : userID // ignore: cast_nullable_to_non_nullable
               as String,
@@ -523,8 +478,8 @@ class __$VacationObjectsCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_VacationObjects implements _VacationObjects {
-  _$_VacationObjects(this.userID);
+class _$VacationObjectsImpl implements _VacationObjects {
+  _$VacationObjectsImpl(this.userID);
 
   @override
   final String userID;
@@ -537,45 +492,32 @@ class _$_VacationObjects implements _VacationObjects {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _VacationObjects &&
-            (identical(other.userID, userID) ||
-                const DeepCollectionEquality().equals(other.userID, userID)));
+        (other.runtimeType == runtimeType &&
+            other is _$VacationObjectsImpl &&
+            (identical(other.userID, userID) || other.userID == userID));
   }
 
   @override
-  int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(userID);
+  int get hashCode => Object.hash(runtimeType, userID);
 
   @JsonKey(ignore: true)
   @override
-  _$VacationObjectsCopyWith<_VacationObjects> get copyWith =>
-      __$VacationObjectsCopyWithImpl<_VacationObjects>(this, _$identity);
+  @pragma('vm:prefer-inline')
+  _$$VacationObjectsImplCopyWith<_$VacationObjectsImpl> get copyWith =>
+      __$$VacationObjectsImplCopyWithImpl<_$VacationObjectsImpl>(
+          this, _$identity);
 }
 
 abstract class _VacationObjects implements VacationsObjects {
-  factory _VacationObjects(String userID) = _$_VacationObjects;
+  factory _VacationObjects(final String userID) = _$VacationObjectsImpl;
 
   @override
-  String get userID => throw _privateConstructorUsedError;
+  String get userID;
   @override
   @JsonKey(ignore: true)
-  _$VacationObjectsCopyWith<_VacationObjects> get copyWith =>
+  _$$VacationObjectsImplCopyWith<_$VacationObjectsImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
-
-/// @nodoc
-class _$SalaryObjectsTearOff {
-  const _$SalaryObjectsTearOff();
-
-  _SalaryObjects call(String userID) {
-    return _SalaryObjects(
-      userID,
-    );
-  }
-}
-
-/// @nodoc
-const $SalaryObjects = _$SalaryObjectsTearOff();
 
 /// @nodoc
 mixin _$SalaryObjects {
@@ -590,59 +532,61 @@ mixin _$SalaryObjects {
 abstract class $SalaryObjectsCopyWith<$Res> {
   factory $SalaryObjectsCopyWith(
           SalaryObjects value, $Res Function(SalaryObjects) then) =
-      _$SalaryObjectsCopyWithImpl<$Res>;
+      _$SalaryObjectsCopyWithImpl<$Res, SalaryObjects>;
+  @useResult
   $Res call({String userID});
 }
 
 /// @nodoc
-class _$SalaryObjectsCopyWithImpl<$Res>
+class _$SalaryObjectsCopyWithImpl<$Res, $Val extends SalaryObjects>
     implements $SalaryObjectsCopyWith<$Res> {
   _$SalaryObjectsCopyWithImpl(this._value, this._then);
 
-  final SalaryObjects _value;
   // ignore: unused_field
-  final $Res Function(SalaryObjects) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? userID = freezed,
+    Object? userID = null,
   }) {
     return _then(_value.copyWith(
-      userID: userID == freezed
+      userID: null == userID
           ? _value.userID
           : userID // ignore: cast_nullable_to_non_nullable
               as String,
-    ));
+    ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$SalaryObjectsCopyWith<$Res>
+abstract class _$$SalaryObjectsImplCopyWith<$Res>
     implements $SalaryObjectsCopyWith<$Res> {
-  factory _$SalaryObjectsCopyWith(
-          _SalaryObjects value, $Res Function(_SalaryObjects) then) =
-      __$SalaryObjectsCopyWithImpl<$Res>;
+  factory _$$SalaryObjectsImplCopyWith(
+          _$SalaryObjectsImpl value, $Res Function(_$SalaryObjectsImpl) then) =
+      __$$SalaryObjectsImplCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({String userID});
 }
 
 /// @nodoc
-class __$SalaryObjectsCopyWithImpl<$Res>
-    extends _$SalaryObjectsCopyWithImpl<$Res>
-    implements _$SalaryObjectsCopyWith<$Res> {
-  __$SalaryObjectsCopyWithImpl(
-      _SalaryObjects _value, $Res Function(_SalaryObjects) _then)
-      : super(_value, (v) => _then(v as _SalaryObjects));
+class __$$SalaryObjectsImplCopyWithImpl<$Res>
+    extends _$SalaryObjectsCopyWithImpl<$Res, _$SalaryObjectsImpl>
+    implements _$$SalaryObjectsImplCopyWith<$Res> {
+  __$$SalaryObjectsImplCopyWithImpl(
+      _$SalaryObjectsImpl _value, $Res Function(_$SalaryObjectsImpl) _then)
+      : super(_value, _then);
 
-  @override
-  _SalaryObjects get _value => super._value as _SalaryObjects;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? userID = freezed,
+    Object? userID = null,
   }) {
-    return _then(_SalaryObjects(
-      userID == freezed
+    return _then(_$SalaryObjectsImpl(
+      null == userID
           ? _value.userID
           : userID // ignore: cast_nullable_to_non_nullable
               as String,
@@ -652,8 +596,8 @@ class __$SalaryObjectsCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_SalaryObjects implements _SalaryObjects {
-  _$_SalaryObjects(this.userID);
+class _$SalaryObjectsImpl implements _SalaryObjects {
+  _$SalaryObjectsImpl(this.userID);
 
   @override
   final String userID;
@@ -666,45 +610,31 @@ class _$_SalaryObjects implements _SalaryObjects {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _SalaryObjects &&
-            (identical(other.userID, userID) ||
-                const DeepCollectionEquality().equals(other.userID, userID)));
+        (other.runtimeType == runtimeType &&
+            other is _$SalaryObjectsImpl &&
+            (identical(other.userID, userID) || other.userID == userID));
   }
 
   @override
-  int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(userID);
+  int get hashCode => Object.hash(runtimeType, userID);
 
   @JsonKey(ignore: true)
   @override
-  _$SalaryObjectsCopyWith<_SalaryObjects> get copyWith =>
-      __$SalaryObjectsCopyWithImpl<_SalaryObjects>(this, _$identity);
+  @pragma('vm:prefer-inline')
+  _$$SalaryObjectsImplCopyWith<_$SalaryObjectsImpl> get copyWith =>
+      __$$SalaryObjectsImplCopyWithImpl<_$SalaryObjectsImpl>(this, _$identity);
 }
 
 abstract class _SalaryObjects implements SalaryObjects {
-  factory _SalaryObjects(String userID) = _$_SalaryObjects;
+  factory _SalaryObjects(final String userID) = _$SalaryObjectsImpl;
 
   @override
-  String get userID => throw _privateConstructorUsedError;
+  String get userID;
   @override
   @JsonKey(ignore: true)
-  _$SalaryObjectsCopyWith<_SalaryObjects> get copyWith =>
+  _$$SalaryObjectsImplCopyWith<_$SalaryObjectsImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
-
-/// @nodoc
-class _$SalaryDetailsObjectsTearOff {
-  const _$SalaryDetailsObjectsTearOff();
-
-  _SalaryDetailsObjects call(String userID) {
-    return _SalaryDetailsObjects(
-      userID,
-    );
-  }
-}
-
-/// @nodoc
-const $SalaryDetailsObjects = _$SalaryDetailsObjectsTearOff();
 
 /// @nodoc
 mixin _$SalaryDetailsObjects {
@@ -719,59 +649,62 @@ mixin _$SalaryDetailsObjects {
 abstract class $SalaryDetailsObjectsCopyWith<$Res> {
   factory $SalaryDetailsObjectsCopyWith(SalaryDetailsObjects value,
           $Res Function(SalaryDetailsObjects) then) =
-      _$SalaryDetailsObjectsCopyWithImpl<$Res>;
+      _$SalaryDetailsObjectsCopyWithImpl<$Res, SalaryDetailsObjects>;
+  @useResult
   $Res call({String userID});
 }
 
 /// @nodoc
-class _$SalaryDetailsObjectsCopyWithImpl<$Res>
+class _$SalaryDetailsObjectsCopyWithImpl<$Res,
+        $Val extends SalaryDetailsObjects>
     implements $SalaryDetailsObjectsCopyWith<$Res> {
   _$SalaryDetailsObjectsCopyWithImpl(this._value, this._then);
 
-  final SalaryDetailsObjects _value;
   // ignore: unused_field
-  final $Res Function(SalaryDetailsObjects) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? userID = freezed,
+    Object? userID = null,
   }) {
     return _then(_value.copyWith(
-      userID: userID == freezed
+      userID: null == userID
           ? _value.userID
           : userID // ignore: cast_nullable_to_non_nullable
               as String,
-    ));
+    ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$SalaryDetailsObjectsCopyWith<$Res>
+abstract class _$$SalaryDetailsObjectsImplCopyWith<$Res>
     implements $SalaryDetailsObjectsCopyWith<$Res> {
-  factory _$SalaryDetailsObjectsCopyWith(_SalaryDetailsObjects value,
-          $Res Function(_SalaryDetailsObjects) then) =
-      __$SalaryDetailsObjectsCopyWithImpl<$Res>;
+  factory _$$SalaryDetailsObjectsImplCopyWith(_$SalaryDetailsObjectsImpl value,
+          $Res Function(_$SalaryDetailsObjectsImpl) then) =
+      __$$SalaryDetailsObjectsImplCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({String userID});
 }
 
 /// @nodoc
-class __$SalaryDetailsObjectsCopyWithImpl<$Res>
-    extends _$SalaryDetailsObjectsCopyWithImpl<$Res>
-    implements _$SalaryDetailsObjectsCopyWith<$Res> {
-  __$SalaryDetailsObjectsCopyWithImpl(
-      _SalaryDetailsObjects _value, $Res Function(_SalaryDetailsObjects) _then)
-      : super(_value, (v) => _then(v as _SalaryDetailsObjects));
+class __$$SalaryDetailsObjectsImplCopyWithImpl<$Res>
+    extends _$SalaryDetailsObjectsCopyWithImpl<$Res, _$SalaryDetailsObjectsImpl>
+    implements _$$SalaryDetailsObjectsImplCopyWith<$Res> {
+  __$$SalaryDetailsObjectsImplCopyWithImpl(_$SalaryDetailsObjectsImpl _value,
+      $Res Function(_$SalaryDetailsObjectsImpl) _then)
+      : super(_value, _then);
 
-  @override
-  _SalaryDetailsObjects get _value => super._value as _SalaryDetailsObjects;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? userID = freezed,
+    Object? userID = null,
   }) {
-    return _then(_SalaryDetailsObjects(
-      userID == freezed
+    return _then(_$SalaryDetailsObjectsImpl(
+      null == userID
           ? _value.userID
           : userID // ignore: cast_nullable_to_non_nullable
               as String,
@@ -781,8 +714,8 @@ class __$SalaryDetailsObjectsCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_SalaryDetailsObjects implements _SalaryDetailsObjects {
-  _$_SalaryDetailsObjects(this.userID);
+class _$SalaryDetailsObjectsImpl implements _SalaryDetailsObjects {
+  _$SalaryDetailsObjectsImpl(this.userID);
 
   @override
   final String userID;
@@ -795,47 +728,152 @@ class _$_SalaryDetailsObjects implements _SalaryDetailsObjects {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _SalaryDetailsObjects &&
-            (identical(other.userID, userID) ||
-                const DeepCollectionEquality().equals(other.userID, userID)));
+        (other.runtimeType == runtimeType &&
+            other is _$SalaryDetailsObjectsImpl &&
+            (identical(other.userID, userID) || other.userID == userID));
   }
 
   @override
-  int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(userID);
+  int get hashCode => Object.hash(runtimeType, userID);
 
   @JsonKey(ignore: true)
   @override
-  _$SalaryDetailsObjectsCopyWith<_SalaryDetailsObjects> get copyWith =>
-      __$SalaryDetailsObjectsCopyWithImpl<_SalaryDetailsObjects>(
-          this, _$identity);
+  @pragma('vm:prefer-inline')
+  _$$SalaryDetailsObjectsImplCopyWith<_$SalaryDetailsObjectsImpl>
+      get copyWith =>
+          __$$SalaryDetailsObjectsImplCopyWithImpl<_$SalaryDetailsObjectsImpl>(
+              this, _$identity);
 }
 
 abstract class _SalaryDetailsObjects implements SalaryDetailsObjects {
-  factory _SalaryDetailsObjects(String userID) = _$_SalaryDetailsObjects;
+  factory _SalaryDetailsObjects(final String userID) =
+      _$SalaryDetailsObjectsImpl;
 
   @override
-  String get userID => throw _privateConstructorUsedError;
+  String get userID;
   @override
   @JsonKey(ignore: true)
-  _$SalaryDetailsObjectsCopyWith<_SalaryDetailsObjects> get copyWith =>
+  _$$SalaryDetailsObjectsImplCopyWith<_$SalaryDetailsObjectsImpl>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+mixin _$AttendanceObjects {
+  String get userID => throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $AttendanceObjectsCopyWith<AttendanceObjects> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-class _$EmpBasicDataObjectTearOff {
-  const _$EmpBasicDataObjectTearOff();
+abstract class $AttendanceObjectsCopyWith<$Res> {
+  factory $AttendanceObjectsCopyWith(
+          AttendanceObjects value, $Res Function(AttendanceObjects) then) =
+      _$AttendanceObjectsCopyWithImpl<$Res, AttendanceObjects>;
+  @useResult
+  $Res call({String userID});
+}
 
-  _EmpBasicDataObject call(String userID, int empId) {
-    return _EmpBasicDataObject(
-      userID,
-      empId,
-    );
+/// @nodoc
+class _$AttendanceObjectsCopyWithImpl<$Res, $Val extends AttendanceObjects>
+    implements $AttendanceObjectsCopyWith<$Res> {
+  _$AttendanceObjectsCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? userID = null,
+  }) {
+    return _then(_value.copyWith(
+      userID: null == userID
+          ? _value.userID
+          : userID // ignore: cast_nullable_to_non_nullable
+              as String,
+    ) as $Val);
   }
 }
 
 /// @nodoc
-const $EmpBasicDataObject = _$EmpBasicDataObjectTearOff();
+abstract class _$$AttendanceObjectsImplCopyWith<$Res>
+    implements $AttendanceObjectsCopyWith<$Res> {
+  factory _$$AttendanceObjectsImplCopyWith(_$AttendanceObjectsImpl value,
+          $Res Function(_$AttendanceObjectsImpl) then) =
+      __$$AttendanceObjectsImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String userID});
+}
+
+/// @nodoc
+class __$$AttendanceObjectsImplCopyWithImpl<$Res>
+    extends _$AttendanceObjectsCopyWithImpl<$Res, _$AttendanceObjectsImpl>
+    implements _$$AttendanceObjectsImplCopyWith<$Res> {
+  __$$AttendanceObjectsImplCopyWithImpl(_$AttendanceObjectsImpl _value,
+      $Res Function(_$AttendanceObjectsImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? userID = null,
+  }) {
+    return _then(_$AttendanceObjectsImpl(
+      null == userID
+          ? _value.userID
+          : userID // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$AttendanceObjectsImpl implements _AttendanceObjects {
+  _$AttendanceObjectsImpl(this.userID);
+
+  @override
+  final String userID;
+
+  @override
+  String toString() {
+    return 'AttendanceObjects(userID: $userID)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$AttendanceObjectsImpl &&
+            (identical(other.userID, userID) || other.userID == userID));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, userID);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$AttendanceObjectsImplCopyWith<_$AttendanceObjectsImpl> get copyWith =>
+      __$$AttendanceObjectsImplCopyWithImpl<_$AttendanceObjectsImpl>(
+          this, _$identity);
+}
+
+abstract class _AttendanceObjects implements AttendanceObjects {
+  factory _AttendanceObjects(final String userID) = _$AttendanceObjectsImpl;
+
+  @override
+  String get userID;
+  @override
+  @JsonKey(ignore: true)
+  _$$AttendanceObjectsImplCopyWith<_$AttendanceObjectsImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
 
 /// @nodoc
 mixin _$EmpBasicDataObject {
@@ -851,69 +889,71 @@ mixin _$EmpBasicDataObject {
 abstract class $EmpBasicDataObjectCopyWith<$Res> {
   factory $EmpBasicDataObjectCopyWith(
           EmpBasicDataObject value, $Res Function(EmpBasicDataObject) then) =
-      _$EmpBasicDataObjectCopyWithImpl<$Res>;
+      _$EmpBasicDataObjectCopyWithImpl<$Res, EmpBasicDataObject>;
+  @useResult
   $Res call({String userID, int empId});
 }
 
 /// @nodoc
-class _$EmpBasicDataObjectCopyWithImpl<$Res>
+class _$EmpBasicDataObjectCopyWithImpl<$Res, $Val extends EmpBasicDataObject>
     implements $EmpBasicDataObjectCopyWith<$Res> {
   _$EmpBasicDataObjectCopyWithImpl(this._value, this._then);
 
-  final EmpBasicDataObject _value;
   // ignore: unused_field
-  final $Res Function(EmpBasicDataObject) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? userID = freezed,
-    Object? empId = freezed,
+    Object? userID = null,
+    Object? empId = null,
   }) {
     return _then(_value.copyWith(
-      userID: userID == freezed
+      userID: null == userID
           ? _value.userID
           : userID // ignore: cast_nullable_to_non_nullable
               as String,
-      empId: empId == freezed
+      empId: null == empId
           ? _value.empId
           : empId // ignore: cast_nullable_to_non_nullable
               as int,
-    ));
+    ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$EmpBasicDataObjectCopyWith<$Res>
+abstract class _$$EmpBasicDataObjectImplCopyWith<$Res>
     implements $EmpBasicDataObjectCopyWith<$Res> {
-  factory _$EmpBasicDataObjectCopyWith(
-          _EmpBasicDataObject value, $Res Function(_EmpBasicDataObject) then) =
-      __$EmpBasicDataObjectCopyWithImpl<$Res>;
+  factory _$$EmpBasicDataObjectImplCopyWith(_$EmpBasicDataObjectImpl value,
+          $Res Function(_$EmpBasicDataObjectImpl) then) =
+      __$$EmpBasicDataObjectImplCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({String userID, int empId});
 }
 
 /// @nodoc
-class __$EmpBasicDataObjectCopyWithImpl<$Res>
-    extends _$EmpBasicDataObjectCopyWithImpl<$Res>
-    implements _$EmpBasicDataObjectCopyWith<$Res> {
-  __$EmpBasicDataObjectCopyWithImpl(
-      _EmpBasicDataObject _value, $Res Function(_EmpBasicDataObject) _then)
-      : super(_value, (v) => _then(v as _EmpBasicDataObject));
+class __$$EmpBasicDataObjectImplCopyWithImpl<$Res>
+    extends _$EmpBasicDataObjectCopyWithImpl<$Res, _$EmpBasicDataObjectImpl>
+    implements _$$EmpBasicDataObjectImplCopyWith<$Res> {
+  __$$EmpBasicDataObjectImplCopyWithImpl(_$EmpBasicDataObjectImpl _value,
+      $Res Function(_$EmpBasicDataObjectImpl) _then)
+      : super(_value, _then);
 
-  @override
-  _EmpBasicDataObject get _value => super._value as _EmpBasicDataObject;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? userID = freezed,
-    Object? empId = freezed,
+    Object? userID = null,
+    Object? empId = null,
   }) {
-    return _then(_EmpBasicDataObject(
-      userID == freezed
+    return _then(_$EmpBasicDataObjectImpl(
+      null == userID
           ? _value.userID
           : userID // ignore: cast_nullable_to_non_nullable
               as String,
-      empId == freezed
+      null == empId
           ? _value.empId
           : empId // ignore: cast_nullable_to_non_nullable
               as int,
@@ -923,8 +963,8 @@ class __$EmpBasicDataObjectCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_EmpBasicDataObject implements _EmpBasicDataObject {
-  _$_EmpBasicDataObject(this.userID, this.empId);
+class _$EmpBasicDataObjectImpl implements _EmpBasicDataObject {
+  _$EmpBasicDataObjectImpl(this.userID, this.empId);
 
   @override
   final String userID;
@@ -939,56 +979,698 @@ class _$_EmpBasicDataObject implements _EmpBasicDataObject {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _EmpBasicDataObject &&
-            (identical(other.userID, userID) ||
-                const DeepCollectionEquality().equals(other.userID, userID)) &&
-            (identical(other.empId, empId) ||
-                const DeepCollectionEquality().equals(other.empId, empId)));
+        (other.runtimeType == runtimeType &&
+            other is _$EmpBasicDataObjectImpl &&
+            (identical(other.userID, userID) || other.userID == userID) &&
+            (identical(other.empId, empId) || other.empId == empId));
   }
 
   @override
-  int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(userID) ^
-      const DeepCollectionEquality().hash(empId);
+  int get hashCode => Object.hash(runtimeType, userID, empId);
 
   @JsonKey(ignore: true)
   @override
-  _$EmpBasicDataObjectCopyWith<_EmpBasicDataObject> get copyWith =>
-      __$EmpBasicDataObjectCopyWithImpl<_EmpBasicDataObject>(this, _$identity);
+  @pragma('vm:prefer-inline')
+  _$$EmpBasicDataObjectImplCopyWith<_$EmpBasicDataObjectImpl> get copyWith =>
+      __$$EmpBasicDataObjectImplCopyWithImpl<_$EmpBasicDataObjectImpl>(
+          this, _$identity);
 }
 
 abstract class _EmpBasicDataObject implements EmpBasicDataObject {
-  factory _EmpBasicDataObject(String userID, int empId) = _$_EmpBasicDataObject;
+  factory _EmpBasicDataObject(final String userID, final int empId) =
+      _$EmpBasicDataObjectImpl;
 
   @override
-  String get userID => throw _privateConstructorUsedError;
+  String get userID;
   @override
-  int get empId => throw _privateConstructorUsedError;
+  int get empId;
   @override
   @JsonKey(ignore: true)
-  _$EmpBasicDataObjectCopyWith<_EmpBasicDataObject> get copyWith =>
+  _$$EmpBasicDataObjectImplCopyWith<_$EmpBasicDataObjectImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-class _$empSkillsObjectTearOff {
-  const _$empSkillsObjectTearOff();
+mixin _$EmpBasicDataSaveObject {
+  String get userID => throw _privateConstructorUsedError; //int empId,
+  empBasicDataEmployeeObject get employee => throw _privateConstructorUsedError;
+  empBasicDataAddressObject get address => throw _privateConstructorUsedError;
 
-  _empSkillsObject call(String userID, String Date, int GradeId,
-      int QualificationId, int EmployeeId) {
-    return _empSkillsObject(
-      userID,
-      Date,
-      GradeId,
-      QualificationId,
-      EmployeeId,
-    );
+  @JsonKey(ignore: true)
+  $EmpBasicDataSaveObjectCopyWith<EmpBasicDataSaveObject> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $EmpBasicDataSaveObjectCopyWith<$Res> {
+  factory $EmpBasicDataSaveObjectCopyWith(EmpBasicDataSaveObject value,
+          $Res Function(EmpBasicDataSaveObject) then) =
+      _$EmpBasicDataSaveObjectCopyWithImpl<$Res, EmpBasicDataSaveObject>;
+  @useResult
+  $Res call(
+      {String userID,
+      empBasicDataEmployeeObject employee,
+      empBasicDataAddressObject address});
+
+  $empBasicDataEmployeeObjectCopyWith<$Res> get employee;
+  $empBasicDataAddressObjectCopyWith<$Res> get address;
+}
+
+/// @nodoc
+class _$EmpBasicDataSaveObjectCopyWithImpl<$Res,
+        $Val extends EmpBasicDataSaveObject>
+    implements $EmpBasicDataSaveObjectCopyWith<$Res> {
+  _$EmpBasicDataSaveObjectCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? userID = null,
+    Object? employee = null,
+    Object? address = null,
+  }) {
+    return _then(_value.copyWith(
+      userID: null == userID
+          ? _value.userID
+          : userID // ignore: cast_nullable_to_non_nullable
+              as String,
+      employee: null == employee
+          ? _value.employee
+          : employee // ignore: cast_nullable_to_non_nullable
+              as empBasicDataEmployeeObject,
+      address: null == address
+          ? _value.address
+          : address // ignore: cast_nullable_to_non_nullable
+              as empBasicDataAddressObject,
+    ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $empBasicDataEmployeeObjectCopyWith<$Res> get employee {
+    return $empBasicDataEmployeeObjectCopyWith<$Res>(_value.employee, (value) {
+      return _then(_value.copyWith(employee: value) as $Val);
+    });
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $empBasicDataAddressObjectCopyWith<$Res> get address {
+    return $empBasicDataAddressObjectCopyWith<$Res>(_value.address, (value) {
+      return _then(_value.copyWith(address: value) as $Val);
+    });
   }
 }
 
 /// @nodoc
-const $empSkillsObject = _$empSkillsObjectTearOff();
+abstract class _$$EmpBasicDataSaveObjectImplCopyWith<$Res>
+    implements $EmpBasicDataSaveObjectCopyWith<$Res> {
+  factory _$$EmpBasicDataSaveObjectImplCopyWith(
+          _$EmpBasicDataSaveObjectImpl value,
+          $Res Function(_$EmpBasicDataSaveObjectImpl) then) =
+      __$$EmpBasicDataSaveObjectImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {String userID,
+      empBasicDataEmployeeObject employee,
+      empBasicDataAddressObject address});
+
+  @override
+  $empBasicDataEmployeeObjectCopyWith<$Res> get employee;
+  @override
+  $empBasicDataAddressObjectCopyWith<$Res> get address;
+}
+
+/// @nodoc
+class __$$EmpBasicDataSaveObjectImplCopyWithImpl<$Res>
+    extends _$EmpBasicDataSaveObjectCopyWithImpl<$Res,
+        _$EmpBasicDataSaveObjectImpl>
+    implements _$$EmpBasicDataSaveObjectImplCopyWith<$Res> {
+  __$$EmpBasicDataSaveObjectImplCopyWithImpl(
+      _$EmpBasicDataSaveObjectImpl _value,
+      $Res Function(_$EmpBasicDataSaveObjectImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? userID = null,
+    Object? employee = null,
+    Object? address = null,
+  }) {
+    return _then(_$EmpBasicDataSaveObjectImpl(
+      null == userID
+          ? _value.userID
+          : userID // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == employee
+          ? _value.employee
+          : employee // ignore: cast_nullable_to_non_nullable
+              as empBasicDataEmployeeObject,
+      null == address
+          ? _value.address
+          : address // ignore: cast_nullable_to_non_nullable
+              as empBasicDataAddressObject,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$EmpBasicDataSaveObjectImpl implements _EmpBasicDataSaveObject {
+  _$EmpBasicDataSaveObjectImpl(this.userID, this.employee, this.address);
+
+  @override
+  final String userID;
+//int empId,
+  @override
+  final empBasicDataEmployeeObject employee;
+  @override
+  final empBasicDataAddressObject address;
+
+  @override
+  String toString() {
+    return 'EmpBasicDataSaveObject(userID: $userID, employee: $employee, address: $address)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$EmpBasicDataSaveObjectImpl &&
+            (identical(other.userID, userID) || other.userID == userID) &&
+            (identical(other.employee, employee) ||
+                other.employee == employee) &&
+            (identical(other.address, address) || other.address == address));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, userID, employee, address);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$EmpBasicDataSaveObjectImplCopyWith<_$EmpBasicDataSaveObjectImpl>
+      get copyWith => __$$EmpBasicDataSaveObjectImplCopyWithImpl<
+          _$EmpBasicDataSaveObjectImpl>(this, _$identity);
+}
+
+abstract class _EmpBasicDataSaveObject implements EmpBasicDataSaveObject {
+  factory _EmpBasicDataSaveObject(
+      final String userID,
+      final empBasicDataEmployeeObject employee,
+      final empBasicDataAddressObject address) = _$EmpBasicDataSaveObjectImpl;
+
+  @override
+  String get userID;
+  @override //int empId,
+  empBasicDataEmployeeObject get employee;
+  @override
+  empBasicDataAddressObject get address;
+  @override
+  @JsonKey(ignore: true)
+  _$$EmpBasicDataSaveObjectImplCopyWith<_$EmpBasicDataSaveObjectImpl>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+mixin _$empBasicDataEmployeeObject {
+  int get empId => throw _privateConstructorUsedError;
+  String get ArabicName => throw _privateConstructorUsedError;
+  String get EnglishName => throw _privateConstructorUsedError;
+  String get BirthDate => throw _privateConstructorUsedError;
+  String get NationalId => throw _privateConstructorUsedError;
+  String get SocialId => throw _privateConstructorUsedError;
+  String get Email => throw _privateConstructorUsedError;
+  String get Phone => throw _privateConstructorUsedError;
+  String get Emergency_Number => throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $empBasicDataEmployeeObjectCopyWith<empBasicDataEmployeeObject>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $empBasicDataEmployeeObjectCopyWith<$Res> {
+  factory $empBasicDataEmployeeObjectCopyWith(empBasicDataEmployeeObject value,
+          $Res Function(empBasicDataEmployeeObject) then) =
+      _$empBasicDataEmployeeObjectCopyWithImpl<$Res,
+          empBasicDataEmployeeObject>;
+  @useResult
+  $Res call(
+      {int empId,
+      String ArabicName,
+      String EnglishName,
+      String BirthDate,
+      String NationalId,
+      String SocialId,
+      String Email,
+      String Phone,
+      String Emergency_Number});
+}
+
+/// @nodoc
+class _$empBasicDataEmployeeObjectCopyWithImpl<$Res,
+        $Val extends empBasicDataEmployeeObject>
+    implements $empBasicDataEmployeeObjectCopyWith<$Res> {
+  _$empBasicDataEmployeeObjectCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? empId = null,
+    Object? ArabicName = null,
+    Object? EnglishName = null,
+    Object? BirthDate = null,
+    Object? NationalId = null,
+    Object? SocialId = null,
+    Object? Email = null,
+    Object? Phone = null,
+    Object? Emergency_Number = null,
+  }) {
+    return _then(_value.copyWith(
+      empId: null == empId
+          ? _value.empId
+          : empId // ignore: cast_nullable_to_non_nullable
+              as int,
+      ArabicName: null == ArabicName
+          ? _value.ArabicName
+          : ArabicName // ignore: cast_nullable_to_non_nullable
+              as String,
+      EnglishName: null == EnglishName
+          ? _value.EnglishName
+          : EnglishName // ignore: cast_nullable_to_non_nullable
+              as String,
+      BirthDate: null == BirthDate
+          ? _value.BirthDate
+          : BirthDate // ignore: cast_nullable_to_non_nullable
+              as String,
+      NationalId: null == NationalId
+          ? _value.NationalId
+          : NationalId // ignore: cast_nullable_to_non_nullable
+              as String,
+      SocialId: null == SocialId
+          ? _value.SocialId
+          : SocialId // ignore: cast_nullable_to_non_nullable
+              as String,
+      Email: null == Email
+          ? _value.Email
+          : Email // ignore: cast_nullable_to_non_nullable
+              as String,
+      Phone: null == Phone
+          ? _value.Phone
+          : Phone // ignore: cast_nullable_to_non_nullable
+              as String,
+      Emergency_Number: null == Emergency_Number
+          ? _value.Emergency_Number
+          : Emergency_Number // ignore: cast_nullable_to_non_nullable
+              as String,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$empBasicDataEmployeeObjectImplCopyWith<$Res>
+    implements $empBasicDataEmployeeObjectCopyWith<$Res> {
+  factory _$$empBasicDataEmployeeObjectImplCopyWith(
+          _$empBasicDataEmployeeObjectImpl value,
+          $Res Function(_$empBasicDataEmployeeObjectImpl) then) =
+      __$$empBasicDataEmployeeObjectImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {int empId,
+      String ArabicName,
+      String EnglishName,
+      String BirthDate,
+      String NationalId,
+      String SocialId,
+      String Email,
+      String Phone,
+      String Emergency_Number});
+}
+
+/// @nodoc
+class __$$empBasicDataEmployeeObjectImplCopyWithImpl<$Res>
+    extends _$empBasicDataEmployeeObjectCopyWithImpl<$Res,
+        _$empBasicDataEmployeeObjectImpl>
+    implements _$$empBasicDataEmployeeObjectImplCopyWith<$Res> {
+  __$$empBasicDataEmployeeObjectImplCopyWithImpl(
+      _$empBasicDataEmployeeObjectImpl _value,
+      $Res Function(_$empBasicDataEmployeeObjectImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? empId = null,
+    Object? ArabicName = null,
+    Object? EnglishName = null,
+    Object? BirthDate = null,
+    Object? NationalId = null,
+    Object? SocialId = null,
+    Object? Email = null,
+    Object? Phone = null,
+    Object? Emergency_Number = null,
+  }) {
+    return _then(_$empBasicDataEmployeeObjectImpl(
+      null == empId
+          ? _value.empId
+          : empId // ignore: cast_nullable_to_non_nullable
+              as int,
+      null == ArabicName
+          ? _value.ArabicName
+          : ArabicName // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == EnglishName
+          ? _value.EnglishName
+          : EnglishName // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == BirthDate
+          ? _value.BirthDate
+          : BirthDate // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == NationalId
+          ? _value.NationalId
+          : NationalId // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == SocialId
+          ? _value.SocialId
+          : SocialId // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == Email
+          ? _value.Email
+          : Email // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == Phone
+          ? _value.Phone
+          : Phone // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == Emergency_Number
+          ? _value.Emergency_Number
+          : Emergency_Number // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$empBasicDataEmployeeObjectImpl implements _empBasicDataEmployeeObject {
+  _$empBasicDataEmployeeObjectImpl(
+      this.empId,
+      this.ArabicName,
+      this.EnglishName,
+      this.BirthDate,
+      this.NationalId,
+      this.SocialId,
+      this.Email,
+      this.Phone,
+      this.Emergency_Number);
+
+  @override
+  final int empId;
+  @override
+  final String ArabicName;
+  @override
+  final String EnglishName;
+  @override
+  final String BirthDate;
+  @override
+  final String NationalId;
+  @override
+  final String SocialId;
+  @override
+  final String Email;
+  @override
+  final String Phone;
+  @override
+  final String Emergency_Number;
+
+  @override
+  String toString() {
+    return 'empBasicDataEmployeeObject(empId: $empId, ArabicName: $ArabicName, EnglishName: $EnglishName, BirthDate: $BirthDate, NationalId: $NationalId, SocialId: $SocialId, Email: $Email, Phone: $Phone, Emergency_Number: $Emergency_Number)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$empBasicDataEmployeeObjectImpl &&
+            (identical(other.empId, empId) || other.empId == empId) &&
+            (identical(other.ArabicName, ArabicName) ||
+                other.ArabicName == ArabicName) &&
+            (identical(other.EnglishName, EnglishName) ||
+                other.EnglishName == EnglishName) &&
+            (identical(other.BirthDate, BirthDate) ||
+                other.BirthDate == BirthDate) &&
+            (identical(other.NationalId, NationalId) ||
+                other.NationalId == NationalId) &&
+            (identical(other.SocialId, SocialId) ||
+                other.SocialId == SocialId) &&
+            (identical(other.Email, Email) || other.Email == Email) &&
+            (identical(other.Phone, Phone) || other.Phone == Phone) &&
+            (identical(other.Emergency_Number, Emergency_Number) ||
+                other.Emergency_Number == Emergency_Number));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, empId, ArabicName, EnglishName,
+      BirthDate, NationalId, SocialId, Email, Phone, Emergency_Number);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$empBasicDataEmployeeObjectImplCopyWith<_$empBasicDataEmployeeObjectImpl>
+      get copyWith => __$$empBasicDataEmployeeObjectImplCopyWithImpl<
+          _$empBasicDataEmployeeObjectImpl>(this, _$identity);
+}
+
+abstract class _empBasicDataEmployeeObject
+    implements empBasicDataEmployeeObject {
+  factory _empBasicDataEmployeeObject(
+      final int empId,
+      final String ArabicName,
+      final String EnglishName,
+      final String BirthDate,
+      final String NationalId,
+      final String SocialId,
+      final String Email,
+      final String Phone,
+      final String Emergency_Number) = _$empBasicDataEmployeeObjectImpl;
+
+  @override
+  int get empId;
+  @override
+  String get ArabicName;
+  @override
+  String get EnglishName;
+  @override
+  String get BirthDate;
+  @override
+  String get NationalId;
+  @override
+  String get SocialId;
+  @override
+  String get Email;
+  @override
+  String get Phone;
+  @override
+  String get Emergency_Number;
+  @override
+  @JsonKey(ignore: true)
+  _$$empBasicDataEmployeeObjectImplCopyWith<_$empBasicDataEmployeeObjectImpl>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+mixin _$empBasicDataAddressObject {
+  String get AddressText => throw _privateConstructorUsedError;
+  int get DistrictId => throw _privateConstructorUsedError;
+  String get PoBox => throw _privateConstructorUsedError;
+  String get ZipCode => throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $empBasicDataAddressObjectCopyWith<empBasicDataAddressObject> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $empBasicDataAddressObjectCopyWith<$Res> {
+  factory $empBasicDataAddressObjectCopyWith(empBasicDataAddressObject value,
+          $Res Function(empBasicDataAddressObject) then) =
+      _$empBasicDataAddressObjectCopyWithImpl<$Res, empBasicDataAddressObject>;
+  @useResult
+  $Res call({String AddressText, int DistrictId, String PoBox, String ZipCode});
+}
+
+/// @nodoc
+class _$empBasicDataAddressObjectCopyWithImpl<$Res,
+        $Val extends empBasicDataAddressObject>
+    implements $empBasicDataAddressObjectCopyWith<$Res> {
+  _$empBasicDataAddressObjectCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? AddressText = null,
+    Object? DistrictId = null,
+    Object? PoBox = null,
+    Object? ZipCode = null,
+  }) {
+    return _then(_value.copyWith(
+      AddressText: null == AddressText
+          ? _value.AddressText
+          : AddressText // ignore: cast_nullable_to_non_nullable
+              as String,
+      DistrictId: null == DistrictId
+          ? _value.DistrictId
+          : DistrictId // ignore: cast_nullable_to_non_nullable
+              as int,
+      PoBox: null == PoBox
+          ? _value.PoBox
+          : PoBox // ignore: cast_nullable_to_non_nullable
+              as String,
+      ZipCode: null == ZipCode
+          ? _value.ZipCode
+          : ZipCode // ignore: cast_nullable_to_non_nullable
+              as String,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$empBasicDataAddressObjectImplCopyWith<$Res>
+    implements $empBasicDataAddressObjectCopyWith<$Res> {
+  factory _$$empBasicDataAddressObjectImplCopyWith(
+          _$empBasicDataAddressObjectImpl value,
+          $Res Function(_$empBasicDataAddressObjectImpl) then) =
+      __$$empBasicDataAddressObjectImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String AddressText, int DistrictId, String PoBox, String ZipCode});
+}
+
+/// @nodoc
+class __$$empBasicDataAddressObjectImplCopyWithImpl<$Res>
+    extends _$empBasicDataAddressObjectCopyWithImpl<$Res,
+        _$empBasicDataAddressObjectImpl>
+    implements _$$empBasicDataAddressObjectImplCopyWith<$Res> {
+  __$$empBasicDataAddressObjectImplCopyWithImpl(
+      _$empBasicDataAddressObjectImpl _value,
+      $Res Function(_$empBasicDataAddressObjectImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? AddressText = null,
+    Object? DistrictId = null,
+    Object? PoBox = null,
+    Object? ZipCode = null,
+  }) {
+    return _then(_$empBasicDataAddressObjectImpl(
+      null == AddressText
+          ? _value.AddressText
+          : AddressText // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == DistrictId
+          ? _value.DistrictId
+          : DistrictId // ignore: cast_nullable_to_non_nullable
+              as int,
+      null == PoBox
+          ? _value.PoBox
+          : PoBox // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == ZipCode
+          ? _value.ZipCode
+          : ZipCode // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$empBasicDataAddressObjectImpl implements _empBasicDataAddressObject {
+  _$empBasicDataAddressObjectImpl(
+      this.AddressText, this.DistrictId, this.PoBox, this.ZipCode);
+
+  @override
+  final String AddressText;
+  @override
+  final int DistrictId;
+  @override
+  final String PoBox;
+  @override
+  final String ZipCode;
+
+  @override
+  String toString() {
+    return 'empBasicDataAddressObject(AddressText: $AddressText, DistrictId: $DistrictId, PoBox: $PoBox, ZipCode: $ZipCode)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$empBasicDataAddressObjectImpl &&
+            (identical(other.AddressText, AddressText) ||
+                other.AddressText == AddressText) &&
+            (identical(other.DistrictId, DistrictId) ||
+                other.DistrictId == DistrictId) &&
+            (identical(other.PoBox, PoBox) || other.PoBox == PoBox) &&
+            (identical(other.ZipCode, ZipCode) || other.ZipCode == ZipCode));
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, AddressText, DistrictId, PoBox, ZipCode);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$empBasicDataAddressObjectImplCopyWith<_$empBasicDataAddressObjectImpl>
+      get copyWith => __$$empBasicDataAddressObjectImplCopyWithImpl<
+          _$empBasicDataAddressObjectImpl>(this, _$identity);
+}
+
+abstract class _empBasicDataAddressObject implements empBasicDataAddressObject {
+  factory _empBasicDataAddressObject(
+      final String AddressText,
+      final int DistrictId,
+      final String PoBox,
+      final String ZipCode) = _$empBasicDataAddressObjectImpl;
+
+  @override
+  String get AddressText;
+  @override
+  int get DistrictId;
+  @override
+  String get PoBox;
+  @override
+  String get ZipCode;
+  @override
+  @JsonKey(ignore: true)
+  _$$empBasicDataAddressObjectImplCopyWith<_$empBasicDataAddressObjectImpl>
+      get copyWith => throw _privateConstructorUsedError;
+}
 
 /// @nodoc
 mixin _$empSkillsObject {
@@ -1007,7 +1689,8 @@ mixin _$empSkillsObject {
 abstract class $empSkillsObjectCopyWith<$Res> {
   factory $empSkillsObjectCopyWith(
           empSkillsObject value, $Res Function(empSkillsObject) then) =
-      _$empSkillsObjectCopyWithImpl<$Res>;
+      _$empSkillsObjectCopyWithImpl<$Res, empSkillsObject>;
+  @useResult
   $Res call(
       {String userID,
       String Date,
@@ -1017,54 +1700,57 @@ abstract class $empSkillsObjectCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$empSkillsObjectCopyWithImpl<$Res>
+class _$empSkillsObjectCopyWithImpl<$Res, $Val extends empSkillsObject>
     implements $empSkillsObjectCopyWith<$Res> {
   _$empSkillsObjectCopyWithImpl(this._value, this._then);
 
-  final empSkillsObject _value;
   // ignore: unused_field
-  final $Res Function(empSkillsObject) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? userID = freezed,
-    Object? Date = freezed,
-    Object? GradeId = freezed,
-    Object? QualificationId = freezed,
-    Object? EmployeeId = freezed,
+    Object? userID = null,
+    Object? Date = null,
+    Object? GradeId = null,
+    Object? QualificationId = null,
+    Object? EmployeeId = null,
   }) {
     return _then(_value.copyWith(
-      userID: userID == freezed
+      userID: null == userID
           ? _value.userID
           : userID // ignore: cast_nullable_to_non_nullable
               as String,
-      Date: Date == freezed
+      Date: null == Date
           ? _value.Date
           : Date // ignore: cast_nullable_to_non_nullable
               as String,
-      GradeId: GradeId == freezed
+      GradeId: null == GradeId
           ? _value.GradeId
           : GradeId // ignore: cast_nullable_to_non_nullable
               as int,
-      QualificationId: QualificationId == freezed
+      QualificationId: null == QualificationId
           ? _value.QualificationId
           : QualificationId // ignore: cast_nullable_to_non_nullable
               as int,
-      EmployeeId: EmployeeId == freezed
+      EmployeeId: null == EmployeeId
           ? _value.EmployeeId
           : EmployeeId // ignore: cast_nullable_to_non_nullable
               as int,
-    ));
+    ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$empSkillsObjectCopyWith<$Res>
+abstract class _$$empSkillsObjectImplCopyWith<$Res>
     implements $empSkillsObjectCopyWith<$Res> {
-  factory _$empSkillsObjectCopyWith(
-          _empSkillsObject value, $Res Function(_empSkillsObject) then) =
-      __$empSkillsObjectCopyWithImpl<$Res>;
+  factory _$$empSkillsObjectImplCopyWith(_$empSkillsObjectImpl value,
+          $Res Function(_$empSkillsObjectImpl) then) =
+      __$$empSkillsObjectImplCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {String userID,
       String Date,
@@ -1074,42 +1760,40 @@ abstract class _$empSkillsObjectCopyWith<$Res>
 }
 
 /// @nodoc
-class __$empSkillsObjectCopyWithImpl<$Res>
-    extends _$empSkillsObjectCopyWithImpl<$Res>
-    implements _$empSkillsObjectCopyWith<$Res> {
-  __$empSkillsObjectCopyWithImpl(
-      _empSkillsObject _value, $Res Function(_empSkillsObject) _then)
-      : super(_value, (v) => _then(v as _empSkillsObject));
+class __$$empSkillsObjectImplCopyWithImpl<$Res>
+    extends _$empSkillsObjectCopyWithImpl<$Res, _$empSkillsObjectImpl>
+    implements _$$empSkillsObjectImplCopyWith<$Res> {
+  __$$empSkillsObjectImplCopyWithImpl(
+      _$empSkillsObjectImpl _value, $Res Function(_$empSkillsObjectImpl) _then)
+      : super(_value, _then);
 
-  @override
-  _empSkillsObject get _value => super._value as _empSkillsObject;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? userID = freezed,
-    Object? Date = freezed,
-    Object? GradeId = freezed,
-    Object? QualificationId = freezed,
-    Object? EmployeeId = freezed,
+    Object? userID = null,
+    Object? Date = null,
+    Object? GradeId = null,
+    Object? QualificationId = null,
+    Object? EmployeeId = null,
   }) {
-    return _then(_empSkillsObject(
-      userID == freezed
+    return _then(_$empSkillsObjectImpl(
+      null == userID
           ? _value.userID
           : userID // ignore: cast_nullable_to_non_nullable
               as String,
-      Date == freezed
+      null == Date
           ? _value.Date
           : Date // ignore: cast_nullable_to_non_nullable
               as String,
-      GradeId == freezed
+      null == GradeId
           ? _value.GradeId
           : GradeId // ignore: cast_nullable_to_non_nullable
               as int,
-      QualificationId == freezed
+      null == QualificationId
           ? _value.QualificationId
           : QualificationId // ignore: cast_nullable_to_non_nullable
               as int,
-      EmployeeId == freezed
+      null == EmployeeId
           ? _value.EmployeeId
           : EmployeeId // ignore: cast_nullable_to_non_nullable
               as int,
@@ -1119,9 +1803,9 @@ class __$empSkillsObjectCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_empSkillsObject implements _empSkillsObject {
-  _$_empSkillsObject(this.userID, this.Date, this.GradeId, this.QualificationId,
-      this.EmployeeId);
+class _$empSkillsObjectImpl implements _empSkillsObject {
+  _$empSkillsObjectImpl(this.userID, this.Date, this.GradeId,
+      this.QualificationId, this.EmployeeId);
 
   @override
   final String userID;
@@ -1142,87 +1826,52 @@ class _$_empSkillsObject implements _empSkillsObject {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _empSkillsObject &&
-            (identical(other.userID, userID) ||
-                const DeepCollectionEquality().equals(other.userID, userID)) &&
-            (identical(other.Date, Date) ||
-                const DeepCollectionEquality().equals(other.Date, Date)) &&
-            (identical(other.GradeId, GradeId) ||
-                const DeepCollectionEquality()
-                    .equals(other.GradeId, GradeId)) &&
+        (other.runtimeType == runtimeType &&
+            other is _$empSkillsObjectImpl &&
+            (identical(other.userID, userID) || other.userID == userID) &&
+            (identical(other.Date, Date) || other.Date == Date) &&
+            (identical(other.GradeId, GradeId) || other.GradeId == GradeId) &&
             (identical(other.QualificationId, QualificationId) ||
-                const DeepCollectionEquality()
-                    .equals(other.QualificationId, QualificationId)) &&
+                other.QualificationId == QualificationId) &&
             (identical(other.EmployeeId, EmployeeId) ||
-                const DeepCollectionEquality()
-                    .equals(other.EmployeeId, EmployeeId)));
+                other.EmployeeId == EmployeeId));
   }
 
   @override
-  int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(userID) ^
-      const DeepCollectionEquality().hash(Date) ^
-      const DeepCollectionEquality().hash(GradeId) ^
-      const DeepCollectionEquality().hash(QualificationId) ^
-      const DeepCollectionEquality().hash(EmployeeId);
+  int get hashCode => Object.hash(
+      runtimeType, userID, Date, GradeId, QualificationId, EmployeeId);
 
   @JsonKey(ignore: true)
   @override
-  _$empSkillsObjectCopyWith<_empSkillsObject> get copyWith =>
-      __$empSkillsObjectCopyWithImpl<_empSkillsObject>(this, _$identity);
+  @pragma('vm:prefer-inline')
+  _$$empSkillsObjectImplCopyWith<_$empSkillsObjectImpl> get copyWith =>
+      __$$empSkillsObjectImplCopyWithImpl<_$empSkillsObjectImpl>(
+          this, _$identity);
 }
 
 abstract class _empSkillsObject implements empSkillsObject {
-  factory _empSkillsObject(String userID, String Date, int GradeId,
-      int QualificationId, int EmployeeId) = _$_empSkillsObject;
+  factory _empSkillsObject(
+      final String userID,
+      final String Date,
+      final int GradeId,
+      final int QualificationId,
+      final int EmployeeId) = _$empSkillsObjectImpl;
 
   @override
-  String get userID => throw _privateConstructorUsedError;
+  String get userID;
   @override
-  String get Date => throw _privateConstructorUsedError;
+  String get Date;
   @override
-  int get GradeId => throw _privateConstructorUsedError;
+  int get GradeId;
   @override
-  int get QualificationId => throw _privateConstructorUsedError;
+  int get QualificationId;
   @override
-  int get EmployeeId => throw _privateConstructorUsedError;
+  int get EmployeeId;
   @override
   @JsonKey(ignore: true)
-  _$empSkillsObjectCopyWith<_empSkillsObject> get copyWith =>
+  _$$empSkillsObjectImplCopyWith<_$empSkillsObjectImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
-
-/// @nodoc
-class _$empAcademicDegreeObjectTearOff {
-  const _$empAcademicDegreeObjectTearOff();
-
-  _empAcademicDegreeObject call(
-      String userID,
-      int Id,
-      String Major,
-      String University,
-      String Notes,
-      int EmployeeId,
-      int AcademicDegreeTypeId,
-      int GradeId,
-      String DegreeDate) {
-    return _empAcademicDegreeObject(
-      userID,
-      Id,
-      Major,
-      University,
-      Notes,
-      EmployeeId,
-      AcademicDegreeTypeId,
-      GradeId,
-      DegreeDate,
-    );
-  }
-}
-
-/// @nodoc
-const $empAcademicDegreeObject = _$empAcademicDegreeObjectTearOff();
 
 /// @nodoc
 mixin _$empAcademicDegreeObject {
@@ -1245,7 +1894,8 @@ mixin _$empAcademicDegreeObject {
 abstract class $empAcademicDegreeObjectCopyWith<$Res> {
   factory $empAcademicDegreeObjectCopyWith(empAcademicDegreeObject value,
           $Res Function(empAcademicDegreeObject) then) =
-      _$empAcademicDegreeObjectCopyWithImpl<$Res>;
+      _$empAcademicDegreeObjectCopyWithImpl<$Res, empAcademicDegreeObject>;
+  @useResult
   $Res call(
       {String userID,
       int Id,
@@ -1259,74 +1909,79 @@ abstract class $empAcademicDegreeObjectCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$empAcademicDegreeObjectCopyWithImpl<$Res>
+class _$empAcademicDegreeObjectCopyWithImpl<$Res,
+        $Val extends empAcademicDegreeObject>
     implements $empAcademicDegreeObjectCopyWith<$Res> {
   _$empAcademicDegreeObjectCopyWithImpl(this._value, this._then);
 
-  final empAcademicDegreeObject _value;
   // ignore: unused_field
-  final $Res Function(empAcademicDegreeObject) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? userID = freezed,
-    Object? Id = freezed,
-    Object? Major = freezed,
-    Object? University = freezed,
-    Object? Notes = freezed,
-    Object? EmployeeId = freezed,
-    Object? AcademicDegreeTypeId = freezed,
-    Object? GradeId = freezed,
-    Object? DegreeDate = freezed,
+    Object? userID = null,
+    Object? Id = null,
+    Object? Major = null,
+    Object? University = null,
+    Object? Notes = null,
+    Object? EmployeeId = null,
+    Object? AcademicDegreeTypeId = null,
+    Object? GradeId = null,
+    Object? DegreeDate = null,
   }) {
     return _then(_value.copyWith(
-      userID: userID == freezed
+      userID: null == userID
           ? _value.userID
           : userID // ignore: cast_nullable_to_non_nullable
               as String,
-      Id: Id == freezed
+      Id: null == Id
           ? _value.Id
           : Id // ignore: cast_nullable_to_non_nullable
               as int,
-      Major: Major == freezed
+      Major: null == Major
           ? _value.Major
           : Major // ignore: cast_nullable_to_non_nullable
               as String,
-      University: University == freezed
+      University: null == University
           ? _value.University
           : University // ignore: cast_nullable_to_non_nullable
               as String,
-      Notes: Notes == freezed
+      Notes: null == Notes
           ? _value.Notes
           : Notes // ignore: cast_nullable_to_non_nullable
               as String,
-      EmployeeId: EmployeeId == freezed
+      EmployeeId: null == EmployeeId
           ? _value.EmployeeId
           : EmployeeId // ignore: cast_nullable_to_non_nullable
               as int,
-      AcademicDegreeTypeId: AcademicDegreeTypeId == freezed
+      AcademicDegreeTypeId: null == AcademicDegreeTypeId
           ? _value.AcademicDegreeTypeId
           : AcademicDegreeTypeId // ignore: cast_nullable_to_non_nullable
               as int,
-      GradeId: GradeId == freezed
+      GradeId: null == GradeId
           ? _value.GradeId
           : GradeId // ignore: cast_nullable_to_non_nullable
               as int,
-      DegreeDate: DegreeDate == freezed
+      DegreeDate: null == DegreeDate
           ? _value.DegreeDate
           : DegreeDate // ignore: cast_nullable_to_non_nullable
               as String,
-    ));
+    ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$empAcademicDegreeObjectCopyWith<$Res>
+abstract class _$$empAcademicDegreeObjectImplCopyWith<$Res>
     implements $empAcademicDegreeObjectCopyWith<$Res> {
-  factory _$empAcademicDegreeObjectCopyWith(_empAcademicDegreeObject value,
-          $Res Function(_empAcademicDegreeObject) then) =
-      __$empAcademicDegreeObjectCopyWithImpl<$Res>;
+  factory _$$empAcademicDegreeObjectImplCopyWith(
+          _$empAcademicDegreeObjectImpl value,
+          $Res Function(_$empAcademicDegreeObjectImpl) then) =
+      __$$empAcademicDegreeObjectImplCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {String userID,
       int Id,
@@ -1340,63 +1995,62 @@ abstract class _$empAcademicDegreeObjectCopyWith<$Res>
 }
 
 /// @nodoc
-class __$empAcademicDegreeObjectCopyWithImpl<$Res>
-    extends _$empAcademicDegreeObjectCopyWithImpl<$Res>
-    implements _$empAcademicDegreeObjectCopyWith<$Res> {
-  __$empAcademicDegreeObjectCopyWithImpl(_empAcademicDegreeObject _value,
-      $Res Function(_empAcademicDegreeObject) _then)
-      : super(_value, (v) => _then(v as _empAcademicDegreeObject));
+class __$$empAcademicDegreeObjectImplCopyWithImpl<$Res>
+    extends _$empAcademicDegreeObjectCopyWithImpl<$Res,
+        _$empAcademicDegreeObjectImpl>
+    implements _$$empAcademicDegreeObjectImplCopyWith<$Res> {
+  __$$empAcademicDegreeObjectImplCopyWithImpl(
+      _$empAcademicDegreeObjectImpl _value,
+      $Res Function(_$empAcademicDegreeObjectImpl) _then)
+      : super(_value, _then);
 
-  @override
-  _empAcademicDegreeObject get _value =>
-      super._value as _empAcademicDegreeObject;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? userID = freezed,
-    Object? Id = freezed,
-    Object? Major = freezed,
-    Object? University = freezed,
-    Object? Notes = freezed,
-    Object? EmployeeId = freezed,
-    Object? AcademicDegreeTypeId = freezed,
-    Object? GradeId = freezed,
-    Object? DegreeDate = freezed,
+    Object? userID = null,
+    Object? Id = null,
+    Object? Major = null,
+    Object? University = null,
+    Object? Notes = null,
+    Object? EmployeeId = null,
+    Object? AcademicDegreeTypeId = null,
+    Object? GradeId = null,
+    Object? DegreeDate = null,
   }) {
-    return _then(_empAcademicDegreeObject(
-      userID == freezed
+    return _then(_$empAcademicDegreeObjectImpl(
+      null == userID
           ? _value.userID
           : userID // ignore: cast_nullable_to_non_nullable
               as String,
-      Id == freezed
+      null == Id
           ? _value.Id
           : Id // ignore: cast_nullable_to_non_nullable
               as int,
-      Major == freezed
+      null == Major
           ? _value.Major
           : Major // ignore: cast_nullable_to_non_nullable
               as String,
-      University == freezed
+      null == University
           ? _value.University
           : University // ignore: cast_nullable_to_non_nullable
               as String,
-      Notes == freezed
+      null == Notes
           ? _value.Notes
           : Notes // ignore: cast_nullable_to_non_nullable
               as String,
-      EmployeeId == freezed
+      null == EmployeeId
           ? _value.EmployeeId
           : EmployeeId // ignore: cast_nullable_to_non_nullable
               as int,
-      AcademicDegreeTypeId == freezed
+      null == AcademicDegreeTypeId
           ? _value.AcademicDegreeTypeId
           : AcademicDegreeTypeId // ignore: cast_nullable_to_non_nullable
               as int,
-      GradeId == freezed
+      null == GradeId
           ? _value.GradeId
           : GradeId // ignore: cast_nullable_to_non_nullable
               as int,
-      DegreeDate == freezed
+      null == DegreeDate
           ? _value.DegreeDate
           : DegreeDate // ignore: cast_nullable_to_non_nullable
               as String,
@@ -1406,8 +2060,8 @@ class __$empAcademicDegreeObjectCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_empAcademicDegreeObject implements _empAcademicDegreeObject {
-  _$_empAcademicDegreeObject(
+class _$empAcademicDegreeObjectImpl implements _empAcademicDegreeObject {
+  _$empAcademicDegreeObjectImpl(
       this.userID,
       this.Id,
       this.Major,
@@ -1445,84 +2099,67 @@ class _$_empAcademicDegreeObject implements _empAcademicDegreeObject {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _empAcademicDegreeObject &&
-            (identical(other.userID, userID) ||
-                const DeepCollectionEquality().equals(other.userID, userID)) &&
-            (identical(other.Id, Id) ||
-                const DeepCollectionEquality().equals(other.Id, Id)) &&
-            (identical(other.Major, Major) ||
-                const DeepCollectionEquality().equals(other.Major, Major)) &&
+        (other.runtimeType == runtimeType &&
+            other is _$empAcademicDegreeObjectImpl &&
+            (identical(other.userID, userID) || other.userID == userID) &&
+            (identical(other.Id, Id) || other.Id == Id) &&
+            (identical(other.Major, Major) || other.Major == Major) &&
             (identical(other.University, University) ||
-                const DeepCollectionEquality()
-                    .equals(other.University, University)) &&
-            (identical(other.Notes, Notes) ||
-                const DeepCollectionEquality().equals(other.Notes, Notes)) &&
+                other.University == University) &&
+            (identical(other.Notes, Notes) || other.Notes == Notes) &&
             (identical(other.EmployeeId, EmployeeId) ||
-                const DeepCollectionEquality()
-                    .equals(other.EmployeeId, EmployeeId)) &&
+                other.EmployeeId == EmployeeId) &&
             (identical(other.AcademicDegreeTypeId, AcademicDegreeTypeId) ||
-                const DeepCollectionEquality().equals(
-                    other.AcademicDegreeTypeId, AcademicDegreeTypeId)) &&
-            (identical(other.GradeId, GradeId) ||
-                const DeepCollectionEquality()
-                    .equals(other.GradeId, GradeId)) &&
+                other.AcademicDegreeTypeId == AcademicDegreeTypeId) &&
+            (identical(other.GradeId, GradeId) || other.GradeId == GradeId) &&
             (identical(other.DegreeDate, DegreeDate) ||
-                const DeepCollectionEquality()
-                    .equals(other.DegreeDate, DegreeDate)));
+                other.DegreeDate == DegreeDate));
   }
 
   @override
-  int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(userID) ^
-      const DeepCollectionEquality().hash(Id) ^
-      const DeepCollectionEquality().hash(Major) ^
-      const DeepCollectionEquality().hash(University) ^
-      const DeepCollectionEquality().hash(Notes) ^
-      const DeepCollectionEquality().hash(EmployeeId) ^
-      const DeepCollectionEquality().hash(AcademicDegreeTypeId) ^
-      const DeepCollectionEquality().hash(GradeId) ^
-      const DeepCollectionEquality().hash(DegreeDate);
+  int get hashCode => Object.hash(runtimeType, userID, Id, Major, University,
+      Notes, EmployeeId, AcademicDegreeTypeId, GradeId, DegreeDate);
 
   @JsonKey(ignore: true)
   @override
-  _$empAcademicDegreeObjectCopyWith<_empAcademicDegreeObject> get copyWith =>
-      __$empAcademicDegreeObjectCopyWithImpl<_empAcademicDegreeObject>(
-          this, _$identity);
+  @pragma('vm:prefer-inline')
+  _$$empAcademicDegreeObjectImplCopyWith<_$empAcademicDegreeObjectImpl>
+      get copyWith => __$$empAcademicDegreeObjectImplCopyWithImpl<
+          _$empAcademicDegreeObjectImpl>(this, _$identity);
 }
 
 abstract class _empAcademicDegreeObject implements empAcademicDegreeObject {
   factory _empAcademicDegreeObject(
-      String userID,
-      int Id,
-      String Major,
-      String University,
-      String Notes,
-      int EmployeeId,
-      int AcademicDegreeTypeId,
-      int GradeId,
-      String DegreeDate) = _$_empAcademicDegreeObject;
+      final String userID,
+      final int Id,
+      final String Major,
+      final String University,
+      final String Notes,
+      final int EmployeeId,
+      final int AcademicDegreeTypeId,
+      final int GradeId,
+      final String DegreeDate) = _$empAcademicDegreeObjectImpl;
 
   @override
-  String get userID => throw _privateConstructorUsedError;
+  String get userID;
   @override
-  int get Id => throw _privateConstructorUsedError;
+  int get Id;
   @override
-  String get Major => throw _privateConstructorUsedError;
+  String get Major;
   @override
-  String get University => throw _privateConstructorUsedError;
+  String get University;
   @override
-  String get Notes => throw _privateConstructorUsedError;
+  String get Notes;
   @override
-  int get EmployeeId => throw _privateConstructorUsedError;
+  int get EmployeeId;
   @override
-  int get AcademicDegreeTypeId => throw _privateConstructorUsedError;
+  int get AcademicDegreeTypeId;
   @override
-  int get GradeId => throw _privateConstructorUsedError;
+  int get GradeId;
   @override
-  String get DegreeDate => throw _privateConstructorUsedError;
+  String get DegreeDate;
   @override
   @JsonKey(ignore: true)
-  _$empAcademicDegreeObjectCopyWith<_empAcademicDegreeObject> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$empAcademicDegreeObjectImplCopyWith<_$empAcademicDegreeObjectImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }

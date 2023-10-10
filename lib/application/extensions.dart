@@ -33,6 +33,16 @@ extension NonNullDouble on double {
   }
 }
 
+extension NonNullDateTime on DateTime {
+  DateTime orDateTimeNull() {
+    if (this == null) {
+      return DT_EMPTY;
+    } else {
+      return this;
+    }
+  }
+}
+
   extension NonNullBool on bool? {
   bool orfalse() {
   if (this == null) {

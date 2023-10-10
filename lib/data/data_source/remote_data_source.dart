@@ -15,6 +15,7 @@ abstract class RemoteDataSource {
   //to can be convert it to authentication object
   Future<AuthenticationResponse> login(LoginRequest loginRequest);
   Future<UserProfileResponse> getUserData(UserRequest userRequest);
+  Future<UserImageResponse> getUserImage(UserRequest userRequest);
   Future<QualificationsResponse> getQualification(qualificationRequest userRequest);
   Future<GradesResponse> getGrades(GradeRequest userRequest);
   Future<EmployeeBasicDataResponse> saveBasicData(EmployeeBasicDataRequest  empBDRequest);
@@ -25,7 +26,9 @@ abstract class RemoteDataSource {
   Future<GetAcademicDegreeResponse> getAcademicDegree(displayAcademicDegreeRequest  AcademicDegreeRequest);
 
   Future<VacationsResponse> getVacations(VacationRequest empVacationRequest);
+  Future<VacationTypeResponse> getVacationType();
   Future<SalaryResponse> getSalary(SalaryRequest empSalaryRequest);
+  Future<AttendanceResponse> getAttendance(AttendanceRequest empAttendanceRequest);
   Future<SalaryDetailsResponse> getSalaryDetails(SalaryDetailsRequest SalaryDetailsRequest);
 }
 
@@ -57,13 +60,13 @@ class RemoteDataSourceImplementer implements RemoteDataSource {
 
   @override
   Future<saveEmpSkillsResponse> saveEmployeeSkills (empSkillsRequest) async{
-    String Id=empSkillsRequest.userId.toString();
-    
+    String userId=empSkillsRequest.userId.toString();
+    int? empId=empSkillsRequest.employeeId;
    // Id="b64f7a02-b625-46b7-8126-d3a20defdff8";
     return
       await _appServiceClient.saveEmployeeSkillResponse(
-      Id,empSkillsRequest.date,empSkillsRequest.gradeId,
-      empSkillsRequest.gradeId,empSkillsRequest.qualificationTypeId);
+      userId,empSkillsRequest.date,
+      empSkillsRequest.gradeId,empSkillsRequest.qualificationTypeId,empId);
   }
 
   @override
@@ -85,6 +88,13 @@ class RemoteDataSourceImplementer implements RemoteDataSource {
     return await _appServiceClient.getSalaryDetails(userId);
   }
 
+
+  @override
+  Future<AttendanceResponse> getAttendance(AttendanceRequest empattendanceRequest) async{
+    String userId = empattendanceRequest.userId.toString();
+    return await _appServiceClient.getAttendance(userId);
+  }
+
   @override
   Future<EmployeeBasicDataResponse> saveBasicData(EmployeeBasicDataRequest empBDRequest)
     async {
@@ -93,14 +103,7 @@ class RemoteDataSourceImplementer implements RemoteDataSource {
           Id,
           empBDRequest.employee,
           empBDRequest.address);
-          // empBDRequest.arabicName,empBDRequest.englishName,
-          // empBDRequest.birthDate,empBDRequest.nationalId,
-          // empBDRequest.socialId,empBDRequest.email,
-          // empBDRequest.phone,empBDRequest.emergency_Number,
-          // empBDRequest.addressText,empBDRequest.districtId,
-          // empBDRequest.poBox,empBDRequest.zipCode
 
-      //);
   }
 
   @override
@@ -145,6 +148,18 @@ class RemoteDataSourceImplementer implements RemoteDataSource {
           AcademicDegreeRequest.date
 
       );
+  }
+
+  @override
+  Future<VacationTypeResponse> getVacationType()
+  async{
+    return await _appServiceClient.getVacationType();
+  }
+
+  @override
+  Future<UserImageResponse> getUserImage(UserRequest userRequest) async {
+    String Id=userRequest.userId.toString();
+    return await _appServiceClient.getUserImageResponse(Id);
   }
 
 

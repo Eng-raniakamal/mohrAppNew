@@ -2,9 +2,9 @@ import 'package:mohr_hr/data/networks/error_handler.dart';
 
 
 class Failure {
-  int? status; // 200 ,201,303,500, 400
+  int code; // 200 ,201,303,500, 400
   String message; // error or success
-  Failure(this.status, this.message);
+  Failure(this.code, this.message);
 }
 
 class DefaultFailure extends Failure {

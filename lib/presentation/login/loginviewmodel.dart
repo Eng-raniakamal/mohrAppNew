@@ -1,8 +1,5 @@
 import 'dart:async';
 
-import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
-import 'package:mohr_hr/application/app_prefs.dart';
 import 'package:mohr_hr/application/functions.dart';
 import 'package:mohr_hr/domain/model/model.dart';
 import 'package:mohr_hr/domain/usecase/login_usecase.dart';
@@ -10,7 +7,6 @@ import 'package:mohr_hr/presentation/base/baseviewmodel.dart';
 import 'package:mohr_hr/presentation/common/freezed_data_classes.dart';
 import 'package:mohr_hr/presentation/common/state_renderer/state_render_impl.dart';
 import 'package:mohr_hr/presentation/common/state_renderer/state_renderer.dart';
-import 'package:mohr_hr/presentation/resources/routes.dart';
 
 class LoginViewModel extends BaseViewModel
     with LoginViewModelInputs, LoginViewModelOutputs {
@@ -48,15 +44,12 @@ class LoginViewModel extends BaseViewModel
 
   @override
   void start() {
-    // view tells state renderer, please show the content of the screen
+    // view model tells state renderer, please show the content of the screen
     inputState.add(ContentState());
   }
 
-
   @override
   Sink get inputemail => _emailStreamController.sink;
-
-
 
   @override
   Sink get inputPassword => _passwordStreamController.sink;
@@ -67,20 +60,22 @@ class LoginViewModel extends BaseViewModel
   @override
   login() async {
     DeviceInfo deviceDetails = await getDeviceDetails();
-    String device_id=deviceDetails.identifier;
-    loginObject.deviceId;
+    String deviceId=deviceDetails.identifier;
+   // loginObject.deviceId;
     inputState.add(
         LoadingState(stateRendererType:
         StateRendererType.POPUP_LOADING_STATE));
     (await _loginUseCase.execute(
-        LoginUseCaseInput(loginObject.email, loginObject.password,device_id)))
+        LoginUseCaseInput(loginObject.email, loginObject.password,deviceId)))
         .fold(
             (failure) =>
         {
-          print(failure.message),
+          //print(failure.message),
           // left -> failure
-          inputState.add(ErrorState(
-              StateRendererType.POPUP_ERROR_STATE, failure.message))
+           inputState.add(ErrorState(
+              StateRendererType.POPUP_ERROR_STATE, failure.message)),
+
+
         },
             (data) {
           // right -> success (data)
@@ -100,7 +95,7 @@ class LoginViewModel extends BaseViewModel
   }
 
   @override
-  setemail(String email) {
+  setEmail(String email) {
     inputemail.add(email);
     loginObject = loginObject.copyWith(
         email: email); // data class operation same as kotlin
@@ -164,7 +159,7 @@ abstract class LoginViewModelInputs {
   // three functions for actions
   // EMAIL,PASSWORD,CLICK ON BUTTON
 
-  setemail(String email);
+  setEmail(String email);
   setPassword(String password);
   login();
 

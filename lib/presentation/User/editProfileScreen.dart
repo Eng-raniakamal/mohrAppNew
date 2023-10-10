@@ -31,7 +31,7 @@ class _editProfileScreenState extends State<editProfileScreen> {
                   children: [
                     ProfileWidget(
                       imagePath: Constants.imagePath,
-                      isEdit: true,
+                      isEdit: false,
                       onClicked: () async {},
                     ),
                     const SizedBox(height: 24),

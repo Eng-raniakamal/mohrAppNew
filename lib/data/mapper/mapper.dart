@@ -9,6 +9,7 @@ const EMPTY = "";
 const ZERO = 0;
 const  double DOUBLE_ZERO = 0.0;
 const FALSE = false;
+ DateTime DT_EMPTY=DateTime.now();
 
 extension ResponseMapper on Request? {
   RequestModel toDomain() {
@@ -49,6 +50,14 @@ extension DataResponseMapper on UserDataResponse? {
 
 }
 
+extension ImageResponseMapper on UserImageResponse? {
+  UserImageModel toDomain() {
+    return UserImageModel(
+        this?.UserId.orEmpty() ?? EMPTY,
+        this?.data.orEmpty() ?? EMPTY);
+  }
+
+}
   extension AuthenticationResponseMapper  on AuthenticationResponse {
     AuthenticationModel toDomain() {
       //take two request object not request resopnse and the same for data object
@@ -84,7 +93,32 @@ extension EmployeeResponseMapper on EmployeeResponse? {
     );
   }
 }
+extension EmployeeSaveResponseMapper on EmployeeSaveResponse? {
+  EmployeeSaveModel toDomain() {
+    return EmployeeSaveModel(
+        this?.empId?.orZero() ?? ZERO,
+        this?.arabicName?.orEmpty() ?? EMPTY,
+        this?.englishName?.orEmpty() ?? EMPTY,
+        this?.birthDate?.orEmpty() ?? EMPTY,
+        this?.nationalId?.orEmpty() ?? EMPTY,
+        this?.socialId?.orEmpty() ?? EMPTY,
+        this?.email?.orEmpty() ?? EMPTY,
+        this?.phone?.orEmpty() ?? EMPTY,
+        this?.emergencyNumber?.orEmpty() ?? EMPTY,
 
+    );
+  }
+}
+extension AddressSaveResponseMapper on AddressSaveResponse? {
+  AddressSaveModel toDomain() {
+    return AddressSaveModel(
+      this?.addressText?.orEmpty() ?? EMPTY,
+      this?.districtId?.orZero() ?? ZERO,
+      this?.zipCode?.orEmpty() ?? EMPTY,
+       this?.POBox?.orEmpty() ?? EMPTY,
+    );
+  }
+}
 
 extension AddressResponseMapper on AddressResponse? {
   AddressModel toDomain() {
@@ -121,15 +155,55 @@ extension DistrictResponseMapper on DistrictResponse? {
 }
 
 extension EmployeeBasicDataResponseMapper  on EmployeeBasicDataResponse {
-  EmployeeBasicDataModel toDomain() {
-    return EmployeeBasicDataModel(
-        this.UserId?.orEmpty() ?? EMPTY,
+  EmployeeSaveBasicDataModel toDomain() {
+    return EmployeeSaveBasicDataModel(
         this.Employee?.toDomain(),
         this.Address?.toDomain(),
+      this.isValid?.orfalse()?? FALSE,
+      this.message.orEmpty()?? EMPTY
     );
   }
 }
 
+
+//____________for save(post on api)____________-
+//______--from model to response_________________
+extension saveBasicDataMapper on EmployeeSaveBasicDataModel{
+  EmployeeBasicDataResponse toResponse()
+  { return EmployeeBasicDataResponse(
+
+      this.employee?.toResponse(),
+      this.address?.toResponse(),
+
+  );
+  }
+}
+extension employeesaveBasicDataMapper on EmployeeSaveModel{
+  EmployeeSaveResponse  toResponse()
+  { return EmployeeSaveResponse (
+    this.empId.orZero() ?? ZERO,
+    this.arabicName?.orEmpty() ?? EMPTY,
+    this.englishName?.orEmpty() ?? EMPTY,
+    this.birthdate?.orEmpty() ?? EMPTY,
+    this.nationalId?.orEmpty() ?? EMPTY,
+    this.socialId?.orEmpty() ?? EMPTY,
+    this.email?.orEmpty() ?? EMPTY,
+    this.phone?.orEmpty() ?? EMPTY,
+    this.emergency_Number?.orEmpty() ?? EMPTY,
+
+  );
+  }
+}
+extension AddressSaveBasicDataMapper on AddressSaveModel? {
+  AddressSaveResponse toResponse() {
+    return AddressSaveResponse(
+      this?.addressText?.orEmpty() ?? EMPTY,
+      this?.districtId?.orZero() ?? ZERO,
+      this?.zipCode?.orEmpty() ?? EMPTY,
+      this?.pOBox?.orEmpty() ?? EMPTY,
+    );
+  }
+}
 extension displayBasicDataResponseMapper
 on BasicDataResponse{
   BasicDataModel toDomain(){
@@ -159,7 +233,7 @@ on BasicDataResponse{
 
    int mappedSelectedDistrict=this.selecteddistrict?.orZero()?? ZERO;
 
-   Map<String,dynamic>? mappedAddress=this.address;
+   AddressModel? mappedAddress = this.address.toDomain();
    var empBasicData= BasicDataModel(mappedEmployee,
        mappedAllowEdit, mappedCountry,mappedSelectedCountry,
        mappedGovernorate, mappedSelectedGovernorat,
@@ -171,8 +245,6 @@ on BasicDataResponse{
 
   }
 }
-
-
 //------------------------------skills-----------------------------
 extension EmployeeSkillsResponseMapper  on saveEmpSkillsResponse {
     SaveEmpSkillsModel toDomain() {
@@ -181,7 +253,9 @@ extension EmployeeSkillsResponseMapper  on saveEmpSkillsResponse {
           this.date?.orEmpty() ?? EMPTY,
           this.gradeId?.orZero() ?? ZERO,
           this.qualificationTypeId?.orZero() ?? ZERO,
-          this.employeeId?.orZero() ?? ZERO);
+          this.employeeId?.orZero() ?? ZERO,
+          this.isValid?.orfalse()?? FALSE,
+          this.message.orEmpty()?? EMPTY);
     }
   }
 extension skillsResponseMapper  on SkillsResponse {
@@ -195,6 +269,22 @@ extension skillsResponseMapper  on SkillsResponse {
         this.gradeId?.orZero() ?? ZERO);
   }
 }
+
+//____________for save(post on api)____________
+//______--from model to response_________________
+extension skillsSaveMapper on SaveEmpSkillsModel{
+  saveEmpSkillsResponse  toResponse()
+  { return saveEmpSkillsResponse(
+    this.userId.orEmpty()?? EMPTY,
+    this.date.orEmpty()?? EMPTY,
+    this.gradeId.orZero()??ZERO,
+    this.qualificationTypeId.orZero()??ZERO,
+    this.employeeId.orZero()??ZERO
+  );
+
+  }
+}
+//-----------------------------------------------
 extension getEmpSkillsResponseMapper  on GetEmpSkillsResponse {
 
   getEmpSkillsModel toDomain(){
@@ -276,7 +366,6 @@ extension QualificationsResponseMapper  on QualificationsResponse {
 
   }
 }
-
 //_____________________________Grade________________________
 extension GradeItemResponseMapper  on GradeItemResponse {
   GradeItem toDomain() {
@@ -335,6 +424,40 @@ extension vacationsResponseMapper on VacationsResponse?
   }
 
 }
+
+
+
+
+
+
+
+
+
+extension VacationItemTypeResponseMapper on VacationTypeItemResponse?{
+  VacationTypeItem toDomain() {
+    return VacationTypeItem(
+      this?.id?.orZero() ?? ZERO,
+      this?.name?.orEmpty() ?? EMPTY,
+     );
+  }
+
+}
+
+extension vacationTypeResponseMapper on VacationTypeResponse?
+{
+  VacationTypeObject toDomain()
+  {
+    List<VacationTypeItem> vacationType=
+    (this?.data.
+    map((vacationType) =>vacationType.toDomain())??
+        Iterable.empty()) // empty list for kind of vacation( Iterable.empty())
+        .cast<VacationTypeItem>()
+        .toList();
+    var data = VacationType (vacationType);
+    return VacationTypeObject(data);
+  }
+
+}
 ///////////////salary////////////////////////////////
 extension SalaryItemResponseMapper on SalaryItemResponse?{
   SalaryItems toDomain() {
@@ -362,23 +485,6 @@ extension SalaryResponseMapper on SalaryResponse?
 }
 ///////////////////////////////salaryDetails///////////////////
 
-extension BenfitResponseMapper on BenefitItemResponse?
-{
-  Benefit toDomain() {
-    return Benefit(this?.value?.ordoubleZero() ?? DOUBLE_ZERO,
-        this?.ItemName?.orEmpty() ?? EMPTY,
-        this?.showOnPaySlip?.orfalse()?? FALSE);
-  }
-}
-
-extension DeductedResponseMapper on DeductedItemResponse?
-{
-  Deducted toDomain() {
-    return Deducted(this?.value?.ordoubleZero() ?? DOUBLE_ZERO,
-        this?.ItemName?.orEmpty() ?? EMPTY,
-        this?.showOnPaySlip?.orfalse()?? FALSE);
-  }
-}
 
 extension SalaryDetailsResponseMapper on SalaryDetailsResponse
 {
@@ -407,8 +513,46 @@ mappedpaySlipItems,mappedNetSalary,mappedMax,mappedhideNetSalary);
 return SalaryDetailsObject(data);
 
   }
+
+
+}
+extension AttendanceItemResponseMapper on AttendanceItemResponse? {
+  Attendance toDomain() {
+    return Attendance(this?.id?.orZero() ?? ZERO, this?.mode?.orEmpty() ?? EMPTY,
+        this?.action?.orEmpty() ?? EMPTY, this?.actionTime?.orDateTimeNull() ?? DT_EMPTY);
+  }
 }
 
+extension AttendanceResponseMapper on AttendanceResponse? {
+  AttendanceObject toDomain() {
+    List<Attendance> mappedAttendance =
+    (this?.attendance?.map((attendance) => attendance.toDomain()) ??
+        Iterable.empty())
+        .cast<Attendance>()
+        .toList();
+    var data = AttendanceList(mappedAttendance);
+    return AttendanceObject(data);
+  }
+}
+
+
+extension BenfitResponseMapper on BenefitItemResponse?
+{
+  Benefit toDomain() {
+    return Benefit(this?.value?.ordoubleZero() ?? DOUBLE_ZERO,
+        this?.ItemName?.orEmpty() ?? EMPTY,
+        this?.showOnPaySlip?.orfalse()?? FALSE);
+  }
+}
+
+extension DeductedResponseMapper on DeductedItemResponse?
+{
+  Deducted toDomain() {
+    return Deducted(this?.value?.ordoubleZero() ?? DOUBLE_ZERO,
+        this?.ItemName?.orEmpty() ?? EMPTY,
+        this?.showOnPaySlip?.orfalse()?? FALSE);
+  }
+}
 
 
 

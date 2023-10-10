@@ -2,6 +2,7 @@ import 'package:mohr_hr/application/app_prefs.dart';
 import 'package:mohr_hr/application/constants.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
+import 'package:mohr_hr/data/request/request.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 
@@ -11,7 +12,7 @@ const String ACCEPT = "accept";
 const String AUTHORIZATION = "authorization";
 const String DEFAULT_LANGUAGE = "language";
 const String UserId="userId";
-const int empId=0;
+
 class DioFactory {
   AppPreferences _appPreferences;
   DioFactory(this._appPreferences);
@@ -21,7 +22,8 @@ class DioFactory {
 
     //set the time of request
 
-    int _timeOut = Constants.apitimeout; // 1 min
+   String timeOut = Constants.apitimeout.toString();
+   Duration _timeOut =Constants.apitimeout;// 1 min
     String language = await _appPreferences.getAppLanguage();
     //_appPreferences.setUserToken(Constants.token);
     String token = await _appPreferences.getUserToken();

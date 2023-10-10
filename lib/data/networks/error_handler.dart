@@ -1,7 +1,8 @@
 
+import 'package:dio/dio.dart';
 import 'package:mohr_hr/data/networks/failure.dart';
 import 'package:mohr_hr/presentation/resources/strings_manager.dart';
-import 'package:dio/dio.dart';
+
 import 'package:easy_localization/easy_localization.dart';
 
 enum DataSource {
@@ -22,7 +23,7 @@ enum DataSource {
 }
 
 class ErrorHandler implements Exception {
-  Failure? failure;
+ late Failure failure;
 
   ErrorHandler.handle(dynamic error) {
     if (error is DioError) {
@@ -36,13 +37,13 @@ class ErrorHandler implements Exception {
 
   Failure _handleError(DioError error) {
     switch (error.type) {
-      case DioErrorType.connectTimeout:
+      case DioErrorType.connectionTimeout:
         return DataSource.CONNECT_TIMEOUT.getFailure();
       case DioErrorType.sendTimeout:
         return DataSource.SEND_TIMEOUT.getFailure();
       case DioErrorType.receiveTimeout:
         return DataSource.RECEIVE_TIMEOUT.getFailure();
-      case DioErrorType.response:
+      case DioErrorType.badResponse:
         switch (error.response?.statusCode) {
           case ResponseCode.BAD_REQUEST:
             return DataSource.BAD_REQUEST.getFailure();
@@ -59,9 +60,16 @@ class ErrorHandler implements Exception {
         }
       case DioErrorType.cancel:
         return DataSource.CANCEL.getFailure();
-      case DioErrorType.other:
+      case DioErrorType.unknown:
         return DataSource.DEFAULT.getFailure();
+      case DioExceptionType.badCertificate:
+        return DataSource.DEFAULT.getFailure();
+        break;
+      case DioExceptionType.connectionError:
+        return DataSource.CONNECT_TIMEOUT.getFailure();
+        break;
     }
+
   }
 }
 
@@ -157,7 +165,7 @@ class ResponseMessage {
 }
 
 class ApiInternalStatus {
-  static const int? SUCCESS = 1;
-  static const int? FAILURE = 0;
-
+  static const int? SUCCESS = 0;
+  static const int? FAILURE = 1;
+  static const String SignInStatus= "TRUE";
 }
