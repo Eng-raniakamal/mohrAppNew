@@ -30,8 +30,6 @@ import '../resources/assets_manager.dart';
 import '../resources/routes.dart';
 
 
-
-
 final items=<Widget>
 [ const Icon(Icons.person,size: 30,),
   const Icon(Icons.home,size: 30,),

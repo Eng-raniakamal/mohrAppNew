@@ -10,6 +10,8 @@ import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mohr_hr/application/di.dart';
 import 'package:mohr_hr/data/networks/dio_factory.dart';
+import 'package:mohr_hr/domain/model/model.dart';
+import 'package:mohr_hr/presentation/AddImage/viewModel/GetImage_ViewModel.dart';
 import 'package:mohr_hr/presentation/editEmployee/View/empAcademicDegree_view.dart';
 import 'package:mohr_hr/presentation/editEmployee/ViewModel/empSkills_viewModel.dart';
 import 'package:mohr_hr/presentation/resources/colors.dart';
@@ -33,6 +35,7 @@ import 'package:async/async.dart';
 
 
 final AppPreferences _appPreferences = instance<AppPreferences>();
+final EmployeeImageViewModel _imageViewModel = instance<EmployeeImageViewModel>();
 class EmployeeEditView extends StatefulWidget with NavigationStates
 {
   const EmployeeEditView({Key? key}) : super(key: key);
@@ -46,16 +49,21 @@ class _EmployeeEditViewState extends State<EmployeeEditView>with TickerProviderS
   final _Formkey = GlobalKey<FormState>();
   String? userId;
   String? userImage;
+  File? image;
+  _bind(){
+    _imageViewModel.start();
+  }
 
   @override
   void initState() {
+    _bind();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-
-    userImage=Constants.imagePath;
+    userImage = Constants.imagePath;
+    //image.path=Constants.imagePath;
     final TabController _tabController = TabController(
         length: (3), vsync: this);
     return
@@ -84,17 +92,21 @@ class _EmployeeEditViewState extends State<EmployeeEditView>with TickerProviderS
                                     // height: MediaQuery.of(context).size.height,
                                     child: Column(
                                         children: [
-                                          ProfileWidget(
-                                            imagePath: userImage!,
-                                            isEdit: true,
-                                            onClicked: () async {
-                                              //showImagePicker(context);
-                                              //Navigator.pop(context);
-                                              // setState(() {
-                                                 showImagePicker(context);
-                                              //});
+                                          // ProfileWidget(
+                                          //   imagePath: userImage!,
+                                          //   isEdit: true,
+                                          //   onClicked: () async {
+                                          //     showImagePicker(context);
+                                          //   },
+                                          // ),
+                                          StreamBuilder<UserImageModel>(
+                                              stream: _imageViewModel.outputUserImage,
+                                              builder: (context, snapshot) {
 
-                                            },
+                                                return
+                                                  _getImageWidget(
+                                                      snapshot.data,context)
+                                                  ;}
                                           ),
                                           //const SizedBox(height: 20),
                                           Container( //child:Align(
@@ -166,6 +178,23 @@ class _EmployeeEditViewState extends State<EmployeeEditView>with TickerProviderS
   }
 
   final picker = ImagePicker();
+  Widget _getImageWidget(UserImageModel? image,BuildContext context) {
+    if (image != null) {
+      userImage = image.data;
+      Constants.imagePath=userImage!;
+      return ProfileWidget(
+          imagePath: userImage!,
+          isEdit: true,
+          onClicked: () async {
+            showImagePicker(context);
+
+          }
+      );
+    }
+    else {
+      return Container();
+    }
+  }
 
   void showImagePicker(BuildContext context) {
     showModalBottomSheet(
@@ -201,10 +230,10 @@ class _EmployeeEditViewState extends State<EmployeeEditView>with TickerProviderS
                             ],
                           ),
                           onTap: () {
-                           // setState(() {
-                              _imgFromGallery(context);
-                             // Navigator.pop(context);
-                           // });
+                            // setState(() {
+                            _imgFromGallery();
+                            // Navigator.pop(context);
+                            // });
 
                           },
                         )),
@@ -226,10 +255,10 @@ class _EmployeeEditViewState extends State<EmployeeEditView>with TickerProviderS
                             ),
                           ),
                           onTap: () {
-                           // setState(() {
-                              _imgFromCamera(context);
-                              //Navigator.pop(context);
-                           // });
+                            // setState(() {
+                            _imgFromCamera();
+                            //Navigator.pop(context);
+                            // });
 
                           },
                         ))
@@ -240,39 +269,29 @@ class _EmployeeEditViewState extends State<EmployeeEditView>with TickerProviderS
     );
   }
 
-  _imgFromGallery(BuildContext context) async {
+  _imgFromGallery() async {
     final image = await picker.pickImage(
         source: ImageSource.gallery, imageQuality: 50
     ).then((value) {
       if (value != null) {
-        _cropImage(File(value.path),context);
+        _cropImage(File(value.path));
       }
     });
-    Directory directory = await getApplicationDocumentsDirectory();
-    final name = basename(image.path);
-    final imageFile = File('${directory.path}/$name');
-    final newImage =
-    await File(image.path).copy(imageFile.path);
-
-    setState(() {
-      Constants.imagePath = newImage.path;
-      //saveImageApi(Constants.imagePath);
-
-
-    });
   }
-  _imgFromCamera(BuildContext context) async {
-    await picker.pickImage(
+
+  _imgFromCamera() async {
+    final image = await picker.pickImage(
         source: ImageSource.camera, imageQuality: 50
     ).then((value) {
       if (value != null) {
-        _cropImage(File(value.path),context);
+        _cropImage(File(value.path));
       }
     });
   }
-  _cropImage(File imgFile,BuildContext context) async {
+
+  _cropImage(File image_File) async {
     final croppedFile = await ImageCropper().cropImage(
-        sourcePath: imgFile.path,
+        sourcePath: image_File.path,
         aspectRatioPresets: Platform.isAndroid
             ? [
           CropAspectRatioPreset.square,
@@ -301,23 +320,32 @@ class _EmployeeEditViewState extends State<EmployeeEditView>with TickerProviderS
           )
         ]);
     if (croppedFile != null) {
-      // imageCache.clear();
+      imageCache.clear();
       // setState(() {
       imageFile = File(croppedFile.path);
+     // final imagePermanent = await saveImagePermanently(croppedFile.path);
       setState(() {
-      if (imageFile != null) {
-        userImage= imgFile.toString();
-        // saveImageApi(imgFile.path);
-        upload(File(imgFile.path));
-        resetModules();
-        Navigator.of(context).pushReplacementNamed(Routes.editProfileRoute);
+        if (imageFile != null) {
+          upload(File(croppedFile.path));
+          Navigator.of(this.context).pushReplacementNamed(Routes.editProfileRoute);
 
-      }
+        }
       });
       //});
       // reload();
     }
   }
+
+  Future<File> saveImagePermanently(String imagePath) async
+  {
+    Directory directory = await getApplicationDocumentsDirectory();
+    final name = basename(imagePath);
+    final imageFile = File('${directory.path}/$name');
+    final newImage =
+    await File(imagePath).copy(imageFile.path);
+    return newImage;
+  }
+
   void selectImage(BuildContext context) async {
     Map<Permission, PermissionStatus> statuses = await [
       Permission.storage, Permission.camera].request();
@@ -326,11 +354,11 @@ class _EmployeeEditViewState extends State<EmployeeEditView>with TickerProviderS
       showImagePicker(context);
     }
   }
- Future<bool> upload(File imageFile) async {
 
-    userId= await _appPreferences.getUserToken();
+  Future<bool> upload(File imageFile) async {
+    userId = await _appPreferences.getUserToken();
     // open a bytestream
-    var stream =  http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
+    var stream = http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
     // get file length
     var length = await imageFile.length();
 
@@ -347,7 +375,7 @@ class _EmployeeEditViewState extends State<EmployeeEditView>with TickerProviderS
     // add file to multipart
     request.headers.addAll(<String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
-      'userId':userId! });
+      'userId': userId!});
     request.files.add(multipartFile);
 
 
@@ -364,7 +392,6 @@ class _EmployeeEditViewState extends State<EmployeeEditView>with TickerProviderS
       // then parse the JSON.
       print("Added");
       return true;
-
     } else {
       // If the server did not return a 201 CREATED response,
       // then throw an exception.
@@ -442,5 +469,6 @@ class _EmployeeEditViewState extends State<EmployeeEditView>with TickerProviderS
 
 //}
 }
+
 
 
