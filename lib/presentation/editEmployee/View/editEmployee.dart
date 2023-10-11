@@ -5,25 +5,25 @@ import 'dart:io';
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
+
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mohr_hr/application/di.dart';
-import 'package:mohr_hr/data/networks/dio_factory.dart';
+
 import 'package:mohr_hr/domain/model/model.dart';
 import 'package:mohr_hr/presentation/AddImage/viewModel/GetImage_ViewModel.dart';
 import 'package:mohr_hr/presentation/editEmployee/View/empAcademicDegree_view.dart';
-import 'package:mohr_hr/presentation/editEmployee/ViewModel/empSkills_viewModel.dart';
+
 import 'package:mohr_hr/presentation/resources/colors.dart';
 import 'package:mohr_hr/presentation/resources/routes.dart';
 import 'package:permission_handler/permission_handler.dart';
 import '../../../application/app_prefs.dart';
 import '../../../application/constants.dart';
 import '../../../domain/model/navigationManu.dart';
-import '../../common/state_renderer/state_render_impl.dart';
+
 import '../../resources/strings_manager.dart';
 import '../../widgets/appbarMain.dart';
-import '../../widgets/appbar_widget.dart';
+
 import '../../widgets/profile_widget.dart';
 import 'empBasicData_view.dart';
 import 'empSkills_view.dart';
@@ -161,11 +161,12 @@ class _EmployeeEditViewState extends State<EmployeeEditView>with TickerProviderS
                             //height: MediaQuery.of(context).size.height,
                             child: TabBarView(
                               controller: _tabController,
-                              children: [
+                              children: const [
 
                                 BasicDataView(),
                                 EmployeeSkillsView(),
-                                EmployeeAcademicDegreeView()
+                                AcademicDegreeView(),
+
                               ],
                             ),
                           ),

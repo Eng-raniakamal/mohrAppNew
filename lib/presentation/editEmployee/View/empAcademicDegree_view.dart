@@ -5,7 +5,7 @@ import 'package:mohr_hr/application/di.dart';
 import 'package:mohr_hr/domain/model/model.dart';
 import 'package:mohr_hr/presentation/editEmployee/ViewModel/displayEmpAcademicDegree_ViewModel.dart';
 
-import 'package:mohr_hr/presentation/editEmployee/ViewModel/qualification_viewModel.dart';
+//import 'package:mohr_hr/presentation/editEmployee/ViewModel/qualification_viewModel.dart';
 import 'package:mohr_hr/presentation/editEmployee/ViewModel/grade_viewModel.dart';
 import 'package:mohr_hr/presentation/editEmployee/ViewModel/saveEmpAcademicDegree_ViewModel.dart';
 import 'package:mohr_hr/presentation/resources/colors.dart';
@@ -14,14 +14,14 @@ import '../../common/state_renderer/state_render_impl.dart';
 import '../../resources/strings_manager.dart';
 
 
-class EmployeeAcademicDegreeView extends StatefulWidget {
-  const EmployeeAcademicDegreeView({Key? key}) : super(key: key);
+class AcademicDegreeView extends StatefulWidget {
+  const AcademicDegreeView({Key? key}) : super(key: key);
 
   @override
-  State<EmployeeAcademicDegreeView> createState() => _EmployeeAcademicDegreeViewState();
+  State<AcademicDegreeView> createState() => _AcademicDegreeViewState();
 }
 
-class _EmployeeAcademicDegreeViewState extends State<EmployeeAcademicDegreeView> {
+class _AcademicDegreeViewState extends State<AcademicDegreeView> {
 
   final DisplayAcademicDegreeViewModel _displayViewModel=instance<DisplayAcademicDegreeViewModel>();
   final SaveAcademicDegreeViewModel _saveviewModel=instance<SaveAcademicDegreeViewModel>();
@@ -36,7 +36,7 @@ class _EmployeeAcademicDegreeViewState extends State<EmployeeAcademicDegreeView>
   final TextEditingController _NotesEditingController= TextEditingController();
   final TextEditingController _DateEditingController= TextEditingController();
   final TextEditingController _GradeIdEditingController=TextEditingController();
-  final TextEditingController _QualificationIdEditingController=TextEditingController();
+  //final TextEditingController _QualificationIdEditingController=TextEditingController();
   final TextEditingController _EmployeeIdEditingController=TextEditingController();
   var gradeId;
   var datetext;
@@ -52,16 +52,23 @@ class _EmployeeAcademicDegreeViewState extends State<EmployeeAcademicDegreeView>
     });
 
     _EmployeeIdEditingController.addListener(() {
-      _saveviewModel.setEmployeeId(int.parse(_EmployeeIdEditingController.text));
+      _saveviewModel.setEmployeeId(
+          int.parse(_EmployeeIdEditingController.text));
     });
+
+
   }
 
   @override
   void initState()
   {
-    _blind();
+
     super.initState();
+    _blind();
   }
+
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -86,22 +93,22 @@ class _EmployeeAcademicDegreeViewState extends State<EmployeeAcademicDegreeView>
       );
   }
 
-  Widget _getTabWidget(){
-    return
-      SizedBox(
-        height: 50,
-        child: AppBar(
-          bottom: TabBar(
-            tabs: [
-              Tab(
-                  icon: Icon(Icons.account_box),text: AppStrings.BasicData),
-              Tab(
-                  icon: Icon(Icons.abc,),text: AppStrings.AcadmicDegree),
-            ],
-          ),
-        ),
-      );
-  }
+  // Widget _getTabWidget(){
+  //   return
+  //     SizedBox(
+  //       height: 50,
+  //       child: AppBar(
+  //         bottom: TabBar(
+  //           tabs: [
+  //             Tab(
+  //                 icon: Icon(Icons.account_box),text: AppStrings.BasicData),
+  //             Tab(
+  //                 icon: Icon(Icons.abc,),text: AppStrings.AcadmicDegree),
+  //           ],
+  //         ),
+  //       ),
+  //     );
+  // }
 
   Widget _getContentWidget() {
     return
@@ -119,7 +126,7 @@ class _EmployeeAcademicDegreeViewState extends State<EmployeeAcademicDegreeView>
                     child: Container(
                       child: Column(
                         children: [
-                         //AcademicDegree
+                        // AcademicDegree
                           Container(
                               alignment: AlignmentDirectional.topStart,
                               padding: const EdgeInsets.only(
@@ -176,52 +183,81 @@ class _EmployeeAcademicDegreeViewState extends State<EmployeeAcademicDegreeView>
                                    TextFormField(
                                      keyboardType: TextInputType.text,
                                      controller: _NotesEditingController,
-                                   )
+                                   ),
+                                   Text("Date", textAlign: TextAlign.start,),
+                                  // Text("Date", textAlign: TextAlign.start,),
+
+                                   TextFormField(onTap: () async {
+
+                                     DateTime? newDate=
+                                     await showDatePicker
+                                       (context: context,
+                                         initialDate: date,
+                                         firstDate: DateTime(1900),
+                                         lastDate: DateTime(2100)
+                                     );
+                                     //if 'cancel'=>null
+                                     if(newDate==null)return;
+                                     //if 'ok' => DateTime
+                                     setState(() {
+                                       date=newDate;
+                                     });
+                                   },
+                                       keyboardType: TextInputType.text,
+                                       controller: _DateEditingController,
+                                       decoration: InputDecoration(
+                                           hintText:
+                                           date.day.toString() +
+                                               "/" + date.month.toString() +
+                                               "/" + date.year.toString()
+                                         //labelText: AppStrings.nationalId.tr(),
+                                         //errorText: snapshot.data
+                                       ))
+
                                 //  ),
                               ],
                             ),
                           ),
-                               Container(
-                            padding: const EdgeInsets.only(
-                                top: 12,
-                                left: 28,
-                                right: 28),
-                                 child: Column(crossAxisAlignment: CrossAxisAlignment.start,
-                                       children: [
-                                     Text("Date", textAlign: TextAlign.start,),
-
-                                      TextFormField(onTap: () async {
-
-                                  DateTime? newDate=
-                                  await showDatePicker
-                                    (context: context,
-                                      initialDate: date,
-                                      firstDate: DateTime(1900),
-                                      lastDate: DateTime(2100)
-                                  );
-                                  //if 'cancel'=>null
-                                  if(newDate==null)return;
-                                  //if 'ok' => DateTime
-                                  setState(() {
-                                    date=newDate;
-                                  });
-                                },
-                                    keyboardType: TextInputType.text,
-                                    controller: _DateEditingController,
-                                    decoration: InputDecoration(
-                                        hintText:
-                                        date.day.toString() +
-                                            "/" + date.month.toString() +
-                                            "/" + date.year.toString()
-                                      //labelText: AppStrings.nationalId.tr(),
-                                      //errorText: snapshot.data
-                                    ))
-                                //  ),
-                              ],
-                            ),
-                          ),
+                          //      Container(
+                          //   padding: const EdgeInsets.only(
+                          //       top: 12,
+                          //       left: 28,
+                          //       right: 28),
+                          //        child: Column(crossAxisAlignment: CrossAxisAlignment.start,
+                          //              children: [
+                          //            Text("Date", textAlign: TextAlign.start,),
+                          //
+                          //             TextFormField(onTap: () async {
+                          //
+                          //         DateTime? newDate=
+                          //         await showDatePicker
+                          //           (context: context,
+                          //             initialDate: date,
+                          //             firstDate: DateTime(1900),
+                          //             lastDate: DateTime(2100)
+                          //         );
+                          //         //if 'cancel'=>null
+                          //         if(newDate==null)return;
+                          //         //if 'ok' => DateTime
+                          //         setState(() {
+                          //           date=newDate;
+                          //         });
+                          //       },
+                          //           keyboardType: TextInputType.text,
+                          //           controller: _DateEditingController,
+                          //           decoration: InputDecoration(
+                          //               hintText:
+                          //               date.day.toString() +
+                          //                   "/" + date.month.toString() +
+                          //                   "/" + date.year.toString()
+                          //             //labelText: AppStrings.nationalId.tr(),
+                          //             //errorText: snapshot.data
+                          //           ))
+                          //       //  ),
+                          //     ],
+                          //   ),
+                          // ),
                           //Save bottun
-                          // save bottum
                                 Container(
                               padding: EdgeInsets.all(20),
                                  child: StreamBuilder<bool>(
@@ -246,14 +282,17 @@ class _EmployeeAcademicDegreeViewState extends State<EmployeeAcademicDegreeView>
                                       stream: _displayViewModel.outputAcademicDegree,
                                       // stream: _saveViewModel.outputErrorPassword,
                                       builder: (context, snapshot) {
-                                        List<AcademicDegreeModel>? academicDegree = snapshot.data
+                                        List<AcademicDegreeModel>? academicDegree = snapshot
+                                            .data
                                             ?.academicDegree;
-                                        if(academicDegree!=null) {
+                                        if (academicDegree != null) {
                                           return _createAcademicDegreeTable(
                                               academicDegree);
-                                        }else{return Container();}
-                                      }
-                                  )
+                                        }
+                                        else {
+                                          return Container();
+                                        }
+                                      })
                               ))],
                       ),
                     ),

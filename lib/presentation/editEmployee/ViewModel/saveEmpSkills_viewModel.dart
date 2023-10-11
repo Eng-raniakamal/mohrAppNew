@@ -23,6 +23,7 @@ class EmployeeSkillsViewModel extends BaseViewModel with
 
   EmployeeSkillsViewModel(this._employeeSkillsUseCase);
 
+
 //--input
 
   @override

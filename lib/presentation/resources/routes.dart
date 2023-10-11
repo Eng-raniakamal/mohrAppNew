@@ -69,11 +69,6 @@ class RouteGenerator {
 
         case Routes.editProfileRoute:
            initEmployeeBasicDataModule();
-          // //initSaveEmpBasicDataModule();
-          // initEmployeeSkillsModule();
-          // initQualificationModule();
-          // initGradeModule();
-          // initDisplayEmployeeSkillsModule();
 
           initEmployeeSkillsModule();
           initDisplayEmployeeSkillsModule();

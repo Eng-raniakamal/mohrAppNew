@@ -50,6 +50,7 @@ class _userViewState extends State<userView> {
   bool canEditImage=true;
 
   _bind(){
+
     _viewModel.start();
     _imageViewModel.start();
   }
