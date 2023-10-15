@@ -1,10 +1,15 @@
 
+import 'dart:convert';
+
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
+import 'package:mohr_hr/application/constants.dart';
 import 'package:mohr_hr/application/di.dart';
 import 'package:mohr_hr/domain/model/model.dart';
+import 'package:mohr_hr/presentation/editEmployee/ViewModel/Degree_viewModel.dart';
 import 'package:mohr_hr/presentation/editEmployee/ViewModel/displayEmpAcademicDegree_ViewModel.dart';
-
+import 'package:http/http.dart' as http;
 //import 'package:mohr_hr/presentation/editEmployee/ViewModel/qualification_viewModel.dart';
 import 'package:mohr_hr/presentation/editEmployee/ViewModel/grade_viewModel.dart';
 import 'package:mohr_hr/presentation/editEmployee/ViewModel/saveEmpAcademicDegree_ViewModel.dart';
@@ -24,13 +29,14 @@ class AcademicDegreeView extends StatefulWidget {
 class _AcademicDegreeViewState extends State<AcademicDegreeView> {
 
   final DisplayAcademicDegreeViewModel _displayViewModel=instance<DisplayAcademicDegreeViewModel>();
-  final SaveAcademicDegreeViewModel _saveviewModel=instance<SaveAcademicDegreeViewModel>();
+  //final SaveAcademicDegreeViewModel _saveviewModel=instance<SaveAcademicDegreeViewModel>();
 
   final GradeViewModel _GradeviewModel = instance<GradeViewModel>();
-  //final AppPreferences _appPreferences = instance<AppPreferences>();
+  final DegreeViewModel _DegreeviewModel = instance<DegreeViewModel>();
+  final AppPreferences _appPreferences = instance<AppPreferences>();
   final _Formkey= GlobalKey<FormState>();
   DateTime date= DateTime(2022);
-  String? dropdownValue;
+
   final TextEditingController _UniversityEditingController= TextEditingController();
   final TextEditingController _MajorEditingController= TextEditingController();
   final TextEditingController _NotesEditingController= TextEditingController();
@@ -38,22 +44,28 @@ class _AcademicDegreeViewState extends State<AcademicDegreeView> {
   final TextEditingController _GradeIdEditingController=TextEditingController();
   //final TextEditingController _QualificationIdEditingController=TextEditingController();
   final TextEditingController _EmployeeIdEditingController=TextEditingController();
-  var gradeId;
+  int? gradeId;
   var datetext;
+  int? acadmicId;
+  String? major;
+  String? notes;
+  int? empId;
+  String? userId;
   _blind() {
-    _saveviewModel.start();
+   // _saveviewModel.start();
     _displayViewModel.start();
     _GradeviewModel.start();
+    _DegreeviewModel.start();
     _DateEditingController.addListener(() {
-      _saveviewModel.setDate(_DateEditingController.text);
+     // _saveviewModel.setDate(_DateEditingController.text);
     });
     _GradeIdEditingController.addListener(() {
-      _saveviewModel.setGradeId(int.parse(_GradeIdEditingController.text));
+     // _saveviewModel.setGradeId(int.parse(_GradeIdEditingController.text));
     });
 
     _EmployeeIdEditingController.addListener(() {
-      _saveviewModel.setEmployeeId(
-          int.parse(_EmployeeIdEditingController.text));
+      // _saveviewModel.setEmployeeId(
+      //     int.parse(_EmployeeIdEditingController.text));
     });
 
 
@@ -79,12 +91,13 @@ class _AcademicDegreeViewState extends State<AcademicDegreeView> {
                   Scaffold(
                     //appBar: buildAppBarMain(context),
                     backgroundColor: colorManager.white,
-                    body: StreamBuilder<FlowState>(
-                      stream: _saveviewModel.outputState,
+                    body:
+                    StreamBuilder<FlowState>(
+                      stream: _displayViewModel.outputState,
                       builder: (context, snapshot) {
                         return snapshot.data?.getScreenWidget(context, _getContentWidget(),
                                 () {
-                              _saveviewModel.addAcdemicDegree();
+                             // _saveviewModel.addAcdemicDegree();
                             }) ??
                             _getContentWidget();
                       },
@@ -93,22 +106,7 @@ class _AcademicDegreeViewState extends State<AcademicDegreeView> {
       );
   }
 
-  // Widget _getTabWidget(){
-  //   return
-  //     SizedBox(
-  //       height: 50,
-  //       child: AppBar(
-  //         bottom: TabBar(
-  //           tabs: [
-  //             Tab(
-  //                 icon: Icon(Icons.account_box),text: AppStrings.BasicData),
-  //             Tab(
-  //                 icon: Icon(Icons.abc,),text: AppStrings.AcadmicDegree),
-  //           ],
-  //         ),
-  //       ),
-  //     );
-  // }
+
 
   Widget _getContentWidget() {
     return
@@ -137,7 +135,14 @@ class _AcademicDegreeViewState extends State<AcademicDegreeView> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text("Academic Degree", textAlign: TextAlign.start,),
-                                    _getAcademicDegree()])),
+                                    StreamBuilder<DegreeObject>(
+                                      stream: _DegreeviewModel.outputDegrees,
+                                      // stream: _saveViewModel.outputErrorPassword,
+                                      builder: (context, snapshot) {
+                                        List<DegreeItem>? degrees = snapshot.data?.Degrees;
+                                        return _getAcademicDegree(degrees);
+                                      },
+                                    ),])),
                           //Grade
                                 Container(
                               alignment: AlignmentDirectional.topStart,
@@ -218,63 +223,28 @@ class _AcademicDegreeViewState extends State<AcademicDegreeView> {
                               ],
                             ),
                           ),
-                          //      Container(
-                          //   padding: const EdgeInsets.only(
-                          //       top: 12,
-                          //       left: 28,
-                          //       right: 28),
-                          //        child: Column(crossAxisAlignment: CrossAxisAlignment.start,
-                          //              children: [
-                          //            Text("Date", textAlign: TextAlign.start,),
-                          //
-                          //             TextFormField(onTap: () async {
-                          //
-                          //         DateTime? newDate=
-                          //         await showDatePicker
-                          //           (context: context,
-                          //             initialDate: date,
-                          //             firstDate: DateTime(1900),
-                          //             lastDate: DateTime(2100)
-                          //         );
-                          //         //if 'cancel'=>null
-                          //         if(newDate==null)return;
-                          //         //if 'ok' => DateTime
-                          //         setState(() {
-                          //           date=newDate;
-                          //         });
-                          //       },
-                          //           keyboardType: TextInputType.text,
-                          //           controller: _DateEditingController,
-                          //           decoration: InputDecoration(
-                          //               hintText:
-                          //               date.day.toString() +
-                          //                   "/" + date.month.toString() +
-                          //                   "/" + date.year.toString()
-                          //             //labelText: AppStrings.nationalId.tr(),
-                          //             //errorText: snapshot.data
-                          //           ))
-                          //       //  ),
-                          //     ],
-                          //   ),
-                          // ),
+
                           //Save bottun
                                 Container(
                               padding: EdgeInsets.all(20),
-                                 child: StreamBuilder<bool>(
-                                stream: _saveviewModel.outputDateValid,
-                                  builder: (context, snapshot)
-                                  {
-                                    return ElevatedButton(
+                                 child:
+                                //  StreamBuilder<bool>(
+                                // stream: _saveviewModel.outputDateValid,
+                                //   builder: (context, snapshot)
+                                //   {
+                                //     return
+                                      ElevatedButton(
                                         child: Text("Add"),
                                         onPressed: () {
-                                          _saveviewModel.addAcdemicDegree();
+                                          addingAcademicDegree();
+                                         // _saveviewModel.addAcdemicDegree();
                                         }
                                       // : null,
 
-                                    );
-                                  }
-                              )
-                          ),
+                                    ),
+                                 // }
+                              ),
+                         // ),
                           //academicDegree data table
                                 Container(padding: EdgeInsets.fromLTRB(20,30,10,30),
                                     child:SingleChildScrollView(scrollDirection: Axis.horizontal,
@@ -305,7 +275,7 @@ class _AcademicDegreeViewState extends State<AcademicDegreeView> {
 
 
   void dispose(){
-    _saveviewModel.dispose();
+    //_saveviewModel.dispose();
     super.dispose();
   }
 
@@ -331,28 +301,52 @@ class _AcademicDegreeViewState extends State<AcademicDegreeView> {
       value: gradeId,
     );
   }
-  Widget _getAcademicDegree()
-  {//var  dropdownvalue;
-    var items=<String>["Bachelor of","Bachelor","Master","PHD","Doblom"]
-    .map((acdemicItem) {
-      return DropdownMenuItem(
-        value: acdemicItem,
-        child: Text(acdemicItem),
-      );
-    }).toList();
+  Widget _getAcademicDegree(List<DegreeItem>? degree)
+  {
+    var items=degree?.map(
+            (degreeItem) {
+          return DropdownMenuItem(
 
-
+            value: degreeItem.value,
+            child: Text(degreeItem.text.toString()),);
+        }).toList();
 
     return DropdownButton(
       hint: Text("Choose Academic Degree"),
       items:  items,
       onChanged: (newvalue) {
         setState(() {
-          dropdownValue = newvalue;
+          acadmicId = newvalue;
         });
       },
-      value: dropdownValue,
+      value: acadmicId,
     );
+
+
+
+
+
+    //var  dropdownvalue;
+    // var items=<String>["Bachelor of","Bachelor","Master","PHD","Doblom"]
+    // .map((acdemicItem) {
+    //   return DropdownMenuItem(
+    //     value: acdemicItem,
+    //     child: Text(acdemicItem),
+    //   );
+    // }).toList();
+    //
+    //
+    //
+    // return DropdownButton(
+    //   hint: Text("Choose Academic Degree"),
+    //   items:  items,
+    //   onChanged: (newvalue) {
+    //     setState(() {
+    //       acadmicId = newvalue;
+    //     });
+    //   },
+    //   value: acadmicId ,
+    // );
   }
   DataTable _createAcademicDegreeTable(List<AcademicDegreeModel> academicDegree) {
     return DataTable(
@@ -384,5 +378,107 @@ class _AcademicDegreeViewState extends State<AcademicDegreeView> {
         ]))
         .toList();
   }
+
+  Future addingAcademicDegree() async
+  {
+    userId = await _appPreferences.getUserToken();
+    empId = await _appPreferences.getEmpIdToken();
+    String? major=_MajorEditingController.text;
+    String? university=_UniversityEditingController.text;
+    String? notes=_NotesEditingController.text;
+    // string to uri
+    var uri = Uri.parse(Constants.saveEmpAcademicDegree);
+
+    // create multipart request
+    // var request = http.Request("POST", uri);
+
+    var response = await http.post(
+        uri,
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8','userId':userId!},
+        body: jsonEncode(<String,dynamic>{
+          'Major': major,
+          'University':university,
+          'Notes':notes,
+          'EmployeeId':empId!,
+          'AcademicDegreeTypeId':acadmicId,
+          'GradeId': gradeId,
+
+          }));
+    // check the status code for the result
+    if (response.statusCode == 200) {
+      var x= result.fromJson(jsonDecode(response.body)) ;
+      bool y =x.isValid;
+      if(y==true) {
+        displayDialoge();
+        print(response.body);
+      }else
+      { displayFaileDialoge();}
+    } else {
+      displayFaileDialoge();
+      print('Request failed with status: ${response.statusCode}.');
+    }
+  }
+
+
+  Widget? displayDialoge()
+  {
+    showAnimatedDialog(
+      context: context,
+      barrierDismissible: true,
+      builder: (BuildContext context) {
+        return ClassicGeneralDialogWidget(
+          titleText: 'Information',
+          contentText: 'added successfully',
+          onPositiveClick: () {
+            Navigator.of(context).pop();
+          },
+
+        );
+      },
+      animationType: DialogTransitionType.fade,
+      curve: Curves.linear,
+      duration: Duration(seconds: 1),
+    );
+  }
+
+  Widget? displayFaileDialoge()
+  {
+    showAnimatedDialog(
+      context: context,
+      barrierDismissible: true,
+      builder: (BuildContext context) {
+        return ClassicGeneralDialogWidget(
+          titleText: 'warning',
+          contentText: 'Save Failure',
+          onPositiveClick: () {
+            Navigator.of(context).pop();
+          },
+
+        );
+      },
+      animationType: DialogTransitionType.fade,
+      curve: Curves.linear,
+      duration: Duration(seconds: 1),
+    );
+  }
+
+//
+
+}
+class result {
+  final bool isValid;
+  final String message;
+
+  const result({
+    required this.isValid, required this.message});
+
+  factory result.fromJson(Map<String, dynamic> json) {
+    return result(
+      isValid: json['IsValid'],
+      message: json['Message'],
+    );
+  }
+
 
 }

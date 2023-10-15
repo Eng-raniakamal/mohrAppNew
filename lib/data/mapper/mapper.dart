@@ -387,7 +387,34 @@ extension GradesResponseMapper  on GradesResponse {
 
   }
 }
+///////////////////////////////////////////////////////////////////
 
+//_____________________________Grade________________________
+extension AcademicItemResponseMapper  on AcademicItemResponse {
+  DegreeItem toDomain() {
+    return DegreeItem(
+      this.value?.orZero() ?? ZERO,
+      this.text?.orEmpty() ?? EMPTY,
+    );
+  }
+}
+extension AcademicResponseMapper  on AcademicResponse {
+
+  DegreeObject toDomain(){
+    List<DegreeItem> mappedDegree=
+    (this.data?.map((g) => g.toDomain()) ??
+        Iterable.empty()).cast<DegreeItem>()
+        .toList();
+    var AcademicData= DegreeObject(mappedDegree);
+    return AcademicData;
+
+  }
+}
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////////
 
 
 /////////////display vacation//////////////////////////

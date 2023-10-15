@@ -451,6 +451,39 @@ class RepositoryImpl extends Repository {
   }
 
 
+  @override
+  Future<Either<Failure, DegreeObject>> getDegree(UserRequest userRequest)
+  async {
+    try {
+      if (userRequest.userId == null) {
+
+        userRequest.userId = await _appPreferences.getUserToken();
+
+      }
+      // get from cache
+      final response = await _remoteDataSource.getAcademic(userRequest);
+      return Right(response.toDomain());
+    } catch (cacheError) {
+      // we have cache error so we should call API
+
+      if (await _networkInfo.isConnected) {
+        try {
+          // its safe to call the API
+          final response = await _remoteDataSource.getAcademic(userRequest);
+          return Right(response.toDomain());
+        } catch (error) {
+          return (Left(ErrorHandler
+              .handle(error)
+              .failure));
+        }
+      } else {
+        // return connection error
+        return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
+      }
+    }
+  }
+
+
 
   @override
   Future<Either<Failure, SaveAcademicDegreeModel>>

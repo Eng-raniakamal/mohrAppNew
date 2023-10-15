@@ -5,12 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:mohr_hr/application/app_prefs.dart';
 import 'package:mohr_hr/application/di.dart';
 import 'package:mohr_hr/domain/model/user_preferences.dart';
+import 'package:mohr_hr/presentation/home/Home.dart';
 //import 'package:mohr_hr/presentation/onboarding/onboarding_screen.dart';
 import 'package:mohr_hr/presentation/onbourding/onbording_screen.dart';
 //import 'package:mohr_hr/presentation/onbourding/onbording_screen.dart';
 //import 'package:mohr_hr/presentation/login/loginView.dart';
 import 'package:mohr_hr/presentation/resources/themes.dart';
 import 'package:mohr_hr/presentation/resources/routes.dart';
+import 'package:mohr_hr/presentation/splash/splash.dart';
 //import 'package:mohr_hr/presentation/splash/splashScreen.dart';
 //import 'package:mohr_hr/themes/themes.dart';
 //import 'package:theme_provider/theme_provider.dart';
@@ -59,7 +61,8 @@ class _MyAppState extends State<MyApp> {
                onGenerateRoute: RouteGenerator.getRoute,
               //initialRoute: Routes.splashRoute,
               //home:splashScreen(),
-                 home:   const OnboadingScreen(),
+                 home: SplashView(),
+                // home:  Home(),
               // theme:Theme.of(context),
                 title: "Mohr")
 

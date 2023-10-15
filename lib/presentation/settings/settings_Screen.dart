@@ -110,7 +110,9 @@ class _SettingsPageState extends State<SettingsPage> {
   void changeLanguage() {
 
     _appPreferences.setLanguageChanged();
-    Phoenix.rebirth(context);
+    Phoenix.rebirth(this.context);
+    //Navigator.of(context).pushReplacementNamed(Routes.settings) ;
+
     // restart to apply language changes
   }
 

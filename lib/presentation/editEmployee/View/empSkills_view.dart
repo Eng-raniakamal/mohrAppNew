@@ -2,7 +2,10 @@
 import 'dart:convert';
 
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:mohr_hr/application/constants.dart';
 import 'package:mohr_hr/application/di.dart';
 import 'package:mohr_hr/domain/model/model.dart';
@@ -11,6 +14,8 @@ import 'package:mohr_hr/presentation/editEmployee/ViewModel/empSkills_viewModel.
 import 'package:mohr_hr/presentation/editEmployee/ViewModel/qualification_viewModel.dart';
 import 'package:mohr_hr/presentation/editEmployee/ViewModel/grade_viewModel.dart';
 import 'package:mohr_hr/presentation/resources/colors.dart';
+import 'package:mohr_hr/presentation/resources/routes.dart';
+import 'package:mohr_hr/presentation/resources/strings_manager.dart';
 import '../../../application/app_prefs.dart';
 import '../../common/state_renderer/state_render_impl.dart';
 import 'package:http/http.dart' as http;
@@ -149,7 +154,7 @@ class _EmployeeSkillsViewState extends State<EmployeeSkillsView> {
                               child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text("Qualification",
+                                    Text(AppStrings.Qualification.tr(),
                                       textAlign: TextAlign.start,),
                                     StreamBuilder<QualificationsObject>(
                                       stream: _QualificationviewModel
@@ -174,7 +179,7 @@ class _EmployeeSkillsViewState extends State<EmployeeSkillsView> {
                               child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text("Grade", textAlign: TextAlign.start,),
+                                    Text(AppStrings.Grade.tr(), textAlign: TextAlign.start,),
                                     StreamBuilder<GradesObject>(
                                       stream: _GradeviewModel.outputGrades,
                                       // stream: _saveViewModel.outputErrorPassword,
@@ -194,7 +199,7 @@ class _EmployeeSkillsViewState extends State<EmployeeSkillsView> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text("Date", textAlign: TextAlign.start,),
+                                Text(AppStrings.Date.tr(), textAlign: TextAlign.start,),
 
                                 TextFormField(onTap: () async {
                                   DateTime? newDate =
@@ -226,44 +231,7 @@ class _EmployeeSkillsViewState extends State<EmployeeSkillsView> {
                               ],
                             ),
                           ),
-                          // Container(
-                          //   padding: const EdgeInsets.only(
-                          //       left: 28, right: 28),
-                          //   child: StreamBuilder<String?>(
-                          //     stream: _saveviewModel.outputErrorDate,
-                          //     builder: (context, snapshot) {
-                          //       return TextFormField(
-                          //           keyboardType: TextInputType.text,
-                          //           controller: _DateEditingController,
-                          //           decoration: InputDecoration(
-                          //               hintText: AppStrings.date.tr(),
-                          //               labelText: AppStrings.date.tr(),
-                          //               errorText: snapshot.data));
-                          //     },
-                          //   ),
-                          // ),
-                          // Container(
-                          //     padding: const EdgeInsets.only(
-                          //         left: 28, right: 28),
-                          //     child: StreamBuilder<bool>(
-                          //       //stream: _viewModel.outputIsAllInputsValid,
-                          //       builder: (context, snapshot) {
-                          //         return SizedBox(
-                          //           width: double.infinity,
-                          //           height:40,
-                          //           child: ElevatedButton(
-                          //
-                          //                onPressed: () {
-                          //                 _saveviewModel.addSkills();
-                          //               },
-                          //                  // : null,
-                          //               child: const Text(AppStrings.addSkills).tr()),
-                          //         );
-                          //       },
-                          //     )),
 
-
-                          //Save bottun
                           // save bottum
                           Container(
                               padding: EdgeInsets.all(20),
@@ -271,7 +239,7 @@ class _EmployeeSkillsViewState extends State<EmployeeSkillsView> {
                                   stream: _saveviewModel.outputDateValid,
                                   builder: (context, snapshot) {
                                     return ElevatedButton(
-                                        child: Text("Add"),
+                                        child: Text(AppStrings.Add.tr()),
                                         onPressed: () {
                                          // _saveviewModel.addSkills();
                                           addingSkills();
@@ -323,7 +291,7 @@ class _EmployeeSkillsViewState extends State<EmployeeSkillsView> {
         }).toList();
 
     return DropdownButton(
-      hint: Text("Choose a Qualification"),
+      hint: Text(AppStrings.Choose_a_Qualification.tr()),
       items: items,
       onChanged: (newvalue) {
         setState(() {
@@ -345,7 +313,7 @@ class _EmployeeSkillsViewState extends State<EmployeeSkillsView> {
         }).toList();
 
     return DropdownButton(
-      hint: Text("Choose Grade"),
+      hint: Text(AppStrings.Choose_a_Grad.tr()),
       items: items,
       onChanged: (newvalue) {
         setState(() {
@@ -368,11 +336,11 @@ class _EmployeeSkillsViewState extends State<EmployeeSkillsView> {
   List<DataColumn> _createColumns() {
     return [
       DataColumn(
-          label: Text("Skill", style: TextStyle(color: colorManager.white),)),
+          label: Text(AppStrings.Skill.tr(), style: TextStyle(color: colorManager.white),)),
       DataColumn(label: Text(
-        "Grade Name", style: TextStyle(color: colorManager.white),)),
+        AppStrings.Grade_Name.tr(), style: TextStyle(color: colorManager.white),)),
       DataColumn(
-          label: Text("Date", style: TextStyle(color: colorManager.white),)),
+          label: Text(AppStrings.Date.tr(), style: TextStyle(color: colorManager.white),)),
     ];
   }
 
@@ -410,12 +378,80 @@ class _EmployeeSkillsViewState extends State<EmployeeSkillsView> {
            'EmployeeId':empId!}));
     // check the status code for the result
     if (response.statusCode == 200) {
-      print(response.body);
+      var x= result.fromJson(jsonDecode(response.body)) ;
+      bool y =x.isValid;
+      if(y==true) {
+        displayDialoge();
+        Phoenix.rebirth(Navigator.of(context).pushReplacementNamed(Routes.editProfileRoute) as BuildContext);
+        print(response.body);
+      }else
+        { displayFaileDialoge();}
     } else {
+      displayFaileDialoge();
       print('Request failed with status: ${response.statusCode}.');
     }
   }
+
+
+Widget? displayDialoge()
+{
+  showAnimatedDialog(
+    context: context,
+    barrierDismissible: true,
+    builder: (BuildContext context) {
+      return ClassicGeneralDialogWidget(
+        titleText: 'Information',
+        contentText: 'added successfully',
+        onPositiveClick: () {
+          Navigator.of(context).pop();
+        },
+
+      );
+    },
+    animationType: DialogTransitionType.fade,
+    curve: Curves.linear,
+    duration: Duration(seconds: 1),
+  );
+}
+
+  Widget? displayFaileDialoge()
+  {
+    showAnimatedDialog(
+      context: context,
+      barrierDismissible: true,
+      builder: (BuildContext context) {
+        return ClassicGeneralDialogWidget(
+          titleText: 'warning',
+          contentText: 'Save Failure',
+          onPositiveClick: () {
+            Navigator.of(context).pop();
+          },
+
+        );
+      },
+      animationType: DialogTransitionType.fade,
+      curve: Curves.linear,
+      duration: Duration(seconds: 1),
+    );
+  }
+
     //
 
   }
+class result {
+  final bool isValid;
+  final String message;
+
+  const result({
+  required this.isValid, required this.message});
+
+  factory result.fromJson(Map<String, dynamic> json) {
+    return result(
+      isValid: json['IsValid'],
+      message: json['Message'],
+    );
+  }
+
+
+}
 

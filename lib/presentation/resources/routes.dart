@@ -78,6 +78,7 @@ class RouteGenerator {
           initSaveAcademicDegreesModule();
           initQualificationModule();
           initGradeModule();
+           initDegreeModule();
 
         return MaterialPageRoute(builder: (_)=>  Employee());
 
@@ -110,7 +111,9 @@ class RouteGenerator {
         initDisplayAcademicDegreesModule();
         initSaveAcademicDegreesModule();
         initQualificationModule();
+
         initGradeModule();
+        initDegreeModule();
 
         return MaterialPageRoute(builder: (_)=>  Employee());
           default:

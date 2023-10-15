@@ -84,6 +84,15 @@
   "PoBox": "POBox",
   "zipBox": "Zip Box",
 
+  "Qualification": "Qualification",
+  "Choose_a_Qualification": "Choose a Qualification",
+  "Grade" : "Grade",
+  "Choose_a_Grad" : "Choose a Grad",
+ "Date" : "Date",
+   "Add" : "Add",
+  "Skill" : "Skill",
+   "Grade_Name" : "Grade_Name",
+
   "Permissions": "Permissions",
   "Financial": "Financial",
   "Extra": "Extra",

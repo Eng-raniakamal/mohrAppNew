@@ -76,13 +76,23 @@ class AppStrings {
   static const String PoBox = "POBox";
   static const String ZipCode = "zipCode";
 
-
   static const String details = "details";
   static const String about = "about";
   static const String changeLanguage = "change language";
   static const String logout = "logout";
   static const String Start = "start";
   static const String spalshText ="spalshText";
+//skills
+  static const String Qualification = "Qualification";
+  static const String Choose_a_Qualification  = "Choose_a_Qualification";
+  static const String Grade = "Grade";
+  static const String Choose_a_Grad = "Choose_a_Grad";
+  static const String Date = "Date";
+  static const String Add = "Add";
+  static const String Skill = "Skill";
+  static const String Grade_Name = "Grade_Name";
+//
+
       //
       //
 //slide menu

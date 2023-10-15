@@ -12,6 +12,9 @@ class Home extends StatelessWidget with NavigationStates{
 
   @override
   Widget build(BuildContext context) {
+
+
+
   //  var initialState;
     return Scaffold(
       body: BlocProvider<NavigationBloc>(

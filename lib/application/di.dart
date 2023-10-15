@@ -6,6 +6,7 @@ import 'package:mohr_hr/data/networks/dio_factory.dart';
 import 'package:mohr_hr/data/networks/network_info.dart';
 import 'package:mohr_hr/data/repository/repository_impl.dart';
 import 'package:mohr_hr/domain/repository/repository.dart';
+import 'package:mohr_hr/domain/usecase/Degree_useCase.dart';
 import 'package:mohr_hr/domain/usecase/VacatioType_useCase.dart';
 import 'package:mohr_hr/domain/usecase/displaySkills_useCase.dart';
 import 'package:mohr_hr/domain/usecase/empAcademicDegree_useCase.dart';
@@ -24,6 +25,7 @@ import 'package:mohr_hr/presentation/Requests/Salary/ViewModel/salaryDetailsView
 import 'package:mohr_hr/presentation/Requests/Vacations/viewModel/VacationType_ViewModel.dart';
 
 import 'package:mohr_hr/presentation/User/User_viewModel.dart';
+import 'package:mohr_hr/presentation/editEmployee/ViewModel/Degree_viewModel.dart';
 import 'package:mohr_hr/presentation/editEmployee/ViewModel/displayEmpAcademicDegree_ViewModel.dart';
 import 'package:mohr_hr/presentation/editEmployee/ViewModel/displayEmpSkills_viewModel.dart';
 import 'package:mohr_hr/presentation/editEmployee/ViewModel/qualification_viewModel.dart';
@@ -247,6 +249,18 @@ initGradeModule() {
   }
 }
 
+initDegreeModule() {
+  if (!GetIt.I.isRegistered<DegreeUseCase>()) {
+    instance.registerFactory<DegreeUseCase>(() =>
+        DegreeUseCase(instance()));
+    instance.registerFactory<DegreeViewModel>(() {
+      var item = instance<DegreeUseCase>();
+      return DegreeViewModel(item);
+    }
+    );
+  }
+}
+
   resetModules() {
     instance.reset(dispose: false);
     initAppModule();
@@ -264,5 +278,6 @@ initGradeModule() {
     initSalaryDetailsModule();
     initQualificationModule();
     initGradeModule();
+    initDegreeModule();
   }
 

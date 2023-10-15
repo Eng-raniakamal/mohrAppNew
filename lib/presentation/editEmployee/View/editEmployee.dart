@@ -13,6 +13,7 @@ import 'package:mohr_hr/application/di.dart';
 import 'package:mohr_hr/domain/model/model.dart';
 import 'package:mohr_hr/presentation/AddImage/viewModel/GetImage_ViewModel.dart';
 import 'package:mohr_hr/presentation/editEmployee/View/empAcademicDegree_view.dart';
+import 'package:mohr_hr/presentation/resources/assets_manager.dart';
 
 import 'package:mohr_hr/presentation/resources/colors.dart';
 import 'package:mohr_hr/presentation/resources/routes.dart';
@@ -62,7 +63,7 @@ class _EmployeeEditViewState extends State<EmployeeEditView>with TickerProviderS
 
   @override
   Widget build(BuildContext context) {
-    userImage = Constants.imagePath;
+   // userImage = Constants.imagePath;
     //image.path=Constants.imagePath;
     final TabController _tabController = TabController(
         length: (3), vsync: this);
@@ -112,12 +113,10 @@ class _EmployeeEditViewState extends State<EmployeeEditView>with TickerProviderS
                                           Container( //child:Align(
                                             alignment: Alignment.center,
                                             padding: EdgeInsets.all(10),
-                                            width: MediaQuery
-                                                .of(context)
-                                                .size
-                                                .width,
+                                            width: MediaQuery.of(context).size.width,
+                                            height: 50,
                                             decoration: BoxDecoration(
-                                                color: Colors.grey[300],
+                                                //color: Colors.grey[300],
                                                 borderRadius: BorderRadius
                                                     .circular(30.0,)),
 
@@ -126,10 +125,10 @@ class _EmployeeEditViewState extends State<EmployeeEditView>with TickerProviderS
                                               isScrollable: true,
                                               labelColor: colorManager.primary,
                                               unselectedLabelColor: colorManager
-                                                  .white,
+                                                  .primary,
                                               indicator: BoxDecoration(
                                                 borderRadius: BorderRadius
-                                                    .circular(30.0),
+                                                    .circular(40.0),
                                                 color: colorManager
                                                     .greywithOpacity,
                                               ),
@@ -181,19 +180,26 @@ class _EmployeeEditViewState extends State<EmployeeEditView>with TickerProviderS
   final picker = ImagePicker();
   Widget _getImageWidget(UserImageModel? image,BuildContext context) {
     if (image != null) {
-      userImage = image.data;
-      Constants.imagePath=userImage!;
+     // userImage = image.data;
+      Constants.imagePath=image.data;
       return ProfileWidget(
-          imagePath: userImage!,
+          imagePath: image.data,
           isEdit: true,
           onClicked: () async {
             showImagePicker(context);
-
           }
       );
     }
     else {
-      return Container();
+    //  userImage = ImageAssets.noPhoto;
+      Constants.imagePath=ImageAssets.noPhoto;
+      return ProfileWidget(
+          imagePath: ImageAssets.noPhoto,
+          isEdit: true,
+          onClicked: () async {
+            showImagePicker(context);
+          }
+      );
     }
   }
 
@@ -204,13 +210,9 @@ class _EmployeeEditViewState extends State<EmployeeEditView>with TickerProviderS
           return Card(
             child: Container(
                 width: MediaQuery
-                    .of(context)
-                    .size
-                    .width,
+                    .of(context).size.width,
                 height: MediaQuery
-                    .of(context)
-                    .size
-                    .height / 5.2,
+                    .of(context).size.height / 5.2,
                 margin: const EdgeInsets.only(top: 8.0),
                 padding: const EdgeInsets.all(12),
                 child: Row(
@@ -326,10 +328,13 @@ class _EmployeeEditViewState extends State<EmployeeEditView>with TickerProviderS
       imageFile = File(croppedFile.path);
      // final imagePermanent = await saveImagePermanently(croppedFile.path);
       setState(() {
-        if (imageFile != null) {
+
+        userImage = croppedFile.path;
+        Constants.imagePath=userImage!;
+        if (imageFile != null)
+        {
           upload(File(croppedFile.path));
           Navigator.of(this.context).pushReplacementNamed(Routes.editProfileRoute);
-
         }
       });
       //});

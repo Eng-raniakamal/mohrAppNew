@@ -16,6 +16,7 @@ abstract class Repository
   Future<Either<Failure,UserImageModel>> getUserImage(UserRequest userRequest);
   Future<Either<Failure,QualificationsObject>> getQualification(qualificationRequest userRequest);
   Future<Either<Failure,GradesObject>> getGrade(GradeRequest userRequest);
+  Future<Either<Failure,DegreeObject>> getDegree(UserRequest userRequest);
   Future<Either<Failure,BasicDataModel>>displayEmployeeBasicData(BasicDataRequest getEmpBDReq);
   Future<Either<Failure,EmployeeSaveBasicDataModel>> saveEmployeeBasicData(EmployeeBasicDataRequest empBDReq);
   Future<Either<Failure,SaveEmpSkillsModel>> saveEmployeeSkills(EmployeeSkillsRequest empSkillsReq);

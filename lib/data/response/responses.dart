@@ -619,7 +619,7 @@ class AcademicDegreeResponse
 // // I will send data from the class to api
   Map<String,dynamic> toJson() => _$AcademicDegreeResponseToJson (this);
 }
-//_______________________________________________________________
+
 //Grade
 //_______________________________________________________________
 @JsonSerializable()
@@ -650,6 +650,43 @@ class GradesResponse
     return GradesResponse(listOfGrade);
   }
   Map<String,dynamic> toJson() => _$GradesResponseToJson (this);
+}
+
+
+
+
+
+//_______________________________________________________________
+//Academic Type
+//_______________________________________________________________
+@JsonSerializable()
+class AcademicItemResponse {
+  @JsonKey(name: "Value")
+  int? value;
+  @JsonKey(name: "Text")
+  String? text;
+
+  AcademicItemResponse (this.value, this.text);
+
+// from json
+  factory  AcademicItemResponse.fromJson(Map<String, dynamic> json) =>
+      _$AcademicItemResponseFromJson(json);
+
+// to json
+  Map<String, dynamic> toJson() => _$AcademicItemResponseToJson(this);
+}
+//______________________________________________________________
+@JsonSerializable()
+class AcademicResponse
+{
+  List<AcademicItemResponse>? data;
+  AcademicResponse  (this.data) ;
+  factory AcademicResponse.fromJson(List<dynamic> items)
+  {
+    var listOfAcademic=items.map((academic) => _$AcademicItemResponseFromJson(academic)).toList();
+    return AcademicResponse(listOfAcademic);
+  }
+  Map<String,dynamic> toJson() => _$AcademicResponseToJson (this);
 }
 
 //---------------------------------------------------------------

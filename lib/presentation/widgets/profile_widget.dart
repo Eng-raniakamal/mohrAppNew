@@ -48,14 +48,24 @@ class _ProfileWidgetState extends State<ProfileWidget> {
   // create the image profile and edit the image
   Widget buildImage(BuildContext context) {
    // try {
-      final image = NetworkImage(widget.imagePath);
+    final  image;
+
+    if(widget.imagePath != null)
+    {
+    // var image;
+    // if(image!=null) {
+    image = NetworkImage(widget.imagePath!);
+    }
+     else
+      {
+        image= AssetImage(ImageAssets.noPhoto);
+      }
+
       return ClipOval(
         child: Material(
           color: Colors.transparent,
           child: Ink.image(
-
-            image: image,
-
+            image: image ,
             fit: BoxFit.cover,
             width: 110,
             height: 110,

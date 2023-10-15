@@ -532,6 +532,32 @@ Map<String, dynamic> _$GradesResponseToJson(GradesResponse instance) =>
       'data': instance.data,
     };
 
+AcademicItemResponse _$AcademicItemResponseFromJson(
+        Map<String, dynamic> json) =>
+    AcademicItemResponse(
+      json['Value'] as int?,
+      json['Text'] as String?,
+    );
+
+Map<String, dynamic> _$AcademicItemResponseToJson(
+        AcademicItemResponse instance) =>
+    <String, dynamic>{
+      'Value': instance.value,
+      'Text': instance.text,
+    };
+
+AcademicResponse _$AcademicResponseFromJson(Map<String, dynamic> json) =>
+    AcademicResponse(
+      (json['data'] as List<dynamic>?)
+          ?.map((e) => AcademicItemResponse.fromJson(e as Map<String, dynamic>))
+          .toList(),
+    );
+
+Map<String, dynamic> _$AcademicResponseToJson(AcademicResponse instance) =>
+    <String, dynamic>{
+      'data': instance.data,
+    };
+
 QualificationItemResponse _$QualificationItemResponseFromJson(
         Map<String, dynamic> json) =>
     QualificationItemResponse(

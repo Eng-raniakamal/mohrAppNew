@@ -18,6 +18,7 @@ abstract class RemoteDataSource {
   Future<UserImageResponse> getUserImage(UserRequest userRequest);
   Future<QualificationsResponse> getQualification(qualificationRequest userRequest);
   Future<GradesResponse> getGrades(GradeRequest userRequest);
+  Future<AcademicResponse> getAcademic(UserRequest userRequest);
   Future<EmployeeBasicDataResponse> saveBasicData(EmployeeBasicDataRequest  empBDRequest);
   Future<BasicDataResponse> getBasicData(BasicDataRequest  empBDRequest);
   Future<saveEmpSkillsResponse> saveEmployeeSkills(EmployeeSkillsRequest empSkillsRequest);
@@ -160,6 +161,12 @@ class RemoteDataSourceImplementer implements RemoteDataSource {
   Future<UserImageResponse> getUserImage(UserRequest userRequest) async {
     String Id=userRequest.userId.toString();
     return await _appServiceClient.getUserImageResponse(Id);
+  }
+
+  @override
+  Future<AcademicResponse> getAcademic(UserRequest userRequest) async{
+    String userId = userRequest.userId.toString();
+    return  _appServiceClient.getAcademic(userId);
   }
 
 

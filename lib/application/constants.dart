@@ -13,6 +13,7 @@
     static const String GetEmpAcademicDegree='$baseUrl/api/Employee/GetEmployeeAcademicDegrees';
     static const String GetQualifications='$baseUrl/api/Employee/GetQualificationsLookup';
     static const String GetGrades='$baseUrl/api/Employee/GetGradesLookup';
+    static const String GetAcademic='$baseUrl/api/Employee/GetAcademicDegreesLookup';
     static const String EmployeePhotoUrl='$baseUrl/api/Employee/Avatar';
     static const String vacationUrl='$baseUrl/api/Employee/GetVacations';
     static const String vacationTypeUrl='$baseUrl/api/Employee/GetVacationTypes';

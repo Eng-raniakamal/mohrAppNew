@@ -434,8 +434,9 @@ return Container();
       }
     }
   Widget _getImageWidget(UserImageModel? userImage) {
+    String? URLimage ;
     if (userImage != null) {
-      String? URLimage = userImage.data;
+       URLimage = userImage.data;
 
     Constants.imagePath=URLimage;
     //Constants.canUpload!=empData?["CanUploadMasterImage"];
@@ -460,7 +461,26 @@ return Container();
       );
     }
     else {
-      return Container();
+
+          URLimage=ImageAssets.noPhoto;
+          Constants.imagePath= URLimage;
+      return ProfileWidget(
+          imagePath: ImageAssets.noPhoto,
+          isEdit: false,
+          onClicked: () {
+            // if(canEditImage == true)
+            // {
+            //   displayDialoge();
+            // }
+            // else
+            //   {
+            resetModules();
+            Navigator.of(context).pushReplacementNamed(Routes.editProfileRoute);
+            //}
+          }
+        // Navigator.of(context).push(
+        //   MaterialPageRoute(builder: (context) => editProfileScreen()),
+      );
     }
   }
   Widget _buildItemList(BuildContext context, int index) {

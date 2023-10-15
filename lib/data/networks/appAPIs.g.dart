@@ -269,6 +269,33 @@ class _AppServiceClient implements AppServiceClient {
   }
 
   @override
+  Future<AcademicResponse> getAcademic(String userId) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = {'UserId': userId};
+    final _result = await _dio
+        .fetch<List<dynamic>>(_setStreamType<AcademicResponse>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              'https://mohrapi.azurewebsites.net/api/Employee/GetAcademicDegreesLookup',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final value = AcademicResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
   Future<VacationsResponse> getVacations(String userId) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
@@ -363,7 +390,7 @@ class _AppServiceClient implements AppServiceClient {
     )
             .compose(
               _dio.options,
-              'https://mohrapi.azurewebsites.net/api/Employee/GetSalary/',
+              'https://mohrapi.azurewebsites.net/api/Employee/GetSalary/'+Constants.salaryDetailsId,
               queryParameters: queryParameters,
               data: _data,
             )

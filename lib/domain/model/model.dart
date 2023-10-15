@@ -218,6 +218,16 @@ class getEmpSkillsModel {
 
 ///////////////////academic Degree/////////////////////////
 
+class DegreeItem {
+  int? value;
+  String? text;
+  DegreeItem(this.value, this.text);
+}
+
+class DegreeObject {
+  List<DegreeItem> Degrees;
+  DegreeObject(this.Degrees);
+}
 
 class AcademicDegreeModel{
   int? id;

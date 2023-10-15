@@ -57,6 +57,11 @@ abstract class AppServiceClient{
   Future<GradesResponse> getGrades
       (@Field("UserId") String userId);
 
+
+  @GET(Constants.GetAcademic)
+  Future<AcademicResponse> getAcademic
+      (@Field("UserId") String userId);
+
   @GET(Constants.vacationUrl)
   Future<VacationsResponse> getVacations
       (@Field("UserId") String userId);

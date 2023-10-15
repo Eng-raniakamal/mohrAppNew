@@ -85,7 +85,14 @@
    "PoBox": "رقم البريدى",
    "zipBox": "رقم صندوق البريد",
 
-
+  "Qualification": "المهارة",
+  "Choose_a_Qualification": "أختار المهارة",
+  "Grade" : "الدرجة",
+  "Choose_a_Grad" : "أختار الدرجة",
+  "Date" : "التاريخ",
+  "Add" : "أضف",
+  "Skill" : "المهارة",
+  "Grade_Name" : " الدرجة",
 
 
 
