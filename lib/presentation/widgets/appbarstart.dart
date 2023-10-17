@@ -16,20 +16,20 @@ AppBar buildAppBarstart(BuildContext context) {
   final icon = CupertinoIcons.moon_stars;
 
   return AppBar(
-    //automaticallyImplyLeading: false,
+   // automaticallyImplyLeading: false,
     backgroundColor:Colors.transparent,
-    leading:
-    IconButton(
-      onPressed: () {},
-      icon: Image.asset(ImageAssets.EarthLangIc),
-    ),
+    //leading:
+    // IconButton(
+    //   onPressed: () {},
+    //   icon: Image.asset(ImageAssets.EarthLangIc),
+    // ),
 
 //),
     elevation: 0,
     actions: [
       ThemeSwitcher(
         builder: (context) => IconButton(
-          icon: Icon(icon),
+          icon: Icon(icon,color: colorManager.primary),
           onPressed: () {
             final theme = isDarkMode ? MyThemes.lightTheme : MyThemes.darkTheme;
             final switcher = ThemeSwitcher.of(context);

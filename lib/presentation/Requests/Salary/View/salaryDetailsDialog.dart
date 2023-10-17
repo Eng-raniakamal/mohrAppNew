@@ -1,3 +1,4 @@
+import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mohr_hr/presentation/Requests/Salary/View/salaryDetailsView.dart';
@@ -32,44 +33,50 @@ Widget?  showCustomDialog(BuildContext context, {required ValueChanged onValue})
               ),
             ],
           ),
-          child: Scaffold(
-            backgroundColor: Colors.transparent,
-            body: Stack(
-              clipBehavior: Clip.none,
-              children: [
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
-                    Text(
-                      "Salary Details",
-                      style: TextStyle(
-                        fontSize: 30,
-                        fontFamily: "Poppins",
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
+          child:  ThemeSwitchingArea(
+            child: Builder(
+              builder: (context) =>
+              Scaffold(
+              backgroundColor: Colors.transparent,
+              body: Stack(
+                clipBehavior: Clip.none,
+                children: [
+                  SingleChildScrollView(
+                    scrollDirection: Axis.vertical,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "Salary Details",
+                          style: TextStyle(
+                            fontSize: 30,
+                            fontFamily: "Poppins",
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        salaryDetailsView(),
 
-                    salaryDetailsView(),
-
-                //  Positioned(
-                //   left: 0,
-                //   right: 0,
-                //   bottom: -30,
-                //   child: CircleAvatar(
-                //     radius: 16,
-                //     backgroundColor: Colors.white,
-                //     child: Icon(
-                //       Icons.close,
-                //       size: 20,
-                //       color: Colors.black,
-                //     ),
-                //   ),
-                // )
-              ],
-            ),
-          ]),
+                    //  Positioned(
+                    //   left: 0,
+                    //   right: 0,
+                    //   bottom: -30,
+                    //   child: CircleAvatar(
+                    //     radius: 16,
+                    //     backgroundColor: Colors.white,
+                    //     child: Icon(
+                    //       Icons.close,
+                    //       size: 20,
+                    //       color: Colors.black,
+                    //     ),
+                    //   ),
+                    // )
+                ],
+              ),
+                  ),
+            ]),
         ),
-        ) );
+          ),
+        ) ));
     },
     transitionBuilder: (_, anim, __, child) {
       Tween<Offset> tween;

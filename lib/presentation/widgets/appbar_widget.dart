@@ -14,7 +14,7 @@ AppBar buildAppBar(BuildContext context) {
 
   return AppBar(
     //shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-    leading: BackButton(),
+   // leading: BackButton(),
     backgroundColor: colorManager.lightprimary,
    // flexibleSpace: Container(
    //  decoration: BoxDecoration( gradient: LinearGradient(

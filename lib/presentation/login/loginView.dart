@@ -72,7 +72,7 @@ class _LoginViewState extends State<LoginView> {
           builder: (context) =>
        Scaffold(
          //appBar: buildAppBarMain(context),
-        backgroundColor: colorManager.white,
+        //backgroundColor: colorManager.white,
          body: StreamBuilder<FlowState>(
         stream: _viewModel.outputState,
         builder: (context, snapshot) {

@@ -111,7 +111,6 @@ class RouteGenerator {
         initDisplayAcademicDegreesModule();
         initSaveAcademicDegreesModule();
         initQualificationModule();
-
         initGradeModule();
         initDegreeModule();
 

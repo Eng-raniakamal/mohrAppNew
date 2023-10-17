@@ -94,9 +94,30 @@
   "Skill" : "المهارة",
   "Grade_Name" : " الدرجة",
 
+  "Academic_Degree": "الدرجة العلمية",
+  "Choose_Academic_Degree" :"أختر الدرجة العلمية",
+  "University/Faculty/Institute": "جامعة/ كلية/معهد",
+  "Major":"التخصص",
+  "Notes" :"ملاحظات",
+  "University": "جامعة",
 
+  "Available": "المتاح",
+  "All" : "كل",
+  "Used" : "المستخدم",
+  "Vacation_Type" : "نوع الأجازة",
+  "Vacation_Request" : "طلب اجازة",
+  "Current" : "رصيد السنة الحالية ",
+  "Transferred" : "الرصيد المرحل",
+  "Total" : "الرصيد الكلي",
+  "Consumed" : "مسحوبات الرصيد",
+  "Pending" : "قيد الاعتماد",
 
-
+  "Month" : "الشهر",
+  "More_Details" : "التفاصيل...",
+  "no_salary_found":"لا يوجد مرتب متاح",
+  "Information":"معلومة",
+  "days":"يوم",
+  "Salary_Details": "تفاصيل المرتب",
 
 
 

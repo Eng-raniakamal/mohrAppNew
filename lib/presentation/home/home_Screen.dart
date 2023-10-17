@@ -109,9 +109,7 @@ class _HomeState extends State<Home>
               riveOnInit: (artboard) {
                 final controller = StateMachineController.fromArtboard(
                     artboard, "State Machine");
-
                 artboard.addController(controller!);
-
                 isMenuOpenInput =
                 controller.findInput<bool>("isOpen") as SMIBool;
                 isMenuOpenInput.value = true;

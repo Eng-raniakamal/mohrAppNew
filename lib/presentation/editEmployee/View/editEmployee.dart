@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
@@ -17,6 +18,8 @@ import 'package:mohr_hr/presentation/resources/assets_manager.dart';
 
 import 'package:mohr_hr/presentation/resources/colors.dart';
 import 'package:mohr_hr/presentation/resources/routes.dart';
+import 'package:mohr_hr/presentation/widgets/appbar_widget.dart';
+import 'package:mohr_hr/presentation/widgets/appbarstart.dart';
 import 'package:permission_handler/permission_handler.dart';
 import '../../../application/app_prefs.dart';
 import '../../../application/constants.dart';
@@ -67,18 +70,46 @@ class _EmployeeEditViewState extends State<EmployeeEditView>with TickerProviderS
     //image.path=Constants.imagePath;
     final TabController _tabController = TabController(
         length: (3), vsync: this);
+    final item=<Widget>
+    [ const Icon(Icons.person,size: 30,color: colorManager.white,),
+      const Icon(Icons.home,size: 30,color: colorManager.white),
+      const Icon(Icons.notifications,size: 30,color: colorManager.white),
+
+    ];
     return
       ThemeSwitchingArea(
           child: Builder(
             builder: (context) =>
                 Scaffold(
-                  appBar: buildAppBarMain(context),
-                  backgroundColor: colorManager.white,
+                  appBar: buildAppBarstart(context),
+                 // backgroundColor: colorManager.white,
+                  bottomNavigationBar:
+                  CurvedNavigationBar(items: item,
+                      index: 0,
+
+                      buttonBackgroundColor: colorManager.primary,
+                      backgroundColor: Colors.transparent,
+                      color: colorManager.primary,
+
+
+                      onTap: (int index) {
+                        if(index==1)
+                        {
+                          // changeIndex(index);
+                          Navigator.of(context).pushReplacementNamed(Routes.HomeRoute);
+                        }
+                        else
+                        if(index==2)
+                        {
+                          //Navigator.of(context).pushReplacementNamed(Routes.);
+                        }
+                      }
+                  ),
                   body:
                   Column(
                       children: [
                         Flexible(
-                          flex: 1,
+                         // flex: 1,
                           child:
                           Container(
                               padding: EdgeInsets.only(top: 20),
@@ -86,11 +117,13 @@ class _EmployeeEditViewState extends State<EmployeeEditView>with TickerProviderS
                                   .of(context)
                                   .size
                                   .width,
-                              //height: MediaQuery.of(context).size.height,
+                              height: 250,
+                              //MediaQuery.of(context).size.height/3,
                               child: Form(
                                   key: _Formkey,
                                   child: Container(
-                                    // height: MediaQuery.of(context).size.height,
+                                     //height: 200,
+                                     //MediaQuery.of(context).size.height/3,
                                     child: Column(
                                         children: [
                                           // ProfileWidget(
@@ -151,13 +184,11 @@ class _EmployeeEditViewState extends State<EmployeeEditView>with TickerProviderS
                           ),
                         ),
                         Flexible(
-                          flex: 2,
-                          child: Container(
-                            width: MediaQuery
-                                .of(context)
-                                .size
-                                .width,
-                            //height: MediaQuery.of(context).size.height,
+                          //flex:2 ,
+                         child:
+                          Container(
+                            width: MediaQuery.of(context).size.width,
+                            height: MediaQuery.of(context).size.height*3,
                             child: TabBarView(
                               controller: _tabController,
                               children: const [

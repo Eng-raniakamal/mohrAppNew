@@ -16,14 +16,15 @@ class Home extends StatelessWidget with NavigationStates{
 
 
   //  var initialState;
-    return Scaffold(
+    return
+      Scaffold(
       body: BlocProvider<NavigationBloc>(
         create:(BuildContext context) => NavigationBloc(),
             //(context) => NavigationBloc(initialState),
          child:
          Stack(
            children: [
-            // userView(),
+             //userView(),
              BlocListener<NavigationBloc, NavigationStates>(
                listener: (BuildContext context, state) {
                  // Check here if the state is unathenticated

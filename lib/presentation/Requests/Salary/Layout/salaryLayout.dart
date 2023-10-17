@@ -16,26 +16,26 @@ class SalaryScreen extends StatelessWidget with NavigationStates{
   Widget build(BuildContext context) {
     //  var initialState;
     return Scaffold(
-      bottomNavigationBar:
-      CurvedNavigationBar(items: item,
-          index: 0,
-          buttonBackgroundColor: colorManager.lightprimary,
-          backgroundColor: Colors.transparent,
-          color: colorManager.lightprimary,
-
-          onTap: (int index) {
-            if(index==1)
-            {
-              // changeIndex(index);
-              Navigator.of(context).pushReplacementNamed(Routes.HomeRoute);
-            }
-            else
-            if(index==2)
-            {
-              //Navigator.of(context).pushReplacementNamed(Routes.);
-            }
-          }
-      ),
+      // bottomNavigationBar:
+      // CurvedNavigationBar(items: item,
+      //     index: 0,
+      //     buttonBackgroundColor: colorManager.lightprimary,
+      //     backgroundColor: Colors.transparent,
+      //     color: colorManager.lightprimary,
+      //
+      //     onTap: (int index) {
+      //       if(index==1)
+      //       {
+      //         // changeIndex(index);
+      //         Navigator.of(context).pushReplacementNamed(Routes.HomeRoute);
+      //       }
+      //       else
+      //       if(index==2)
+      //       {
+      //         //Navigator.of(context).pushReplacementNamed(Routes.);
+      //       }
+      //     }
+      // ),
       body: BlocProvider<NavigationBloc>(
         create:(BuildContext context) => NavigationBloc(),
         //(context) => NavigationBloc(initialState),
@@ -50,12 +50,12 @@ class SalaryScreen extends StatelessWidget with NavigationStates{
       ),
     );
   }
-  final item=<Widget>
-  [
-    const Icon(Icons.person,size: 30,color: colorManager.white,),
-    const Icon(Icons.home,size: 30,color: colorManager.white),
-    const Icon(Icons.notifications,size: 30,color: colorManager.white),
-  ];
+  // final item=<Widget>
+  // [
+  //   const Icon(Icons.person,size: 30,color: colorManager.white,),
+  //   const Icon(Icons.home,size: 30,color: colorManager.white),
+  //   const Icon(Icons.notifications,size: 30,color: colorManager.white),
+  // ];
 }
 
 

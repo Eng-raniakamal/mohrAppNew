@@ -23,9 +23,9 @@ CurvedNavigationBar buildNavigatorBar(BuildContext context) {
     height: 50,
      index: 0,
       items: items,
-      color: colorManager.lightprimary,
-      //buttonBackgroundColor: Colors.transparent,
-      //backgroundColor: Colors.white,
+      color: colorManager.primary,
+      buttonBackgroundColor: Colors.transparent,
+      backgroundColor: Colors.transparent,
 
       //(index)=>setState(()=>.index=index),
 

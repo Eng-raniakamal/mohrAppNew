@@ -49,7 +49,7 @@ class _VacationRequestViewState extends State<VacationRequestView>with TickerPro
             builder: (context) =>
                 Scaffold(
                   //appBar: buildAppBarMain(context),
-                  backgroundColor: colorManager.white,
+                  //backgroundColor: colorManager.white,
                   body:
                   Column(
                         children: [

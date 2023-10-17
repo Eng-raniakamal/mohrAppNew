@@ -1,10 +1,15 @@
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:mohr_hr/application/di.dart';
 import 'package:mohr_hr/domain/model/model.dart';
 import 'package:mohr_hr/presentation/common/state_renderer/state_render_impl.dart';
 import 'package:mohr_hr/presentation/resources/colors.dart';
 import 'package:mohr_hr/presentation/resources/routes.dart';
+import 'package:mohr_hr/presentation/resources/strings_manager.dart';
+import 'package:mohr_hr/presentation/widgets/appbar_widget.dart';
+import 'package:mohr_hr/presentation/widgets/appbarstart.dart';
 import 'package:mohr_hr/presentation/widgets/profile_widget.dart';
 import '../../../../application/constants.dart';
 import '../viewModel/vacationViewModel.dart';
@@ -22,6 +27,12 @@ class vacationsView extends StatefulWidget {
 }
 
 
+final items=<Widget>
+[ const Icon(Icons.person,size: 30,),
+  const Icon(Icons.home,size: 30,),
+  const Icon(Icons.notifications,size: 30,),
+
+];
 class _vacationsViewState extends State<vacationsView> {
 
  final VacationViewModel _viewModel = instance <VacationViewModel>();
@@ -38,29 +49,69 @@ class _vacationsViewState extends State<vacationsView> {
 
   @override
   Widget build(BuildContext context) {
+    final item=<Widget>
+    [ const Icon(Icons.person,size: 30,color: colorManager.white,),
+      const Icon(Icons.home,size: 30,color: colorManager.white),
+      const Icon(Icons.notifications,size: 30,color: colorManager.white),
+
+    ];
     return ThemeSwitchingArea(
-        child: SingleChildScrollView(
+        child: Builder(
+        builder: (context) =>
+        Scaffold(
+            appBar: buildAppBarstart(context),
+        bottomNavigationBar:
+        CurvedNavigationBar(items: item,
+        index: 0,
+
+        buttonBackgroundColor: colorManager.primary,
+        backgroundColor: Colors.transparent,
+        color: colorManager.primary,
+
+
+        onTap: (int index) {
+      if(index==1)
+      {
+        // changeIndex(index);
+        Navigator.of(context).pushReplacementNamed(Routes.HomeRoute);
+      }
+      else
+      if(index==2)
+      {
+        //Navigator.of(context).pushReplacementNamed(Routes.);
+      }
+    }
+    ),
+    body:
+    SingleChildScrollView(
           scrollDirection: Axis.vertical,
-          child: StreamBuilder<FlowState>(
-              stream: _viewModel.outputState,
-              builder: (context, snapshot) {
-                return
-                  snapshot.data?.getScreenWidget(
-                      context, _getContentWidget(),
-                          () {
-                        _viewModel.start();
-                      }) ??
-                      _getContentWidget();
-                      //Container();
-              }),
-        ));
+      child: Column(
+
+          children: [ StreamBuilder<FlowState>(
+                stream: _viewModel.outputState,
+                builder: (context, snapshot) {
+                  return
+                    snapshot.data?.getScreenWidget(
+                        context, _getContentWidget(),
+                            () {
+                          _viewModel.start();
+                        }) ??
+                        _getContentWidget();
+                        //Container();
+                }),
+        //  )
+   ] ),
+    ))));
   }
 
   Widget _getContentWidget() {
-    return StreamBuilder<VacationViewObject>(
+     return
+
+      StreamBuilder<VacationViewObject>(
         stream: _viewModel.outputVacations,
         builder: (context, snapshot) {
-          return SingleChildScrollView(
+           return
+          SingleChildScrollView(
               scrollDirection: Axis.vertical,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -82,7 +133,7 @@ class _vacationsViewState extends State<vacationsView> {
                                   width: 150,
 
                                   child: FloatingActionButton(
-                                    child:Text("Vaction Request",style: TextStyle(color: colorManager.white),),
+                                    child:Text(AppStrings.Vacation_Request.tr(),style: TextStyle(color: colorManager.white),),
                                     backgroundColor: colorManager.primary,//child widget inside this button
                                     shape:BeveledRectangleBorder(
                                         borderRadius: BorderRadius.circular(10)),
@@ -99,18 +150,19 @@ class _vacationsViewState extends State<vacationsView> {
                         child: Column(
                           children: [
                             Container(
-
                                 child: _getVacation(snapshot.data?.vacations)),
                           ],
                         ),
                       ),
                     ],
                   ),
-                ),
-                        ],
-            ),
-          );
-        });
+              //  ),
+                    //    ],
+           // ),
+          )]));
+        }
+        //))
+    );
   }
 
   Widget _getVacation(List<Vacation>? vacations) {
@@ -129,14 +181,14 @@ class _vacationsViewState extends State<vacationsView> {
                   child:SingleChildScrollView(scrollDirection: Axis.horizontal,
                     child: DataTable(showBottomBorder: true,
                         headingRowColor: MaterialStateColor.resolveWith((states) => colorManager.primary),
-                        columns: const [
-                          DataColumn(label: Text("VacationType ",style: TextStyle(color: colorManager.white),)),
-                          DataColumn(label: Text("Current",style: TextStyle(color: colorManager.white))),
-                          DataColumn(label: Text("Transferred",style: TextStyle(color: colorManager.white))),
-                          DataColumn(label: Text("Total ",style: TextStyle(color: colorManager.white))),
-                          DataColumn(label: Text("Consumed ",style: TextStyle(color: colorManager.white))),
-                          DataColumn(label: Text(" Available ",style: TextStyle(color: colorManager.white))),
-                          DataColumn(label: Text("Pending",style: TextStyle(color: colorManager.white))),
+                        columns:  [
+                          DataColumn(label: Text(AppStrings.Vacation_Type.tr(),style: TextStyle(color: colorManager.white),)),
+                          DataColumn(label: Text(AppStrings.Current.tr(),style: TextStyle(color: colorManager.white))),
+                          DataColumn(label: Text(AppStrings.Transferred.tr(),style: TextStyle(color: colorManager.white))),
+                          DataColumn(label: Text(AppStrings.Total.tr(),style: TextStyle(color: colorManager.white))),
+                          DataColumn(label: Text(AppStrings.Consumed.tr(),style: TextStyle(color: colorManager.white))),
+                          DataColumn(label: Text(AppStrings.Available.tr(),style: TextStyle(color: colorManager.white))),
+                          DataColumn(label: Text(AppStrings.Pending.tr(),style: TextStyle(color: colorManager.white))),
                         ],
                         rows: vacations
                             .map((vacation) =>
@@ -185,12 +237,12 @@ DataTable _createVacationTable(List<Vacation> vacation) {
 }
 List<DataColumn> _createColumns() {
   return [
-      DataColumn(label: Text("Vacation Type ")),
-      DataColumn(label: Text("Current year balance")),
-      DataColumn(label: Text("Transferred balance")),
-      DataColumn(label: Text("Total balance")),
-      DataColumn(label: Text("Consumed balance")),
-      DataColumn(label: Text("Pending"))
+      DataColumn(label: Text(AppStrings.Vacation_Type.tr())),
+      DataColumn(label: Text(AppStrings.Current.tr())),
+      DataColumn(label: Text(AppStrings.Transferred.tr())),
+      DataColumn(label: Text(AppStrings.Total.tr())),
+      DataColumn(label: Text(AppStrings.Consumed.tr())),
+      DataColumn(label: Text(AppStrings.Pending.tr()))
         ];
 
 }
@@ -251,11 +303,11 @@ class NumbersWidget extends StatelessWidget {
       Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          buildButton(context, 'Available', availableDays.toString()+' days'),
+          buildButton(context, AppStrings.Available.tr(), availableDays.toString()+AppStrings.days.tr()),
           buildDivider(),
-          buildButton(context, 'All', allDays.toString()+' Days'),
+          buildButton(context, AppStrings.All.tr(), allDays.toString()+AppStrings.days.tr()),
           buildDivider(),
-          buildButton(context, 'Used', usedDays.toString()+' Days'),
+          buildButton(context, AppStrings.Used.tr(), usedDays.toString()+AppStrings.days.tr()),
         ],
       );
 

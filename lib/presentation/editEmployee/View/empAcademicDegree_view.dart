@@ -2,6 +2,7 @@
 import 'dart:convert';
 
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
 import 'package:mohr_hr/application/constants.dart';
@@ -90,7 +91,7 @@ class _AcademicDegreeViewState extends State<AcademicDegreeView> {
               builder: (context) =>
                   Scaffold(
                     //appBar: buildAppBarMain(context),
-                    backgroundColor: colorManager.white,
+                    //backgroundColor: colorManager.white,
                     body:
                     StreamBuilder<FlowState>(
                       stream: _displayViewModel.outputState,
@@ -134,7 +135,7 @@ class _AcademicDegreeViewState extends State<AcademicDegreeView> {
                               child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text("Academic Degree", textAlign: TextAlign.start,),
+                                    Text(AppStrings.Academic_Degree.tr(), textAlign: TextAlign.start,),
                                     StreamBuilder<DegreeObject>(
                                       stream: _DegreeviewModel.outputDegrees,
                                       // stream: _saveViewModel.outputErrorPassword,
@@ -153,7 +154,7 @@ class _AcademicDegreeViewState extends State<AcademicDegreeView> {
                                  child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text("Grade", textAlign: TextAlign.start,),
+                                    Text(AppStrings.Grade.tr(), textAlign: TextAlign.start,),
                                     StreamBuilder<GradesObject>(
                                       stream: _GradeviewModel.outputGrades,
                                       // stream: _saveViewModel.outputErrorPassword,
@@ -171,25 +172,25 @@ class _AcademicDegreeViewState extends State<AcademicDegreeView> {
                                 right: 28),
                                    child: Column(crossAxisAlignment: CrossAxisAlignment.start,
                                  children: [
-                                     Text("University/Faculty/Institute", textAlign: TextAlign.start,),
+                                     Text(AppStrings.University_Faculty_Institute.tr(), textAlign: TextAlign.start,),
 
                                     TextFormField(
                                         keyboardType: TextInputType.text,
                                         controller: _UniversityEditingController,
                                         ),
-                                   Text("Major", textAlign: TextAlign.start,),
+                                   Text(AppStrings.Major.tr(), textAlign: TextAlign.start,),
 
                                    TextFormField(
                                      keyboardType: TextInputType.text,
                                      controller: _MajorEditingController,
                                    ),
-                                   Text("Notes", textAlign: TextAlign.start,),
+                                   Text(AppStrings.Notes.tr(), textAlign: TextAlign.start,),
 
                                    TextFormField(
                                      keyboardType: TextInputType.text,
                                      controller: _NotesEditingController,
                                    ),
-                                   Text("Date", textAlign: TextAlign.start,),
+                                   Text(AppStrings.Date.tr(), textAlign: TextAlign.start,),
                                   // Text("Date", textAlign: TextAlign.start,),
 
                                    TextFormField(onTap: () async {
@@ -234,7 +235,7 @@ class _AcademicDegreeViewState extends State<AcademicDegreeView> {
                                 //   {
                                 //     return
                                       ElevatedButton(
-                                        child: Text("Add"),
+                                        child: Text(AppStrings.Add.tr()),
                                         onPressed: () {
                                           addingAcademicDegree();
                                          // _saveviewModel.addAcdemicDegree();
@@ -291,7 +292,7 @@ class _AcademicDegreeViewState extends State<AcademicDegreeView> {
         }).toList();
 
     return DropdownButton(
-      hint: Text("Choose Grade"),
+      hint: Text(AppStrings.Grade.tr()),
       items:  items,
       onChanged: (newvalue) {
         setState(() {
@@ -312,7 +313,7 @@ class _AcademicDegreeViewState extends State<AcademicDegreeView> {
         }).toList();
 
     return DropdownButton(
-      hint: Text("Choose Academic Degree"),
+      hint: Text(AppStrings.Choose_Academic_Degree.tr()),
       items:  items,
       onChanged: (newvalue) {
         setState(() {
@@ -348,20 +349,25 @@ class _AcademicDegreeViewState extends State<AcademicDegreeView> {
     //   value: acadmicId ,
     // );
   }
-  DataTable _createAcademicDegreeTable(List<AcademicDegreeModel> academicDegree) {
-    return DataTable(
-      headingRowColor: MaterialStateColor.resolveWith((states) => colorManager.lightprimary),
-      columns: _createColumns(),
-      rows: _createRows(academicDegree),
-    );
+  Widget _createAcademicDegreeTable(List<AcademicDegreeModel> academicDegree) {
+    if(academicDegree.isEmpty==false) {
+      return DataTable(
+        headingRowColor: MaterialStateColor.resolveWith((states) =>
+        colorManager.lightprimary),
+        columns: _createColumns(),
+        rows: _createRows(academicDegree),
+      );
+    }else {
+      return Container();
+    }
   }
   List<DataColumn> _createColumns() {
     return [
-      DataColumn(label: Text("AcademicDegree")),
-      DataColumn(label: Text("Grade")),
-      DataColumn(label: Text("Major")),
-      DataColumn(label: Text("university")),
-      DataColumn(label: Text("Date")),
+      DataColumn(label: Text(AppStrings.Academic_Degree.tr())),
+      DataColumn(label: Text(AppStrings.Grade.tr())),
+      DataColumn(label: Text(AppStrings.Major.tr())),
+      DataColumn(label: Text(AppStrings.University.tr())),
+      DataColumn(label: Text(AppStrings.Date.tr())),
 
     ];
 

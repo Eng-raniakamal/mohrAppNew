@@ -110,7 +110,7 @@ class _BasicDataViewState extends State<BasicDataView> {
               builder: (context) =>
                   Scaffold(
                     //appBar: buildAppBarMain(context),
-                    backgroundColor: colorManager.white,
+                    //backgroundColor: colorManager.white,
                     body: StreamBuilder<FlowState>(
                       stream: _displayviewModel.outputState,
                       builder: (context, snapshot) {

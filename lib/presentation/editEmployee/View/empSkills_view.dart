@@ -90,7 +90,7 @@ class _EmployeeSkillsViewState extends State<EmployeeSkillsView> {
               builder: (context) =>
                   Scaffold(
                     //appBar: buildAppBarMain(context),
-                    backgroundColor: colorManager.white,
+                   // backgroundColor: colorManager.white,
                     body: StreamBuilder<FlowState>(
                       stream: _saveviewModel.outputState,
                       builder: (context, snapshot) {
@@ -324,13 +324,17 @@ class _EmployeeSkillsViewState extends State<EmployeeSkillsView> {
     );
   }
 
-  DataTable _createSkillsTable(List<skillsModel> skills) {
-    return DataTable(
-      headingRowColor: MaterialStateColor.resolveWith((states) =>
-      colorManager.lightprimary),
-      columns: _createColumns(),
-      rows: _createRows(skills),
-    );
+  Widget _createSkillsTable(List<skillsModel> skills) {
+    if(skills.isEmpty==false) {
+      return DataTable(
+        headingRowColor: MaterialStateColor.resolveWith((states) =>
+        colorManager.lightprimary),
+        columns: _createColumns(),
+        rows: _createRows(skills),
+
+      );
+    }else
+      {return Container();}
   }
 
   List<DataColumn> _createColumns() {

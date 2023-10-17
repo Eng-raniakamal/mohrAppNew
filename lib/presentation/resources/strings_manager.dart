@@ -91,9 +91,36 @@ class AppStrings {
   static const String Add = "Add";
   static const String Skill = "Skill";
   static const String Grade_Name = "Grade_Name";
-//
+//acadmic degree
 
-      //
+  static const String Academic_Degree = "Academic_Degree";
+  static const String Choose_Academic_Degree  = "Choose_Academic_Degree";
+  static const String University_Faculty_Institute = "University/Faculty/Institute";
+  static const String Major = "Major";
+  static const String Notes = "Notes";
+  static const String University = "University";
+//vaction
+  static const String Available = "Available";
+  static const String All = "All";
+  static const String Used = "Used";
+  static const String Vacation_Type = "Vacation_Type";
+  static const String Vacation_Request = "Vacation_Request";
+  static const String Current = "Current";
+  static const String Transferred = "Transferred";
+  static const String Total = "Total";
+  static const String Consumed = "Consumed";
+  static const String Pending = "Pending";
+  //Salary
+  static const String Month = "Month";
+  static const String More_Details = "More_Details";
+
+  static const String no_salary_found="no_salary_found";
+  static const String Information="Information";
+  static const String days="days";
+  static const String Salary_Details="Salary_Details";
+
+
+  //
       //
 //slide menu
   static const String Welcome = "Welcome";

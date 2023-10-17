@@ -4,9 +4,11 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 
 
 class MyThemes {
+
   static final darkTheme = ThemeData(
-    scaffoldBackgroundColor: colorManager.grey,
-    primaryColorDark: colorManager.primary,
+    scaffoldBackgroundColor: Colors.grey.shade800,
+    primaryColorDark: Colors.black,
+      //ColorScheme.dark()
     colorScheme:  ColorScheme.dark(primary: colorManager.lightprimary),
     dividerColor: Colors.white,
     iconTheme: IconThemeData(color: colorManager.white)

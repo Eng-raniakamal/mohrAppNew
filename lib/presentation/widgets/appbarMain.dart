@@ -13,16 +13,16 @@ AppBar buildAppBarMain(BuildContext context) {
   final icon = CupertinoIcons.moon_stars;
 
   return AppBar(
-    automaticallyImplyLeading: false,
-    backgroundColor: colorManager.primary,
+  //  automaticallyImplyLeading: false,
+    backgroundColor: colorManager.lightprimary,
 
-    shape: ShapeBorder.lerp(
-      RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(0.0),
-      ),
-      null,
-      0,
-    ),
+    // shape: ShapeBorder.lerp(
+    //   RoundedRectangleBorder(
+    //     borderRadius: BorderRadius.circular(0.0),
+    //   ),
+    //   null,
+    //   0,
+    // ),
 
 //),
     elevation: 0,

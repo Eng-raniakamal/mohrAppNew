@@ -23,26 +23,29 @@ class Employee extends StatelessWidget with NavigationStates{
 
     //  var initialState;
     return Scaffold(
-      bottomNavigationBar:
-      CurvedNavigationBar(items: item,
-          index: 0,
-          buttonBackgroundColor: colorManager.lightprimary,
-          backgroundColor: Colors.transparent,
-          color: colorManager.lightprimary,
-
-          onTap: (int index) {
-        if(index==1)
-          {
-            // changeIndex(index);
-            Navigator.of(context).pushReplacementNamed(Routes.HomeRoute);
-          }
-        else
-          if(index==2)
-            {
-              //Navigator.of(context).pushReplacementNamed(Routes.);
-            }
-            }
-      ),
+      //backgroundColor: Colors.transparent,
+      // bottomNavigationBar:
+      // CurvedNavigationBar(items: item,
+      //     index: 0,
+      //
+      //     buttonBackgroundColor: colorManager.lightprimary,
+      //     backgroundColor: Colors.transparent,
+      //     color: colorManager.lightprimary,
+      //
+      //
+      //     onTap: (int index) {
+      //   if(index==1)
+      //     {
+      //       // changeIndex(index);
+      //       Navigator.of(context).pushReplacementNamed(Routes.HomeRoute);
+      //     }
+      //   else
+      //     if(index==2)
+      //       {
+      //         //Navigator.of(context).pushReplacementNamed(Routes.);
+      //       }
+      //       }
+      // ),
       body: BlocProvider<NavigationBloc>(
         create:(BuildContext context) => NavigationBloc(),
         //(context) => NavigationBloc(initialState),
@@ -50,7 +53,6 @@ class Employee extends StatelessWidget with NavigationStates{
         Stack(
           children: [
             EmployeeEditView() ,
-
             SideBar(),
          ],
         ),

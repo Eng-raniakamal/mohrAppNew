@@ -19,6 +19,7 @@ import 'package:mohr_hr/presentation/splash/splashScreen.dart';
 import 'package:mohr_hr/presentation/widgets/IconButtonWidgets.dart';
 //import 'package:mohr_hr/User/editProfileScreen.dart';
 import 'package:mohr_hr/presentation/widgets/appbarMain.dart';
+import 'package:mohr_hr/presentation/widgets/appbar_widget.dart';
 import 'package:mohr_hr/presentation/widgets/button_widget.dart';
 import 'package:mohr_hr/presentation/widgets/clipPathWidget.dart';
 import 'package:mohr_hr/presentation/widgets/profile_widget.dart';
@@ -62,41 +63,72 @@ class _userViewState extends State<userView> {
   @override
   Widget build(BuildContext context) {
     return ThemeSwitchingArea(
-        child: StreamBuilder<FlowState>(
+
+        child: Builder(
+        builder: (context) =>
+
+        Scaffold(
+            extendBodyBehindAppBar: true,
+            appBar: buildAppBar(context),
+            bottomNavigationBar:
+            CurvedNavigationBar(items: items,
+                index: 1,
+                buttonBackgroundColor: colorManager.primary,
+                backgroundColor: Colors.transparent,
+                color: colorManager.primary,
+                onTap: (int index) {
+                  if(index==1)
+                  {
+                    Navigator.of(context).pushReplacementNamed(Routes.HomeRoute);
+                  }
+                  else
+                  if(index==0)
+                  {
+                    Navigator.of(context).pushReplacementNamed(Routes.employee);
+                  }
+                }
+            ),
+            body:
+        StreamBuilder<FlowState>(
             stream: _viewModel.outputState,
             builder: (context, snapshot) {
               return
                   snapshot.data?.getScreenWidget(
                       context, _getContentWidget(),
                           () {_viewModel.start();}) ??
-                      Container();
+                      _getContentWidget();
             }
         )
-    );
+    )));
   }
   Widget _getContentWidget() {
-    return Scaffold(
-      extendBodyBehindAppBar: true,
-      appBar: buildAppBarMain(context),
-      bottomNavigationBar:
-      CurvedNavigationBar(items: items,
-        index: 1,
-        buttonBackgroundColor: colorManager.lightprimary,
-        backgroundColor: Colors.transparent,
-        color: colorManager.lightprimary,
-        onTap: (int index) {
-          if(index==1)
-          {
-            Navigator.of(context).pushReplacementNamed(Routes.HomeRoute);
-          }
-          else
-          if(index==0)
-          {
-            Navigator.of(context).pushReplacementNamed(Routes.employee);
-          }
-          }
-      ),
-      body:
+     return
+    // Scaffold(
+    //   extendBodyBehindAppBar: true,
+    //   appBar: buildAppBar(context),
+    //   bottomNavigationBar:
+    //   CurvedNavigationBar(items: items,
+    //     index: 1,
+    //     buttonBackgroundColor: colorManager.primary,
+    //     backgroundColor: Colors.transparent,
+    //     color: colorManager.primary,
+    //     onTap: (int index) {
+    //       if(index==1)
+    //       {
+    //         Navigator.of(context).pushReplacementNamed(Routes.HomeRoute);
+    //       }
+    //       else
+    //       if(index==0)
+    //       {
+    //         Navigator.of(context).pushReplacementNamed(Routes.employee);
+    //       }
+    //       }
+    //   ),
+    //   body:
+       StreamBuilder<EmployeeDataModel>(
+           stream: _viewModel.outputUserData,
+           builder: (context, snapshot) {
+             return
           Container(
             child: ListView(
                   physics:  BouncingScrollPhysics(),
@@ -179,9 +211,10 @@ class _userViewState extends State<userView> {
     ]),
     ),
     ]),
-          ),
-    );
+
+    );});
   }
+
   Widget buildUpgradeButton(String ReqName,Color bgColor) {
  if(ReqName==AppStrings.Vacation.tr())
   {

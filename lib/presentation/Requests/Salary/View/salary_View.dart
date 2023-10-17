@@ -1,6 +1,8 @@
 // ignore_for_file: camel_case_types
 
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
 import 'package:mohr_hr/application/di.dart';
@@ -9,6 +11,9 @@ import 'package:mohr_hr/presentation/Requests/Salary/View/salaryDetailsDialog.da
 import 'package:mohr_hr/presentation/common/state_renderer/state_render_impl.dart';
 import 'package:mohr_hr/presentation/resources/colors.dart';
 import 'package:mohr_hr/presentation/resources/routes.dart';
+import 'package:mohr_hr/presentation/resources/strings_manager.dart';
+import 'package:mohr_hr/presentation/widgets/appbar_widget.dart';
+import 'package:mohr_hr/presentation/widgets/appbarstart.dart';
 import 'package:mohr_hr/presentation/widgets/profile_widget.dart';
 import '../../../../application/constants.dart';
 import '../ViewModel/salaryViewModel.dart';
@@ -20,7 +25,12 @@ class salaryView extends StatefulWidget {
   @override
   State<salaryView> createState() => _salaryViewState();
 }
+final items=<Widget>
+[ const Icon(Icons.person,size: 30,),
+  const Icon(Icons.home,size: 30,),
+  const Icon(Icons.notifications,size: 30,),
 
+];
 class _salaryViewState extends State<salaryView> {
   final SalaryViewModel _viewModel = instance<SalaryViewModel>();
 
@@ -36,9 +46,47 @@ class _salaryViewState extends State<salaryView> {
 
   @override
   Widget build(BuildContext context) {
+    final item=<Widget>
+    [ const Icon(Icons.person,size: 30,color: colorManager.white,),
+      const Icon(Icons.home,size: 30,color: colorManager.white),
+      const Icon(Icons.notifications,size: 30,color: colorManager.white),
+
+    ];
     return ThemeSwitchingArea(
-        child: SingleChildScrollView(
-      child: StreamBuilder<FlowState>(
+        child: Builder(
+        builder: (context) =>
+        Scaffold(
+            appBar: buildAppBarstart(context),
+            bottomNavigationBar:
+            CurvedNavigationBar(items: item,
+                index: 0,
+
+                buttonBackgroundColor: colorManager.primary,
+                backgroundColor: Colors.transparent,
+                color: colorManager.primary,
+
+
+                onTap: (int index) {
+                  if(index==1)
+                  {
+                    // changeIndex(index);
+                    Navigator.of(context).pushReplacementNamed(Routes.HomeRoute);
+                  }
+                  else
+                  if(index==2)
+                  {
+                    //Navigator.of(context).pushReplacementNamed(Routes.);
+                  }
+                }
+            ),
+            body:
+            SingleChildScrollView(
+              scrollDirection: Axis.vertical,
+              child: Column(
+
+                  children: [
+       // child: SingleChildScrollView(
+       StreamBuilder<FlowState>(
           stream: _viewModel.outputState,
           builder: (context, snapshot) {
             return snapshot.data?.getScreenWidget(context, _getContentWidget(),
@@ -48,34 +96,39 @@ class _salaryViewState extends State<salaryView> {
                 _getContentWidget();
             //Container();
           }),
-    ));
+                  ] ),
+            ))));
   }
 
   Widget _getContentWidget() {
-    return StreamBuilder<SalaryViewObject>(
+    return
+      StreamBuilder<SalaryViewObject>(
         stream: _viewModel.outputSalarys,
         builder: (context, snapshot) {
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height,
-                child: Column(
-                  children: [
-                    const Padding(padding: EdgeInsets.only(top: 50)),
-                    Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                      Column(
-                        children: [
-                          _getImageWidget(),
-                        ],
-                      ),
-                    ]),
-                    Container(child: _getSalary(snapshot.data?.salary)),
-                  ],
+          return SingleChildScrollView(
+            scrollDirection: Axis.vertical,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.height,
+                  child: Column(
+                    children: [
+                      const Padding(padding: EdgeInsets.only(top: 50)),
+                      Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                        Column(
+                          children: [
+                            _getImageWidget(),
+                          ],
+                        ),
+                      ]),
+                      Container(child: _getSalary(snapshot.data?.salary)),
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           );
         });
   }
@@ -96,14 +149,14 @@ class _salaryViewState extends State<salaryView> {
                     child: DataTable(
                         headingRowColor: MaterialStateColor.resolveWith(
                             (states) => colorManager.primary),
-                        columns: const [
+                        columns:  [
                           DataColumn(
                               label: Text(
-                            "Month ",
+                            AppStrings.Month.tr(),
                             style: TextStyle(color: colorManager.white),
                           )),
                           DataColumn(
-                              label: Text("Salary",
+                              label: Text(AppStrings.Salary.tr(),
                                   style: TextStyle(color: colorManager.white))),
                           DataColumn(
                               label: Text("",
@@ -139,8 +192,8 @@ class _salaryViewState extends State<salaryView> {
                                       //else
                                       //   {displayDialoge();}
                                     },
-                                    child: const Text(
-                                      "More Details",
+                                    child:  Text(
+                                      AppStrings.More_Details.tr(),
                                       style: TextStyle(
                                           decoration: TextDecoration.underline,
                                           color: Colors.blue),
@@ -170,8 +223,8 @@ class _salaryViewState extends State<salaryView> {
       barrierDismissible: true,
       builder: (BuildContext context) {
         return ClassicGeneralDialogWidget(
-          titleText: 'Information',
-          contentText: 'no salary found ',
+          titleText: AppStrings.Information.tr(),
+          contentText: AppStrings.no_salary_found.tr(),
           onPositiveClick: () {
             Navigator.of(context).pop();
           },
