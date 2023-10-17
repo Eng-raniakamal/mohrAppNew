@@ -95,7 +95,9 @@ class _userViewState extends State<userView> {
               return
                   snapshot.data?.getScreenWidget(
                       context, _getContentWidget(),
-                          () {_viewModel.start();}) ??
+                          () {_viewModel.start();},
+                          () {
+                      }) ??
                       _getContentWidget();
             }
         )

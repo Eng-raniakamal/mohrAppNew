@@ -95,6 +95,8 @@ class _vacationsViewState extends State<vacationsView> {
                         context, _getContentWidget(),
                             () {
                           _viewModel.start();
+                        },
+                            () {
                         }) ??
                         _getContentWidget();
                         //Container();

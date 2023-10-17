@@ -23,10 +23,12 @@ class StateRenderer extends StatelessWidget {
   String message;
   String title;
   Function? retryActionFunction;
+  Function onPopupClick;
 
   StateRenderer(
       {Key? key,
       required this.stateRendererType,
+      required this.onPopupClick,
       String? message,
       String? title,
       required this.retryActionFunction})
@@ -36,10 +38,10 @@ class StateRenderer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return _getStateWidget(context);
+    return _getStateWidget(context, this.onPopupClick);
   }
 
-  Widget _getStateWidget(BuildContext context) {
+  Widget _getStateWidget(BuildContext context, Function onPopupClick) {
     switch (stateRendererType) {
       case StateRendererType.POPUP_LOADING_STATE:
         return _getPopUpDialog(
@@ -48,14 +50,14 @@ class StateRenderer extends StatelessWidget {
         return _getPopUpDialog(context, [
           _getAnimatedImage(JsonAssets.error),
           _getMessage(message),
-          _getRetryButton(AppStrings.ok.tr(), context)
+          _getRetryButton(AppStrings.ok.tr(), context, onPopupClick)
         ]);
       case StateRendererType.POPUP_SUCCESS:
         return _getPopUpDialog(context, [
           _getAnimatedImage(JsonAssets.success),
           _getMessage(title),
           _getMessage(message),
-          _getRetryButton(AppStrings.ok.tr(), context)
+          _getRetryButton(AppStrings.ok.tr(), context, onPopupClick)
         ]);
       case StateRendererType.FULL_SCREEN_LOADING_STATE:
         return _getItemsInColumn(
@@ -64,7 +66,7 @@ class StateRenderer extends StatelessWidget {
         return _getItemsInColumn([
           _getAnimatedImage(JsonAssets.error),
           _getMessage(message),
-          _getRetryButton(AppStrings.retry_again.tr(), context)
+          _getRetryButton(AppStrings.retry_again.tr(), context, onPopupClick)
         ]);
       case StateRendererType.CONTENT_SCREEN_STATE:
         return Container();
@@ -128,7 +130,7 @@ class StateRenderer extends StatelessWidget {
     );
   }
 
-  Widget _getRetryButton(String buttonTitle, BuildContext context) {
+  Widget _getRetryButton(String buttonTitle, BuildContext context, Function onClick) {
     return Center(
       child: Padding(
         padding: const EdgeInsets.all(18),
@@ -143,6 +145,7 @@ class StateRenderer extends StatelessWidget {
                 } else {
                   Navigator.of(context)
                       .pop(); // popup state error so we need to dismiss the dialog
+                  onClick();
                 }
               },
               child: Text(buttonTitle)),

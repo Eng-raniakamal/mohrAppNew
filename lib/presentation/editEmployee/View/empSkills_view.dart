@@ -98,6 +98,8 @@ class _EmployeeSkillsViewState extends State<EmployeeSkillsView> {
                             context, _getContentWidget(),
                                 () {
                               _saveviewModel.addSkills();
+                            },
+                                () {
                             }) ??
                             _getContentWidget();
                       },

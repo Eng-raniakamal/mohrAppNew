@@ -99,6 +99,8 @@ class _AcademicDegreeViewState extends State<AcademicDegreeView> {
                         return snapshot.data?.getScreenWidget(context, _getContentWidget(),
                                 () {
                              // _saveviewModel.addAcdemicDegree();
+                            },
+                                () {
                             }) ??
                             _getContentWidget();
                       },

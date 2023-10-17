@@ -47,10 +47,14 @@ class _salaryDetailsViewState extends State<salaryDetailsView> {
               builder: (context, snapshot) {
                 return
                   snapshot.data?.getScreenWidget(
-                      context, _getContentWidget(),
-                          () {
+                      context,
+                      _getContentWidget(),
+                      () {
                         _viewModel.start();
-                      }) ??
+                      },
+                      () {
+                      }
+                  ) ??
                       _getContentWidget();
                 //Container();
               }),

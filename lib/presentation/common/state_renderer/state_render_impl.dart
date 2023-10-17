@@ -83,14 +83,14 @@ class SuccessState extends FlowState {
 
 extension FlowStateExtension on FlowState {
   Widget getScreenWidget(BuildContext context, Widget contentScreenWidget,
-      Function retryActionFunction) {
+      Function retryActionFunction, Function onPopupClick) {
     switch (runtimeType) {
       case LoadingState:
         {
           dismissDialog(context);
           if (getStateRendererType() == StateRendererType.POPUP_LOADING_STATE) {
             // showing popup dialog
-            showPopUp(context, getStateRendererType(), getMessage());
+            showPopUp(context, getStateRendererType(), getMessage(), onPopupClick);
             // return the content ui of the screen
             return contentScreenWidget;
           } else // StateRendererType.FULL_SCREEN_LOADING_STATE
@@ -98,7 +98,9 @@ extension FlowStateExtension on FlowState {
             return StateRenderer(
                 stateRendererType: getStateRendererType(),
                 message: getMessage(),
-                retryActionFunction: retryActionFunction);
+                retryActionFunction: retryActionFunction,
+                onPopupClick:onPopupClick,
+            );
           }
         }
       case ErrorState:
@@ -106,7 +108,7 @@ extension FlowStateExtension on FlowState {
           dismissDialog(context);
           if (getStateRendererType() == StateRendererType.POPUP_ERROR_STATE) {
             // showing popup dialog
-            showPopUp(context, getStateRendererType(), getMessage());
+            showPopUp(context, getStateRendererType(), getMessage() , onPopupClick);
             // return the content ui of the screen
             return contentScreenWidget;
           } else // StateRendererType.FULL_SCREEN_ERROR_STATE
@@ -114,7 +116,8 @@ extension FlowStateExtension on FlowState {
             return StateRenderer(
                 stateRendererType: getStateRendererType(),
                 message: getMessage(),
-                retryActionFunction: retryActionFunction);
+                retryActionFunction: retryActionFunction,
+                onPopupClick:onPopupClick,);
           }
         }
       case ContentState:
@@ -127,7 +130,8 @@ extension FlowStateExtension on FlowState {
           return StateRenderer(
               stateRendererType: getStateRendererType(),
               message: getMessage(),
-              retryActionFunction: retryActionFunction);
+              retryActionFunction: retryActionFunction,
+            onPopupClick:onPopupClick,);
         }
       case SuccessState:
         {
@@ -135,7 +139,7 @@ extension FlowStateExtension on FlowState {
           dismissDialog(context);
 
           // show popup
-          showPopUp(context, StateRendererType.POPUP_SUCCESS, getMessage(),
+          showPopUp(context, StateRendererType.POPUP_SUCCESS, getMessage(), onPopupClick,
               title: AppStrings.success.tr());
           // return content ui of the screen
           return contentScreenWidget;
@@ -160,7 +164,7 @@ extension FlowStateExtension on FlowState {
     }
   }
   showPopUp(BuildContext context, StateRendererType stateRendererType,
-      String message,{String title = EMPTY}) {
+      String message, Function onPopupClick,{String title = EMPTY}) {
     WidgetsBinding.instance.addPostFrameCallback((_) => showDialog(
         context: context,
         builder: (BuildContext context) => StateRenderer(
@@ -168,6 +172,7 @@ extension FlowStateExtension on FlowState {
               message: message,
               title: title,
               retryActionFunction: () {},
+          onPopupClick: onPopupClick,
             )));
   }
 }

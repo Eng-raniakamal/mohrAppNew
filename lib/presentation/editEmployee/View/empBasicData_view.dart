@@ -118,6 +118,8 @@ class _BasicDataViewState extends State<BasicDataView> {
                             context, _getContentWidget(),
                                 () {
                               _displayviewModel.start();
+                            },
+                                () {
                             }) ?? _getContentWidget();
                       },
                     ),

@@ -92,6 +92,8 @@ class _salaryViewState extends State<salaryView> {
             return snapshot.data?.getScreenWidget(context, _getContentWidget(),
                     () {
                   _viewModel.start();
+                },
+                    () {
                 }) ??
                 _getContentWidget();
             //Container();
