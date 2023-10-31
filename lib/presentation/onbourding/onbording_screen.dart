@@ -33,6 +33,14 @@ class _OnboadingScreenState extends State<OnboadingScreen> {
 
   }
 
+
+  @override
+  void didChangeDependencies() {
+    // _navigator = Navigator.of(context);
+    _appPreferences.getLocal().then((local) => {context.setLocale(local)});
+    super.didChangeDependencies();
+  }
+
   @override
   void initState() {
     _bind();
@@ -167,8 +175,10 @@ class _OnboadingScreenState extends State<OnboadingScreen> {
     );
   }
 
-  void changeLanguage() {
-    _appPreferences.setLanguageChanged();
-    Phoenix.rebirth(context);
+  void changeLanguage() async{
+
+    await _appPreferences.setLanguageChanged();
+    Navigator.of(context).pushReplacementNamed(Routes.onboardingRoute);
+    //Phoenix.rebirth(context);
   }
 }

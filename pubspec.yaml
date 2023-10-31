@@ -69,11 +69,13 @@ dependencies:
   flutter_phoenix: ^1.1.0
   path_provider: ^2.1.1
   path: ^1.8.3
-
+  provider: ^6.0.5
   rive: ^0.11.17
   flutter_svg: ^2.0.7
   data_table_2: ^2.2.1
   toggle_switch: ^2.1.0
+  syncfusion_flutter_datepicker: ^23.1.41
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -130,7 +132,6 @@ flutter:
     - assets/icons/attendance.png
     - assets/icons/vacation.png
     - assets/icons/requests.png
-
     - assets/images/change_lang_ic.svg
     - assets/images/contact_us_ic.svg
     - assets/images/logout_ic.svg

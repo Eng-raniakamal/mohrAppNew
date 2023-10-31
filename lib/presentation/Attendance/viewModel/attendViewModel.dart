@@ -23,7 +23,7 @@ class AttendanceViewModel extends BaseViewModel with
   final StreamController _toStreamController= StreamController<String>.broadcast();
 
   //from rxdart
-  final _AttendanceStreamController = BehaviorSubject<Attendance>();
+  final _AttendanceStreamController = BehaviorSubject<AttendanceViewObject>();
 
   final AppPreferences _appPreferences = instance <AppPreferences>();
 
@@ -102,7 +102,7 @@ class AttendanceViewModel extends BaseViewModel with
   Sink get inputattendance => _AttendanceStreamController.sink;
 
   @override
-  Stream<Attendance> get outputattendances =>
+  Stream<AttendanceViewObject> get outputattendances =>
       _AttendanceStreamController.stream.
       map((attendance) => attendance);
 
@@ -121,7 +121,7 @@ abstract class AttendanceViewModelInputs{
 }
 
 abstract class AttendanceViewModelOutputs{
-  Stream<Attendance> get outputattendances;
+  Stream<AttendanceViewObject> get outputattendances;
 }
 
 class  AttendanceViewObject {

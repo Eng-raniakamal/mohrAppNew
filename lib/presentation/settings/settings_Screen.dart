@@ -11,6 +11,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:mohr_hr/presentation/resources/routes.dart';
+
 
 import 'dart:math' as math;
 
@@ -28,93 +30,117 @@ class _SettingsPageState extends State<SettingsPage> {
   LocalDataSource _localDataSource = instance<LocalDataSource>();
 
   @override
+  void  initState()
+  {
+    // _appPreferences.setLanguageChanged();
+    // context.setLocale(ENGLISH_LOCAL);
+    super.initState();
+
+  }
+  @override
+  void didChangeDependencies() {
+    // _navigator = Navigator.of(context);
+    _appPreferences.getLocal().then((local) => {context.setLocale(local)});
+    super.didChangeDependencies();
+  }
+
+  @override
   Widget build(BuildContext context) {
-   return ThemeSwitchingArea(
+   return  Localizations.override(
+       context: context,
+       locale:  context.locale,
+       delegates: context.localizationDelegates,
+    child:
+     ThemeSwitchingArea(
         child: Builder(
         builder: (context) =>
         Scaffold(
           appBar: buildAppBar(context),
           body:
-        ListView(
+                ListView(
           padding: const EdgeInsets.all(AppPadding.p8),
           children: [
             SizedBox(height: 20,),
             ListTile(
 
-              title: Text(
-                AppStrings.changeLanguage,
-                  style: TextStyle(fontSize: 20)
-               // style: Theme.of(context).textTheme.headline2,
-              ).tr(),
-              leading: SvgPicture.asset(ImageAssets.changeLangIc),
-               trailing:
-               Transform(
-                alignment: Alignment.center,
-                transform: Matrix4.rotationY(isRtl() ? math.pi : 0),
-               child:
-                SvgPicture.asset(ImageAssets.settingsRightArrowIc),
-             ),
-              onTap: () {
-                changeLanguage();
-              },
-            ),
+                  title: Text(
+                    AppStrings.changeLanguage.tr(),
+                      style: TextStyle(fontSize: 20)
+                   // style: Theme.of(context).textTheme.headline2,
+                  ).tr(),
+                  leading: SvgPicture.asset(ImageAssets.changeLangIc),
+                   trailing:
+                   Transform(
+                    alignment: Alignment.center,
+                    transform: Matrix4.rotationY(isRtl() ? math.pi : 0),
+                   child:
+                    SvgPicture.asset(ImageAssets.settingsRightArrowIc),
+                 ),
+                  onTap: () {
+                    changeLanguage();
+                  },
+                ),
             ListTile(
-              title: Text(
-                  AppStrings.contact_us.tr(), style: TextStyle(fontSize: 18)
-               // style: Theme.of(context).textTheme.headline2,
-              ).tr(),
-              leading: SvgPicture.asset(ImageAssets.contactUsIc),
-              trailing:
-              Transform(
-                alignment: Alignment.center,
-                transform: Matrix4.rotationY(isRtl() ? math.pi : 0),
-                child:
-               SvgPicture.asset(ImageAssets.settingsRightArrowIc),
-               ),
-              onTap: () {
-                _contactUs();
-              },
-            ),
-
+                  title: Text(
+                      AppStrings.contact_us.tr(), style: const TextStyle(fontSize: 18)
+                   // style: Theme.of(context).textTheme.headline2,
+                  ).tr(),
+                  leading: SvgPicture.asset(ImageAssets.contactUsIc),
+                  trailing:
+                  Transform(
+                    alignment: Alignment.center,
+                    transform: Matrix4.rotationY(isRtl() ? math.pi : 0),
+                    child:
+                   SvgPicture.asset(ImageAssets.settingsRightArrowIc),
+                   ),
+                  onTap: () {
+                    _contactUs();
+                  },
+                ),
             ListTile(
-              title: Text(
-                AppStrings.logout.tr(),
-                style: TextStyle(fontSize: 18),
-              ).tr(),
-              leading: SvgPicture.asset(ImageAssets.logoutIc),
-              trailing:
-              Transform(
-                alignment: Alignment.center,
-                transform: Matrix4.rotationY(isRtl() ? math.pi : 0),
-                child:
-                SvgPicture.asset(ImageAssets.settingsRightArrowIc),
-             ),
-              onTap: () {
-                _logout();
-              },
-            )
-          ],
-        ),
-        )
-        ),
+                  title: Text(
+                    AppStrings.logout.tr(),
+                    style: TextStyle(fontSize: 18),
+                  ).tr(),
+                  leading: SvgPicture.asset(ImageAssets.logoutIc),
+                  trailing:
+                  Transform(
+                    alignment: Alignment.center,
+                    transform: Matrix4.rotationY(isRtl() ? math.pi : 0),
+                    child:
+                    SvgPicture.asset(ImageAssets.settingsRightArrowIc),
+                 ),
+                  onTap: () {
+                    _logout();
+                  },
+                )
 
-    );
+
+           ] ),
+
+        ))
+
+    ));
 
   }
 
   bool isRtl() {
    // return true;
-    return context.locale == ARABIC_LOCAL; // app is in arabic language
+    return context.locale == ARABIC_LOCAL;
+    // app is in arabic language
   }
 
-  void changeLanguage() {
+  void changeLanguage()
+   async {
+     await _appPreferences.setLanguageChanged();
 
-    _appPreferences.setLanguageChanged();
-    Phoenix.rebirth(this.context);
-    //Navigator.of(context).pushReplacementNamed(Routes.settings) ;
+       Navigator.of(context).pushReplacementNamed(Routes.settings);
+    }
+
+      //Phoenix.rebirth(context);;
 
     // restart to apply language changes
-  }
+
 
   void _contactUs() {
 
@@ -127,4 +153,4 @@ class _SettingsPageState extends State<SettingsPage> {
     _localDataSource.clearCache();
     Navigator.pushReplacementNamed(context, Routes.loginRoute);
   }
-}
+ }

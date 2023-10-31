@@ -1,12 +1,14 @@
 // ignore_for_file: camel_case_types
 
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
 import 'package:mohr_hr/application/di.dart';
 import 'package:mohr_hr/domain/model/model.dart';
 import 'package:mohr_hr/presentation/common/state_renderer/state_render_impl.dart';
 import 'package:mohr_hr/presentation/resources/colors.dart';
+import 'package:mohr_hr/presentation/resources/strings_manager.dart';
 import 'package:mohr_hr/presentation/widgets/profile_widget.dart';
 import '../../../../application/constants.dart';
 import '../ViewModel/salaryDetailsViewModel.dart';
@@ -153,7 +155,7 @@ class _salaryDetailsViewState extends State<salaryDetailsView> {
               DataTable(
                 headingRowColor: MaterialStateColor.resolveWith((states) => colorManager.primary),
                 columns: [
-                  DataColumn(label: Text("Benefits")),
+                  DataColumn(label: Text(AppStrings.Benefits.tr())),
                   DataColumn(label: Text(""))],
 
                 rows: benifit
@@ -184,7 +186,7 @@ class _salaryDetailsViewState extends State<salaryDetailsView> {
             children: [
               DataTable( headingRowColor: MaterialStateColor.resolveWith((states) => colorManager.primary),
                 columns: [
-                  DataColumn(label: Text("Deducted")),
+                  DataColumn(label: Text(AppStrings.Deducted.tr())),
                   DataColumn(label: Text(""))],
 
                 rows: deducted
@@ -208,9 +210,9 @@ class _salaryDetailsViewState extends State<salaryDetailsView> {
     if (totaldeducated != null) {
       String total = totaldeducated.toString();
       return
-        Text("Total of Deductions : " + total,style: TextStyle(fontWeight: FontWeight.bold,fontSize: 17));
+        Text((AppStrings.Total_of_Benefit.tr())+" : " + total,style: TextStyle(fontWeight: FontWeight.bold,fontSize: 17));
     } else {
-      return Text("Total of Deductions : 0.0",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 17));
+      return Text((AppStrings.Total_of_Benefit.tr())+" : 0.0",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 17));
     }
   }
 
@@ -218,9 +220,9 @@ class _salaryDetailsViewState extends State<salaryDetailsView> {
     if (totalBenefit != null) {
       String total = totalBenefit.toString();
       return
-        Text("Total of Benefit : " + total,style: TextStyle(fontWeight: FontWeight.bold,fontSize: 17));
+        Text((AppStrings.Total_of_Benefit.tr())+" : "  + total,style: TextStyle(fontWeight: FontWeight.bold,fontSize: 17));
     } else {
-      return Text("Total of Benefit : 0.0",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 17));
+      return Text((AppStrings.Total_of_Benefit.tr())+" : 0.0",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 17));
     }
   }
 
@@ -228,9 +230,9 @@ class _salaryDetailsViewState extends State<salaryDetailsView> {
     if (total != null) {
       String netSalary = total.toString();
       return
-        Text("Net Salary : " + netSalary,style: TextStyle(fontWeight: FontWeight.bold,fontSize: 17));
+        Text((AppStrings.Net_Salary.tr())+" : "  + netSalary,style: TextStyle(fontWeight: FontWeight.bold,fontSize: 17));
     } else {
-      return Text("Net Salary: 0.0",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 17));
+      return Text((AppStrings.Net_Salary.tr())+" : 0.0",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 17));
     }
   }
 

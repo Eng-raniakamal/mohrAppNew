@@ -72,14 +72,12 @@ class LoginViewModel extends BaseViewModel
         {
           //print(failure.message),
           // left -> failure
+
            inputState.add(ErrorState(
               StateRendererType.POPUP_ERROR_STATE, failure.message)),
-
-
         },
             (data) {
           // right -> success (data)
-
           inputState.add(ContentState());
           // navigate to profile(HOME)  screen after the login
           isUserLoggedInSuccessfullyStreamController.add(true);

@@ -19,6 +19,7 @@ enum DataSource {
   SEND_TIMEOUT,
   CACHE_ERROR,
   NO_INTERNET_CONNECTION,
+  Invalid_UserName_Or_Password,
   DEFAULT
 }
 
@@ -50,7 +51,13 @@ class ErrorHandler implements Exception {
           case ResponseCode.FORBIDDEN:
             return DataSource.FORBIDDEN.getFailure();
           case ResponseCode.UNAUTHORISED:
+            if(error.response?.data["errorMessageCode"] == "InvalidUserNameOrPassword")
+            {
+              return DataSource.Invalid_UserName_Or_Password.getFailure();
+            }
             return DataSource.UNAUTHORISED.getFailure();
+          // case ResponseCode.UNAUTHORISED:
+          //   return DataSource.Invalid_UserName_Or_Password.getFailure();
           case ResponseCode.NOT_FOUND:
             return DataSource.NOT_FOUND.getFailure();
           case ResponseCode.INTERNAL_SERVER_ERROR:
@@ -68,6 +75,8 @@ class ErrorHandler implements Exception {
       case DioExceptionType.connectionError:
         return DataSource.CONNECT_TIMEOUT.getFailure();
         break;
+      case DioExceptionType.badResponse:
+        return DataSource.CONNECT_TIMEOUT.getFailure();
     }
 
   }
@@ -102,6 +111,11 @@ extension DataSourceExtension on DataSource {
       case DataSource.NO_INTERNET_CONNECTION:
         return Failure(ResponseCode.NO_INTERNET_CONNECTION,
             ResponseMessage.NO_INTERNET_CONNECTION.tr());
+
+      case DataSource.Invalid_UserName_Or_Password:
+        return Failure(ResponseCode.UNAUTHORISED,
+            ResponseMessage.InvalidUserNameOrPassword.tr());
+
       case DataSource.DEFAULT:
         return Failure(ResponseCode.DEFAULT, ResponseMessage.DEFAULT);
       default:
@@ -141,7 +155,10 @@ class ResponseMessage {
   static const String FORBIDDEN =
       AppStrings.forbiddenError; // failure,  api rejected our request
   static const String UNAUTHORISED =
-      AppStrings.unauthorizedError; // failure, user is not authorised
+      AppStrings.unauthorizedError;// failure, user is not authorised
+
+  static const String InvalidUserNameOrPassword =
+      AppStrings.Invalid_UserName_Or_Password;
   static const String NOT_FOUND = AppStrings
       .notFoundError; // failure, API url is not correct and not found in api side.
   static const String INTERNAL_SERVER_ERROR =

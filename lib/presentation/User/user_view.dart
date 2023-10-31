@@ -16,6 +16,7 @@ import 'package:mohr_hr/presentation/resources/colors.dart';
 import 'package:mohr_hr/presentation/resources/strings_manager.dart';
 import 'package:mohr_hr/presentation/settings/settings_Screen.dart';
 import 'package:mohr_hr/presentation/splash/splashScreen.dart';
+import 'package:mohr_hr/presentation/underConstraction.dart';
 import 'package:mohr_hr/presentation/widgets/IconButtonWidgets.dart';
 //import 'package:mohr_hr/User/editProfileScreen.dart';
 import 'package:mohr_hr/presentation/widgets/appbarMain.dart';
@@ -63,10 +64,8 @@ class _userViewState extends State<userView> {
   @override
   Widget build(BuildContext context) {
     return ThemeSwitchingArea(
-
         child: Builder(
         builder: (context) =>
-
         Scaffold(
             extendBodyBehindAppBar: true,
             appBar: buildAppBar(context),
@@ -216,7 +215,6 @@ class _userViewState extends State<userView> {
 
     );});
   }
-
   Widget buildUpgradeButton(String ReqName,Color bgColor) {
  if(ReqName==AppStrings.Vacation.tr())
   {
@@ -261,34 +259,14 @@ if(ReqName==AppStrings.Salary.tr())
           )
       )
   );}
- if(ReqName==AppStrings.Salary.tr())
-  {return Hero(
-      tag: ReqName,
-      transitionOnUserGestures: true,
-      child: InkWell(
-          onTap: () {
 
-          },
-          child: Column(mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children:[
-              SizedBox(width: 70,height: 70,
-                child: Image(image: AssetImage(ImageAssets.attendance),
-                  fit: BoxFit.contain,
-                ),
-              ),
-              SizedBox(width: 90,height: 70,child: Text(AppStrings.Attendance.tr()))
-            ],
-          )
-      )
-  );}
  if(ReqName==AppStrings.Attendance.tr())
   {  return Hero(
       tag: ReqName,
       transitionOnUserGestures: true,
       child: InkWell(
           onTap: () {
-
+            Navigator.of(context).pushReplacementNamed(Routes.attendance);
           },
           child: Column(mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -309,6 +287,8 @@ if(ReqName==AppStrings.Requests.tr())
       transitionOnUserGestures: true,
       child: InkWell(
           onTap: () {
+            // MaterialPageRoute(builder: (_)=> UnderConstructionScreen());
+            // Navigator.of(context).pushNamed(UnderConstructionScreen() as String);
           },
           child: Column(
             children: [

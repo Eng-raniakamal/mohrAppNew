@@ -5,6 +5,7 @@
     static const String EmployeeUrl='$baseUrl/api/Employee';
     static const String getImageUrl='$baseUrl/api/Employee/Avatar';
     static const String postImageUrl='$baseUrl/api/Employee/Photo';
+    static const String attendanceUrl='$baseUrl/api/Attendance?fromDate=';
     static const String SaveEmployeeBasicDataUrl='$baseUrl/api/Employee/PersonellData';
     static const String DisplayEmployeeBasicData='$baseUrl/api/Employee/GetPersonellData';
     static const String SaveEmpSkillsUrl='$baseUrl/api/Skills';

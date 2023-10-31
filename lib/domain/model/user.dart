@@ -4,7 +4,7 @@ class User {
   final String email;
   final String code;
   final String about;
-  final bool isDarkMode;
+  final bool? isDarkMode;
 
   const User({
     required this.imagePath,

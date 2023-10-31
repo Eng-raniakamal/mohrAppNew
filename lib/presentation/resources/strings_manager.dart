@@ -4,6 +4,7 @@ class AppStrings {
   static const String email = "Email";
   static const String emailError = "invalid_email";
   static const String passwordError = "invalid_password";
+  static const String Invalid_UserName_Or_Password="Invalid_UserName_Or_Password";
   static const String password = "Password";
   static const String login = "Login";
   static const String date = "Date";
@@ -70,6 +71,9 @@ class AppStrings {
   static const String Phone = "Phone";
   static const String EmergencyNumber = "EmergencyNumber";
   static const String Country= "Country";
+  static const String Choose_Country= "Choose_Country";
+  static const String Choose_Governorate="Choose_Governorate";
+  static const String Choose_District="Choose_District";
   static const String Governorate = "Governorate";
   static const String District = "District";
   static const String Address = "Address";
@@ -113,14 +117,29 @@ class AppStrings {
   //Salary
   static const String Month = "Month";
   static const String More_Details = "More_Details";
-
   static const String no_salary_found="no_salary_found";
   static const String Information="Information";
   static const String days="days";
   static const String Salary_Details="Salary_Details";
+  static const String Benefits = "Benefits";
+  static const String Deducted = "Deducted";
+  static const String Total_of_Deductions = "Total of Deductions";
+  static const String Total_of_Benefit = "Total of Benefit";
+  static const String Net_Salary = "Net Salary";
+  static const String Was_Saved_Successfully = "Was Saved Successfully";
+  static const String saveing_Failed="saveing_Failed";
+  //Attendance
+  static const String attendance_Alerts="Attendance Alerts";
+  static const String attendance_Activity="Attendance Activity";
+  static const String Working_hours="Working_hours";
+  static const String from="From";
+  static const String to="To";
+  static const String time="Time";
+  static const String type="Type";
+  static const String Action="Action";
+  static const String Action_Type="Action_Type";
 
 
-  //
       //
 //slide menu
   static const String Welcome = "Welcome";

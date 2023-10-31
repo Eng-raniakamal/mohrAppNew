@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mohr_hr/application/constants.dart';
+import 'package:mohr_hr/presentation/widgets/profile_widget.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:mohr_hr/presentation/resources/strings_manager.dart';
 import 'package:mohr_hr/presentation/resources/colors.dart';
@@ -13,6 +15,15 @@ import 'package:mohr_hr/presentation/resources/language_manager.dart';
 import 'dart:math' as math;
 import '../../../application/di.dart';
 import '../../resources/routes.dart';
+
+
+import 'package:flutter/material.dart';
+import 'package:mohr_hr/application/app_prefs.dart';
+import 'package:mohr_hr/application/di.dart';
+import 'package:mohr_hr/data/data_source/local_data_source.dart';
+
+
+
 class SideBar extends StatefulWidget {
   @override
   _SideBarState createState() => _SideBarState();
@@ -25,6 +36,9 @@ class _SideBarState extends State<SideBar> with SingleTickerProviderStateMixin<S
   late StreamSink<bool> isSidebarOpenedSink;
   final _animationDuration = const Duration(milliseconds: 500);
 
+  AppPreferences _appPreferences = instance<AppPreferences>();
+  LocalDataSource _localDataSource = instance<LocalDataSource>();
+
   @override
   void initState() {
     super.initState();
@@ -32,6 +46,13 @@ class _SideBarState extends State<SideBar> with SingleTickerProviderStateMixin<S
     isSidebarOpenedStreamController = PublishSubject<bool>();
     isSidebarOpenedStream = isSidebarOpenedStreamController.stream;
     isSidebarOpenedSink = isSidebarOpenedStreamController.sink;
+  }
+
+  @override
+  void didChangeDependencies() {
+    // _navigator = Navigator.of(context);
+    _appPreferences.getLocal().then((local) => {context.setLocale(local)});
+    super.didChangeDependencies();
   }
 
   @override
@@ -54,15 +75,7 @@ class _SideBarState extends State<SideBar> with SingleTickerProviderStateMixin<S
       isSidebarOpenedSink.add(true);
       _animationController.forward();
     }
-  // }
-  // else{
-  //   if (!isAnimationCompleted) {
-  //   isSidebarOpenedSink.add(false);
-  //   _animationController.reverse();
-  //   } else {
-  //   isSidebarOpenedSink.add(true);
-  //   _animationController.forward();
-  //   }}
+
   }
   bool isRtl() {
     // return true;
@@ -122,12 +135,15 @@ class _SideBarState extends State<SideBar> with SingleTickerProviderStateMixin<S
                                 fontSize: 20,
                               ),
                             ),
-                            leading: CircleAvatar(
-                              child: Icon(
-                                Icons.perm_identity,
-                                color: Colors.white,
-                              ),
-                              radius: 40,
+                            // leading: CircleAvatar(
+                            //   radius: 60,
+                            //   child:Image.network(Constants.imagePath),
+                             leading: ClipOval(
+                                 child: SizedBox.fromSize(
+                                   size: Size.fromRadius(30),
+                                 child: Image.network(Constants.imagePath, fit: BoxFit.cover),
+
+                                   ),
                             ),
                           ),
                           Divider(
@@ -143,7 +159,7 @@ class _SideBarState extends State<SideBar> with SingleTickerProviderStateMixin<S
                             onTap: () {
                               onIconPressed();
                               Navigator.of(context).pushReplacementNamed(Routes.HomeRoute);
-                              //BlocProvider.of<NavigationBloc>(context).add(NavigationEvents.HomePageClickedEvent);
+                             // BlocProvider.of<NavigationBloc>(context).add(NavigationEvents.HomePageClickedEvent);
                             },
                           ),
                           MenuItems(
@@ -161,6 +177,32 @@ class _SideBarState extends State<SideBar> with SingleTickerProviderStateMixin<S
                               onIconPressed();
                               Navigator.of(context).pushReplacementNamed(Routes.settings);
                               },
+                          ),
+                          //change language
+                          // MenuItems(
+                          //   icon: Icons.language,
+                          //   title: AppStrings.changeLanguage.tr(),
+                          //   onTap: () async {
+                          //
+                          //     onIconPressed();
+                          //
+                          //     await _appPreferences.setLanguageChanged();
+                          //      // Navigator.pop(context);
+                          //     //Navigator.of(context).pushReplacementNamed(Routes.HomeRoute);
+                          //     BlocProvider.of<NavigationBloc>(context).add(NavigationEvents.MyProfileClickedEvent);
+                          //     }
+                          //
+                          // ),
+                          //logout
+                          MenuItems(
+                            icon: Icons.logout,
+                            title: AppStrings.logout.tr(),
+                            onTap: () {
+                              onIconPressed();
+                              _appPreferences.logout(); // clear login flag from app prefs
+                              _localDataSource.clearCache();
+                              Navigator.pushReplacementNamed(context, Routes.loginRoute);
+                            },
                           ),
                         ],
                       ),
@@ -203,6 +245,20 @@ class _SideBarState extends State<SideBar> with SingleTickerProviderStateMixin<S
       ),
     );
   }
+  Widget _getImageWidget() {
+    String? URLimage ;
+
+
+      Constants.imagePath=URLimage!;
+      return ProfileWidget(
+          imagePath: URLimage,
+          isEdit: false,
+          onClicked: () {
+          }
+
+      );
+    }
+
 }
 
 class CustomMenuClipper extends CustomClipper<Path> {

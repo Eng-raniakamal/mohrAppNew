@@ -417,7 +417,8 @@ class _AppServiceClient implements AppServiceClient {
     )
             .compose(
               _dio.options,
-              'https://mohrapi.azurewebsites.net/api/Attendance?fromDate=',
+       'https://mohrapi.azurewebsites.net/api/Attendance?fromDate='+Constants.attendanceFrom.toString()+
+       '&toDate='+Constants.attendanceTo.toString(),
               queryParameters: queryParameters,
               data: _data,
             )

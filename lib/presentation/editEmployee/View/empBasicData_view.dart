@@ -30,6 +30,12 @@ class _BasicDataViewState extends State<BasicDataView> {
   final AppPreferences _appPreferences = instance<AppPreferences>();
   final _Formkey = GlobalKey<FormState>();
   DateTime? birthDate;
+  DateTime? date;
+  bool? allowEdit;
+  int? countryId;
+  int? governorateId;
+  int? districtId;
+  int firstSelect =0;
   //
   final TextEditingController _ArabicNameEditingController = TextEditingController();
   final TextEditingController _EnglishNameEditingController = TextEditingController();
@@ -109,11 +115,10 @@ class _BasicDataViewState extends State<BasicDataView> {
           child: Builder(
               builder: (context) =>
                   Scaffold(
-                    //appBar: buildAppBarMain(context),
-                    //backgroundColor: colorManager.white,
+
                     body: StreamBuilder<FlowState>(
                       stream: _displayviewModel.outputState,
-                      builder: (context, snapshot) {
+                      builder: (context, snapshot){
                         return snapshot.data?.getScreenWidget(
                             context, _getContentWidget(),
                                 () {
@@ -163,6 +168,7 @@ class _BasicDataViewState extends State<BasicDataView> {
                                         stream: _displayviewModel.outputEmpBasicData,
                                         builder: (context, snapshot) {
                                           return TextFormField(
+                                            enabled: allowEdit,
                                                 keyboardType: TextInputType.text,
                                                 controller: _ArabicNameEditingController,
                                                 decoration: InputDecoration(
@@ -190,6 +196,7 @@ class _BasicDataViewState extends State<BasicDataView> {
                                           stream: _displayviewModel.outputEmpBasicData,
                                           builder: (context, snapshot) {
                                             return TextFormField(
+                                                enabled: allowEdit,
                                                 //initialValue:snapshot.data?.employee?.englishName.toString() ,
                                                 keyboardType: TextInputType.text,
                                                 controller:
@@ -235,7 +242,10 @@ class _BasicDataViewState extends State<BasicDataView> {
                                             }
                                           }
                                           //birthDate = DateTime.parse(dateString!);
-                                          return TextFormField(onTap: () async {
+                                          return TextFormField(
+
+                                              enabled: allowEdit,
+                                              onTap: () async {
                                             DateTime? newDate = await
                                             showDatePicker
                                               (context: context,
@@ -244,13 +254,18 @@ class _BasicDataViewState extends State<BasicDataView> {
                                                 lastDate: DateTime(2100));
                                             if (newDate == null) return;
                                             setState(() {
-                                            birthDate = newDate;
+                                              date=birthDate;
+                                              birthDate = newDate;
+                                            date=newDate;
                                             });
 
                                           },
                                               keyboardType: TextInputType.text,
                                               controller: _BirthDateEditingController,
                                               decoration: InputDecoration(
+                                                    prefixIcon: Icon(Icons.calendar_month),
+
+                                                 // border: InputBorder.,
                                                   hintText:
                                                   birthDate!.day.toString() +
                                                       "/" + birthDate!.month.toString() +
@@ -277,6 +292,7 @@ class _BasicDataViewState extends State<BasicDataView> {
                                         stream: _displayviewModel.outputEmpBasicData,
                                         builder: (context, snapshot) {
                                           return TextFormField(
+                                              enabled: allowEdit,
                                               keyboardType: TextInputType.text,
                                               controller: _NationalIdEditingController,
                                               decoration: InputDecoration(
@@ -303,7 +319,7 @@ class _BasicDataViewState extends State<BasicDataView> {
                                       StreamBuilder<BasicDataModel>(
                                         stream: _displayviewModel.outputEmpBasicData,
                                         builder: (context, snapshot) {
-                                          return TextFormField(
+                                          return TextFormField(enabled: allowEdit,
                                               keyboardType: TextInputType.text,
                                               controller: _SocialIdEditingController,
                                               decoration: InputDecoration(
@@ -331,6 +347,7 @@ class _BasicDataViewState extends State<BasicDataView> {
                                             stream: _displayviewModel.outputEmpBasicData,
                                             builder: (context, snapshot) {
                                               return TextFormField(
+                                                  enabled: allowEdit,
                                                   keyboardType: TextInputType.text,
                                                   controller: _EmailEditingController,
                                                   decoration: InputDecoration(
@@ -356,6 +373,7 @@ class _BasicDataViewState extends State<BasicDataView> {
                                             stream: _displayviewModel.outputEmpBasicData,
                                             builder: (context, snapshot) {
                                               return TextFormField(
+                                                  enabled: allowEdit,
                                                   keyboardType: TextInputType.text,
                                                   controller: _PhoneEditingController,
                                                   decoration: InputDecoration(
@@ -382,6 +400,7 @@ class _BasicDataViewState extends State<BasicDataView> {
                                             stream: _displayviewModel.outputEmpBasicData,
                                             builder: (context, snapshot) {
                                               return TextFormField(
+                                                  enabled: allowEdit,
                                                   keyboardType: TextInputType.text,
                                                   controller: _EmergencyNumberEditingController,
                                                   decoration: InputDecoration(
@@ -393,55 +412,58 @@ class _BasicDataViewState extends State<BasicDataView> {
                                             },
                                           ),
                                         ])),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    // country id //_getcountry
-                                    Container(
-                                        padding: const EdgeInsets.only(
-                                            top: 12,
-                                            left: 28,
-                                            right: 28),
-                                        child: Column(
-                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                            children: [
-                                              Text(AppStrings.Country.tr(), textAlign: TextAlign.start,),
-                                              StreamBuilder<BasicDataModel?>(
-                                                stream: _displayviewModel.outputEmpBasicData,
-                                                // stream: _saveViewModel.outputErrorPassword,
-                                                builder: (context, snapshot) {
-                                                  int? selectedValue = snapshot.data
-                                                      ?.selectedcountry;
-                                                  return _getcountry(
-                                                      snapshot.data?.country, selectedValue);
-                                                },
-                                              ),
-                                            ])),
-                                    // Governorate
-                                    Container(
-                                        padding: const EdgeInsets.only(
-                                            top: 12,
-                                            left: 28,
-                                            right: 28),
-                                        child: Column(
-                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                AppStrings.Governorate.tr(), textAlign: TextAlign.start,),
-                                              StreamBuilder<BasicDataModel?>(
-                                                stream: _displayviewModel.outputEmpBasicData,
-                                                // stream: _saveViewModel.outputErrorPassword,
-                                                builder: (context, snapshot) {
-                                                  int? selectedValue = snapshot.data
-                                                      ?.selectedgovernorate;
-                                                  return _getGovernorate(
-                                                      snapshot.data?.governorate,
-                                                      selectedValue);
-                                                },
-                                              ),
-                                            ])),
+                                SingleChildScrollView(
+                                  scrollDirection: Axis.horizontal,
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      // country id //_getcountry
+                                      Container(
+                                          padding: const EdgeInsets.only(
+                                              top: 12,
+                                              left: 28,
+                                              right: 28),
+                                          child: Column(
+                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              children: [
+                                                Text(AppStrings.Country.tr(), textAlign: TextAlign.start,),
+                                                StreamBuilder<BasicDataModel?>(
+                                                  stream: _displayviewModel.outputEmpBasicData,
+                                                  // stream: _saveViewModel.outputErrorPassword,
+                                                  builder: (context, snapshot) {
+                                                    int? selectedValue = snapshot.data
+                                                        ?.selectedcountry;
+                                                    return _getcountry(
+                                                        snapshot.data?.country, selectedValue);
+                                                  },
+                                                ),
+                                              ])),
+                                      // Governorate
+                                      Container(
+                                          padding: const EdgeInsets.only(
+                                              top: 12,
+                                              left: 28,
+                                              right: 28),
+                                          child: Column(
+                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  AppStrings.Governorate.tr(), textAlign: TextAlign.start,),
+                                                StreamBuilder<BasicDataModel?>(
+                                                  stream: _displayviewModel.outputEmpBasicData,
+                                                  // stream: _saveViewModel.outputErrorPassword,
+                                                  builder: (context, snapshot) {
+                                                    int? selectedValue = snapshot.data
+                                                        ?.selectedgovernorate;
+                                                    return _getGovernorate(
+                                                        snapshot.data?.governorate,
+                                                        selectedValue);
+                                                  },
+                                                ),
+                                              ])),
 
-                                    ],
+                                      ],
+                                  ),
                                 ),
                                 // district
                                 Container(
@@ -484,6 +506,7 @@ class _BasicDataViewState extends State<BasicDataView> {
                                               // String? a=AddressText!;
 
                                               return TextFormField(
+                                                enabled: allowEdit,
                                                   keyboardType: TextInputType.text,
                                                   controller: _AddressTextEditingController,
                                                   decoration: InputDecoration(
@@ -508,6 +531,7 @@ class _BasicDataViewState extends State<BasicDataView> {
                                             stream: _displayviewModel.outputEmpBasicData,
                                             builder: (context, snapshot) {
                                               return TextFormField(
+                                                enabled: allowEdit,
                                                   keyboardType: TextInputType.text,
                                                   controller: _POBoxEditingController,
 
@@ -528,12 +552,14 @@ class _BasicDataViewState extends State<BasicDataView> {
                                     child: Column(
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
-                                           Text(AppStrings.ZipCode.tr(), textAlign: TextAlign.start,),
+                                           Text(AppStrings.ZipCode.tr(), textAlign: TextAlign.start,
+                                           ),
                                            StreamBuilder<BasicDataModel?>(
                                             // stream: _displayviewModel.outputEmpBasicData,
                                             stream: _displayviewModel.outputEmpBasicData,
                                             builder: (context, snapshot) {
                                               return TextFormField(
+                                                  enabled: allowEdit,
                                                   keyboardType: TextInputType.text,
                                                   controller: _ZipCodeEditingController,
                                                   decoration: InputDecoration(
@@ -550,88 +576,147 @@ class _BasicDataViewState extends State<BasicDataView> {
                         ),
                       ),
                   Container(
-                    padding: EdgeInsets.all(20),
-                      child:ElevatedButton (
+                  padding: EdgeInsets.all(20),
+                  child: StreamBuilder<BasicDataModel?>(
+                  stream: _displayviewModel.outputEmpBasicData,
+                  builder: (context, snapshot) {
+                    if (snapshot.data?.allowEdit == false) {
+                      allowEdit=false;
+                      return Container();
+                    }
+                    else {
+                      allowEdit=true;
+                      return
+                        ElevatedButton(
+                            child: Text("Save"),
+                            onPressed: () async {
+                              _saveViewModel!.SaveBasicData(
+                                  empId!,
+                                  _ArabicNameEditingController.text.toString(),
+                                  _EnglishNameEditingController.text.toString(),
+                                  date.toString(),
+                                  _NationalIdEditingController.text.toString(),
+                                  _SocialIdEditingController.text.toString(),
+                                  _EmailEditingController.text.toString(),
+                                  _PhoneEditingController.text.toString(),
+                                  _EmergencyNumberEditingController.text
+                                      .toString(),
+                                  _AddressTextEditingController.text.toString(),
+                                  districtId!,
+                                  _POBoxEditingController.text.toString(),
+                                  _ZipCodeEditingController.text.toString());
+                              displayDialoge();
+                            }
+                          // : null,
+                        );
+                    }
+                  })
 
-                       child: Text("Save"),
-                       onPressed: () async{
-
-
-                      _saveViewModel!.SaveBasicData(empId!,_ArabicNameEditingController.text.toString(),
-                      _EnglishNameEditingController.text.toString(),
-                      _BirthDateEditingController.text.toString(),
-                      _NationalIdEditingController.text.toString(),
-                      _SocialIdEditingController.text.toString(),
-                      _EmailEditingController.text.toString(),
-                      _PhoneEditingController.text.toString(),
-                      _EmergencyNumberEditingController.text.toString(),
-                      _AddressTextEditingController.text.toString(),
-                        1,
-                      _POBoxEditingController.text.toString(),
-                      _ZipCodeEditingController.text.toString());
-                        displayDialoge();
-                      }
-    // : null,
-    )
-                                    )
-        ]),
+                                    )]),
     );
   }
   Widget _getcountry(List<CountryModel>? country, int? selectedValue) {
-    if (selectedValue == null) {
-      if( country![0].countryId != null) {
-        selectedValue = country[0].countryId;
-      }
+    if (selectedValue == null && country![0].countryId != null) {
+      selectedValue = country[0].countryId;
+      countryId =selectedValue;
     }
-    return DropdownButton(
-      value: selectedValue,
-      items: country?.map(
-              (countryItems) {
-            return DropdownMenuItem(
-              value: countryItems.countryId,
-              child: Text(countryItems.countryName.toString()),);
-          }).toList(),
-      onChanged: (Object? value) {
-        selectedValue = value as int;
-      },
 
+    countryId =selectedValue;
+    var items = country?.map(
+            (countryItem) {
+          return DropdownMenuItem(
+
+            value: countryItem.countryId,
+            child: Text(countryItem.countryName.toString()),);
+        }).toList();
+    return DropdownButton(
+      hint: Text(AppStrings.Choose_Country.tr()),
+      items: items,
+      //enableFeedback: ,
+      onChanged: (newvalue) {allowEdit! ?
+      setState(() {
+        countryId = newvalue;
+      }):null;
+      },
+      value: countryId,
     );
   }
   Widget _getGovernorate(List<GovernorateModel>? governorate, int? selectedValue) {
-    if (selectedValue == null) {
-      selectedValue = governorate![0].governorateId;
-    }
-    return DropdownButton(
-      value: selectedValue,
-      items: governorate?.map(
-              (governorateItems) {
-            return DropdownMenuItem(
-              value: governorateItems.governorateId,
-              child: Text(governorateItems.governorateName.toString()),);
-          }).toList(),
-      onChanged: (Object? value) {
-        selectedValue = value as int;
-      },
+    selectedValue ??= governorate![0].governorateId;
+    governorateId=selectedValue;
+    // return DropdownButton(
+    //   value: selectedValue,
+    //   items: governorate?.map(
+    //           (governorateItems) {
+    //         return DropdownMenuItem(
+    //           value: governorateItems.governorateId,
+    //           child: Text(governorateItems.governorateName.toString()),);
+    //       }).toList(),
+    //   onChanged: (Object? value) {
+    //     selectedValue = value as int;
+    //   },
+    //
+    // );
+    var items = governorate?.map(
+            (governorateItem) {
+          return DropdownMenuItem(
 
+            value: governorateItem.governorateId,
+            child: Text(governorateItem.governorateName.toString()),);
+        }).toList();
+    return DropdownButton(
+      hint: Text(AppStrings.Choose_Governorate.tr()),
+      items: items,
+
+      //enableFeedback: ,
+      onChanged: (newValue) {
+      setState(() {
+        governorateId = newValue;
+      });
+      },
+      value: governorateId,
     );
   }
   Widget _getDistrict(List<DistrictsModel>? districts, int? selectedValue) {
-    if (selectedValue == null) {
-      selectedValue = districts![0].districtId;
-    }
-    return DropdownButton(
-      value: selectedValue,
-      items: districts?.map(
-              (DistrictItems) {
-            return DropdownMenuItem(
-              child: Text(DistrictItems.districtName!.toString()),
-              value: DistrictItems.districtId,);
-          }).toList(),
-      onChanged: (Object? value) {
-        selectedValue = value as int;
-      },
+    selectedValue ??= districts![0].districtId;
+    //districtId=selectedValue;
 
+    if(firstSelect==0){
+      districtId=selectedValue;
+    }
+    var items = districts?.map(
+            (districtItem) {
+          return DropdownMenuItem(
+
+            value: districtItem.districtId,
+            child: Text(districtItem.districtName.toString()),);
+        }).toList();
+    return DropdownButton(
+      hint: Text(AppStrings.Choose_District.tr()),
+      items: items,
+      //enableFeedback: ,
+      onChanged: (newvalue) {
+        firstSelect=1;
+      setState(() {
+
+        districtId = newvalue;
+      });
+      },
+      value: districtId,
     );
+    // return DropdownButton(
+    //   value: selectedValue,
+    //   items: districts?.map(
+    //           (DistrictItems) {
+    //         return DropdownMenuItem(
+    //           child: Text(DistrictItems.districtName!.toString()),
+    //           value: DistrictItems.districtId,);
+    //       }).toList(),
+    //   onChanged: (Object? value) {
+    //     selectedValue = value as int;
+    //   },
+    //
+    // );
   }
 
   Widget? displayDialoge() {
@@ -642,8 +727,8 @@ class _BasicDataViewState extends State<BasicDataView> {
       barrierDismissible: true,
       builder: (BuildContext context) {
         return ClassicGeneralDialogWidget(
-          titleText: 'Success',
-          contentText: 'Was Saved Successfully',
+          titleText: "",
+          contentText: AppStrings.Was_Saved_Successfully.tr(),
           onPositiveClick: () {
             Navigator.of(context).pop();
           },

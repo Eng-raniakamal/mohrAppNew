@@ -1,7 +1,8 @@
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
+//import 'packageer/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:mohr_hr/domain/model/user_preferences.dart';
 import 'package:mohr_hr/presentation/resources/colors.dart';
 import 'package:mohr_hr/presentation/resources/themes.dart';
 import 'package:mohr_hr/presentation/widgets/clipPathWidget.dart';
@@ -14,7 +15,7 @@ AppBar buildAppBar(BuildContext context) {
 
   return AppBar(
     //shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-   // leading: BackButton(),
+    //leading: BackButton(),
     backgroundColor: colorManager.lightprimary,
    // flexibleSpace: Container(
    //  decoration: BoxDecoration( gradient: LinearGradient(
@@ -33,6 +34,8 @@ AppBar buildAppBar(BuildContext context) {
             final theme = isDarkMode ? MyThemes.lightTheme : MyThemes.darkTheme;
             final switcher = ThemeSwitcher.of(context);
             switcher.changeTheme(theme: theme);
+           // final user = UserPreferences.myUser;
+
           },
         ),
       ),

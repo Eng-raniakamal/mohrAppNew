@@ -195,7 +195,9 @@ class _AcademicDegreeViewState extends State<AcademicDegreeView> {
                                    Text(AppStrings.Date.tr(), textAlign: TextAlign.start,),
                                   // Text("Date", textAlign: TextAlign.start,),
 
-                                   TextFormField(onTap: () async {
+                                   TextFormField(
+
+                                       onTap: () async {
 
                                      DateTime? newDate=
                                      await showDatePicker
@@ -214,6 +216,7 @@ class _AcademicDegreeViewState extends State<AcademicDegreeView> {
                                        keyboardType: TextInputType.text,
                                        controller: _DateEditingController,
                                        decoration: InputDecoration(
+                                           prefixIcon: Icon(Icons.calendar_month),
                                            hintText:
                                            date.day.toString() +
                                                "/" + date.month.toString() +
@@ -231,21 +234,24 @@ class _AcademicDegreeViewState extends State<AcademicDegreeView> {
                                 Container(
                               padding: EdgeInsets.all(20),
                                  child:
-                                //  StreamBuilder<bool>(
-                                // stream: _saveviewModel.outputDateValid,
-                                //   builder: (context, snapshot)
-                                //   {
-                                //     return
-                                      ElevatedButton(
-                                        child: Text(AppStrings.Add.tr()),
-                                        onPressed: () {
-                                          addingAcademicDegree();
-                                         // _saveviewModel.addAcdemicDegree();
-                                        }
-                                      // : null,
+                                 StreamBuilder<getAcademicDegreeModel>(
+                                stream: _displayViewModel.outputAcademicDegree,
+                                  builder: (context, snapshot) {
+                                    if (snapshot.data?.allowEdit == true) {
+                                      return
+                                        ElevatedButton(
+                                            child: Text(AppStrings.Add.tr()),
+                                            onPressed: () {
+                                              addingAcademicDegree();
+                                              // _saveviewModel.addAcdemicDegree();
+                                            }
+                                          // : null,
 
-                                    ),
-                                 // }
+                                        );
+                                    }
+                                    return Container();
+                                  }
+                                 )
                               ),
                          // ),
                           //academicDegree data table
@@ -436,8 +442,8 @@ class _AcademicDegreeViewState extends State<AcademicDegreeView> {
       barrierDismissible: true,
       builder: (BuildContext context) {
         return ClassicGeneralDialogWidget(
-          titleText: 'Information',
-          contentText: 'added successfully',
+          titleText: AppStrings.Alerts.tr(),
+          contentText: AppStrings.Was_Saved_Successfully.tr(),
           onPositiveClick: () {
             Navigator.of(context).pop();
           },
@@ -457,15 +463,15 @@ class _AcademicDegreeViewState extends State<AcademicDegreeView> {
       barrierDismissible: true,
       builder: (BuildContext context) {
         return ClassicGeneralDialogWidget(
-          titleText: 'warning',
-          contentText: 'Save Failure',
+          //titleText: AppStrings.tr(),
+          contentText: AppStrings.saveing_Failed,
           onPositiveClick: () {
             Navigator.of(context).pop();
           },
 
         );
       },
-      animationType: DialogTransitionType.fade,
+      animationType: DialogTransitionType.sizeFade,
       curve: Curves.linear,
       duration: Duration(seconds: 1),
     );

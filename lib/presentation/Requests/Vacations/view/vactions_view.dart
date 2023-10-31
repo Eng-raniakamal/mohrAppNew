@@ -8,6 +8,7 @@ import 'package:mohr_hr/presentation/common/state_renderer/state_render_impl.dar
 import 'package:mohr_hr/presentation/resources/colors.dart';
 import 'package:mohr_hr/presentation/resources/routes.dart';
 import 'package:mohr_hr/presentation/resources/strings_manager.dart';
+import 'package:mohr_hr/presentation/underConstraction.dart';
 import 'package:mohr_hr/presentation/widgets/appbar_widget.dart';
 import 'package:mohr_hr/presentation/widgets/appbarstart.dart';
 import 'package:mohr_hr/presentation/widgets/profile_widget.dart';
@@ -108,7 +109,6 @@ class _vacationsViewState extends State<vacationsView> {
 
   Widget _getContentWidget() {
      return
-
       StreamBuilder<VacationViewObject>(
         stream: _viewModel.outputVacations,
         builder: (context, snapshot) {
@@ -141,7 +141,9 @@ class _vacationsViewState extends State<vacationsView> {
                                         borderRadius: BorderRadius.circular(10)),
                                     onPressed: ()
                                      {
-                                      Navigator.of(context).pushReplacementNamed(Routes.VacationRequest);
+                                       MaterialPageRoute(builder: (_)=> UnderConstructionScreen());
+                                           //Navigator.pushReplacement(context,UnderConstructionScreen() as Route<Object?>);
+                                     // Navigator.of(context).pushReplacementNamed(UnderConstructionScreen() as String);
                                       },)),
 
                                 ],
@@ -217,8 +219,6 @@ class _vacationsViewState extends State<vacationsView> {
     return Padding(padding: const EdgeInsets.all(25.0),
      child: Container());
   }
-
-
  Widget _getImageWidget() {
 
      return ProfileWidget(
@@ -265,7 +265,7 @@ List<DataRow> _createRows(List<Vacation> vacations) {
 
 }
 double _calculateAllDays(List<Vacation> vacations)
- {
+{
  double all=0;
   vacations.map((e)=>(all+= e.total)).toList();
 
@@ -276,7 +276,6 @@ all=inDouble;
 
  return all;
 }
-
 double _calculateUsedDays(List<Vacation> vacations)
 {
   double Used=0.0;
@@ -295,8 +294,6 @@ double _calculateAvailableDays(List<Vacation> vacations)
   Available=inDouble;
   return Available;
 }
-
-
 class NumbersWidget extends StatelessWidget {
   const NumbersWidget({super.key});
 

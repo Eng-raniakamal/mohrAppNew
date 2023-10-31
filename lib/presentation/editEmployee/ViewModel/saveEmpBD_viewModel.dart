@@ -92,9 +92,10 @@ EmployeeSaveModel? employee;
   ))
   //it's function inside either return left ana right
       .fold((failure) =>
-  {inputState.add(
-  //SuccessState(StateRendererType.POPUP_SUCCESS,failure.message)),
-      ErrorState(StateRendererType.POPUP_ERROR_STATE, failure.message)),
+  {
+    inputState.add(
+  SuccessState(failure.message)),
+      //ErrorState(StateRendererType.POPUP_ERROR_STATE, failure.message)),
 
   }, (data) {
         print(data.employee?.arabicName!);
@@ -128,7 +129,7 @@ void dispose(){
 
   @override
   Sink get inputBirthDate => BirthDateStreamController.sink;
-
+  @override
   Sink get inputNationalId => NationalIdStreamController.sink;
 
   @override
@@ -180,7 +181,6 @@ void dispose(){
       NationalIdStreamController.stream.map(
               (nationalId) => _isNationalIdValid(nationalId));
 
-  @override
   Stream<String> get outputSocialIdValid =>
       SocialIdStreamController.stream.map(
               (socialId) => _isSocialIdValid(socialId));
@@ -479,7 +479,7 @@ void dispose(){
   }
 
   String _isEmailValid(String Email) {
-    return Email = " ";
+    return Email = "";
   }
 
   String _isPhoneValid(String Phone) {

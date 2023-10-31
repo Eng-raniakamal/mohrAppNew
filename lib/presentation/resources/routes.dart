@@ -1,6 +1,9 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:mohr_hr/application/di.dart';
+import 'package:mohr_hr/presentation/Attendance/view/AttendanceHome.dart';
+import 'package:mohr_hr/presentation/Attendance/view/AttendanceLayout.dart';
+import 'package:mohr_hr/presentation/Attendance/view/attendanceView.dart';
 import 'package:mohr_hr/presentation/Requests/Salary/Layout/salaryLayout.dart';
 import 'package:mohr_hr/presentation/Requests/Salary/View/salaryDetailsDialog.dart';
 import 'package:mohr_hr/presentation/Requests/Salary/View/salaryDetailsView.dart';
@@ -37,6 +40,7 @@ class Routes
   static const String main="/main";
   static const String settings="/settings";
   static const String employee="/user/layout";
+  static const String attendance="/Attendance/attendanceView.dart";
   static const String Vacations="/Requests/Vacations";
   static const String VacationRequest="/Requests/Vacations/vacationRequests_view.dart";
   static const String salary="/Requests/Salary/View/salary_View.dart";
@@ -89,6 +93,9 @@ class RouteGenerator {
         initVacationModule();
         return MaterialPageRoute(builder: (_)=> VacationScreen());
 
+      case Routes.attendance:
+        initAttendanceModule();
+        return MaterialPageRoute(builder: (_)=> AttendanceHome());
 
       case Routes.VacationRequest:
         initVacationTypeModule();

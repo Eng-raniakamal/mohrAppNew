@@ -2,16 +2,19 @@
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+
 import 'package:mohr_hr/application/app_prefs.dart';
 import 'package:mohr_hr/application/di.dart';
 import 'package:mohr_hr/domain/model/user_preferences.dart';
 import 'package:mohr_hr/presentation/home/Home.dart';
 //import 'package:mohr_hr/presentation/onboarding/onboarding_screen.dart';
 import 'package:mohr_hr/presentation/onbourding/onbording_screen.dart';
+import 'package:mohr_hr/presentation/resources/strings_manager.dart';
 //import 'package:mohr_hr/presentation/onbourding/onbording_screen.dart';
 //import 'package:mohr_hr/presentation/login/loginView.dart';
 import 'package:mohr_hr/presentation/resources/themes.dart';
 import 'package:mohr_hr/presentation/resources/routes.dart';
+import 'package:mohr_hr/presentation/settings/settings_Screen.dart';
 import 'package:mohr_hr/presentation/splash/splash.dart';
 //import 'package:mohr_hr/presentation/splash/splashScreen.dart';
 //import 'package:mohr_hr/themes/themes.dart';
@@ -50,7 +53,7 @@ class _MyAppState extends State<MyApp> {
 
     return
       ThemeProvider(
-      initTheme: user.isDarkMode ? MyThemes.darkTheme : MyThemes.lightTheme,
+      initTheme: user.isDarkMode! ? MyThemes.darkTheme : MyThemes.lightTheme,
       child: Builder(
         builder: (context) =>
              MaterialApp(
@@ -69,5 +72,15 @@ class _MyAppState extends State<MyApp> {
             ),
       )
     ;
+  }
+}
+class LocaleModel extends ChangeNotifier {
+  Locale? _locale;
+
+  Locale? get locale => _locale;
+
+  void set(Locale locale) {
+    _locale = locale;
+    notifyListeners();
   }
 }

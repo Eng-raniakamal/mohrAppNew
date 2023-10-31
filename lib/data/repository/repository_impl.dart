@@ -59,6 +59,7 @@ class RepositoryImpl extends Repository {
           //return Left(Failure(409, "error message"));
         }
       } catch (error) {
+
         return (Left(ErrorHandler
             .handle(error)
             .failure));
@@ -614,39 +615,39 @@ class RepositoryImpl extends Repository {
       }
     }
 
-  @override
-  Future<Either<Failure, AttendanceObject>> getAttendance(AttendanceRequest attendanceReq)
-  async {
-    try {
-      if (attendanceReq.userId == null) {
-        attendanceReq.userId = await _appPreferences.getUserToken();
-      }
-      final response = await _remoteDataSource.getAttendance(attendanceReq);
-      return Right(response.toDomain());
-    } catch (cacheError) {
-      // we have cache error so we should call API
-
-      if (await _networkInfo.isConnected) {
-        try {
-          // its safe to call the API
-          final response = await _remoteDataSource.getAttendance(attendanceReq);
-          if (response.attendance!.isNotEmpty) // success
-              {
-            //_localDataSource.saveUserToCache( );
-            return Right(response.toDomain());
-          } else {
-            // return left
-            return Left(Failure(700, ResponseMessage.DEFAULT));
-          }
-        } catch (error) {
-          return (Left(ErrorHandler.handle(error).failure!));
-        }
-      } else {
-        // return connection error
-        return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
-      }
-    }
-  }
+  // @override
+  // Future<Either<Failure, AttendanceObject>> getAttendance(AttendanceRequest attendanceReq)
+  // async {
+  //   try {
+  //     if (attendanceReq.userId == null) {
+  //       attendanceReq.userId = await _appPreferences.getUserToken();
+  //     }
+  //     final response = await _remoteDataSource.getAttendance(attendanceReq);
+  //     return Right(response.toDomain());
+  //   } catch (cacheError) {
+  //     // we have cache error so we should call API
+  //
+  //     if (await _networkInfo.isConnected) {
+  //       try {
+  //         // its safe to call the API
+  //         final response = await _remoteDataSource.getAttendance(attendanceReq);
+  //         if (response.attendance!.isNotEmpty) // success
+  //             {
+  //           //_localDataSource.saveUserToCache( );
+  //           return Right(response.toDomain());
+  //         } else {
+  //           // return left
+  //           return Left(Failure(700, ResponseMessage.DEFAULT));
+  //         }
+  //       } catch (error) {
+  //         return (Left(ErrorHandler.handle(error).failure!));
+  //       }
+  //     } else {
+  //       // return connection error
+  //       return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
+  //     }
+  //   }
+  // }
 
   @override
   Future<Either<Failure, UserImageModel>> getUserImage(UserRequest userRequest)
@@ -689,6 +690,12 @@ class RepositoryImpl extends Repository {
         }
       }
     }
+
+  @override
+  Future<Either<Failure, AttendanceObject>> getAttendance(AttendanceRequest attendanceReq) {
+    // TODO: implement getAttendance
+    throw UnimplementedError();
+  }
   }
 
 

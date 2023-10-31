@@ -8,6 +8,7 @@ import 'package:mohr_hr/data/repository/repository_impl.dart';
 import 'package:mohr_hr/domain/repository/repository.dart';
 import 'package:mohr_hr/domain/usecase/Degree_useCase.dart';
 import 'package:mohr_hr/domain/usecase/VacatioType_useCase.dart';
+import 'package:mohr_hr/domain/usecase/attendance_UseCase.dart';
 import 'package:mohr_hr/domain/usecase/displaySkills_useCase.dart';
 import 'package:mohr_hr/domain/usecase/empAcademicDegree_useCase.dart';
 import 'package:mohr_hr/domain/usecase/grade_useCase.dart';
@@ -21,6 +22,7 @@ import 'package:mohr_hr/domain/usecase/saveAcademicDegree_UseCase.dart';
 import 'package:mohr_hr/domain/usecase/saveEmpBD_useCase.dart';
 import 'package:mohr_hr/domain/usecase/userImage_usecase.dart';
 import 'package:mohr_hr/presentation/AddImage/viewModel/GetImage_ViewModel.dart';
+import 'package:mohr_hr/presentation/Attendance/viewModel/attendViewModel.dart';
 import 'package:mohr_hr/presentation/Requests/Salary/ViewModel/salaryDetailsViewModel.dart';
 import 'package:mohr_hr/presentation/Requests/Vacations/viewModel/VacationType_ViewModel.dart';
 
@@ -178,6 +180,18 @@ initSaveAcademicDegreesModule() {
   }
 }
 
+
+initAttendanceModule() {
+  if (!GetIt.I.isRegistered<AttendanceUseCase>()) {
+    instance.registerFactory<AttendanceUseCase>(() => AttendanceUseCase(instance()));
+    instance.registerFactory<AttendanceViewModel>(() {
+      var item = instance<AttendanceUseCase>();
+      return AttendanceViewModel(item);
+    }
+    );
+  }
+}
+
 initSalaryModule() {
   if (!GetIt.I.isRegistered<SalaryUseCase>()) {
     instance.registerFactory<SalaryUseCase>(() => SalaryUseCase(instance()));
@@ -274,6 +288,7 @@ initDegreeModule() {
     initDisplayAcademicDegreesModule();
     initSaveAcademicDegreesModule();
     initVacationModule();
+    initAttendanceModule();
     initSalaryModule();
     initSalaryDetailsModule();
     initQualificationModule();
