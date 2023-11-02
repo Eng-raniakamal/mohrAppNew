@@ -106,104 +106,111 @@ class _EmployeeEditViewState extends State<EmployeeEditView>with TickerProviderS
                       }
                   ),
                   body:
-                  Column(
-                      children: [
-                        Flexible(
-                         // flex: 1,
-                          child:
-                          Container(
-                              padding: EdgeInsets.only(top: 20),
-                              width: MediaQuery
-                                  .of(context)
-                                  .size
-                                  .width,
-                              height: 250,
-                              //MediaQuery.of(context).size.height/3,
-                              child: Form(
-                                  key: _Formkey,
-                                  child: Container(
-                                     //height: 200,
-                                     //MediaQuery.of(context).size.height/3,
-                                    child: Column(
-                                        children: [
-                                          // ProfileWidget(
-                                          //   imagePath: userImage!,
-                                          //   isEdit: true,
-                                          //   onClicked: () async {
-                                          //     showImagePicker(context);
-                                          //   },
-                                          // ),
-                                          StreamBuilder<UserImageModel>(
-                                              stream: _imageViewModel.outputUserImage,
-                                              builder: (context, snapshot) {
+                  Container(
+                    height: MediaQuery.of(context).size.height,
+                    child: SingleChildScrollView(
+                      scrollDirection: Axis.vertical,
+                      child: Column(
+                          children: [
+                            // Flexible(
+                            //  // flex: 1,
+                            //   child:
+                              Container(
+                                  padding: EdgeInsets.only(top: 20),
+                                  width: MediaQuery
+                                      .of(context)
+                                      .size
+                                      .width,
+                                  height: 250,
+                                  //MediaQuery.of(context).size.height/3,
+                                  child: Form(
+                                      key: _Formkey,
+                                      child: Container(
+                                         //height: 200,
+                                         //MediaQuery.of(context).size.height/3,
+                                        child: Column(
+                                            children: [
+                                              // ProfileWidget(
+                                              //   imagePath: userImage!,
+                                              //   isEdit: true,
+                                              //   onClicked: () async {
+                                              //     showImagePicker(context);
+                                              //   },
+                                              // ),
+                                              StreamBuilder<UserImageModel>(
+                                                  stream: _imageViewModel.outputUserImage,
+                                                  builder: (context, snapshot) {
 
-                                                return
-                                                  _getImageWidget(
-                                                      snapshot.data,context)
-                                                  ;}
-                                          ),
-                                          //const SizedBox(height: 20),
-                                          Container( //child:Align(
-                                            alignment: Alignment.center,
-                                            padding: EdgeInsets.all(10),
-                                            width: MediaQuery.of(context).size.width,
-                                            height: 50,
-                                            decoration: BoxDecoration(
-                                                //color: Colors.grey[300],
-                                                borderRadius: BorderRadius
-                                                    .circular(30.0,)),
-
-                                            child: TabBar(
-                                              controller: _tabController,
-                                              isScrollable: true,
-                                              labelColor: colorManager.primary,
-                                              unselectedLabelColor: colorManager
-                                                  .primary,
-                                              indicator: BoxDecoration(
-                                                borderRadius: BorderRadius
-                                                    .circular(40.0),
-                                                color: colorManager
-                                                    .greywithOpacity,
+                                                    return
+                                                      _getImageWidget(
+                                                          snapshot.data,context)
+                                                      ;}
                                               ),
-                                              tabs: [
-                                                Tab(text: AppStrings.BasicData
-                                                    .tr()),
-                                                Tab(text: AppStrings.Skills
-                                                    .tr()),
-                                                Tab(
-                                                  text: AppStrings.AcadmicDegree
-                                                      .tr(),)
-                                              ],
-                                            ),
-                                          ),
+                                              //const SizedBox(height: 20),
+                                              Container( //child:Align(
+                                                alignment: Alignment.center,
+                                                padding: EdgeInsets.all(10),
+                                                width: MediaQuery.of(context).size.width,
+                                                height: 50,
+                                                decoration: BoxDecoration(
+                                                    //color: Colors.grey[300],
+                                                    borderRadius: BorderRadius
+                                                        .circular(30.0,)),
 
-                                        ]
-                                    ),
+                                                child: TabBar(
+                                                  controller: _tabController,
+                                                  isScrollable: true,
+                                                  labelColor: colorManager.primary,
+                                                  unselectedLabelColor: colorManager
+                                                      .primary,
+                                                  indicator: BoxDecoration(
+                                                    borderRadius: BorderRadius
+                                                        .circular(40.0),
+                                                    color: colorManager
+                                                        .greywithOpacity,
+                                                  ),
+                                                  tabs: [
+                                                    Tab(text: AppStrings.BasicData
+                                                        .tr()),
+                                                    Tab(text: AppStrings.Skills
+                                                        .tr()),
+                                                    Tab(
+                                                      text: AppStrings.AcadmicDegree
+                                                          .tr(),)
+                                                  ],
+                                                ),
+                                              ),
+
+                                            ]
+                                        ),
+                                      )
                                   )
-                              )
-                          ),
-                        ),
-                        Flexible(
-                          //flex:2 ,
-                         child:
-                          Container(
-                            width: MediaQuery.of(context).size.width,
-                            height: MediaQuery.of(context).size.height*3,
-                            child: TabBarView(
-                              controller: _tabController,
-                              children: const [
+                              ),
+                           // ),
+                           //  Flexible(
+                           //    //flex:2 ,
+                           //   child:
+                              SizedBox(
+                                child: Container(
+                                  width: MediaQuery.of(context).size.width,
+                                  height: MediaQuery.of(context).size.height*2,
+                                  child: TabBarView(
+                                    controller: _tabController,
+                                    children: const [
+                                      BasicDataView(),
+                                      EmployeeSkillsView(),
+                                      AcademicDegreeView(),
 
-                                BasicDataView(),
-                                EmployeeSkillsView(),
-                                AcademicDegreeView(),
-
-                              ],
-                            ),
-                          ),
+                                    ],
+                                  ),
+                                ),
+                              ),
 
 
-                        ),
-                      ]),
+                         //   ),
+                          ]),
+                    ),
+                  ),
                 ),
           ));
   }

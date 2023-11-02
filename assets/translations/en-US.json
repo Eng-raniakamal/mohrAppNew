@@ -37,7 +37,7 @@
   "bad_request_error": "bad request. try again later",
   "forbidden_error": "forbidden request. try again later",
   "unauthorized_error": "user unauthorized may be you use another mobile, try again later",
-  "saveing_Failed": "saveing Failed",
+  "saving_Failed": "saving Failed",
   "Invalid_UserName_Or_Password": "Invalid user Name or password,try again later",
   "not_found_error": "url not found, try again later",
   "conflict_error": "conflict found, try again later",
@@ -128,7 +128,7 @@
   "Net Salary": "Net Salary",
   "Was Saved Successfully": "Was Saved Successfully",
   "Success": "",
-
+  "saveing_Failed": "",
 
   "Permissions": "Permissions",
   "Financial": "Financial",

@@ -3,19 +3,17 @@
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
 import 'package:mohr_hr/application/di.dart';
 import 'package:mohr_hr/domain/model/model.dart';
 import 'package:mohr_hr/presentation/common/state_renderer/state_render_impl.dart';
 import 'package:mohr_hr/presentation/resources/colors.dart';
 import 'package:mohr_hr/presentation/resources/strings_manager.dart';
-import 'package:mohr_hr/presentation/widgets/profile_widget.dart';
-import '../../../../application/constants.dart';
+
 import '../ViewModel/salaryDetailsViewModel.dart';
 
 
 
-// ignore: camel_case_types
+
 class salaryDetailsView extends StatefulWidget {
   const salaryDetailsView({Key? key}) : super(key: key);
 
@@ -41,51 +39,34 @@ class _salaryDetailsViewState extends State<salaryDetailsView> {
 
   @override
   Widget build(BuildContext context) {
-    return ThemeSwitchingArea(
-        child: SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child: StreamBuilder<FlowState>(
-              stream: _viewModel.outputState,
-              builder: (context, snapshot) {
-                return
-                  snapshot.data?.getScreenWidget(
-                      context,
-                      _getContentWidget(),
-                      () {
-                        _viewModel.start();
-                      },
-                      () {
-                      }
-                  ) ??
-                      _getContentWidget();
-                //Container();
-              }),
-        ));
+    return
+            StreamBuilder<FlowState>(
+                stream: _viewModel.outputState,
+                builder: (context, snapshot) {
+                  return
+                    snapshot.data?.getScreenWidget(
+                        context,
+                        _getContentWidget(),
+                        () {
+                          _viewModel.start();
+                        },
+                        () {
+                        }
+                    ) ??
+                        _getContentWidget();
+                }
+         );
   }
 
   Widget _getContentWidget() {
-    return StreamBuilder<SalaryDetails>(
-        stream: _viewModel.outputSalarys,
-        builder: (context, snapshot) {
-          return
-            SingleChildScrollView(
-              scrollDirection: Axis.vertical,
-              child: Container(
-                // decoration: BoxDecoration(borderRadius: BorderRadius.circular(20),
-                // color: colorManager.primary,
-               // ),
-               //
-               //
-               //    width: MediaQuery
-               //        .of(context)
-               //        .size
-               //        .width,
-               //    height: MediaQuery
-               //        .of(context)
-               //        .size
-               //        .height,
-                  
-                  child: Column(
+    return
+       StreamBuilder<SalaryDetails>(
+          stream: _viewModel.outputSalarys,
+          builder: (context, snapshot) {
+            return
+              Container(
+                color: Colors.white70,
+                child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -137,11 +118,10 @@ class _salaryDetailsViewState extends State<salaryDetailsView> {
                       //    // child: _getSalaryDetails()
                       // ),
                     ],
-                  )
 
-              ),
-            );
-        });
+                ),
+              );
+          });
   }
 
   Widget _getBenefitList(List<Benefit>? benifit) {

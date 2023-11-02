@@ -127,7 +127,7 @@ class AppStrings {
   static const String Total_of_Benefit = "Total of Benefit";
   static const String Net_Salary = "Net Salary";
   static const String Was_Saved_Successfully = "Was Saved Successfully";
-  static const String saveing_Failed="saveing_Failed";
+  static const String saving_Failed="saving_Failed";
   //Attendance
   static const String attendance_Alerts="Attendance Alerts";
   static const String attendance_Activity="Attendance Activity";

@@ -103,7 +103,7 @@ class _EmployeeEditViewState extends State<AttendanceLayout>with TickerProviderS
                   Column(
                       children: [
                         Flexible(
-                          // flex: 1,
+                           flex: 1,
                           child:
                           Container(
                               padding: EdgeInsets.only(top: 20),
@@ -115,7 +115,8 @@ class _EmployeeEditViewState extends State<AttendanceLayout>with TickerProviderS
                               //MediaQuery.of(context).size.height/3,
                               child: Form(
                                   key: _Formkey,
-                                  child: Container(
+                                  child: Container(width: MediaQuery.of(context).size.width,
+                                    height: MediaQuery.of(context).size.height*3,
                                     child: Column(
                                         children: [
                                           StreamBuilder<UserImageModel>(
@@ -166,7 +167,7 @@ class _EmployeeEditViewState extends State<AttendanceLayout>with TickerProviderS
                           ),
                         ),
                         Flexible(
-                          //flex:2 ,
+                          flex:2 ,
                           child:
                           Container(
                             width: MediaQuery.of(context).size.width,

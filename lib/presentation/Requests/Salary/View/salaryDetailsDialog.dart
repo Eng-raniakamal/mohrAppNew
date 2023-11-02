@@ -1,7 +1,7 @@
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mohr_hr/presentation/Requests/Salary/View/salaryDetailsView.dart';
+import 'package:mohr_hr/presentation/resources/themes.dart';
 
 
 Widget?  showCustomDialog(BuildContext context, {required ValueChanged onValue}) {
@@ -18,7 +18,7 @@ Widget?  showCustomDialog(BuildContext context, {required ValueChanged onValue})
           margin: const EdgeInsets.symmetric(horizontal: 16),
           padding: const EdgeInsets.symmetric(vertical: 32, horizontal: 24),
           decoration: BoxDecoration(
-            color: Colors.white.withOpacity(0.95),
+            color: Colors.white70,
             borderRadius: BorderRadius.circular(40),
             boxShadow: [
               BoxShadow(
@@ -33,50 +33,64 @@ Widget?  showCustomDialog(BuildContext context, {required ValueChanged onValue})
               ),
             ],
           ),
-          child:  ThemeSwitchingArea(
-            child: Builder(
+          // child:  ThemeSwitchingArea(
+             child:
+            Builder(
               builder: (context) =>
               Scaffold(
-              backgroundColor: Colors.transparent,
-              body: Stack(
-                clipBehavior: Clip.none,
-                children: [
-                  SingleChildScrollView(
-                    scrollDirection: Axis.vertical,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          "Salary Details",
-                          style: TextStyle(
-                            fontSize: 30,
-                            fontFamily: "Poppins",
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                        salaryDetailsView(),
+              backgroundColor:Colors.white70,
+              body: Center(
+                child: Stack(
+                  clipBehavior: Clip.none,
+                  children: [
+                    Center(
+                      child: SingleChildScrollView(
+                        scrollDirection: Axis.vertical,
+                        child: Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Center(
+                                child: Text(
+                                  "Salary Details",
+                                  style: TextStyle(
+                                    fontSize: 30,
+                                    fontFamily: "Poppins",
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                color:  Colors.white70,
+                                padding: EdgeInsets.only(left: 40),
+                                  child: salaryDetailsView()
+                              ),
 
-                    //  Positioned(
-                    //   left: 0,
-                    //   right: 0,
-                    //   bottom: -30,
-                    //   child: CircleAvatar(
-                    //     radius: 16,
-                    //     backgroundColor: Colors.white,
-                    //     child: Icon(
-                    //       Icons.close,
-                    //       size: 20,
-                    //       color: Colors.black,
-                    //     ),
-                    //   ),
-                    // )
-                ],
-              ),
-                  ),
+                          //  Positioned(
+                          //   left: 0,
+                          //   right: 0,
+                          //   bottom: -30,
+                          //   child: CircleAvatar(
+                          //     radius: 16,
+                          //     backgroundColor: Colors.white,
+                          //     child: Icon(
+                          //       Icons.close,
+                          //       size: 20,
+                          //       color: Colors.black,
+                          //     ),
+                          //   ),
+                          // )
+                  ],
+                ),
+                        ),
+                      ),
+                    ),
             ]),
+              ),
         ),
           ),
-        ) ));
+        ) );
     },
     transitionBuilder: (_, anim, __, child) {
       Tween<Offset> tween;
@@ -97,4 +111,5 @@ Widget?  showCustomDialog(BuildContext context, {required ValueChanged onValue})
       );
     },
   ).then(onValue);
+
 }

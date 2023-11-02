@@ -26,7 +26,7 @@ class AttendanceHome extends StatelessWidget with NavigationStates{
         child:
         Stack(
           children: [
-            AttendanceLayout() ,
+            const AttendanceLayout() ,
             SideBar(),
           ],
         ),

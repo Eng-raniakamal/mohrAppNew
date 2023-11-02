@@ -454,6 +454,7 @@ class _AcademicDegreeViewState extends State<AcademicDegreeView> {
       curve: Curves.linear,
       duration: Duration(seconds: 1),
     );
+    return null;
   }
 
   Widget? displayFaileDialoge()
@@ -464,7 +465,7 @@ class _AcademicDegreeViewState extends State<AcademicDegreeView> {
       builder: (BuildContext context) {
         return ClassicGeneralDialogWidget(
           //titleText: AppStrings.tr(),
-          contentText: AppStrings.saveing_Failed,
+          contentText: AppStrings.saving_Failed,
           onPositiveClick: () {
             Navigator.of(context).pop();
           },

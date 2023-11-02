@@ -52,6 +52,8 @@ class _EmployeeSkillsViewState extends State<EmployeeSkillsView> {
   var datetext;
   int? empId;
   bool? allowEdit;
+  bool? addingSuccess;
+  List<skillsModel>? skillsUpdate;
 
 
   _blind() {
@@ -79,6 +81,9 @@ class _EmployeeSkillsViewState extends State<EmployeeSkillsView> {
   void initState() {
     super.initState();
     _blind();
+    setState(() {
+
+    });
   }
 
   @override
@@ -225,21 +230,28 @@ class _EmployeeSkillsViewState extends State<EmployeeSkillsView> {
                         // save bottum
                         Container(
                             padding: EdgeInsets.all(20),
-
-
                             child: StreamBuilder<getEmpSkillsModel>(
                                 stream: _displayViewModel.outputEmpSkill,
                                 builder: (context, snapshot) {
                                   if (snapshot.data?.allowEdit == true) {
-                                    return ElevatedButton(
+                                    return StatefulBuilder
+                                      (builder: (context,setState)=>ElevatedButton(
                                         child: Text(AppStrings.Add.tr()),
                                         onPressed: () {
-                                          // _saveviewModel.addSkills();
+
                                           addingSkills();
+                                          //addingSuccess=true;
+                                          setState(() {
+                                            //addingSkills();
+                                            addingSuccess;
+                                            initDisplayEmployeeSkillsModule();
+                                            skillsUpdate=snapshot.data?.skills;
+
+                                          });
                                         }
                                       // : null,
 
-                                    );
+                                    ));
                                   }
                                   return Container();
                                 }
@@ -259,7 +271,15 @@ class _EmployeeSkillsViewState extends State<EmployeeSkillsView> {
                                       List<skillsModel>? skills = snapshot
                                           .data
                                           ?.skills;
-                                      return _createSkillsTable(skills!);
+                                      skillsUpdate = skills;
+                                      return StatefulBuilder
+                                      (builder: (context,setState)=>RefreshIndicator(
+                                        onRefresh: ()async{
+                                          setState((){
+                                            skillsUpdate = skills;
+                                        // Update your data here
+                                      }); },
+                                          child: Skillstable(skillsUpdate!)));
                                     }
                                 )
                             ))
@@ -270,6 +290,10 @@ class _EmployeeSkillsViewState extends State<EmployeeSkillsView> {
           ],
         ),
       );
+  }
+  Future<void> refrash()
+  { return Future.delayed(const Duration(seconds: 1));
+
   }
 
   Widget _getQualification(List<QualificationItem>? qualification) {
@@ -315,8 +339,19 @@ class _EmployeeSkillsViewState extends State<EmployeeSkillsView> {
       value: gradeId,
     );
   }
-
   Widget _createSkillsTable(List<skillsModel> skills) {
+    if(skills.isEmpty==false) {
+      return DataTable(
+        headingRowColor: MaterialStateColor.resolveWith((states) =>
+        colorManager.lightprimary),
+        columns: _createColumns(),
+        rows: _createRows(skills),
+
+      );
+    }else
+    {return Container();}
+  }
+  Future<Widget> _createSkillsTable1(List<skillsModel> skills) async{
     if(skills.isEmpty==false) {
       return DataTable(
         headingRowColor: MaterialStateColor.resolveWith((states) =>
@@ -350,7 +385,6 @@ class _EmployeeSkillsViewState extends State<EmployeeSkillsView> {
         ]))
         .toList();
   }
-
   Future addingSkills() async
   {
     userId = await _appPreferences.getUserToken();
@@ -377,6 +411,7 @@ class _EmployeeSkillsViewState extends State<EmployeeSkillsView> {
       var x= result.fromJson(jsonDecode(response.body)) ;
       bool y =x.isValid;
       if(y==true) {
+        addingSuccess=true;
         displayDialoge();
        // print(response.body);
       }else
@@ -386,7 +421,34 @@ class _EmployeeSkillsViewState extends State<EmployeeSkillsView> {
      // print('Request failed with status: ${response.statusCode}.');
     }
   }
+  Widget Skillstable(List<skillsModel> skills){
+    return
+      FutureBuilder(
+          future:_createSkillsTable1(skills),
+          builder:(context,snapshot)
+          {
+            switch (snapshot.connectionState) {
+              case ConnectionState.waiting:
+                return Center(
+                    child:CircularProgressIndicator());
+              default:
+                if (snapshot.hasError)
+                  return Text('Error: ${snapshot.error}');
+                else
+                if (addingSuccess!=false) {
+                  return Center(
+                      child:_createSkillsTable(skills)
+                  );}
+            }
+            return Center(
+                child:_createSkillsTable(skills)
+            );
+          }
 
+
+
+      );
+  }
 
 Widget? displayDialoge()
 {
@@ -407,6 +469,7 @@ Widget? displayDialoge()
     curve: Curves.linear,
     duration: Duration(seconds: 1),
   );
+  return null;
 }
 
   Widget? displayFaileDialoge()
@@ -416,8 +479,8 @@ Widget? displayDialoge()
       barrierDismissible: true,
       builder: (BuildContext context) {
         return ClassicGeneralDialogWidget(
-          titleText: AppStrings.Alerts.tr(),
-          contentText: AppStrings.saveing_Failed,
+          titleText: "",
+          contentText: AppStrings.saving_Failed,
           onPositiveClick: () {
             Navigator.of(context).pop();
           },
@@ -428,6 +491,7 @@ Widget? displayDialoge()
       curve: Curves.linear,
       duration: Duration(seconds: 1),
     );
+    return null;
   }
 
     //

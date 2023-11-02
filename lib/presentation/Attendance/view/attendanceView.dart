@@ -121,26 +121,6 @@ oKPressed=false;
                                   SizedBox(height: 30),
                                    table(),
 
-                                  // FutureBuilder(
-                                  //     future:_createAttendanceTable(attendanceData),
-                                  //     builder:(context,snapshot){
-                                  //
-                                  //       if (oKPressed) {
-                                  //         //attendanceData= getApiAttendance();
-                                  //         return Center(
-                                  //             child:_createAttendanceTable1(attendanceData)
-                                  //         );}
-                                  //
-                                  //
-                                  //       return Center(
-                                  //           child:CircularProgressIndicator());
-                                  //     }
-                                  //
-                                  //
-                                  //
-                                  // )
-
-                                //  _createAttendanceTable(attendanceData)
 
                                 ],
                               ))))
