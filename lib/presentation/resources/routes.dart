@@ -1,6 +1,8 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:mohr_hr/application/di.dart';
+import 'package:mohr_hr/presentation/Alert_Notification/View/alertView.dart';
+import 'package:mohr_hr/presentation/Alert_Notification/View/alert_notfiHome.dart';
 import 'package:mohr_hr/presentation/Attendance/view/AttendanceHome.dart';
 import 'package:mohr_hr/presentation/Attendance/view/AttendanceLayout.dart';
 import 'package:mohr_hr/presentation/Attendance/view/attendanceView.dart';
@@ -17,6 +19,7 @@ import 'package:mohr_hr/presentation/onbourding/onbording_screen.dart';
 import 'package:mohr_hr/presentation/resources/strings_manager.dart';
 //import 'package:mohr_hr/presentation/profile/profileScreen.dart';
 import 'package:mohr_hr/presentation/splash/splashScreen.dart';
+import 'package:mohr_hr/presentation/underConstraction.dart';
 //import 'package:mohr_hr/presentation/profile/editProfileScreen.dart';
 
 import '../Requests/Vacations/Layout/vacationLayout.dart';
@@ -30,13 +33,14 @@ import '../settings/settings_Screen.dart';
 
 class Routes
 {
+  static const String underConstraction="/underConstruction.dart";
   static const String onboardingRoute="/onboarding";
   static const String splashRoute="/splash";
   static const String loginRoute="/login";
   static const String profileRoute="/user";
   static const String HomeRoute="/home/Home.dart";
+  static const String notification="/Alert_Notification";
   static const String editProfileRoute="/user/layout";
-    //  "/editEmployee/editEmployee.dart";
   static const String main="/main";
   static const String settings="/settings";
   static const String employee="/user/layout";
@@ -70,6 +74,11 @@ class RouteGenerator {
         initUserModule();
         initUserImageModule();
         return MaterialPageRoute(builder: (_)=>  Home());
+
+      case Routes.notification:
+        initUserModule();
+        initUserImageModule();
+        return MaterialPageRoute(builder: (_)=>  AlertHome());
 
         case Routes.editProfileRoute:
            initEmployeeBasicDataModule();
@@ -109,6 +118,11 @@ class RouteGenerator {
       case Routes.salaryDetails:
         initSalaryDetailsModule();
         return MaterialPageRoute(builder: (_)=>  salaryDetailsView());
+
+
+      case Routes.underConstraction:
+        initSalaryModule();
+        return MaterialPageRoute(builder: (_)=>  UnderConstructionScreen());
 
       case Routes.employee:
         initEmployeeSkillsModule();

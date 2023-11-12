@@ -73,7 +73,9 @@ class _AttendanceAlertViewState extends State<AttendanceAlertView> {
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Container(
+      child:Image.asset("assets/images/44190-under-construction-1 (1).gif")
+    );
   }
 
   }

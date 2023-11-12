@@ -95,7 +95,7 @@ class _EmployeeEditViewState extends State<AttendanceLayout>with TickerProviderS
                         else
                         if(index==2)
                         {
-                          //Navigator.of(context).pushReplacementNamed(Routes.);
+                          Navigator.of(context).pushReplacementNamed(Routes.notification);
                         }
                       }
                   ),

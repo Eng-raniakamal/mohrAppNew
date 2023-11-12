@@ -73,7 +73,34 @@ class _EmployeeEditViewState extends State<EmployeeEditView>with TickerProviderS
     final item=<Widget>
     [ const Icon(Icons.person,size: 30,color: colorManager.white,),
       const Icon(Icons.home,size: 30,color: colorManager.white),
-      const Icon(Icons.notifications,size: 30,color: colorManager.white),
+      Stack(
+        children: [
+          const Icon(Icons.notifications,size: 30),
+          Positioned(
+            right: 0,
+            child: Container(
+              padding: const EdgeInsets.all(1),
+              decoration: BoxDecoration(
+                color: Colors.red,
+                borderRadius: BorderRadius.circular(6),
+              ),
+              constraints: const BoxConstraints(
+                minWidth: 12,
+                minHeight: 12,
+              ),
+              child: Text(
+                Constants.notificationNumber.toString(),
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 8,
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ),
+          )
+        ],
+      ),
+    //  const Icon(Icons.notifications,size: 30,color: colorManager.white),
 
     ];
     return
@@ -101,7 +128,7 @@ class _EmployeeEditViewState extends State<EmployeeEditView>with TickerProviderS
                         else
                         if(index==2)
                         {
-                          //Navigator.of(context).pushReplacementNamed(Routes.);
+                          Navigator.of(context).pushReplacementNamed(Routes.notification);
                         }
                       }
                   ),
@@ -116,12 +143,12 @@ class _EmployeeEditViewState extends State<EmployeeEditView>with TickerProviderS
                             //  // flex: 1,
                             //   child:
                               Container(
-                                  padding: EdgeInsets.only(top: 20),
+                                  padding: const EdgeInsets.only(top: 20),
                                   width: MediaQuery
                                       .of(context)
                                       .size
                                       .width,
-                                  height: 250,
+                                  height: 200,
                                   //MediaQuery.of(context).size.height/3,
                                   child: Form(
                                       key: _Formkey,
@@ -149,7 +176,7 @@ class _EmployeeEditViewState extends State<EmployeeEditView>with TickerProviderS
                                               //const SizedBox(height: 20),
                                               Container( //child:Align(
                                                 alignment: Alignment.center,
-                                                padding: EdgeInsets.all(10),
+                                                padding: const EdgeInsets.all(5),
                                                 width: MediaQuery.of(context).size.width,
                                                 height: 50,
                                                 decoration: BoxDecoration(
@@ -260,12 +287,12 @@ class _EmployeeEditViewState extends State<EmployeeEditView>with TickerProviderS
                         child: InkWell(
                           child: Column(
                             children: [
-                              Icon(Icons.image, size: 60.0, color: Colors.blue),
-                              SizedBox(height: 12.0),
+                              const Icon(Icons.image, size: 60.0, color: Colors.blue),
+                              const SizedBox(height: 12.0),
                               Text(
                                 AppStrings.Gallary.tr(),
                                 textAlign: TextAlign.center,
-                                style: TextStyle(fontSize: 16,
+                                style: const TextStyle(fontSize: 16,
                                     color: Colors.black),
                               )
                             ],
@@ -283,13 +310,13 @@ class _EmployeeEditViewState extends State<EmployeeEditView>with TickerProviderS
                           child: SizedBox(
                             child: Column(
                               children: [
-                                Icon(Icons.camera_alt, size: 60.0,
+                                const Icon(Icons.camera_alt, size: 60.0,
                                   color: Colors.blue,),
-                                SizedBox(height: 12.0),
+                                const SizedBox(height: 12.0),
                                 Text(
                                   AppStrings.Camera.tr(),
                                   textAlign: TextAlign.center,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       fontSize: 16, color: Colors.black),
                                 )
                               ],
@@ -413,7 +440,7 @@ class _EmployeeEditViewState extends State<EmployeeEditView>with TickerProviderS
     var request = http.MultipartRequest("POST", uri);
 
     // multipart that takes file
-    var multipartFile = new http.MultipartFile('file', stream, length,
+    var multipartFile = http.MultipartFile('file', stream, length,
         filename: basename(imageFile.path));
 
     // add file to multipart

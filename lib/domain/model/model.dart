@@ -187,7 +187,8 @@ class QualificationsObject {
   QualificationsObject(this.qualifications);
 }
 
-class skillsModel{
+class skillsModel
+{
   int? id;
   String? typeName;
   String? gradeName;
@@ -395,3 +396,67 @@ class SalaryDetailsObject
  SalaryDetailsObject(this.data);
 }
 
+
+class AlertModel {
+  String content;
+  String link;
+
+  AlertModel({required this.content,required this.link});
+
+  factory AlertModel.fromJson(Map<String, dynamic> json) {
+    return AlertModel(
+      content: json["Content"],
+      link: json["Link"],
+
+    );
+  }
+}
+
+
+class NotificationModel {
+  int? id;
+  String? date;
+  String? title;
+  String? details;
+  String? notes;
+  String? attachments;
+  bool? isCanceled;
+  bool? seen;
+  String? cancellationReason;
+  int? employeeId;
+  String? name;
+  String? executionDate;
+  double? value;
+  NotificationModel({ this.id,
+     this.date,
+     this.title,
+     this.details,
+     this.notes,
+     this.attachments,
+     this.isCanceled,required this.seen,
+     this.cancellationReason,
+     this.employeeId,
+     this.name,
+     this.executionDate,
+     this.value,
+  });
+
+  factory NotificationModel.fromJson(Map<String, dynamic> json) {
+    return NotificationModel(
+      id: json["Id"],
+      date: json["Date"],
+      title: json["Title"],
+      details: json["Details"],
+      notes: json["Notes"],
+      attachments:json["attachments"],
+      isCanceled: json["IsCanceled"],
+      seen: json["Seen"],
+      cancellationReason:json["CancellationReason"],
+      employeeId: json["EmployeeId"],
+      name: json["Name"],
+      executionDate:json["ExecutionDate"],
+      value:json["Value"]
+
+    );
+  }
+}

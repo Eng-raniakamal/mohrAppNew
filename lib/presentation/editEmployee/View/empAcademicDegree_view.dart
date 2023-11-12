@@ -52,6 +52,8 @@ class _AcademicDegreeViewState extends State<AcademicDegreeView> {
   String? notes;
   int? empId;
   String? userId;
+  List<UserAcademicDegree>? academicDegree;
+  bool? addingSuccess;
   _blind() {
    // _saveviewModel.start();
     _displayViewModel.start();
@@ -238,16 +240,20 @@ class _AcademicDegreeViewState extends State<AcademicDegreeView> {
                                 stream: _displayViewModel.outputAcademicDegree,
                                   builder: (context, snapshot) {
                                     if (snapshot.data?.allowEdit == true) {
-                                      return
-                                        ElevatedButton(
+                                      return StatefulBuilder
+                                        (builder: (context,setState)=>FloatingActionButton(
                                             child: Text(AppStrings.Add.tr()),
-                                            onPressed: () {
-                                              addingAcademicDegree();
+                                            onPressed: () async {
+                                              await addingAcademicDegree();
+                                              await generateAcademicDegreeData();
+                                              setState(() {
+                                                academicDegree=academicDegree;
+                                              });
                                               // _saveviewModel.addAcdemicDegree();
                                             }
                                           // : null,
 
-                                        );
+                                        ));
                                     }
                                     return Container();
                                   }
@@ -265,8 +271,7 @@ class _AcademicDegreeViewState extends State<AcademicDegreeView> {
                                             .data
                                             ?.academicDegree;
                                         if (academicDegree != null) {
-                                          return _createAcademicDegreeTable(
-                                              academicDegree);
+                                          return academicDegreeTable();
                                         }
                                         else {
                                           return Container();
@@ -357,7 +362,7 @@ class _AcademicDegreeViewState extends State<AcademicDegreeView> {
     //   value: acadmicId ,
     // );
   }
-  Widget _createAcademicDegreeTable(List<AcademicDegreeModel> academicDegree) {
+  Widget _createAcademicDegreeTable(List<UserAcademicDegree> academicDegree) {
     if(academicDegree.isEmpty==false) {
       return DataTable(
         headingRowColor: MaterialStateColor.resolveWith((states) =>
@@ -380,7 +385,7 @@ class _AcademicDegreeViewState extends State<AcademicDegreeView> {
     ];
 
   }
-  List<DataRow> _createRows(List<AcademicDegreeModel> academicDegree) {
+  List<DataRow> _createRows(List<UserAcademicDegree> academicDegree) {
     return academicDegree
         .map((academicDegree) =>
         DataRow(cells: [
@@ -425,13 +430,45 @@ class _AcademicDegreeViewState extends State<AcademicDegreeView> {
       bool y =x.isValid;
       if(y==true) {
         displayDialoge();
-        print(response.body);
+        setState(() {
+
+          addingSuccess=true;
+        });
       }else
       { displayFaileDialoge();}
     } else {
       displayFaileDialoge();
-      print('Request failed with status: ${response.statusCode}.');
+      //print('Request failed with status: ${response.statusCode}.');
     }
+  }
+
+  Widget academicDegreeTable(){
+    return
+      FutureBuilder(
+          future:generateAcademicDegreeData(),
+          builder:(context,snapshot)
+          {
+            switch (snapshot.connectionState) {
+              case ConnectionState.waiting:
+                return Center(
+                    child:CircularProgressIndicator());
+              default:
+                if (snapshot.hasError)
+                  return Text('Error: ${snapshot.error}');
+                else
+                if (addingSuccess!=false) {
+                  return Center(
+                      child:_createAcademicDegreeTable(academicDegree!)
+                  );}
+            }
+            return Center(
+                child:_createAcademicDegreeTable(academicDegree!)
+            );
+          }
+
+
+
+      );
   }
 
 
@@ -478,7 +515,22 @@ class _AcademicDegreeViewState extends State<AcademicDegreeView> {
     );
   }
 
-//
+  Future <List<UserAcademicDegree>?> generateAcademicDegreeData() async {
+    List<UserAcademicDegree>? a;
+    userId = await _appPreferences.getUserToken();
+    var response = await http.get(
+        Uri.parse(Constants.GetEmpAcademicDegree), headers: <String, String>{'Content-Type': 'application/json; charset=UTF-8','userId':userId!});
+    var responseData = json.decode(response.body);
+    //.cast<Map<String, dynamic>>();
+    if(responseData['academicDegrees']!=null) {
+      var user_academicDegrees = responseData['academicDegrees'] as List;
+      a = await user_academicDegrees .map((jsonData) =>
+          UserAcademicDegree.fromJson(jsonData)).toList();
+      List<UserAcademicDegree>? b = List<UserAcademicDegree>.from(a as Iterable);
+      academicDegree = b;
+      return academicDegree;
+    } return null;
+  }
 
 }
 class result {
@@ -496,4 +548,39 @@ class result {
   }
 
 
+}
+
+class UserAcademicDegree{
+
+  final int id;
+  final String typeName;
+  final String gradeName;
+  final int academicDegreeTypeId;
+  final String degreeDate;
+  final int gradeId;
+  final String  major;
+  final String university;
+  UserAcademicDegree({
+    required this.id,
+    required this.typeName,
+    required this.gradeName,
+    required this.academicDegreeTypeId,
+    required this.degreeDate,
+    required this.gradeId,
+    required this.major,
+    required this.university
+  });
+
+  factory UserAcademicDegree .fromJson(Map<String, dynamic> json) {
+    return UserAcademicDegree(
+        id: json["Id"],
+        typeName: json["TypeName"],
+        gradeName: json["GradeName"],
+        academicDegreeTypeId: json["AcademicDegreeTypeId"],
+        degreeDate: json["DegreeDate"],
+        gradeId: json["GradeId"],
+        major: json["Major"],
+        university: json["University"]
+    );
+  }
 }

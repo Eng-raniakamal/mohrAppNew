@@ -8,6 +8,7 @@ import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
 import 'package:mohr_hr/application/constants.dart';
 import 'package:mohr_hr/application/di.dart';
 import 'package:mohr_hr/domain/model/model.dart';
+import 'package:mohr_hr/domain/model/user.dart';
 import 'package:mohr_hr/presentation/editEmployee/ViewModel/displayEmpSkills_viewModel.dart';
 import 'package:mohr_hr/presentation/editEmployee/ViewModel/empSkills_viewModel.dart';
 import 'package:mohr_hr/presentation/editEmployee/ViewModel/qualification_viewModel.dart';
@@ -53,8 +54,9 @@ class _EmployeeSkillsViewState extends State<EmployeeSkillsView> {
   int? empId;
   bool? allowEdit;
   bool? addingSuccess;
-  List<skillsModel>? skillsUpdate;
-
+  List<UserSkills>? skillsUpdate;
+  List<GradeItem>? gradeItems;
+  List<QualificationItem>? QualificationItems;
 
   _blind() {
     _saveviewModel.start();
@@ -79,15 +81,17 @@ class _EmployeeSkillsViewState extends State<EmployeeSkillsView> {
 
   @override
   void initState() {
+
     super.initState();
     _blind();
     setState(() {
-
+skillsUpdate;
     });
   }
 
   @override
   void dispose() {
+    _displayViewModel.dispose();
     _saveviewModel.dispose();
     super.dispose();
   }
@@ -133,14 +137,14 @@ class _EmployeeSkillsViewState extends State<EmployeeSkillsView> {
                     .of(context)
                     .size
                     .height * 1.3,
-                padding: const EdgeInsets.only(top: 30),
+                padding: const EdgeInsets.only(top: 5),
                 child: SingleChildScrollView(
                   child: Form(
                     key: _Formkey,
                     child: Column(
                       children: [
                         // qualification
-                        Container(
+                          Container(
                             alignment: AlignmentDirectional.topStart,
                             padding: const EdgeInsets.only(
                                 top: 12,
@@ -181,6 +185,7 @@ class _EmployeeSkillsViewState extends State<EmployeeSkillsView> {
                                     builder: (context, snapshot) {
                                       List<GradeItem>? grades = snapshot.data
                                           ?.grades;
+                                      gradeItems=grades;
                                       return _getGrade(grades);
                                     },
                                   ),
@@ -235,17 +240,16 @@ class _EmployeeSkillsViewState extends State<EmployeeSkillsView> {
                                 builder: (context, snapshot) {
                                   if (snapshot.data?.allowEdit == true) {
                                     return StatefulBuilder
-                                      (builder: (context,setState)=>ElevatedButton(
+                                      (builder: (context,setState)=>FloatingActionButton(
                                         child: Text(AppStrings.Add.tr()),
-                                        onPressed: () {
+                                        onPressed: () async{
+                                          //skillsUpdate=snapshot.data?.skills;
 
-                                          addingSkills();
-                                          //addingSuccess=true;
+                                         await addingSkills();
+                                         await generateSkillsData() ;
+
                                           setState(() {
-                                            //addingSkills();
-                                            addingSuccess;
-                                            initDisplayEmployeeSkillsModule();
-                                            skillsUpdate=snapshot.data?.skills;
+                                            skillsUpdate=skillsUpdate;
 
                                           });
                                         }
@@ -266,21 +270,20 @@ class _EmployeeSkillsViewState extends State<EmployeeSkillsView> {
                                 child: StreamBuilder<getEmpSkillsModel>(
                                     stream: _displayViewModel.outputEmpSkill,
                                     // stream: _saveViewModel.outputErrorPassword,
-                                    builder: (context, snapshot) {
+                                    builder: (context, snapshot){
                                       allowEdit=snapshot.data?.allowEdit;
-                                      List<skillsModel>? skills = snapshot
+                                      List<skillsModel>? skills= snapshot
                                           .data
                                           ?.skills;
-                                      skillsUpdate = skills;
-                                      return StatefulBuilder
-                                      (builder: (context,setState)=>RefreshIndicator(
-                                        onRefresh: ()async{
-                                          setState((){
-                                            skillsUpdate = skills;
-                                        // Update your data here
-                                      }); },
-                                          child: Skillstable(skillsUpdate!)));
-                                    }
+
+                                      return
+                                        Skillstable();
+                                      }
+
+
+                                      // ))
+
+
                                 )
                             ))
                       ],
@@ -298,12 +301,14 @@ class _EmployeeSkillsViewState extends State<EmployeeSkillsView> {
 
   Widget _getQualification(List<QualificationItem>? qualification) {
     //var dropdownvalue;
+    QualificationItems=qualification;
     var items = qualification?.map(
             (qualificationItem) {
           return DropdownMenuItem(
             value: qualificationItem.value,
             child: Text(qualificationItem.text.toString()),);
         }).toList();
+
 
     return DropdownButton(enableFeedback: allowEdit,
       hint: Text(AppStrings.Choose_a_Qualification.tr()),
@@ -315,6 +320,27 @@ class _EmployeeSkillsViewState extends State<EmployeeSkillsView> {
       },
       value: qualificationid,
     );
+  }
+
+
+  String? gradeName(int gId){
+
+
+    gradeItems?.map(
+            (gradeItem) {
+              if(gradeItem.value==gId){return gradeItem.text ;}
+            }).toList();
+    return null;
+  }
+
+  String? QualificationName(int QId){
+
+
+    QualificationItems?.map(
+            (qualificationItem) {
+          if(qualificationItem.value==QId){return qualificationItem.text ;}
+        }).toList();
+    return null;
   }
 
   Widget _getGrade(List<GradeItem>? grade) {
@@ -339,7 +365,7 @@ class _EmployeeSkillsViewState extends State<EmployeeSkillsView> {
       value: gradeId,
     );
   }
-  Widget _createSkillsTable(List<skillsModel> skills) {
+  Widget _createSkillsTable(List<UserSkills> skills) {
     if(skills.isEmpty==false) {
       return DataTable(
         headingRowColor: MaterialStateColor.resolveWith((states) =>
@@ -351,7 +377,7 @@ class _EmployeeSkillsViewState extends State<EmployeeSkillsView> {
     }else
     {return Container();}
   }
-  Future<Widget> _createSkillsTable1(List<skillsModel> skills) async{
+  Future<Widget> _createSkillsTable1(List<UserSkills> skills) async{
     if(skills.isEmpty==false) {
       return DataTable(
         headingRowColor: MaterialStateColor.resolveWith((states) =>
@@ -375,7 +401,7 @@ class _EmployeeSkillsViewState extends State<EmployeeSkillsView> {
     ];
   }
 
-  List<DataRow> _createRows(List<skillsModel> skills) {
+  List<DataRow> _createRows(List<UserSkills> skills) {
     return skills
         .map((skill) =>
         DataRow(cells: [
@@ -411,7 +437,15 @@ class _EmployeeSkillsViewState extends State<EmployeeSkillsView> {
       var x= result.fromJson(jsonDecode(response.body)) ;
       bool y =x.isValid;
       if(y==true) {
-        addingSuccess=true;
+       setState(() {
+
+      // skillsUpdate!.add(skillsModel(empId, QualificationName(qualificationid!), gradeName(gradeId!), qualificationid, datetext, gradeId));
+          addingSuccess=true;
+          //skillsUpdate= await generateSkillsData();
+
+
+        });
+
         displayDialoge();
        // print(response.body);
       }else
@@ -421,10 +455,10 @@ class _EmployeeSkillsViewState extends State<EmployeeSkillsView> {
      // print('Request failed with status: ${response.statusCode}.');
     }
   }
-  Widget Skillstable(List<skillsModel> skills){
+  Widget Skillstable(){
     return
       FutureBuilder(
-          future:_createSkillsTable1(skills),
+          future:generateSkillsData(),
           builder:(context,snapshot)
           {
             switch (snapshot.connectionState) {
@@ -437,11 +471,11 @@ class _EmployeeSkillsViewState extends State<EmployeeSkillsView> {
                 else
                 if (addingSuccess!=false) {
                   return Center(
-                      child:_createSkillsTable(skills)
+                      child:_createSkillsTable(skillsUpdate!)
                   );}
             }
             return Center(
-                child:_createSkillsTable(skills)
+                child:_createSkillsTable(skillsUpdate!)
             );
           }
 
@@ -494,7 +528,22 @@ Widget? displayDialoge()
     return null;
   }
 
-    //
+  Future <List<UserSkills>?> generateSkillsData() async {
+    List<UserSkills>? a;
+    userId = await _appPreferences.getUserToken();
+    var response = await http.get(
+        Uri.parse(Constants.GetEmpSkillsUrl), headers: <String, String>{'Content-Type': 'application/json; charset=UTF-8','userId':userId!});
+    var responseData = json.decode(response.body);
+        //.cast<Map<String, dynamic>>();
+    if(responseData['skills']!=null) {
+      var user_Skills = responseData['skills'] as List;
+      a = await user_Skills.map((jsonData) =>
+          UserSkills.fromJson(jsonData)).toList();
+      List<UserSkills>? b = List<UserSkills>.from(a as Iterable);
+      skillsUpdate = b;
+      return skillsUpdate;
+    } return null;
+  }
 
   }
 class result {
@@ -513,4 +562,30 @@ class result {
 
 
 }
+class UserSkills {
+  final int id;
+  final String typeName;
+  final String gradeName;
+  final int qualificationTypeId;
+  final  String date;
+  final int gradeId;
 
+  UserSkills ({
+    required this.id,
+    required this.typeName,
+    required this.gradeName,
+    required this.qualificationTypeId,
+    required this.date,
+    required this.gradeId,
+  });
+  factory UserSkills.fromJson(Map<String, dynamic> json) {
+    return UserSkills(
+        id: json["Id"],
+        typeName: json["TypeName"],
+        gradeName: json["GradeName"],
+        qualificationTypeId: json["QualificationTypeId"],
+        date: json["Date"],
+        gradeId: json["GradeId"]
+    );
+  }
+}

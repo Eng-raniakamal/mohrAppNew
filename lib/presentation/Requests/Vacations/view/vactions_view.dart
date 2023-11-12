@@ -79,7 +79,7 @@ class _vacationsViewState extends State<vacationsView> {
       else
       if(index==2)
       {
-        //Navigator.of(context).pushReplacementNamed(Routes.);
+        Navigator.of(context).pushReplacementNamed(Routes.notification);
       }
     }
     ),
@@ -141,7 +141,10 @@ class _vacationsViewState extends State<vacationsView> {
                                         borderRadius: BorderRadius.circular(10)),
                                     onPressed: ()
                                      {
-                                       MaterialPageRoute(builder: (_)=> UnderConstructionScreen());
+                                       Navigator.push(
+                                           context,
+                                           MaterialPageRoute(builder: (context) => const UnderConstructionScreen()));
+                                      // MaterialPageRoute(builder: (_)=> UnderConstructionScreen());
                                            //Navigator.pushReplacement(context,UnderConstructionScreen() as Route<Object?>);
                                      // Navigator.of(context).pushReplacementNamed(UnderConstructionScreen() as String);
                                       },)),

@@ -75,6 +75,7 @@ dependencies:
   data_table_2: ^2.2.1
   toggle_switch: ^2.1.0
   syncfusion_flutter_datepicker: ^23.1.41
+  flutter_local_notifications: ^16.1.0
 
 dev_dependencies:
   flutter_test:

@@ -138,8 +138,9 @@ class AppStrings {
   static const String type="Type";
   static const String Action="Action";
   static const String Action_Type="Action_Type";
-
-
+//Alert & notification
+  static const String announcements="Announcements";
+  static const String memos="Memos";
       //
 //slide menu
   static const String Welcome = "Welcome";

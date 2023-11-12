@@ -16,13 +16,13 @@ AppBar buildAppBarstart(BuildContext context) {
   final icon = CupertinoIcons.moon_stars;
 
   return AppBar(
-   // automaticallyImplyLeading: false,
+    automaticallyImplyLeading: true,
     backgroundColor:Colors.transparent,
-    //leading:
-    // IconButton(
-    //   onPressed: () {},
-    //   icon: Image.asset(ImageAssets.EarthLangIc),
-    // ),
+    leading: BackButton(
+      color: colorManager.primary,
+        onPressed: () => Navigator.of(context).pop()
+      ),
+
 
 //),
     elevation: 0,

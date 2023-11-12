@@ -8,6 +8,7 @@ const String PREFS_KEY_ONBOARDING_SCREEN = "PREFS_KEY_ONBOARDING_SCREEN";
 const String PREFS_KEY_IS_USER_LOGGED_IN = "PREFS_KEY_IS_USER_LOGGED_IN";
 final String PREFS_KEY_TOKEN ="PREFS_KEY_TOKEN";
 final String PREFS_ID_TOKEN ="PREFS_ID_TOKEN";
+final String PREFS_List_Notification="PREFS_List_Notification";
 
 class AppPreferences {
   final SharedPreferences _sharedPreferences;
@@ -118,4 +119,15 @@ class AppPreferences {
   Future<void> logout() async {
     _sharedPreferences.remove(PREFS_KEY_IS_USER_LOGGED_IN);
   }
+  ///////////////////////////////////////////
+  Future<void> setUserNotificationList(int lengthOfList) async {
+    _sharedPreferences.setInt(PREFS_List_Notification,lengthOfList);
+  }
+
+  Future<int> getUserNotificationList() async {
+    return _sharedPreferences.getInt(PREFS_List_Notification) ?? 0;
+  }
+
+
+
 }

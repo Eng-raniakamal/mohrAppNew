@@ -182,12 +182,12 @@ oKPressed=false;
                               child: Container(
                   margin: const EdgeInsets.fromLTRB(40, 0, 30, 0),
                   height: 30,
-                  child: Text(AppStrings.from +' : '+ _startDate)),
+                  child: Text(AppStrings.from +' : '+ _startDate,style: TextStyle(fontSize: 14,fontWeight: FontWeight.bold),)),
                             ),
                             Expanded(
                              child: Container(
                                  margin: const EdgeInsets.fromLTRB(30, 0, 40,0),
-              height: 30, child: Text(AppStrings.to +' : '+ _endDate)),
+              height: 30, child: Text(AppStrings.to +' : '+ _endDate,style: TextStyle(fontSize: 14,fontWeight: FontWeight.bold))),
                            )
                                    ]),
             SizedBox(height: 40,
@@ -370,7 +370,6 @@ Future <List<UserAttendance>?> getApiAttendance() async
              )
    ));
 
-
  }
 
  Widget table(){
@@ -381,7 +380,7 @@ Future <List<UserAttendance>?> getApiAttendance() async
        {
          switch (snapshot.connectionState) {
            case ConnectionState.waiting:
-             return Center(
+             return const Center(
                child:CircularProgressIndicator());
            default:
              if (snapshot.hasError)
@@ -393,18 +392,12 @@ Future <List<UserAttendance>?> getApiAttendance() async
                    child:_createAttendanceTable1(attendanceData)
                );}
          }
-         return Text('');
+         return const Text('');
        }
-
-
-
    );
  }
    
  }
-
-
-
 class UserAttendance {
   final int id;
   final String mode;

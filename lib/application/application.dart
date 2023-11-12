@@ -1,11 +1,19 @@
 
+import 'dart:async';
+
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 import 'package:mohr_hr/application/app_prefs.dart';
+import 'package:mohr_hr/application/constants.dart';
 import 'package:mohr_hr/application/di.dart';
+import 'package:mohr_hr/domain/model/model.dart';
 import 'package:mohr_hr/domain/model/user_preferences.dart';
+import 'package:mohr_hr/main.dart';
+import 'package:mohr_hr/presentation/Alert_Notification/ViewModel/notificationViewModel.dart';
+import 'package:mohr_hr/presentation/Notification.dart';
+import 'package:mohr_hr/presentation/NotificationService.dart';
 import 'package:mohr_hr/presentation/home/Home.dart';
 //import 'package:mohr_hr/presentation/onboarding/onboarding_screen.dart';
 import 'package:mohr_hr/presentation/onbourding/onbording_screen.dart';
@@ -37,12 +45,24 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
 
   final AppPreferences _appPreferences = instance<AppPreferences>();
+  final NotificationServies _notifiService=NotificationServies();
+  Timer? timer;
+
+
+
 
   @override
   void didChangeDependencies() {
    // _navigator = Navigator.of(context);
     _appPreferences.getLocal().then((local) => {context.setLocale(local)});
     super.didChangeDependencies();
+  }
+  @override
+  void initState(){
+    super.initState();
+    Notifications.initialize(flutterLocalNotificationsPlugin);
+    timer = Timer.periodic(Duration(seconds: 30), (Timer t) async => await _notifiService.checkNewNotifications());
+
   }
 
 
@@ -74,6 +94,8 @@ class _MyAppState extends State<MyApp> {
     ;
   }
 }
+
+
 class LocaleModel extends ChangeNotifier {
   Locale? _locale;
 
@@ -83,4 +105,39 @@ class LocaleModel extends ChangeNotifier {
     _locale = locale;
     notifyListeners();
   }
+}
+
+class NotificationServies
+{
+  // Timer? timer;
+  final AppPreferences _appPreferences = instance<AppPreferences>();
+  NotificationData _notificationDataData=NotificationData();
+  List<NotificationModel>? notifications;
+  int? lengthOfList;
+  Future<void> checkNewNotifications() async {
+    notifications= await _notificationDataData.getApiNotification();
+    lengthOfList=notifications?.length;
+    int storedDataLength=await _appPreferences.getUserNotificationList() ;
+    if( lengthOfList!=null) {
+      if (storedDataLength == null) {
+        _appPreferences.setUserNotificationList(lengthOfList!);
+      }
+      else {
+        if (storedDataLength < lengthOfList!)
+        {
+          int different=lengthOfList!-storedDataLength;
+          Constants.notificationNumber=different;
+          Notifications.showBigTextNotification(title:"MOHR",body:different.toString()+"new message here",
+              fln:flutterLocalNotificationsPlugin);
+        }
+      }
+    }
+
+    // // do request here
+    // setState((){
+    //   // change state according to result of request
+    // });
+
+  }
+
 }

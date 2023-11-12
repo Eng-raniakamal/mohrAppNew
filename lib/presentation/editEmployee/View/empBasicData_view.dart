@@ -644,19 +644,6 @@ class _BasicDataViewState extends State<BasicDataView> {
   Widget _getGovernorate(List<GovernorateModel>? governorate, int? selectedValue) {
     selectedValue ??= governorate![0].governorateId;
     governorateId=selectedValue;
-    // return DropdownButton(
-    //   value: selectedValue,
-    //   items: governorate?.map(
-    //           (governorateItems) {
-    //         return DropdownMenuItem(
-    //           value: governorateItems.governorateId,
-    //           child: Text(governorateItems.governorateName.toString()),);
-    //       }).toList(),
-    //   onChanged: (Object? value) {
-    //     selectedValue = value as int;
-    //   },
-    //
-    // );
     var items = governorate?.map(
             (governorateItem) {
           return DropdownMenuItem(

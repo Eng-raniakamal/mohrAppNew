@@ -85,6 +85,11 @@ class _userViewState extends State<userView> {
                   {
                     Navigator.of(context).pushReplacementNamed(Routes.employee);
                   }
+                  else
+                    if(index==2)
+                      {
+                        Navigator.of(context).pushReplacementNamed(Routes.notification);
+                      }
                 }
             ),
             body:
@@ -287,8 +292,10 @@ if(ReqName==AppStrings.Requests.tr())
       transitionOnUserGestures: true,
       child: InkWell(
           onTap: () {
-            // MaterialPageRoute(builder: (_)=> UnderConstructionScreen());
-            // Navigator.of(context).pushNamed(UnderConstructionScreen() as String);
+           // Navigator.of(context).pushReplacementNamed(Routes.underConstraction);
+            Navigator.push(context,
+              MaterialPageRoute(builder: (context) => const UnderConstructionScreen()),
+            );
           },
           child: Column(
             children: [
