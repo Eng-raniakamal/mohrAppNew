@@ -45,32 +45,106 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
 
   final AppPreferences _appPreferences = instance<AppPreferences>();
-  final NotificationServies _notifiService=NotificationServies();
+ // final NotificationServies _notifiService=NotificationServies();
   Timer? timer;
 
+  //final AppPreferences _appPreferences = instance<AppPreferences>();
+  NotificationData _notificationData =NotificationData();
+  List<NotificationModel>? notifications;
+  int? lengthOfList;
+  int different=0;
+  int differentflag=0;
+  bool checked=false;
+  int? storedDataLength;
 
-
-
+_bind()
+{
+  getnotification();
+  //checked=false;
+}
   @override
   void didChangeDependencies() {
-   // _navigator = Navigator.of(context);
     _appPreferences.getLocal().then((local) => {context.setLocale(local)});
     super.didChangeDependencies();
   }
   @override
   void initState(){
-    super.initState();
+  _bind();
+
+    //Constants.notificationNumber=different;
     Notifications.initialize(flutterLocalNotificationsPlugin);
-    timer = Timer.periodic(Duration(seconds: 30), (Timer t) async => await _notifiService.checkNewNotifications());
+  super.initState();
+    setState(() {
+
+    });
+
+//if(checked==true) {
+  timer = Timer.periodic(const Duration(seconds: 20), (
+      Timer t) async => await checkNewNotifications());
+//}
+  }
+  getnotification()
+  async {await checkNewNotifications();}
+
+  Future<void> checkNewNotifications() async {
+
+    notifications= await _notificationData.getApiNotification();
+
+    lengthOfList=await _notificationData.getUnSeenNotification(notifications!);
+    Constants.notificationNumber = lengthOfList!;
+
+
+    if( lengthOfList!=null) {
+
+         storedDataLength=await _appPreferences.getUserNotificationList() ;
+
+         if(lengthOfList!=storedDataLength)
+           {
+        setState(()  {
+          Constants.notificationNumber = lengthOfList!;
+        });
+        Notifications.showBigTextNotification(
+            title: "MOHR", body: "${lengthOfList} new message here",
+            fln: flutterLocalNotificationsPlugin );
+        _appPreferences.setUserNotificationList(lengthOfList!);
+           }
+         else{
+           setState(()  {
+             Constants.notificationNumber = lengthOfList!;
+           });
+
+           _appPreferences.setUserNotificationList(lengthOfList!);
+         }
+     // }
+      // else {
+      //   if (storedDataLength! < lengthOfList!) {
+      //       different = lengthOfList! - storedDataLength!;
+      //       Constants.notificationNumber = different;
+      //       _appPreferences.setUserNotificationList(lengthOfList!);
+      //       differentflag = different;
+      //       setState(() {
+      //         Constants.notificationNumber = different;
+      //       });
+      //
+      //       Notifications.showBigTextNotification(
+      //           title: "MOHR", body: "${different}new message here",
+      //           fln: flutterLocalNotificationsPlugin);
+      //     }
+      //   }
+      }
+  // }
+
+    // // do request here
+    // setState(() {
+    //   Constants.notificationNumber=different;
+    // });
 
   }
-
 
   @override
   Widget build(BuildContext? context) {
     final user = UserPreferences.myUser;
     //bool darkMode= false;
-
     return
       ThemeProvider(
       initTheme: user.isDarkMode! ? MyThemes.darkTheme : MyThemes.lightTheme,
@@ -105,39 +179,4 @@ class LocaleModel extends ChangeNotifier {
     _locale = locale;
     notifyListeners();
   }
-}
-
-class NotificationServies
-{
-  // Timer? timer;
-  final AppPreferences _appPreferences = instance<AppPreferences>();
-  NotificationData _notificationDataData=NotificationData();
-  List<NotificationModel>? notifications;
-  int? lengthOfList;
-  Future<void> checkNewNotifications() async {
-    notifications= await _notificationDataData.getApiNotification();
-    lengthOfList=notifications?.length;
-    int storedDataLength=await _appPreferences.getUserNotificationList() ;
-    if( lengthOfList!=null) {
-      if (storedDataLength == null) {
-        _appPreferences.setUserNotificationList(lengthOfList!);
-      }
-      else {
-        if (storedDataLength < lengthOfList!)
-        {
-          int different=lengthOfList!-storedDataLength;
-          Constants.notificationNumber=different;
-          Notifications.showBigTextNotification(title:"MOHR",body:different.toString()+"new message here",
-              fln:flutterLocalNotificationsPlugin);
-        }
-      }
-    }
-
-    // // do request here
-    // setState((){
-    //   // change state according to result of request
-    // });
-
-  }
-
 }

@@ -23,6 +23,7 @@ import 'package:mohr_hr/presentation/widgets/appbarMain.dart';
 import 'package:mohr_hr/presentation/widgets/appbar_widget.dart';
 import 'package:mohr_hr/presentation/widgets/button_widget.dart';
 import 'package:mohr_hr/presentation/widgets/clipPathWidget.dart';
+import 'package:mohr_hr/presentation/widgets/navigator_bar.dart';
 import 'package:mohr_hr/presentation/widgets/profile_widget.dart';
 import 'package:mohr_hr/presentation/Requests/Vacations/view/vactions_view.dart';
 import 'package:scroll_snap_list/scroll_snap_list.dart';
@@ -69,29 +70,29 @@ class _userViewState extends State<userView> {
         Scaffold(
             extendBodyBehindAppBar: true,
             appBar: buildAppBar(context),
-            bottomNavigationBar:
-            CurvedNavigationBar(items: items,
-                index: 1,
-                buttonBackgroundColor: colorManager.primary,
-                backgroundColor: Colors.transparent,
-                color: colorManager.primary,
-                onTap: (int index) {
-                  if(index==1)
-                  {
-                    Navigator.of(context).pushReplacementNamed(Routes.HomeRoute);
-                  }
-                  else
-                  if(index==0)
-                  {
-                    Navigator.of(context).pushReplacementNamed(Routes.employee);
-                  }
-                  else
-                    if(index==2)
-                      {
-                        Navigator.of(context).pushReplacementNamed(Routes.notification);
-                      }
-                }
-            ),
+            bottomNavigationBar:NavigatorBar(index: 1),
+            // CurvedNavigationBar(items: items,
+            //     index: 1,
+            //     buttonBackgroundColor: colorManager.primary,
+            //     backgroundColor: Colors.transparent,
+            //     color: colorManager.primary,
+            //     onTap: (int index) {
+            //       if(index==1)
+            //       {
+            //         Navigator.of(context).pushReplacementNamed(Routes.HomeRoute);
+            //       }
+            //       else
+            //       if(index==0)
+            //       {
+            //         Navigator.of(context).pushReplacementNamed(Routes.employee);
+            //       }
+            //       else
+            //         if(index==2)
+            //           {
+            //             Navigator.of(context).pushReplacementNamed(Routes.notification);
+            //           }
+            //     }
+            // ),
             body:
         StreamBuilder<FlowState>(
             stream: _viewModel.outputState,

@@ -24,6 +24,7 @@ import 'package:mohr_hr/presentation/resources/colors.dart';
 import 'package:mohr_hr/presentation/resources/routes.dart';
 import 'package:mohr_hr/presentation/widgets/appbar_widget.dart';
 import 'package:mohr_hr/presentation/widgets/appbarstart.dart';
+import 'package:mohr_hr/presentation/widgets/navigator_bar.dart';
 import 'package:permission_handler/permission_handler.dart';
 import '../../../application/app_prefs.dart';
 import '../../../application/constants.dart';
@@ -63,7 +64,7 @@ class _AlertViewState extends State<AlertLayout>with TickerProviderStateMixin {
   Widget build(BuildContext context) {
 
     final TabController _tabController = TabController(
-        length: (3), vsync: this);
+        length: (2), vsync: this);
     final item=<Widget>
     [ const Icon(Icons.person,size: 30,color: colorManager.white,),
       const Icon(Icons.home,size: 30,color: colorManager.white),
@@ -76,37 +77,15 @@ class _AlertViewState extends State<AlertLayout>with TickerProviderStateMixin {
             builder: (context) =>
                 Scaffold(
                   appBar: buildAppBarstart(context),
-                  // backgroundColor: colorManager.white,
-                  bottomNavigationBar:
-                  CurvedNavigationBar(items: item,
-                      index: 2,
 
-                      buttonBackgroundColor: colorManager.primary,
-                      backgroundColor: Colors.transparent,
-                      color: colorManager.primary,
+                  bottomNavigationBar:NavigatorBar(index: 2),
 
-
-                      onTap: (int index) {
-                        if(index==1)
-                        {
-                          // changeIndex(index);
-                          Navigator.of(context).pushReplacementNamed(Routes.HomeRoute);
-                        }
-                        else
-                        if(index==0)
-                        {
-                          Navigator.of(context).pushReplacementNamed(Routes.editProfileRoute);
-                        }
-                      }
-                  ),
                   body:
                   SingleChildScrollView(
                     scrollDirection: Axis.vertical,
                     child: Column(
                         children: [
-                          // Flexible(
-                          //   flex: 1,
-                          //   child:
+
                             Container(
                                 padding: EdgeInsets.only(top: 20),
                                 width: MediaQuery
@@ -153,9 +132,9 @@ class _AlertViewState extends State<AlertLayout>with TickerProviderStateMixin {
                                                       .greywithOpacity,
                                                 ),
                                                 tabs: [
-                                                  Tab(text: AppStrings.announcements
+                                                  Tab(text:AppStrings.memos
                                                       .tr()),
-                                                  Tab(text: AppStrings.memos
+                                                  Tab(text: AppStrings.announcements
                                                       .tr()),
 
                                                 ],
@@ -168,17 +147,15 @@ class _AlertViewState extends State<AlertLayout>with TickerProviderStateMixin {
                                 )
                             ),
 
-                          // Flexible(
-                          //   flex:2 ,
-                          //   child:
                             Container(
                               width: MediaQuery.of(context).size.width,
                               height: MediaQuery.of(context).size.height*3,
                               child: TabBarView(
                                 controller: _tabController,
                                 children:  const [
+                                  NotificationView(),
                                   AlertView(),
-                                  NotificationView()
+
                                 ],
                               ),
                             ),

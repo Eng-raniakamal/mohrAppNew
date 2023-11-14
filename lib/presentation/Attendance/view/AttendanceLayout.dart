@@ -22,6 +22,7 @@ import 'package:mohr_hr/presentation/resources/colors.dart';
 import 'package:mohr_hr/presentation/resources/routes.dart';
 import 'package:mohr_hr/presentation/widgets/appbar_widget.dart';
 import 'package:mohr_hr/presentation/widgets/appbarstart.dart';
+import 'package:mohr_hr/presentation/widgets/navigator_bar.dart';
 import 'package:permission_handler/permission_handler.dart';
 import '../../../application/app_prefs.dart';
 import '../../../application/constants.dart';
@@ -77,29 +78,29 @@ class _EmployeeEditViewState extends State<AttendanceLayout>with TickerProviderS
                 Scaffold(
                   appBar: buildAppBarstart(context),
                   // backgroundColor: colorManager.white,
-                  bottomNavigationBar:
-                  CurvedNavigationBar(items: item,
-                      index: 0,
-
-                      buttonBackgroundColor: colorManager.primary,
-                      backgroundColor: Colors.transparent,
-                      color: colorManager.primary,
-
-
-                      onTap: (int index) {
-                        if(index==1)
-                        {
-                          // changeIndex(index);
-                          Navigator.of(context).pushReplacementNamed(Routes.HomeRoute);
-                        }
-                        else
-                        if(index==2)
-                        {
-                          Navigator.of(context).pushReplacementNamed(Routes.notification);
-                        }
-                      }
-                  ),
-                  body:
+                  bottomNavigationBar:NavigatorBar(index:0)
+                  // CurvedNavigationBar(items: item,
+                  //     index: 0,
+                  //
+                  //     buttonBackgroundColor: colorManager.primary,
+                  //     backgroundColor: Colors.transparent,
+                  //     color: colorManager.primary,
+                  //
+                  //
+                  //     onTap: (int index) {
+                  //       if(index==1)
+                  //       {
+                  //         // changeIndex(index);
+                  //         Navigator.of(context).pushReplacementNamed(Routes.HomeRoute);
+                  //       }
+                  //       else
+                  //       if(index==2)
+                  //       {
+                  //         Navigator.of(context).pushReplacementNamed(Routes.notification);
+                  //       }
+                  //     }
+                  // ),
+                  ,body:
                   Column(
                       children: [
                         Flexible(

@@ -99,7 +99,6 @@ class _SideBarState extends State<SideBar> with SingleTickerProviderStateMixin<S
         stream: isSidebarOpenedStream,
         builder: (context, isSideBarOpenedAsync) {
           return
-
             AnimatedPositioned(
               duration: _animationDuration,
               top: 0,
@@ -247,8 +246,6 @@ class _SideBarState extends State<SideBar> with SingleTickerProviderStateMixin<S
   }
   Widget _getImageWidget() {
     String? URLimage ;
-
-
       Constants.imagePath=URLimage!;
       return ProfileWidget(
           imagePath: URLimage,

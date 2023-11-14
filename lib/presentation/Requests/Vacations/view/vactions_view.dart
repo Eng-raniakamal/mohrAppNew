@@ -11,6 +11,7 @@ import 'package:mohr_hr/presentation/resources/strings_manager.dart';
 import 'package:mohr_hr/presentation/underConstraction.dart';
 import 'package:mohr_hr/presentation/widgets/appbar_widget.dart';
 import 'package:mohr_hr/presentation/widgets/appbarstart.dart';
+import 'package:mohr_hr/presentation/widgets/navigator_bar.dart';
 import 'package:mohr_hr/presentation/widgets/profile_widget.dart';
 import '../../../../application/constants.dart';
 import '../viewModel/vacationViewModel.dart';
@@ -61,28 +62,28 @@ class _vacationsViewState extends State<vacationsView> {
         builder: (context) =>
         Scaffold(
             appBar: buildAppBarstart(context),
-        bottomNavigationBar:
-        CurvedNavigationBar(items: item,
-        index: 0,
-
-        buttonBackgroundColor: colorManager.primary,
-        backgroundColor: Colors.transparent,
-        color: colorManager.primary,
-
-
-        onTap: (int index) {
-      if(index==1)
-      {
-        // changeIndex(index);
-        Navigator.of(context).pushReplacementNamed(Routes.HomeRoute);
-      }
-      else
-      if(index==2)
-      {
-        Navigator.of(context).pushReplacementNamed(Routes.notification);
-      }
-    }
-    ),
+        bottomNavigationBar:NavigatorBar(index: 0),
+    //     CurvedNavigationBar(items: item,
+    //     index: 0,
+    //
+    //     buttonBackgroundColor: colorManager.primary,
+    //     backgroundColor: Colors.transparent,
+    //     color: colorManager.primary,
+    //
+    //
+    //     onTap: (int index) {
+    //   if(index==1)
+    //   {
+    //     // changeIndex(index);
+    //     Navigator.of(context).pushReplacementNamed(Routes.HomeRoute);
+    //   }
+    //   else
+    //   if(index==2)
+    //   {
+    //     Navigator.of(context).pushReplacementNamed(Routes.notification);
+    //   }
+    // }
+    // ),
     body:
     SingleChildScrollView(
           scrollDirection: Axis.vertical,

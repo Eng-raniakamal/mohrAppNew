@@ -20,6 +20,7 @@ import 'package:mohr_hr/presentation/resources/colors.dart';
 import 'package:mohr_hr/presentation/resources/routes.dart';
 import 'package:mohr_hr/presentation/widgets/appbar_widget.dart';
 import 'package:mohr_hr/presentation/widgets/appbarstart.dart';
+import 'package:mohr_hr/presentation/widgets/navigator_bar.dart';
 import 'package:permission_handler/permission_handler.dart';
 import '../../../application/app_prefs.dart';
 import '../../../application/constants.dart';
@@ -70,39 +71,39 @@ class _EmployeeEditViewState extends State<EmployeeEditView>with TickerProviderS
     //image.path=Constants.imagePath;
     final TabController _tabController = TabController(
         length: (3), vsync: this);
-    final item=<Widget>
-    [ const Icon(Icons.person,size: 30,color: colorManager.white,),
-      const Icon(Icons.home,size: 30,color: colorManager.white),
-      Stack(
-        children: [
-          const Icon(Icons.notifications,size: 30),
-          Positioned(
-            right: 0,
-            child: Container(
-              padding: const EdgeInsets.all(1),
-              decoration: BoxDecoration(
-                color: Colors.red,
-                borderRadius: BorderRadius.circular(6),
-              ),
-              constraints: const BoxConstraints(
-                minWidth: 12,
-                minHeight: 12,
-              ),
-              child: Text(
-                Constants.notificationNumber.toString(),
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 8,
-                ),
-                textAlign: TextAlign.center,
-              ),
-            ),
-          )
-        ],
-      ),
-    //  const Icon(Icons.notifications,size: 30,color: colorManager.white),
-
-    ];
+    // final item=<Widget>
+    // [ const Icon(Icons.person,size: 30,color: colorManager.white,),
+    //   const Icon(Icons.home,size: 30,color: colorManager.white),
+    //   Stack(
+    //     children: [
+    //       const Icon(Icons.notifications,size: 30),
+    //       Positioned(
+    //         right: 0,
+    //         child: Container(
+    //           padding: const EdgeInsets.all(1),
+    //           decoration: BoxDecoration(
+    //             color: Colors.red,
+    //             borderRadius: BorderRadius.circular(6),
+    //           ),
+    //           constraints: const BoxConstraints(
+    //             minWidth: 12,
+    //             minHeight: 12,
+    //           ),
+    //           child: Text(
+    //             Constants.notificationNumber.toString(),
+    //             style: const TextStyle(
+    //               color: Colors.white,
+    //               fontSize: 8,
+    //             ),
+    //             textAlign: TextAlign.center,
+    //           ),
+    //         ),
+    //       )
+    //     ],
+    //   ),
+    // //  const Icon(Icons.notifications,size: 30,color: colorManager.white),
+    //
+    // ];
     return
       ThemeSwitchingArea(
           child: Builder(
@@ -110,28 +111,30 @@ class _EmployeeEditViewState extends State<EmployeeEditView>with TickerProviderS
                 Scaffold(
                   appBar: buildAppBarstart(context),
                  // backgroundColor: colorManager.white,
+
                   bottomNavigationBar:
-                  CurvedNavigationBar(items: item,
-                      index: 0,
-
-                      buttonBackgroundColor: colorManager.primary,
-                      backgroundColor: Colors.transparent,
-                      color: colorManager.primary,
-
-
-                      onTap: (int index) {
-                        if(index==1)
-                        {
-                          // changeIndex(index);
-                          Navigator.of(context).pushReplacementNamed(Routes.HomeRoute);
-                        }
-                        else
-                        if(index==2)
-                        {
-                          Navigator.of(context).pushReplacementNamed(Routes.notification);
-                        }
-                      }
-                  ),
+                  NavigatorBar(index: 0),
+                  // CurvedNavigationBar(items: item,
+                  //     index: 0,
+                  //
+                  //     buttonBackgroundColor: colorManager.primary,
+                  //     backgroundColor: Colors.transparent,
+                  //     color: colorManager.primary,
+                  //
+                  //
+                  //     onTap: (int index) {
+                  //       if(index==1)
+                  //       {
+                  //         // changeIndex(index);
+                  //         Navigator.of(context).pushReplacementNamed(Routes.HomeRoute);
+                  //       }
+                  //       else
+                  //       if(index==2)
+                  //       {
+                  //         Navigator.of(context).pushReplacementNamed(Routes.notification);
+                  //       }
+                  //     }
+                  // ),
                   body:
                   Container(
                     height: MediaQuery.of(context).size.height,

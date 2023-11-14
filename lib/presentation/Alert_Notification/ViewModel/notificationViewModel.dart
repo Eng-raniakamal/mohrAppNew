@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:dartz/dartz_unsafe.dart';
 import 'package:mohr_hr/application/app_prefs.dart';
 import 'package:mohr_hr/application/constants.dart';
 import 'package:mohr_hr/application/di.dart';
@@ -31,5 +32,20 @@ class NotificationData {
       return notifications;
     }
     return null;
+  }
+
+  Future <int> getUnSeenNotification(List<NotificationModel> notifiList) async
+  {
+    int unSeenMessage=0;
+
+    for(var i = 0; i < notifiList.length; i++)
+      {
+        if(notifiList[i].seen==false)
+          {
+            unSeenMessage++;
+          }
+
+      }
+    return unSeenMessage;
   }
 }

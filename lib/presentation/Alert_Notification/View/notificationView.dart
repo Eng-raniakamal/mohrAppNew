@@ -65,12 +65,13 @@ class _NotificationViewState extends State<NotificationView> {
                           child: Column(
                             children: [
                               Notificationtable(),
-                              ElevatedButton(
-                                  onPressed: ()
-                                  {
-                                    Notifications.showBigTextNotification(title:"message",body:"new message here",
-                                        fln:flutterLocalNotificationsPlugin);
-                                  }, child: Text("click"))
+                              //for notification test
+                              // ElevatedButton(
+                              //     onPressed: ()
+                              //     {
+                              //       Notifications.showBigTextNotification(title:"message",body:"new message here",
+                              //           fln:flutterLocalNotificationsPlugin);
+                              //     }, child: Text("click"))
 
                             ],
                           ),
@@ -127,7 +128,7 @@ class _NotificationViewState extends State<NotificationView> {
           DataCell(Text(_textHandling(notificationItem.attachments).toString())),
          // DataCell(_boolHandling(notificationItem.isCanceled)),
           DataCell(notificationItem.isCanceled == true ?
-        Icon(Icons.check,color: Colors.red):Text("_")),
+        Icon(Icons.check):Text("_")),
           DataCell(Text(_textHandling(notificationItem.cancellationReason).toString())),
            DataCell(notificationItem.seen == true ?
              Icon(Icons.check_box,color: Colors.blue,):Icon(Icons.close,color: Colors.grey))
