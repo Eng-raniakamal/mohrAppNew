@@ -267,9 +267,7 @@ class _BasicDataViewState extends State<BasicDataView> {
 
                                                  // border: InputBorder.,
                                                   hintText:
-                                                  birthDate!.day.toString() +
-                                                      "/" + birthDate!.month.toString() +
-                                                      "/" + birthDate!.year.toString()
+                                                  "${birthDate!.day}/${birthDate!.month}/${birthDate!.year}"
                                                 //labelText: AppStrings.nationalId.tr(),
                                                 //errorText: snapshot.data
                                               ));
