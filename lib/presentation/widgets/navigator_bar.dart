@@ -60,6 +60,7 @@ import 'package:mohr_hr/presentation/resources/routes.dart';
 //
 
 
+// ignore: must_be_immutable
 class NavigatorBar extends StatefulWidget {
   int index;
    NavigatorBar({
@@ -75,7 +76,7 @@ class _NavigatorBarState extends State<NavigatorBar> {
   final AppPreferences _appPreferences = instance<AppPreferences>();
   NotificationData _notificationData=NotificationData();
   List<NotificationModel>? notifications;
-  int? lengthOfList;
+  late int lengthOfList;
   int different=0;
   int differentflag=0;
   int? storedDataLength;
@@ -83,7 +84,7 @@ class _NavigatorBarState extends State<NavigatorBar> {
 
   @override
   void initState() {
-
+    //getnotification();
     super.initState();
     setState(() {
       Constants.notificationNumber;
@@ -150,7 +151,6 @@ class _NavigatorBarState extends State<NavigatorBar> {
                 minHeight: 12,
               ),
                child:
-
                     Text(
                       Constants.notificationNumber.toString(),
                     style: const TextStyle(
@@ -167,38 +167,21 @@ class _NavigatorBarState extends State<NavigatorBar> {
       );
     }
   }
-  // Widget _NotificationIcon(){
-  //   return
-  //     FutureBuilder(
-  //         future:_notificationData.getUnSeenNotification(notifications!),
-  //         builder:(context,snapshot) {
-  //           switch (snapshot.connectionState) {
-  //             case ConnectionState.waiting:
-  //               return const Center(
-  //                  child:CircularProgressIndicator()
-  //               );
-  //             default:
-  //               if (snapshot.hasError)
-  //                 return Text('Error: ${snapshot.error}');
-  //               else {
-  //                 return notificationIcon(lengthOfList)
-  //                 ;
-  //               }
-  //           }
-  //         });
-  // }
+
 getnotification()
   async {lengthOfList=await _notificationData.getUnSeenNotification(notifications!);
+
+    Constants.notificationNumber=lengthOfList;
   }
 
   Future<void> checkNewNotifications() async {
-
-    notifications= await _notificationData.getApiNotification();
+ String userId = await _appPreferences.getUserToken();
+    notifications= await _notificationData.getApiNotification(userId);
     //lengthOfList=notifications?.length;
 
     lengthOfList=await _notificationData.getUnSeenNotification(notifications!);
     storedDataLength=await _appPreferences.getUserNotificationList() ;
-    _appPreferences.setUserNotificationList(lengthOfList!);
+    _appPreferences.setUserNotificationList(lengthOfList);
 
     if( lengthOfList!=null) {
       if (storedDataLength == 0) {

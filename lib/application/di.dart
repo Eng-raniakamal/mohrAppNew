@@ -22,6 +22,7 @@ import 'package:mohr_hr/domain/usecase/saveAcademicDegree_UseCase.dart';
 import 'package:mohr_hr/domain/usecase/saveEmpBD_useCase.dart';
 import 'package:mohr_hr/domain/usecase/userImage_usecase.dart';
 import 'package:mohr_hr/presentation/AddImage/viewModel/GetImage_ViewModel.dart';
+import 'package:mohr_hr/presentation/Alert_Notification/ViewModel/notificationViewModel.dart';
 import 'package:mohr_hr/presentation/Attendance/viewModel/attendViewModel.dart';
 import 'package:mohr_hr/presentation/Requests/Salary/ViewModel/salaryDetailsViewModel.dart';
 import 'package:mohr_hr/presentation/Requests/Vacations/viewModel/VacationType_ViewModel.dart';
@@ -62,6 +63,12 @@ Future<void> initAppModule() async {
   // app prefs instance
   instance.registerLazySingleton<AppPreferences>
     (() => AppPreferences(instance()));
+
+
+  ////////
+  instance.registerLazySingleton<NotificationData>
+    (() => NotificationData());
+  ///////
   // network info
   instance.registerLazySingleton<NetworkInfo>(
           () => NetworkInfoImpl(InternetConnectionChecker()));
@@ -137,162 +144,168 @@ initSaveEmpBasicDataModule() {
   }
 }
 
-initEmployeeSkillsModule() {
-  if (!GetIt.I.isRegistered<EmployeeSkillsUseCase>()) {
-    instance.registerFactory<EmployeeSkillsUseCase>(() =>
-        EmployeeSkillsUseCase(instance()));
-    instance.registerFactory<EmployeeSkillsViewModel>(() {
-      var item = instance<EmployeeSkillsUseCase>();
-      return EmployeeSkillsViewModel(item);
-    });
-  }
-}
-
-initDisplayEmployeeSkillsModule() {
-  if (!GetIt.I.isRegistered<displaySkillsUseCase>()) {
-    instance.registerFactory<displaySkillsUseCase>(() =>
-        displaySkillsUseCase(instance()));
-    instance.registerFactory<DisplayEmpSkillsViewModel>(() {
-      var item = instance<displaySkillsUseCase>();
-      return DisplayEmpSkillsViewModel(item);
-    });
-  }
-}
-initDisplayAcademicDegreesModule(){
-  if (!GetIt.I.isRegistered<GetAcademicDegreeUseCase>()) {
-    instance.registerFactory<GetAcademicDegreeUseCase>(() =>
-        GetAcademicDegreeUseCase(instance()));
-    instance.registerFactory<DisplayAcademicDegreeViewModel>(() {
-      var item = instance<GetAcademicDegreeUseCase>();
-      return DisplayAcademicDegreeViewModel(item);
-    });
-  }
-}
-
-initSaveAcademicDegreesModule() {
-  if (!GetIt.I.isRegistered<saveAcademicDegreeUseCase>()) {
-    instance.registerFactory<saveAcademicDegreeUseCase>(() =>
-        saveAcademicDegreeUseCase(instance()));
-    instance.registerFactory<SaveAcademicDegreeViewModel >(() {
-      var item = instance<saveAcademicDegreeUseCase>();
-      return SaveAcademicDegreeViewModel (item);
-    });
-  }
-}
 
 
-initAttendanceModule() {
-  if (!GetIt.I.isRegistered<AttendanceUseCase>()) {
-    instance.registerFactory<AttendanceUseCase>(() => AttendanceUseCase(instance()));
-    instance.registerFactory<AttendanceViewModel>(() {
-      var item = instance<AttendanceUseCase>();
-      return AttendanceViewModel(item);
-    }
-    );
-  }
-}
 
-initSalaryModule() {
-  if (!GetIt.I.isRegistered<SalaryUseCase>()) {
-    instance.registerFactory<SalaryUseCase>(() => SalaryUseCase(instance()));
-    instance.registerFactory<SalaryViewModel>(() {
-      var item = instance<SalaryUseCase>();
-      return SalaryViewModel(item);
-    }
-    );
-  }
-}
-  initSalaryDetailsModule() {
-    if (!GetIt.I.isRegistered<SalaryDetailsUseCase>()) {
-      instance.registerFactory<SalaryDetailsUseCase>(() =>
-          SalaryDetailsUseCase(instance()));
-      instance.registerFactory<SalaryDetailsViewModel>(() {
-        var item = instance<SalaryDetailsUseCase>();
-        return SalaryDetailsViewModel(item);
+    initEmployeeSkillsModule() {
+      if (!GetIt.I.isRegistered<EmployeeSkillsUseCase>()) {
+        instance.registerFactory<EmployeeSkillsUseCase>(() =>
+            EmployeeSkillsUseCase(instance()));
+        instance.registerFactory<EmployeeSkillsViewModel>(() {
+          var item = instance<EmployeeSkillsUseCase>();
+          return EmployeeSkillsViewModel(item);
+        });
       }
-      );
     }
-  }
 
-  initVacationModule() {
-    if (!GetIt.I.isRegistered<VacationUseCase>()) {
-      instance.registerFactory<VacationUseCase>(() =>
-          VacationUseCase(instance()));
-      instance.registerFactory<VacationViewModel>(() {
-        var item = instance<VacationUseCase>();
-        return VacationViewModel(item);
+    initDisplayEmployeeSkillsModule() {
+      if (!GetIt.I.isRegistered<displaySkillsUseCase>()) {
+        instance.registerFactory<displaySkillsUseCase>(() =>
+            displaySkillsUseCase(instance()));
+        instance.registerFactory<DisplayEmpSkillsViewModel>(() {
+          var item = instance<displaySkillsUseCase>();
+          return DisplayEmpSkillsViewModel(item);
+        });
       }
-      );
     }
-  }
-
-initVacationTypeModule() {
-  if (!GetIt.I.isRegistered<VacationTypeUseCase>()) {
-    instance.registerFactory<VacationTypeUseCase>(() =>
-        VacationTypeUseCase(instance()));
-    instance.registerFactory<VacationTypeViewModel>(() {
-      var item = instance<VacationTypeUseCase>();
-      return VacationTypeViewModel(item);
+    initDisplayAcademicDegreesModule() {
+      if (!GetIt.I.isRegistered<GetAcademicDegreeUseCase>()) {
+        instance.registerFactory<GetAcademicDegreeUseCase>(() =>
+            GetAcademicDegreeUseCase(instance()));
+        instance.registerFactory<DisplayAcademicDegreeViewModel>(() {
+          var item = instance<GetAcademicDegreeUseCase>();
+          return DisplayAcademicDegreeViewModel(item);
+        });
+      }
     }
-    );
-  }
-}
 
-initQualificationModule() {
-  if (!GetIt.I.isRegistered<QualificationUseCase>()) {
-    instance.registerFactory<QualificationUseCase>(() =>
-        QualificationUseCase(instance()));
-    instance.registerFactory<QualificationViewModel>(() {
-      var item = instance<QualificationUseCase>();
-      return QualificationViewModel(item);
+    initSaveAcademicDegreesModule() {
+      if (!GetIt.I.isRegistered<saveAcademicDegreeUseCase>()) {
+        instance.registerFactory<saveAcademicDegreeUseCase>(() =>
+            saveAcademicDegreeUseCase(instance()));
+        instance.registerFactory<SaveAcademicDegreeViewModel>(() {
+          var item = instance<saveAcademicDegreeUseCase>();
+          return SaveAcademicDegreeViewModel(item);
+        });
+      }
     }
-    );
-  }
-}
 
 
-initGradeModule() {
-  if (!GetIt.I.isRegistered<GradeUseCase>()) {
-    instance.registerFactory<GradeUseCase>(() =>
-        GradeUseCase(instance()));
-    instance.registerFactory<GradeViewModel>(() {
-      var item = instance<GradeUseCase>();
-      return GradeViewModel(item);
+    initAttendanceModule() {
+      if (!GetIt.I.isRegistered<AttendanceUseCase>()) {
+        instance.registerFactory<AttendanceUseCase>(() =>
+            AttendanceUseCase(instance()));
+        instance.registerFactory<AttendanceViewModel>(() {
+          var item = instance<AttendanceUseCase>();
+          return AttendanceViewModel(item);
+        }
+        );
+      }
     }
-    );
-  }
-}
 
-initDegreeModule() {
-  if (!GetIt.I.isRegistered<DegreeUseCase>()) {
-    instance.registerFactory<DegreeUseCase>(() =>
-        DegreeUseCase(instance()));
-    instance.registerFactory<DegreeViewModel>(() {
-      var item = instance<DegreeUseCase>();
-      return DegreeViewModel(item);
+    initSalaryModule() {
+      if (!GetIt.I.isRegistered<SalaryUseCase>()) {
+        instance.registerFactory<SalaryUseCase>(() =>
+            SalaryUseCase(instance()));
+        instance.registerFactory<SalaryViewModel>(() {
+          var item = instance<SalaryUseCase>();
+          return SalaryViewModel(item);
+        }
+        );
+      }
     }
-    );
-  }
-}
+    initSalaryDetailsModule() {
+      if (!GetIt.I.isRegistered<SalaryDetailsUseCase>()) {
+        instance.registerFactory<SalaryDetailsUseCase>(() =>
+            SalaryDetailsUseCase(instance()));
+        instance.registerFactory<SalaryDetailsViewModel>(() {
+          var item = instance<SalaryDetailsUseCase>();
+          return SalaryDetailsViewModel(item);
+        }
+        );
+      }
+    }
 
-  resetModules() {
-    instance.reset(dispose: false);
-    initAppModule();
-    initLoginModule();
-    initUserModule();
-    initUserImageModule();
-    initEmployeeBasicDataModule();
-    //initSaveEmpBasicDataModule();
-    initDisplayEmployeeSkillsModule();
-    initEmployeeSkillsModule();
-    initDisplayAcademicDegreesModule();
-    initSaveAcademicDegreesModule();
-    initVacationModule();
-    initAttendanceModule();
-    initSalaryModule();
-    initSalaryDetailsModule();
-    initQualificationModule();
-    initGradeModule();
-    initDegreeModule();
-  }
+    initVacationModule() {
+      if (!GetIt.I.isRegistered<VacationUseCase>()) {
+        instance.registerFactory<VacationUseCase>(() =>
+            VacationUseCase(instance()));
+        instance.registerFactory<VacationViewModel>(() {
+          var item = instance<VacationUseCase>();
+          return VacationViewModel(item);
+        }
+        );
+      }
+    }
+
+    initVacationTypeModule() {
+      if (!GetIt.I.isRegistered<VacationTypeUseCase>()) {
+        instance.registerFactory<VacationTypeUseCase>(() =>
+            VacationTypeUseCase(instance()));
+        instance.registerFactory<VacationTypeViewModel>(() {
+          var item = instance<VacationTypeUseCase>();
+          return VacationTypeViewModel(item);
+        }
+        );
+      }
+    }
+
+    initQualificationModule() {
+      if (!GetIt.I.isRegistered<QualificationUseCase>()) {
+        instance.registerFactory<QualificationUseCase>(() =>
+            QualificationUseCase(instance()));
+        instance.registerFactory<QualificationViewModel>(() {
+          var item = instance<QualificationUseCase>();
+          return QualificationViewModel(item);
+        }
+        );
+      }
+    }
+
+
+    initGradeModule() {
+      if (!GetIt.I.isRegistered<GradeUseCase>()) {
+        instance.registerFactory<GradeUseCase>(() =>
+            GradeUseCase(instance()));
+        instance.registerFactory<GradeViewModel>(() {
+          var item = instance<GradeUseCase>();
+          return GradeViewModel(item);
+        }
+        );
+      }
+    }
+
+    initDegreeModule() {
+      if (!GetIt.I.isRegistered<DegreeUseCase>()) {
+        instance.registerFactory<DegreeUseCase>(() =>
+            DegreeUseCase(instance()));
+        instance.registerFactory<DegreeViewModel>(() {
+          var item = instance<DegreeUseCase>();
+          return DegreeViewModel(item);
+        }
+        );
+      }
+    }
+
+    resetModules() {
+      instance.reset(dispose: false);
+      initAppModule();
+      initLoginModule();
+      initUserModule();
+      initUserImageModule();
+      initEmployeeBasicDataModule();
+      //initSaveEmpBasicDataModule();
+      initDisplayEmployeeSkillsModule();
+      initEmployeeSkillsModule();
+      initDisplayAcademicDegreesModule();
+      initSaveAcademicDegreesModule();
+      initVacationModule();
+      initAttendanceModule();
+      initSalaryModule();
+      initSalaryDetailsModule();
+      initQualificationModule();
+      initGradeModule();
+      initDegreeModule();
+
+    }
 

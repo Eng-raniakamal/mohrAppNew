@@ -70,7 +70,6 @@ oKPressed=false;
 
   @override
   Widget build(BuildContext context) {
-
     return ThemeSwitchingArea(
         child: Builder(
             builder: (context) =>
@@ -180,14 +179,14 @@ oKPressed=false;
                          children: [
                             Expanded(
                               child: Container(
-                  margin: const EdgeInsets.fromLTRB(40, 0, 30, 0),
+                  padding: const EdgeInsets.fromLTRB(40, 0, 0, 0),
                   height: 30,
-                  child: Text(AppStrings.from +' : '+ _startDate,style: TextStyle(fontSize: 14,fontWeight: FontWeight.bold),)),
+                  child: Text(AppStrings.from +' : '+ _startDate,style: TextStyle(fontSize: 13,fontWeight: FontWeight.bold),)),
                             ),
                             Expanded(
                              child: Container(
                                  margin: const EdgeInsets.fromLTRB(30, 0, 40,0),
-              height: 30, child: Text(AppStrings.to +' : '+ _endDate,style: TextStyle(fontSize: 14,fontWeight: FontWeight.bold))),
+              height: 30, child: Text(AppStrings.to +' : '+ _endDate,style: TextStyle(fontSize: 13,fontWeight: FontWeight.bold))),
                            )
                                    ]),
             SizedBox(height: 40,

@@ -7,6 +7,7 @@
     static const String postImageUrl='$baseUrl/api/Employee/Photo';
     static const String getAlertUrl='$baseUrl/api/Employee/GetAlerts';
     static const String getNotificationUrl='$baseUrl/api/Employee/GetEmployeeNotifications';
+    static const String getMarkNotificationAsSeenUrl='$baseUrl/api/Employee/MarkAsSeen';
     static const String attendanceUrl='$baseUrl/api/Attendance?fromDate=';
     static const String SaveEmployeeBasicDataUrl='$baseUrl/api/Employee/PersonellData';
     static const String DisplayEmployeeBasicData='$baseUrl/api/Employee/GetPersonellData';

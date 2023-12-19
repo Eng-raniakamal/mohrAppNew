@@ -4,12 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:mohr_hr/presentation/resources/assets_manager.dart';
 import 'package:mohr_hr/presentation/resources/routes.dart';
 import 'package:mohr_hr/presentation/widgets/components/animated_btn.dart';
-//import 'package:mohr_hr/presentation/widgets/components/sign_in_dialog.dart';
 import 'package:rive/rive.dart';
 import 'package:mohr_hr/presentation/resources/strings_manager.dart';
 import 'package:toggle_switch/toggle_switch.dart';
-import 'package:flutter_phoenix/flutter_phoenix.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:easy_localization/easy_localization.dart';
 import '../../application/app_prefs.dart';
 import '../../application/di.dart';
@@ -93,16 +90,18 @@ class _OnboadingScreenState extends State<OnboadingScreen> {
                     const Spacer(),
                     SizedBox(
                       width: 260,
-                      child: Column(
-                        children:   [
+                      child: SingleChildScrollView(
+                        child: Column(
+                          children:   [
 
-                           Center(child: Image(image: AssetImage(ImageAssets.startLogo)))
+                             Center(child: Image(image: AssetImage(ImageAssets.startLogo)))
 
-                          ,Text(AppStrings.spalshText.tr()
+                            ,Text(AppStrings.spalshText.tr()
 
-                          ),
-                          SizedBox(height: 16),
-                        ],
+                            ),
+                            SizedBox(height: 16),
+                          ],
+                        ),
                       ),
                     ),
 
@@ -146,25 +145,15 @@ class _OnboadingScreenState extends State<OnboadingScreen> {
                                 Navigator.of(context).pushReplacementNamed(Routes.loginRoute)
                                 }
 
-
-                         //   Navigator.of(context).pushReplacementNamed(Routes.loginRoute);
-                            // showCustomDialog(
-                            //   context,
-                            //   onValue: (_) {
-                            //     setState(() {
-                            //       isShowSignInDialog = false;
-                            //     });
-                            //   },
-                            // );
                           },
                         );
                       },
     );}),
-                    const Padding(
-                      padding: EdgeInsets.symmetric(vertical: 24),
-                      child: Text(
-                         ""),
-                    )
+                    // const Padding(
+                    //   padding: EdgeInsets.symmetric(vertical: 24),
+                    //   child: Text(
+                    //      ""),
+                    // )
                   ],
                 ),
               ),

@@ -30,7 +30,8 @@ class _BasicDataViewState extends State<BasicDataView> {
   final AppPreferences _appPreferences = instance<AppPreferences>();
   final _Formkey = GlobalKey<FormState>();
   DateTime? birthDate;
-  DateTime? date;
+  DateTime? date1;
+  DateTime date = DateTime(2023);
   bool? allowEdit;
   int? countryId;
   int? governorateId;
@@ -137,8 +138,7 @@ class _BasicDataViewState extends State<BasicDataView> {
     super.dispose();
   }
 
-  Widget _getContentWidget()
-  {
+  Widget _getContentWidget() {
     return SingleChildScrollView(
       scrollDirection: Axis.vertical,
       child: Column(
@@ -146,7 +146,7 @@ class _BasicDataViewState extends State<BasicDataView> {
               children: [
                   Container(
                     width: MediaQuery.of(context).size.width,
-                    height: MediaQuery.of(context).size.height*1.3,
+                    height: MediaQuery.of(context).size.height*3.5,
                       padding: const EdgeInsets.only(top: 20),
                         child: Form(
                           key: _Formkey,
@@ -228,50 +228,86 @@ class _BasicDataViewState extends State<BasicDataView> {
                                       StreamBuilder<BasicDataModel>(
                                         stream: _displayviewModel.outputEmpBasicData,
                                         builder: (context, snapshot) {
-
-                                          String? dateString = snapshot.data?.employee
+                                          String? dateString = snapshot.data
+                                              ?.employee
                                               ?.birthdate.toString();
-                                          if(birthDate == null) {
-                                            if (dateString != null) {
-                                              birthDate =
-                                                  DateTime.parse(dateString);
-                                            }
-                                            else {
-                                              // birthDate =
-                                              //     DateTime.parse("dd/mm/yyyy");
-                                            }
+                                          if (dateString!= "" && dateString != null) {
+                                            birthDate =
+                                                DateTime.parse(dateString);
+                                            return TextFormField(
+                                                enabled: allowEdit,
+                                                onTap: () async {
+                                                  if (birthDate != null) {
+                                                    DateTime? newDate = await
+                                                    showDatePicker
+                                                      (context: context,
+                                                        initialDate: birthDate,
+                                                        firstDate: DateTime(
+                                                            1900),
+                                                        lastDate: DateTime(
+                                                            2100));
+                                                    if (newDate == null) return;
+                                                    setState(() {
+                                                      date1 = birthDate!;
+                                                      birthDate = newDate;
+                                                      date1 = newDate;
+                                                    });
+                                                  }
+                                                },
+                                                keyboardType: TextInputType
+                                                    .text,
+                                                controller: _BirthDateEditingController,
+                                                decoration: InputDecoration(
+                                                    prefixIcon: Icon(
+                                                        Icons.calendar_month),
+
+                                                    // border: InputBorder.,
+                                                    hintText:
+                                                    "${birthDate!
+                                                        .day}/${birthDate!
+                                                        .month}/${birthDate!
+                                                        .year}"
+                                                  //labelText: AppStrings.nationalId.tr(),
+                                                  //errorText: snapshot.data
+                                                ));
                                           }
-                                          //birthDate = DateTime.parse(dateString!);
-                                          return TextFormField(
 
-                                              enabled: allowEdit,
-                                              onTap: () async {
-                                            DateTime? newDate = await
-                                            showDatePicker
+                                        return  TextFormField(onTap: () async {
+                                            DateTime? newDate =
+                                            await showDatePicker
                                               (context: context,
-                                                initialDate: birthDate!,
+                                                initialDate: date,
                                                 firstDate: DateTime(1900),
-                                                lastDate: DateTime(2100));
+                                                lastDate: DateTime(2100)
+                                            );
+                                            //if 'cancel'=>null
                                             if (newDate == null) return;
+                                            //if 'ok' => DateTime
                                             setState(() {
-                                              date=birthDate;
-                                              birthDate = newDate;
-                                            date=newDate;
+                                              date = newDate;
+                                              birthDate = date;
                                             });
-
                                           },
                                               keyboardType: TextInputType.text,
                                               controller: _BirthDateEditingController,
                                               decoration: InputDecoration(
-                                                    prefixIcon: Icon(Icons.calendar_month),
-
-                                                 // border: InputBorder.,
+                                                  prefixIcon: Icon(
+                                                      Icons.calendar_month),
                                                   hintText:
-                                                  "${birthDate!.day}/${birthDate!.month}/${birthDate!.year}"
+                                                  date!.day.toString() +
+                                                      "/" +
+                                                      date!.month.toString() +
+                                                      "/" +
+                                                      date!.year.toString()
                                                 //labelText: AppStrings.nationalId.tr(),
                                                 //errorText: snapshot.data
                                               ));
-                                        },
+                                        }
+
+                                          //birthDate = DateTime.parse(dateString!);
+
+
+
                                       ),
                                     ],
                                   ),
@@ -568,55 +604,114 @@ class _BasicDataViewState extends State<BasicDataView> {
                                             },
                                           ),
                                         ])),
+                                Center(
+                                  child: Container(
+                                      padding: EdgeInsets.all(20),
+                                      child: StreamBuilder<BasicDataModel?>(
+                                          stream: _displayviewModel.outputEmpBasicData,
+                                          builder: (context, snapshot) {
+                                            if (snapshot.data?.allowEdit == false) {
+                                              allowEdit=false;
+                                              return Container();
+                                            }
+                                            else {
+                                              allowEdit=true;
+                                              return
+                                                ElevatedButton(
+                                                    child: Text("Save"),
+                                                    onPressed: () async {
+                                                      _saveViewModel!.SaveBasicData(
+                                                          empId!,
+                                                          _ArabicNameEditingController.text.toString(),
+                                                          _EnglishNameEditingController.text.toString(),
+                                                          date.toString(),
+                                                          _NationalIdEditingController.text.toString(),
+                                                          _SocialIdEditingController.text.toString(),
+                                                          _EmailEditingController.text.toString(),
+                                                          _PhoneEditingController.text.toString(),
+                                                          _EmergencyNumberEditingController.text
+                                                              .toString(),
+                                                          _AddressTextEditingController.text.toString(),
+                                                          districtId!,
+                                                          _POBoxEditingController.text.toString(),
+                                                          _ZipCodeEditingController.text.toString());
+                                                      displayDialoge();
+                                                    }
+                                                  // : null,
+                                                );
+                                            }
+                                          })
+
+                                  ),
+                                )
                               ],
                             ),
                           ),
                         ),
                       ),
-                  Container(
-                  padding: EdgeInsets.all(20),
-                  child: StreamBuilder<BasicDataModel?>(
-                  stream: _displayviewModel.outputEmpBasicData,
-                  builder: (context, snapshot) {
-                    if (snapshot.data?.allowEdit == false) {
-                      allowEdit=false;
-                      return Container();
-                    }
-                    else {
-                      allowEdit=true;
-                      return
-                        ElevatedButton(
-                            child: Text("Save"),
-                            onPressed: () async {
-                              _saveViewModel!.SaveBasicData(
-                                  empId!,
-                                  _ArabicNameEditingController.text.toString(),
-                                  _EnglishNameEditingController.text.toString(),
-                                  date.toString(),
-                                  _NationalIdEditingController.text.toString(),
-                                  _SocialIdEditingController.text.toString(),
-                                  _EmailEditingController.text.toString(),
-                                  _PhoneEditingController.text.toString(),
-                                  _EmergencyNumberEditingController.text
-                                      .toString(),
-                                  _AddressTextEditingController.text.toString(),
-                                  districtId!,
-                                  _POBoxEditingController.text.toString(),
-                                  _ZipCodeEditingController.text.toString());
-                              displayDialoge();
-                            }
-                          // : null,
-                        );
-                    }
-                  })
-
-                                    )]),
+                  // Container(
+                  // padding: EdgeInsets.all(20),
+                  // child: StreamBuilder<BasicDataModel?>(
+                  // stream: _displayviewModel.outputEmpBasicData,
+                  // builder: (context, snapshot) {
+                  //   if (snapshot.data?.allowEdit == false) {
+                  //     allowEdit=false;
+                  //     return Container();
+                  //   }
+                  //   else {
+                  //     allowEdit=true;
+                  //     return
+                  //       ElevatedButton(
+                  //           child: Text("Save"),
+                  //           onPressed: () async {
+                  //             _saveViewModel!.SaveBasicData(
+                  //                 empId!,
+                  //                 _ArabicNameEditingController.text.toString(),
+                  //                 _EnglishNameEditingController.text.toString(),
+                  //                 date.toString(),
+                  //                 _NationalIdEditingController.text.toString(),
+                  //                 _SocialIdEditingController.text.toString(),
+                  //                 _EmailEditingController.text.toString(),
+                  //                 _PhoneEditingController.text.toString(),
+                  //                 _EmergencyNumberEditingController.text
+                  //                     .toString(),
+                  //                 _AddressTextEditingController.text.toString(),
+                  //                 districtId!,
+                  //                 _POBoxEditingController.text.toString(),
+                  //                 _ZipCodeEditingController.text.toString());
+                  //             displayDialoge();
+                  //           }
+                  //         // : null,
+                  //       );
+                  //   }
+                  // })
+                  //
+                  //                   )
+              ]),
     );
   }
   Widget _getcountry(List<CountryModel>? country, int? selectedValue) {
-    if (selectedValue == null && country![0].countryId != null) {
-      selectedValue = country[0].countryId;
-      countryId =selectedValue;
+    if ((selectedValue == 0 || selectedValue == null)  &&
+        country![0].countryId != null) {
+      // selectedValue = country[0].countryId;
+      // countryId =selectedValue;
+      var items = country.map(
+              (countryItem) {
+            return DropdownMenuItem(
+              value: countryItem.countryId,
+              child: Text(countryItem.countryName.toString()),);
+          }).toList();
+      return DropdownButton(
+        hint: Text(AppStrings.Choose_Country.tr()),
+        items: items,
+        //enableFeedback: ,
+        onChanged: (newvalue) {allowEdit! ?
+        setState(() {
+          countryId = newvalue;
+        }):null;
+        },
+        value: countryId,
+      );
     }
 
     countryId =selectedValue;
@@ -640,12 +735,34 @@ class _BasicDataViewState extends State<BasicDataView> {
     );
   }
   Widget _getGovernorate(List<GovernorateModel>? governorate, int? selectedValue) {
-    selectedValue ??= governorate![0].governorateId;
+    //selectedValue ??= governorate![0].governorateId;
+    if ((selectedValue == 0 || selectedValue == null) &&
+        governorate![0].governorateId != null) {
+      //governorateId=selectedValue;
+      var items = governorate.map(
+              (governorateItem) {
+            return DropdownMenuItem(
+              value: governorateItem.governorateId,
+              child: Text(governorateItem.governorateName.toString()),);
+          }).toList();
+      return DropdownButton(
+        hint: Text(AppStrings.Choose_Governorate.tr()),
+        items: items,
+
+        //enableFeedback: ,
+        onChanged: (newValue) {
+          allowEdit! ?
+          setState(() {
+            governorateId = newValue;
+          }) : null;
+        },
+        value: governorateId,
+      );
+    }
     governorateId=selectedValue;
-    var items = governorate?.map(
+    var items = governorate!.map(
             (governorateItem) {
           return DropdownMenuItem(
-
             value: governorateItem.governorateId,
             child: Text(governorateItem.governorateName.toString()),);
         }).toList();
@@ -655,9 +772,10 @@ class _BasicDataViewState extends State<BasicDataView> {
 
       //enableFeedback: ,
       onChanged: (newValue) {
-      setState(() {
-        governorateId = newValue;
-      });
+        allowEdit! ?
+        setState(() {
+          governorateId = newValue;
+        }) : null;
       },
       value: governorateId,
     );
@@ -689,21 +807,8 @@ class _BasicDataViewState extends State<BasicDataView> {
       },
       value: districtId,
     );
-    // return DropdownButton(
-    //   value: selectedValue,
-    //   items: districts?.map(
-    //           (DistrictItems) {
-    //         return DropdownMenuItem(
-    //           child: Text(DistrictItems.districtName!.toString()),
-    //           value: DistrictItems.districtId,);
-    //       }).toList(),
-    //   onChanged: (Object? value) {
-    //     selectedValue = value as int;
-    //   },
-    //
-    // );
-  }
 
+  }
   Widget? displayDialoge() {
     showAnimatedDialog(
       context: context,
@@ -722,6 +827,7 @@ class _BasicDataViewState extends State<BasicDataView> {
       animationType: DialogTransitionType.fade, curve: Curves.linear,
       duration: const Duration(seconds: 1),
     );
+    return null;
   }
 }
 

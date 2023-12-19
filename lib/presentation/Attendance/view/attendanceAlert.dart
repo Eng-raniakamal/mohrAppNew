@@ -46,9 +46,9 @@ bool oKPressed=false;
 late String _startDate, _endDate;
 final DateRangePickerController _controller = DateRangePickerController();
 
-String? userId;
-final AppPreferences _appPreferences = instance<AppPreferences>();
 
+final AppPreferences _appPreferences = instance<AppPreferences>();
+String? userId;
 final TextEditingController _FromDateEditingController = TextEditingController();
 final TextEditingController _ToDateEditingController = TextEditingController();
 class _AttendanceAlertViewState extends State<AttendanceAlertView> {
@@ -67,7 +67,8 @@ class _AttendanceAlertViewState extends State<AttendanceAlertView> {
     super.initState();
   }
 
-  _bind() {
+  _bind() async {
+    userId= await _appPreferences.getUserToken() ;
     _viewModel.start();
   }
 

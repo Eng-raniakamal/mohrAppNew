@@ -1,0 +1,73 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_dynamic_icon/flutter_dynamic_icon.dart';
+import 'package:mohr_hr/application/app_prefs.dart';
+import 'package:mohr_hr/application/application.dart';
+import 'package:mohr_hr/application/constants.dart';
+import 'package:mohr_hr/application/di.dart';
+import 'package:mohr_hr/domain/model/model.dart';
+import 'package:mohr_hr/main.dart';
+import 'package:mohr_hr/presentation/Alert_Notification/ViewModel/notificationViewModel.dart';
+import 'package:mohr_hr/presentation/Attendance/view/attendanceAlert.dart';
+import 'package:mohr_hr/presentation/Notification.dart';
+
+
+
+AppPreferences appPreferences = instance<AppPreferences>();
+
+  Future<void> checkNewNotifications() async {
+
+    // final NotificationServies _notifiService=NotificationServies();
+
+    //final service = FlutterBackgroundService();
+
+    NotificationData _notificationData = NotificationData();
+    List<NotificationModel>? notifications;
+    var lengthOfList;
+
+    int? storedDataLength;
+    notifications = await _notificationData.getApiNotification("e4cf7459-06d9-43d1-b04a-a415f8b59663");
+
+    if (notifications != null) {
+      lengthOfList =
+      await _notificationData.getUnSeenNotification(notifications);
+      Constants.notificationNumber = lengthOfList;
+
+
+      if (lengthOfList != null) {
+
+        storedDataLength = await appPreferences.getUserNotificationList();
+
+        if (lengthOfList != storedDataLength) {
+          Constants.notificationNumber = lengthOfList!;
+
+          if (lengthOfList! > 0) {
+            //setBatchNumber(context as BuildContext, Constants.notificationNumber);
+            Notifications.showBigTextNotification(
+                title: "MOHR", body: "$lengthOfList New notification here",
+                fln: flutterLocalNotificationsPlugin);
+
+            //  _appPreferences.setUserNotificationList(lengthOfList);
+          }
+          // }
+          else {
+            Constants.notificationNumber = lengthOfList!;
+
+            //   _appPreferences.setUserNotificationList(lengthOfList!);
+          }
+        }
+      }
+    }
+  }
+  setBatchNumber(BuildContext context, int num) async {
+    try {
+      await FlutterDynamicIcon.setApplicationIconBadgeNumber(num);
+    } on PlatformException {
+      print('Exception:Platform not supported');
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  //int bachNumber=await FlutterDynamicIcon.getApplicationIconBadgeNumber();
+

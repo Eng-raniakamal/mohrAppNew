@@ -177,22 +177,7 @@ class _SideBarState extends State<SideBar> with SingleTickerProviderStateMixin<S
                               Navigator.of(context).pushReplacementNamed(Routes.settings);
                               },
                           ),
-                          //change language
-                          // MenuItems(
-                          //   icon: Icons.language,
-                          //   title: AppStrings.changeLanguage.tr(),
-                          //   onTap: () async {
-                          //
-                          //     onIconPressed();
-                          //
-                          //     await _appPreferences.setLanguageChanged();
-                          //      // Navigator.pop(context);
-                          //     //Navigator.of(context).pushReplacementNamed(Routes.HomeRoute);
-                          //     BlocProvider.of<NavigationBloc>(context).add(NavigationEvents.MyProfileClickedEvent);
-                          //     }
-                          //
-                          // ),
-                          //logout
+
                           MenuItems(
                             icon: Icons.logout,
                             title: AppStrings.logout.tr(),

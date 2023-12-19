@@ -193,29 +193,32 @@ class _userViewState extends State<userView> {
 
                         const SizedBox(height: 10,),
                         Container(
-                              child: Column(children:[
-                               Row(children:[
-                               //SizedBox(width:5),
-                                Center(child:SizedBox(width: 200,
-                                  child:
-                                 buildUpgradeButton(AppStrings.Vacation.tr(),colorManager.greywithOpacity))),
-                                Center(child:SizedBox(width: 200,
-                                  child:
-                                  buildUpgradeButton(AppStrings.Salary.tr(),colorManager.lightprimary),
-                              ))]),
-                                const SizedBox(height: 70),
-                               Row(children:[
-                                Center(child:SizedBox(width: 200,
+                              child: SingleChildScrollView(
+                                scrollDirection: Axis.horizontal,
+                                child: Column(children:[
+                                 Row(children:[
+                                 //SizedBox(width:5),
+                                  Center(child:SizedBox(width: 200,
                                     child:
-                                    buildUpgradeButton(AppStrings.Attendance.tr(),colorManager.lightprimary))),
-                                Center(child:SizedBox(width: 200,
+                                   buildUpgradeButton(AppStrings.Vacation.tr(),colorManager.greywithOpacity))),
+                                  Center(child:SizedBox(width: 200,
                                     child:
-                                    buildUpgradeButton(AppStrings.Requests.tr(),colorManager.lightprimary),
-                                )
-                                )
-                               ]),
+                                    buildUpgradeButton(AppStrings.Salary.tr(),colorManager.lightprimary),
+                                ))]),
+                                  const SizedBox(height: 70),
+                                 Row(children:[
+                                  Center(child:SizedBox(width: 200,
+                                      child:
+                                      buildUpgradeButton(AppStrings.Attendance.tr(),colorManager.lightprimary))),
+                                  Center(child:SizedBox(width: 200,
+                                      child:
+                                      buildUpgradeButton(AppStrings.Requests.tr(),colorManager.lightprimary),
+                                  )
+                                  )
+                                 ]),
 
     ]),
+                              ),
     ),
     ]),
 
@@ -491,12 +494,7 @@ return Container();
           imagePath: ImageAssets.noPhoto,
           isEdit: false,
           onClicked: () {
-            // if(canEditImage == true)
-            // {
-            //   displayDialoge();
-            // }
-            // else
-            //   {
+
             resetModules();
             Navigator.of(context).pushReplacementNamed(Routes.editProfileRoute);
             //}

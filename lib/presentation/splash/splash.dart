@@ -9,6 +9,7 @@ import 'package:mohr_hr/presentation/resources/assets_manager.dart';
 import 'package:mohr_hr/presentation/resources/colors.dart';
 import 'package:mohr_hr/presentation/resources/routes.dart';
 import 'package:rive/rive.dart';
+import 'package:workmanager/workmanager.dart';
 
 class SplashView extends StatefulWidget {
   const SplashView({Key? key}) : super(key: key);
@@ -56,6 +57,11 @@ class _SplashViewState extends State<SplashView> {
   void initState() {
     super.initState();
     _startDelay();
+
+    // Workmanager().registerPeriodicTask("control","control",
+    //     frequency: Duration(minutes: 15),
+    //     existingWorkPolicy: ExistingWorkPolicy.append
+    // );
   }
 
   @override
@@ -69,11 +75,7 @@ class _SplashViewState extends State<SplashView> {
     return Scaffold(
      // backgroundColor: colorManager.white,
       body:
-      // Center(
-      //   child: Image(
-      //     image: AssetImage(ImageAssets.startLogo),
-      //   ),
-      // ),
+
       Stack(
         children: [
           Positioned(

@@ -43,13 +43,13 @@ class EmployeeBasicDataViewModel extends BaseViewModel with
     super.dispose();
   }
 
-  @override
+
   getEmpBasicData() async{
     uId=await _appPreferences.getUserToken();
     empId=await _appPreferences.getEmpIdToken();
     var  empObject=EmpBasicDataObject(uId!,empId!);
 
-    if(empObject.userID != null && empObject.empId !=0)
+    if( empObject.empId !=0)
     {
       inputState.add(LoadingState(
           stateRendererType:StateRendererType.POPUP_LOADING_STATE)

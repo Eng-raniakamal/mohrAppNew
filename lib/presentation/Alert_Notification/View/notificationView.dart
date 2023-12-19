@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
+import 'package:dartz/dartz_unsafe.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:mohr_hr/application/app_prefs.dart';
@@ -23,35 +24,34 @@ class NotificationView extends StatefulWidget {
 class _NotificationViewState extends State<NotificationView> {
 
   String? userId;
-
-  //bool isShowSignInDialog = false;
-
   final AppPreferences _appPreferences = instance<AppPreferences>();
 
-  //final EmployeeSkillsViewModel _saveviewModel = instance<EmployeeSkillsViewModel>();
   final _Formkey = GlobalKey<FormState>();
   List<NotificationModel>? notifications;
-  Notifications noti=Notifications();
+  Notifications notifi=Notifications();
 
   _bind() {
-    //_appPreferences.setOnBoardingScreenViewed();
-    // Notifications= await getApiNotification();
     start();
+
   }
 
-  Future<void> start() async {
-    notifications = await getApiNotification();
+  Future<void> start() async
+  {
+    //notifications = await getApiNotification();
+    //await markNotificationAsSeen();
   }
 
 
   @override
-  void initState() {
+  void initState()
+  {
     //_bind();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    //_bind();
     return
       ThemeSwitchingArea(
           child: Builder(
@@ -63,16 +63,9 @@ class _NotificationViewState extends State<NotificationView> {
                         child: SingleChildScrollView(
                           scrollDirection: Axis.vertical,
                           child: Column(
-                            children: [
+                            children:
+                            [
                               Notificationtable(),
-                              //for notification test
-                              // ElevatedButton(
-                              //     onPressed: ()
-                              //     {
-                              //       Notifications.showBigTextNotification(title:"message",body:"new message here",
-                              //           fln:flutterLocalNotificationsPlugin);
-                              //     }, child: Text("click"))
-
                             ],
                           ),
                         )),
@@ -114,7 +107,6 @@ class _NotificationViewState extends State<NotificationView> {
           label: Text("Cancellation Reason", style: TextStyle(color: colorManager.white),)),
       DataColumn(label: Text(
         "Seen", style: TextStyle(color: colorManager.white),)),
-
     ];
   }
   List<DataRow> _createRows(List<NotificationModel>? notification) {
@@ -156,10 +148,46 @@ class _NotificationViewState extends State<NotificationView> {
       var userNotifications = responseData as List;
       a = userNotifications.map((data) => NotificationModel.fromJson(data)).toList();
       notifications = List<NotificationModel>.from(a as Iterable);
+      if(notifications !=null) {
+        await getUnseenNotificationId(notifications!);
+      }
       return notifications;
     }
     return null;
   }
+ Future <void> getUnseenNotificationId(List<NotificationModel> notifi)
+  async {
+    for( var item in notifi)
+      {
+        if( item.seen== false)
+        {
+         await markNotificationAsSeen(item.id!);
+        }
+
+      }
+}
+ Future <void> markNotificationAsSeen(int id) async
+  {
+    userId = await _appPreferences.getUserToken();
+    var uri;
+    String url = Constants.getMarkNotificationAsSeenUrl;
+    bool seenFlag;
+
+        uri = Uri.parse(url + "/" + id.toString());
+        var response = await http.get(
+            uri, headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'userId': userId!
+        });
+
+        final responseData = json.decode(response.body);
+        if (responseData != null) {
+          var userNotifications = responseData as bool;
+          seenFlag = userNotifications;
+          //return seenFlag;
+        }
+      }
+
   Widget Notificationtable() {
     return
       FutureBuilder(
@@ -188,9 +216,8 @@ class _NotificationViewState extends State<NotificationView> {
           }
       );
   }
-
- String _textHandling(String? text)
- {
+  String _textHandling(String? text)
+  {
    String txtResult;
    if(text==null) {
      txtResult="";
@@ -199,7 +226,6 @@ class _NotificationViewState extends State<NotificationView> {
    txtResult=text;
    return txtResult;
  }
-
   String? _formatingDate(String? date)
   {
     if(date!=null){
@@ -207,7 +233,6 @@ class _NotificationViewState extends State<NotificationView> {
     return formatingDate;}
     return null;
   }
-
   Widget _boolHandling(bool? boolData)
   {
     if(boolData==true)

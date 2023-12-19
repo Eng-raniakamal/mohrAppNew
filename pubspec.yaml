@@ -43,6 +43,7 @@ dependencies:
   animated_theme_switcher: ^2.0.1-nullsafety.0
   theme_provider: ^0.6.0
   get: ^4.6.5
+  #get_it: ^4.0.2
   json_annotation: ^4.8.1
     # retrofit: ^3.1.1
     #analyzer: ^3.3.1
@@ -76,6 +77,9 @@ dependencies:
   toggle_switch: ^2.1.0
   syncfusion_flutter_datepicker: ^23.1.41
   flutter_local_notifications: ^16.1.0
+  flutter_dynamic_icon: ^2.1.0
+  workmanager: ^0.5.2
+
 
 dev_dependencies:
   flutter_test:
@@ -138,6 +142,7 @@ flutter:
     - assets/images/logout_ic.svg
     - assets/images/Earth.svg
     - assets/images/settings_right_arrow_ic.svg
+    - assets/Backgrounds/countries.png
     - assets/translations/
     - assets/Backgrounds/
     - assets/RiveAssets/

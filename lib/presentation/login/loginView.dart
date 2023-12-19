@@ -70,10 +70,15 @@ class _LoginViewState extends State<LoginView> {
       ThemeSwitchingArea(
       child: Builder(
           builder: (context) =>
-       Scaffold(
+       Scaffold(bottomSheet:
+
+       Image.asset("assets/Backgrounds/countries.png"),
+        //fit: BoxFit.cover,
+
          //appBar: buildAppBarMain(context),
         //backgroundColor: colorManager.white,
          body: StreamBuilder<FlowState>(
+
         stream: _viewModel.outputState,
         builder: (context, snapshot) {
           return snapshot.data?.getScreenWidget(context, _getContentWidget(),
@@ -94,8 +99,8 @@ class _LoginViewState extends State<LoginView> {
 
   Widget _getContentWidget() {
     return Container(
-            padding: const EdgeInsets.all(0.0),
-       // padding: const EdgeInsets.only(top: AppPadding.p100),
+
+        padding: const EdgeInsets.all(0.0),
         child: SingleChildScrollView(
           child: Form(
             key: _formKey,
@@ -132,28 +137,17 @@ class _LoginViewState extends State<LoginView> {
 ///////////////////////////////////////////////////////
                          ),
 //delete the  log
-                  const Image(image: AssetImage(ImageAssets.startLogo)),
+                  const Image(image: AssetImage(ImageAssets.startLogo),width: 180,),
                 // const SizedBox(height: AppSize.s28),
 
                 Container(
                     padding: const EdgeInsets.all(15.0),
                     margin: const EdgeInsets.all(15.0),
-                    decoration: BoxDecoration(
-
-                      border: Border.all(
-                        width: 4,
-                          color: colorManager.lightprimary
-                      ),
-                      borderRadius: BorderRadius.circular(18),
-                      //color: colorManager.lightprimary
-                    ),
-
-                // color: colorManager.lightblue,
                   child: Column(
                   children: [
                     Padding(
                       padding: const EdgeInsets.only(
-                          left: AppPadding.p28, right: AppPadding.p28),
+                          left: AppPadding.p20, right: AppPadding.p20),
                       child: StreamBuilder<bool>(
                         stream: _viewModel.outputIsEmailValid,
                         builder: (context, snapshot) {
@@ -162,8 +156,9 @@ class _LoginViewState extends State<LoginView> {
                             keyboardType: TextInputType.emailAddress,
                             controller: _emailController,
                             decoration: InputDecoration(
+                                contentPadding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
                               prefix: Icon(Icons.account_box),
-                                border: OutlineInputBorder(),
+                                border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
                                 hintText: AppStrings.email.tr(),
                                 labelText: AppStrings.email.tr(),
                                 errorText: (snapshot.data ?? true)
@@ -180,7 +175,7 @@ class _LoginViewState extends State<LoginView> {
                    const SizedBox(height: AppSize.s28),
                     Padding(
                      padding: const EdgeInsets.only(
-                      left: AppPadding.p28, right: AppPadding.p28),
+                      left: AppPadding.p20, right: AppPadding.p20),
                       child: StreamBuilder<bool>(
                         stream: _viewModel.outputIsPasswordValid,
                         builder: (context, snapshot) {
@@ -191,8 +186,10 @@ class _LoginViewState extends State<LoginView> {
                           keyboardType: TextInputType.visiblePassword,
 
                         decoration: InputDecoration(
+                          contentPadding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
+                          //border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
                           prefix: Icon(Icons.local_mall),
-                          border: OutlineInputBorder(),
+                          border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
                             hintText: AppStrings.password.tr(),
                             labelText: AppStrings.password.tr(),
                             errorText: (snapshot.data ?? true)
