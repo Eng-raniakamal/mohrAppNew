@@ -7,21 +7,21 @@ import 'package:mohr_hr/presentation/Attendance/view/attendanceAlert.dart';
 import 'package:http/http.dart' as http;
 
 
-//final AppPreferences _appPreferences = instance<AppPreferences>();
+final AppPreferences _appPreferences = instance<AppPreferences>();
 class NotificationData {
   //final AppPreferences _appPreferences;
   NotificationData();
 
-  Future <List<NotificationModel>?> getApiNotification(String userId) async
+  Future <List<NotificationModel>?> getApiNotification() async
   {
-   // userId = await _appPreferences.getUserToken();
+    userId = await _appPreferences.getUserToken();
     var uri = Uri.parse(Constants.getNotificationUrl);
     List<NotificationModel>? a;
 
     var response = await http.get(
         uri, headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
-      'userId': userId
+      'userId': userId!
     });
 
     final responseData = json.decode(response.body);

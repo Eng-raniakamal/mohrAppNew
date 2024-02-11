@@ -15,6 +15,7 @@ import 'package:mohr_hr/domain/model/model.dart';
 import 'package:mohr_hr/presentation/AddImage/viewModel/GetImage_ViewModel.dart';
 import 'package:mohr_hr/presentation/Alert_Notification/View/alertView.dart';
 import 'package:mohr_hr/presentation/Alert_Notification/View/notificationView.dart';
+import 'package:mohr_hr/presentation/Alert_Notification/testpaging.dart';
 import 'package:mohr_hr/presentation/Attendance/view/attendanceAlert.dart';
 import 'package:mohr_hr/presentation/Attendance/view/attendanceView.dart';
 import 'package:mohr_hr/presentation/editEmployee/View/empAcademicDegree_view.dart';
@@ -76,9 +77,9 @@ class _AlertViewState extends State<AlertLayout>with TickerProviderStateMixin {
           child: Builder(
             builder: (context) =>
                 Scaffold(
-                  appBar: buildAppBarstart(context),
+                  appBar: buildAppBar(context),
 
-                  bottomNavigationBar:NavigatorBar(index: 2),
+                  bottomNavigationBar:NavigatorBar(index: 0,notificationNumber: Constants.notificationNumber,),
 
                   body:
                   SingleChildScrollView(
@@ -153,6 +154,7 @@ class _AlertViewState extends State<AlertLayout>with TickerProviderStateMixin {
                               child: TabBarView(
                                 controller: _tabController,
                                 children:  const [
+                                  //PaginatedDataTableView(),
                                   NotificationView(),
                                   AlertView(),
 

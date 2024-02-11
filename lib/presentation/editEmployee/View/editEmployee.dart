@@ -109,11 +109,11 @@ class _EmployeeEditViewState extends State<EmployeeEditView>with TickerProviderS
           child: Builder(
             builder: (context) =>
                 Scaffold(
-                  appBar: buildAppBarstart(context),
+                  appBar: buildAppBar(context),
                  // backgroundColor: colorManager.white,
 
                   bottomNavigationBar:
-                  NavigatorBar(index: 0),
+                  NavigatorBar(index: 0,notificationNumber: Constants.notificationNumber,),
                   // CurvedNavigationBar(items: item,
                   //     index: 0,
                   //

@@ -40,10 +40,12 @@ class RepositoryImpl extends Repository {
         // if( response.code==ApiInternalStatus.SUCCESS) {
         String? TokenUserID = response.userdata?.UserId;
         int? TokenEmpId = response.userdata?.EmployeeId;
+        String? tokenUserName=response.userdata?.UserName;
         if (TokenUserID != null) {
           Constants.token = TokenUserID;
           _appPreferences.setUserToken(TokenUserID);
           _appPreferences.setEmpIdToken(TokenEmpId);
+          _appPreferences.setUserNameToken(tokenUserName);
           return Right(response.toDomain());
         }
         // return data (success)

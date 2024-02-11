@@ -4,9 +4,9 @@ import 'package:workmanager/workmanager.dart';
 class Notifications{
   static Future initialize(FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin) async {
     var androidInitialize = const AndroidInitializationSettings('mipmap/ic_launcher');
-    //var iOSInitialize =  IOSInitializationSettings();
+    var iOSInitialize =  DarwinInitializationSettings();
     var initializationsSettings = InitializationSettings(android: androidInitialize,
-      //iOS: iOSInitialize
+      iOS: iOSInitialize
     );
     await flutterLocalNotificationsPlugin.initialize(initializationsSettings );
   }
@@ -19,13 +19,13 @@ class Notifications{
       'channel_name',
 
       playSound: true,
-     // sound: RawResourceAndroidNotificationSound('notification'),
+      sound: RawResourceAndroidNotificationSound('notification'),
       importance: Importance.max,
       priority: Priority.high,
     );
 
     var not= NotificationDetails(android: androidPlatformChannelSpecifics,
-      //iOS: IOSNotificationDetails()
+      iOS: DarwinNotificationDetails()
     );
     await fln.show(0, title, body,not );
   }

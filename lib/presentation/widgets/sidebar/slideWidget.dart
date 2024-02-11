@@ -179,6 +179,15 @@ class _SideBarState extends State<SideBar> with SingleTickerProviderStateMixin<S
                           ),
 
                           MenuItems(
+                            icon: Icons.password,
+                            title:AppStrings.resetPassword.tr(),
+                            onTap: () {
+                              onIconPressed();
+                              Navigator.of(context).pushReplacementNamed(Routes.changePassword);
+                            },
+                          ),
+
+                          MenuItems(
                             icon: Icons.logout,
                             title: AppStrings.logout.tr(),
                             onTap: () {

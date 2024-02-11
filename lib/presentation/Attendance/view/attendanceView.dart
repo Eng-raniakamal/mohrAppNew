@@ -179,20 +179,20 @@ oKPressed=false;
                          children: [
                             Expanded(
                               child: Container(
-                  padding: const EdgeInsets.fromLTRB(40, 0, 0, 0),
+                  padding: const EdgeInsets.fromLTRB(40, 0, 20, 0),
                   height: 30,
-                  child: Text(AppStrings.from +' : '+ _startDate,style: TextStyle(fontSize: 13,fontWeight: FontWeight.bold),)),
+                  child: Text(AppStrings.from.tr() +' : '+ _startDate,style: TextStyle(fontSize: 13,fontWeight: FontWeight.bold),)),
                             ),
                             Expanded(
                              child: Container(
-                                 margin: const EdgeInsets.fromLTRB(30, 0, 40,0),
-              height: 30, child: Text(AppStrings.to +' : '+ _endDate,style: TextStyle(fontSize: 13,fontWeight: FontWeight.bold))),
+                                 margin: const EdgeInsets.fromLTRB(30, 0, 20,0),
+              height: 30, child: Text(AppStrings.to.tr() +' : '+ _endDate,style: TextStyle(fontSize: 13,fontWeight: FontWeight.bold))),
                            )
                                    ]),
             SizedBox(height: 40,
                 width: 150,
                 child:FloatingActionButton(
-                child: const Text("select time duration"),
+                child:  Text(AppStrings.select_time_duration.tr()),
                 onPressed: () async{
                   //oKPressed=false;
                   await showDialogDate();
@@ -354,7 +354,7 @@ Future <List<UserAttendance>?> getApiAttendance() async
                      getDateRangePicker(),
                      FloatingActionButton(
                        backgroundColor: colorManager.primary,
-                       child: Text(AppStrings.ok),
+                       child: Text(AppStrings.ok.tr()),
                        onPressed: () {
                        // setState(() {
                            oKPressed = true;

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_dynamic_icon/flutter_dynamic_icon.dart';
+//import 'package:flutter_dynamic_icon/flutter_dynamic_icon.dart';
 import 'package:mohr_hr/application/app_prefs.dart';
 import 'package:mohr_hr/application/application.dart';
 import 'package:mohr_hr/application/constants.dart';
@@ -26,7 +26,7 @@ AppPreferences appPreferences = instance<AppPreferences>();
     var lengthOfList;
 
     int? storedDataLength;
-    notifications = await _notificationData.getApiNotification("e4cf7459-06d9-43d1-b04a-a415f8b59663");
+    notifications = await _notificationData.getApiNotification();
 
     if (notifications != null) {
       lengthOfList =
@@ -61,7 +61,7 @@ AppPreferences appPreferences = instance<AppPreferences>();
   }
   setBatchNumber(BuildContext context, int num) async {
     try {
-      await FlutterDynamicIcon.setApplicationIconBadgeNumber(num);
+    //  await FlutterDynamicIcon.setApplicationIconBadgeNumber(num);
     } on PlatformException {
       print('Exception:Platform not supported');
     } catch (e) {

@@ -76,30 +76,10 @@ class _EmployeeEditViewState extends State<AttendanceLayout>with TickerProviderS
           child: Builder(
             builder: (context) =>
                 Scaffold(
-                  appBar: buildAppBarstart(context),
+                  appBar: buildAppBar(context),
                   // backgroundColor: colorManager.white,
-                  bottomNavigationBar:NavigatorBar(index:0)
-                  // CurvedNavigationBar(items: item,
-                  //     index: 0,
-                  //
-                  //     buttonBackgroundColor: colorManager.primary,
-                  //     backgroundColor: Colors.transparent,
-                  //     color: colorManager.primary,
-                  //
-                  //
-                  //     onTap: (int index) {
-                  //       if(index==1)
-                  //       {
-                  //         // changeIndex(index);
-                  //         Navigator.of(context).pushReplacementNamed(Routes.HomeRoute);
-                  //       }
-                  //       else
-                  //       if(index==2)
-                  //       {
-                  //         Navigator.of(context).pushReplacementNamed(Routes.notification);
-                  //       }
-                  //     }
-                  // ),
+                  bottomNavigationBar:NavigatorBar(index: 0,notificationNumber: Constants.notificationNumber,)
+
                   ,body:
                   Column(
                       children: [
@@ -141,7 +121,7 @@ class _EmployeeEditViewState extends State<AttendanceLayout>with TickerProviderS
 
                                             child: TabBar(
                                               controller: _tabController,
-                                              isScrollable: true,
+                                              isScrollable: false,
                                               labelColor: colorManager.primary,
                                               unselectedLabelColor: colorManager
                                                   .primary,

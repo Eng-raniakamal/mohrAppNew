@@ -16,6 +16,7 @@ class AppStrings {
   static const String addBasicData =  "Add Data";
   static const String retry_again = "retry again";
   static const String ok = "ok";
+  static const String close = "close";
   static const String arabicName = "Arabic Name";
   static const String englishName = "English Name";
   static const String birthDate = "Birth Date";
@@ -25,8 +26,8 @@ class AppStrings {
   static const String emergencyNumber = "Emergency Number";
   static const String addressText = "Address Text";
   static const String districtId = "District Id";
-  static const String pOBox = "POBox";
-  static const String zipCode= "ZipCode";
+   static const String PoBox = "PoBox";
+  // static const String zipCode= "zipCode";
   static const String emailHint = 'Email';
   static const String invalidEmail = "invalid_email";
   static const String resetPassword = "reset_password";
@@ -43,6 +44,14 @@ class AppStrings {
   static const String Alerts = "Alerts";
   static const String search = "search";
   static const String settings = "settings";
+ // static const String resetPassword = "resetPassword";
+
+
+  static const String old_password= "old_password";
+  static const String new_password= "new_password";
+  static const String confirm_password= "confirm_password";
+  static const String change_password= "change_password";
+
   static const String services = "services";
 
   static const String Loan = "Loan";
@@ -77,9 +86,9 @@ class AppStrings {
   static const String Governorate = "Governorate";
   static const String District = "District";
   static const String Address = "Address";
-  static const String PoBox = "POBox";
-  static const String ZipCode = "zipCode";
-
+  //static const String PoBox = "POBox";
+  static const String zipCode = "zipCode";
+  static const String salaryDetails = "salaryDetails";
   static const String details = "details";
   static const String about = "about";
   static const String changeLanguage = "change language";
@@ -103,6 +112,9 @@ class AppStrings {
   static const String Major = "Major";
   static const String Notes = "Notes";
   static const String University = "University";
+
+  static const String save = "save";
+  static const String confirm = "confirm";
 //vaction
   static const String Available = "Available";
   static const String All = "All";
@@ -127,13 +139,14 @@ class AppStrings {
   static const String Total_of_Benefit = "Total of Benefit";
   static const String Net_Salary = "Net Salary";
   static const String Was_Saved_Successfully = "Was Saved Successfully";
-  static const String saving_Failed="saving_Failed";
+  static const String saving_Failed="saving Failed";
   //Attendance
-  static const String attendance_Alerts="Attendance Alerts";
-  static const String attendance_Activity="Attendance Activity";
+  static const String attendance_Alerts="attendance_Alerts";
+  static const String attendance_Activity="attendance_Activity";
   static const String Working_hours="Working_hours";
-  static const String from="From";
-  static const String to="To";
+  static const String from="from";
+  static const String to="to";
+  static const String select_time_duration="select_time_duration";
   static const String time="Time";
   static const String type="Type";
   static const String Action="Action";
@@ -168,4 +181,19 @@ class AppStrings {
   static const String defaultError = "default error";
   static const String cacheError = "cache error";
   static const String noInternetError = "no internet error";
+
+  static const String title = "title";
+  static const String notes = "notes";
+  static const String attachments = "attachments";
+  static const String noAttachments = "noAttachments";
+  static const String canceled = "canceled";
+  static const String cancellation_Reason = "cancellation_Reason";
+  static const String seen = "seen";
+  static const String permission_message="permission_message";
+  static const String new_message_here="new_message_here";
+  static const String Password_Changed_Successfully = "Password_Changed_Successfully";
+  static const String Invalid_Password ="Invalid Password";
+  static const String Invalid_Device ="Invalid Device";
+
+
 }

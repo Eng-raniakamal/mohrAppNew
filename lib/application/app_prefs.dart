@@ -7,6 +7,7 @@ const String PREFS_KEY_LANG = "PREFS_KEY_LANG";
 const String PREFS_KEY_ONBOARDING_SCREEN = "PREFS_KEY_ONBOARDING_SCREEN";
 const String PREFS_KEY_IS_USER_LOGGED_IN = "PREFS_KEY_IS_USER_LOGGED_IN";
 final String PREFS_KEY_TOKEN ="PREFS_KEY_TOKEN";
+final String PREFS_USERNAME_TOKEN ="PREFS_USERNAME_TOKEN";
 final String PREFS_ID_TOKEN ="PREFS_ID_TOKEN";
 final String PREFS_List_Notification="PREFS_List_Notification";
 
@@ -85,6 +86,16 @@ class AppPreferences {
     return _sharedPreferences.getString(PREFS_KEY_TOKEN) ?? "";
   }
 ////////////////////////////////////////////////
+
+  Future<void> setUserNameToken(String? tokenUserName) async {
+    _sharedPreferences.setString(PREFS_USERNAME_TOKEN,tokenUserName!);
+  }
+
+  Future<String> getUserNameToken() async {
+    return _sharedPreferences.getString(PREFS_USERNAME_TOKEN) ?? "";
+  }
+
+  /////////////////////////////////////////////////
 //////////////////////empId////////////////////
   Future<void> setEmpIdToken(int? token) async {
     _sharedPreferences.setInt(PREFS_ID_TOKEN,token!);
@@ -93,7 +104,8 @@ class AppPreferences {
   Future<int> getEmpIdToken() async {
     return _sharedPreferences.getInt(PREFS_ID_TOKEN) ?? 0;
   }
-  /////////////////////////////////////////////////
+  ////////////////////////////////////////////////
+
   //login screen
  //  ///////////////////////////
   Future<void> setIsUserLoggedIn() async {

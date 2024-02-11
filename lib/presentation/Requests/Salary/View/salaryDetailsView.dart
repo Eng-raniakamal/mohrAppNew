@@ -12,15 +12,12 @@ import 'package:mohr_hr/presentation/resources/strings_manager.dart';
 import '../ViewModel/salaryDetailsViewModel.dart';
 
 
-
-
 class salaryDetailsView extends StatefulWidget {
   const salaryDetailsView({Key? key}) : super(key: key);
 
   @override
   State<salaryDetailsView> createState() => _salaryDetailsViewState();
 }
-
 
 class _salaryDetailsViewState extends State<salaryDetailsView> {
 

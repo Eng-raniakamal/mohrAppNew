@@ -6,6 +6,7 @@ import 'package:mohr_hr/presentation/Alert_Notification/View/alert_notfiHome.dar
 import 'package:mohr_hr/presentation/Attendance/view/AttendanceHome.dart';
 import 'package:mohr_hr/presentation/Attendance/view/AttendanceLayout.dart';
 import 'package:mohr_hr/presentation/Attendance/view/attendanceView.dart';
+import 'package:mohr_hr/presentation/ChangePassword/changePassword.dart';
 import 'package:mohr_hr/presentation/Requests/Salary/Layout/salaryLayout.dart';
 import 'package:mohr_hr/presentation/Requests/Salary/View/salaryDetailsDialog.dart';
 import 'package:mohr_hr/presentation/Requests/Salary/View/salaryDetailsView.dart';
@@ -22,6 +23,7 @@ import 'package:mohr_hr/presentation/splash/splashScreen.dart';
 import 'package:mohr_hr/presentation/underConstraction.dart';
 //import 'package:mohr_hr/presentation/profile/editProfileScreen.dart';
 
+import '../ChangePassword/layout/changePasswordLayout.dart';
 import '../Requests/Vacations/Layout/vacationLayout.dart';
 import '../Requests/Vacations/view/vactions_view.dart';
 import '../User/layout/employeeLayout.dart';
@@ -43,6 +45,7 @@ class Routes
   static const String editProfileRoute="/user/layout";
   static const String main="/main";
   static const String settings="/settings";
+  static const String changePassword="/changePassword";
   static const String employee="/user/layout";
   static const String attendance="/Attendance/attendanceView.dart";
   static const String Vacations="/Requests/Vacations";
@@ -97,7 +100,8 @@ class RouteGenerator {
 
       case Routes.settings:
           return MaterialPageRoute(builder: (_)=>  Settings());
-
+      case Routes.changePassword:
+        return MaterialPageRoute(builder: (_)=>  ChangePassword());
       case Routes.Vacations:
         initVacationModule();
         return MaterialPageRoute(builder: (_)=> VacationScreen());

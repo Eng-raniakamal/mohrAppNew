@@ -9,11 +9,6 @@ import '../../editEmployee/View/editEmployee.dart';
 import '../settings_Screen.dart';
 
 
-
-
-
-
-
 class Settings extends StatelessWidget with NavigationStates{
 
   @override

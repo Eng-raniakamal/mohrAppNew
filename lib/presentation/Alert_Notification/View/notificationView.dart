@@ -1,19 +1,25 @@
 import 'dart:convert';
+
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
-import 'package:dartz/dartz_unsafe.dart';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
 import 'package:mohr_hr/application/app_prefs.dart';
 import 'package:mohr_hr/application/constants.dart';
 import 'package:mohr_hr/application/di.dart';
 import 'package:mohr_hr/domain/model/model.dart';
+// ignore: depend_on_referenced_packages
 import 'package:http/http.dart' as http;
-import 'package:mohr_hr/main.dart';
+import 'package:mohr_hr/presentation/Alert_Notification/View/AttachmentDialog.dart';
 import 'package:mohr_hr/presentation/Notification.dart';
 import 'package:mohr_hr/presentation/resources/colors.dart';
 import 'package:mohr_hr/presentation/resources/strings_manager.dart';
+import 'package:adaptive_scrollbar/adaptive_scrollbar.dart';
+import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
 
+final GlobalKey<SfPdfViewerState> _pdfViewerKey = GlobalKey();
 
 class NotificationView extends StatefulWidget {
   const NotificationView({super.key});
@@ -26,14 +32,12 @@ class _NotificationViewState extends State<NotificationView> {
   String? userId;
   final AppPreferences _appPreferences = instance<AppPreferences>();
 
-  final _Formkey = GlobalKey<FormState>();
+  final formKey = GlobalKey<FormState>();
   List<NotificationModel>? notifications;
-  Notifications notifi=Notifications();
+  Notifications notify=Notifications();
+  final _verticalScrollController = ScrollController();
+  final _horizontalScrollController = ScrollController();
 
-  _bind() {
-    start();
-
-  }
 
   Future<void> start() async
   {
@@ -59,24 +63,139 @@ class _NotificationViewState extends State<NotificationView> {
                   Scaffold(
                     body:
                     Container(
-                        padding: EdgeInsets.fromLTRB(40, 0, 30, 0),
-                        child: SingleChildScrollView(
-                          scrollDirection: Axis.vertical,
+                      height: MediaQuery.of(context).size.height,
+                        padding:  EdgeInsets.fromLTRB(0, 5, 0, 150),
+                         child: SingleChildScrollView(
+                               controller: _verticalScrollController,
+                           scrollDirection: Axis.vertical,
                           child: Column(
                             children:
                             [
-                              Notificationtable(),
+                              AdaptiveScrollbar
+                                (
+                                  controller: _verticalScrollController,
+                                  //scrollDirection: Axis.vertical,
+                                  child: notificationTable()
+                              ),
                             ],
                           ),
                         )),
 
                   )
-          ));
+         // )
+    ));
   }
 
+  // Image.network(
+  //     imageUrl,
+  //     )
+
+  Widget? displayImgDialoge(String name,String url,String pdf,BuildContext context) {
+    Widget colseButton = TextButton(
+      child: Text(AppStrings.close.tr()),
+      onPressed: () {
+        Navigator.of(context).pop();
+      },
+    );
+    if (url != "") {
+      showAnimatedDialog(
+        barrierColor: Colors.white70,
+        context: context,
+        barrierDismissible: true,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            actions: [
+              colseButton,
+            ],
+            content: Column(
+              children: [
+                Text(name, style: TextStyle(
+                  color: Colors.blue,
+                  fontSize: 20,
+                  fontFamily: "Poppins",
+                  fontWeight: FontWeight.w600,)),
+                Center(
+                  child: Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Image.network(url),
+                  ),
+                ),
+
+              ],
+            ),
+          );
+        },
+        animationType: DialogTransitionType.fade,
+        curve: Curves.linear,
+        duration: Duration(seconds: 1),
+      );
+      return null;
+    }
+    if(pdf!="")
+      { showAnimatedDialog(
+        barrierColor: Colors.white70,
+        context: context,
+        barrierDismissible: true,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            actions: [
+              colseButton,
+            ],
+            content: Column(
+              children: [
+                Text(name, style: TextStyle(
+                  color: Colors.blue,
+                  fontSize: 20,
+                  fontFamily: "Poppins",
+                  fontWeight: FontWeight.w600,)),
+
+
+
+                      Container(width: 450,
+                          height: 500,
+                          child: SfPdfViewer.network(pdf)),
+
+
+              ],
+            ),
+          );
+        },
+        animationType: DialogTransitionType.fade,
+        curve: Curves.linear,
+        duration: Duration(seconds: 1),
+      );
+      return null;
+      }
+  }
+
+  Widget? displayMoreDialoge(String message,BuildContext context) {
+    showAnimatedDialog(
+      context: context,
+      barrierDismissible: true,
+      builder: (BuildContext context) {
+        return ClassicGeneralDialogWidget(
+          //titleText: AppStrings.Alerts.tr(),
+          contentText: message,
+          positiveText: AppStrings.ok.tr(),
+          onPositiveClick: () {
+            Navigator.of(context).pop();
+          },
+
+        );
+      },
+      animationType: DialogTransitionType.fade,
+      curve: Curves.linear,
+      duration: Duration(seconds: 1),
+    );
+    return null;
+  }
   Widget _createMemoTable(List<NotificationModel>? notification) {
     if(notification?.isEmpty==false) {
+
       return DataTable(
+        dataRowHeight: 50,
+
+
         headingRowColor: MaterialStateColor.resolveWith((states) =>
         colorManager.lightprimary),
         columns: _createColumns(),
@@ -86,44 +205,66 @@ class _NotificationViewState extends State<NotificationView> {
     }else
     {return
       Container(margin: const EdgeInsets.fromLTRB(40, 40, 30, 0),
-        child: Text(AppStrings.noContent.tr(),style: TextStyle(color: Colors.orange),),);}
+        child: Text(AppStrings.noContent.tr(),style: const TextStyle(color: Colors.orange),),);}
   }
-
   List<DataColumn> _createColumns() {
     return [
       DataColumn(
-          label: Text("Date", style: TextStyle(color: colorManager.white),)),
+          label: Text(AppStrings.date.tr(), style: const TextStyle(color: colorManager.white),)),
       DataColumn(label: Text(
-        "Title", style: TextStyle(color: colorManager.white),)),
+        AppStrings.title.tr(), style: const TextStyle(color: colorManager.white),)),
       DataColumn(
-          label: Text(AppStrings.details.tr(), style: TextStyle(color: colorManager.white),)),
-      DataColumn(label: Text(
-        "Notes", style: TextStyle(color: colorManager.white),)),
+          label: Text(AppStrings.details.tr(), style: const TextStyle(color: colorManager.white),)),
+      DataColumn(label: Text(AppStrings.notes.tr()
+        , style: const TextStyle(color: colorManager.white),)),
       DataColumn(
-          label: Text("Attachments", style: TextStyle(color: colorManager.white),)),
+          label: Text(AppStrings.attachments.tr(), style: const TextStyle(color: colorManager.white),)),
       DataColumn(label: Text(
-        "Canceled", style: TextStyle(color: colorManager.white),)),
+        AppStrings.canceled.tr(), style: const TextStyle(color: colorManager.white),)),
       DataColumn(
-          label: Text("Cancellation Reason", style: TextStyle(color: colorManager.white),)),
+          label: Text(AppStrings.cancellation_Reason.tr(), style: const TextStyle(color: colorManager.white),)),
       DataColumn(label: Text(
-        "Seen", style: TextStyle(color: colorManager.white),)),
+        AppStrings.seen.tr(), style: const TextStyle(color: colorManager.white),)),
     ];
   }
   List<DataRow> _createRows(List<NotificationModel>? notification) {
     return notification!
         .map((notificationItem) =>
         DataRow(cells: [
-          DataCell(Text(_formatingDate(notificationItem.date).toString())),
+          DataCell(Text(_formattingDate(notificationItem.date).toString())),
           DataCell(Text((notificationItem.title).toString())),
-          DataCell(Text(_textHandling(notificationItem.details).toString())),
-          DataCell(Text(_textHandling(notificationItem.notes).toString())),
-          DataCell(Text(_textHandling(notificationItem.attachments).toString())),
+          DataCell(       onTap: () {
+// Your code here
+            displayMoreDialoge(_textHandling(notificationItem.details).toString(),context);
+               },
+              Container(width: 200,
+            height: 150,
+            child: Text(_textHandling(notificationItem.details).toString(),softWrap: true, maxLines: 2,
+                overflow: TextOverflow.ellipsis,)
+          )),
+          DataCell( onTap: () {
+    displayMoreDialoge(_textHandling(notificationItem.details).toString(),context);
+    },
+    Container(width: 200,
+    height: 150,
+    child: Text(_textHandling(notificationItem.notes).toString(),maxLines: 2,
+    overflow: TextOverflow.ellipsis,))),
+          DataCell(Text(_textHandling(notificationItem.attachments).toString()!="" ?
+          AppStrings.attachments.tr():AppStrings.noAttachments.tr()),
+          onTap: () async {
+            if(_textHandling(notificationItem.attachments).toString()!="" ) {
+             dynamic attachmentData= await getAttachment(int.parse(notificationItem.attachments.toString()));
+              String img=attachmentData[0]["img"].toString();
+              //showAttachmentDialog(attachmentData,context,onValue: (_) {});
+             displayImgDialoge(attachmentData[0]["Name"],img,attachmentData[0]["pdf"],context );
+
+            } },),
          // DataCell(_boolHandling(notificationItem.isCanceled)),
           DataCell(notificationItem.isCanceled == true ?
-        Icon(Icons.check):Text("_")),
+        const Icon(Icons.check):const Text("_")),
           DataCell(Text(_textHandling(notificationItem.cancellationReason).toString())),
            DataCell(notificationItem.seen == true ?
-             Icon(Icons.check_box,color: Colors.blue,):Icon(Icons.close,color: Colors.grey))
+             const Icon(Icons.check_box,color: Colors.blue,):const Icon(Icons.close,color: Colors.grey))
 
 
           //DataCell(_boolHandling(notificationItem.seen)),
@@ -155,9 +296,9 @@ class _NotificationViewState extends State<NotificationView> {
     }
     return null;
   }
- Future <void> getUnseenNotificationId(List<NotificationModel> notifi)
+ Future <void> getUnseenNotificationId(List<NotificationModel> notify)
   async {
-    for( var item in notifi)
+    for( var item in notify)
       {
         if( item.seen== false)
         {
@@ -166,14 +307,36 @@ class _NotificationViewState extends State<NotificationView> {
 
       }
 }
+Future<dynamic> getAttachment(int ids) async
+{
+  userId = await _appPreferences.getUserToken();
+  Uri uri;
+  String url = Constants.getAttachmentUrl;
+
+  uri = Uri.parse("$url"+"$ids");
+  var response = await http.get(
+      uri, headers: <String, String>{
+    'Content-Type': 'application/json; charset=UTF-8',
+    'userId': userId!
+  });
+
+  final responseData = json.decode(response.body);
+
+  if (responseData != null) {
+    return responseData;
+
+  }
+
+}
+
+
  Future <void> markNotificationAsSeen(int id) async
   {
     userId = await _appPreferences.getUserToken();
-    var uri;
+    Uri uri;
     String url = Constants.getMarkNotificationAsSeenUrl;
-    bool seenFlag;
 
-        uri = Uri.parse(url + "/" + id.toString());
+        uri = Uri.parse("$url/$id");
         var response = await http.get(
             uri, headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
@@ -182,13 +345,10 @@ class _NotificationViewState extends State<NotificationView> {
 
         final responseData = json.decode(response.body);
         if (responseData != null) {
-          var userNotifications = responseData as bool;
-          seenFlag = userNotifications;
           //return seenFlag;
         }
       }
-
-  Widget Notificationtable() {
+  Widget notificationTable() {
     return
       FutureBuilder(
           future: getApiNotification(),
@@ -201,15 +361,27 @@ class _NotificationViewState extends State<NotificationView> {
                 if (snapshot.hasError) {
                   return Text('Error: ${snapshot.error}');
                 } else {
-                  return Center(
-                      child: SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        child: Column(
-                          children: [
-                            _createMemoTable(notifications),
-                          ],
-                        ),
-                      )
+                  return
+                      AdaptiveScrollbar(
+                      controller: _horizontalScrollController,
+                      position: ScrollbarPosition.bottom,
+                      underColor: Colors.blueGrey.withOpacity(0.3),
+            sliderDefaultColor: Colors.blueGrey.withOpacity(0.7),
+            sliderActiveColor: Colors.grey,
+            child: SingleChildScrollView(
+            controller: _verticalScrollController,
+
+            scrollDirection: Axis.vertical,
+            child: SingleChildScrollView(
+            controller: _horizontalScrollController,
+            scrollDirection: Axis.horizontal,
+            child: Padding(
+                padding: const EdgeInsets.only(right: 0, bottom: 30),
+                child:
+            _createMemoTable(notifications),
+            )))
+                      //),
+
                   );
                 }
             }
@@ -226,22 +398,80 @@ class _NotificationViewState extends State<NotificationView> {
    txtResult=text;
    return txtResult;
  }
-  String? _formatingDate(String? date)
+  String? _formattingDate(String? date)
   {
     if(date!=null){
-    String? formatingDate = date.split('T').first;
-    return formatingDate;}
+    String? formattingDate = date.split('T').first;
+    return formattingDate;}
     return null;
   }
-  Widget _boolHandling(bool? boolData)
-  {
-    if(boolData==true)
-      {
-        return  Icon(Icons.check,color: Colors.black);
 
-        }
-    return  Icon(Icons.close,color: Colors.black);
+}
+
+// ignore: unused_element, camel_case_types
+class _notificationDataSource extends DataTableSource {
+  final List<NotificationModel> data;
+
+  _notificationDataSource({required this.data});
+
+  @override
+  DataRow? getRow(int index) {
+    if (index >= data.length) {
+      return null;
+    }
+
+    final item = data[index];
+
+    return DataRow(cells: [
+      DataCell(Text(_formattingDate(item.date).toString())),
+      DataCell(Text((item.title).toString())),
+      DataCell(Text(
+        _textHandling(item.details).toString(), softWrap: true, maxLines: 3,)),
+      DataCell(Text(_textHandling(item.notes).toString(), softWrap: true)),
+      DataCell(Text(_textHandling(item.attachments).toString())),
+      // DataCell(_boolHandling(notificationItem.isCanceled)),
+      DataCell(item.isCanceled == true ?
+      const Icon(Icons.check) : const Text("_")),
+      DataCell(Text(_textHandling(item.cancellationReason).toString())),
+      DataCell(item.seen == true ?
+      const Icon(Icons.check_box, color: Colors.blue,) : const Icon(
+          Icons.close, color: Colors.grey))
+
+
+      //DataCell(_boolHandling(notificationItem.seen)),
+
+    ]);
   }
+
+  String _textHandling(String? text) {
+    String txtResult;
+    if (text == null) {
+      txtResult = "";
+      return txtResult;
+    }
+    txtResult = text;
+    return txtResult;
+  }
+
+  String? _formattingDate(String? date) {
+    if (date != null) {
+      String? formattingDate = date
+          .split('T')
+          .first;
+      return formattingDate;
+    }
+    return null;
+  }
+
+  @override
+  bool get isRowCountApproximate => false;
+
+  @override
+  int get rowCount => data.length;
+
+  @override
+  int get selectedRowCount => 0;
+
 
 
 }

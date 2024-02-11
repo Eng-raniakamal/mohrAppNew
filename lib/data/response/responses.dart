@@ -339,8 +339,10 @@ class GovernoratyResponse {
   int? governoratyId;
   @JsonKey(name: "Name")
   String? governoratyname;
+  @JsonKey(name: "CountryId")
+  int? countryId;
 
-  GovernoratyResponse (this.governoratyId, this.governoratyname);
+  GovernoratyResponse (this.governoratyId, this.governoratyname,this.countryId);
 
 // from json
   factory  GovernoratyResponse.fromJson(Map<String, dynamic> json) =>
@@ -356,8 +358,10 @@ class DistrictResponse {
   int? districtId;
   @JsonKey(name: "Name")
   String? districtname;
+  @JsonKey(name: "GovernrateId")
+  int? governoratyId;
 
-  DistrictResponse (this.districtId, this.districtname);
+  DistrictResponse (this.districtId, this.districtname,this.governoratyId);
 
 // from json
   factory  DistrictResponse.fromJson(Map<String, dynamic> json) =>

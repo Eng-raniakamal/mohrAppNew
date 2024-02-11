@@ -141,7 +141,7 @@ extension CountryResponseMapper on CountriesResponse? {
 extension GovernoratyResponseMapper on GovernoratyResponse? {
   GovernorateModel toDomain() {
     return GovernorateModel(this?.governoratyId?.orZero() ?? ZERO,
-      this?.governoratyname?.orEmpty() ?? EMPTY,
+      this?.governoratyname?.orEmpty() ?? EMPTY,this?.countryId?.orZero()
     );
   }
 }
@@ -149,7 +149,7 @@ extension GovernoratyResponseMapper on GovernoratyResponse? {
 extension DistrictResponseMapper on DistrictResponse? {
   DistrictsModel toDomain() {
     return DistrictsModel(this?.districtId?.orZero() ?? ZERO,
-      this?.districtname?.orEmpty() ?? EMPTY,
+      this?.districtname?.orEmpty() ?? EMPTY,this?.governoratyId?.orZero()
     );
   }
 }

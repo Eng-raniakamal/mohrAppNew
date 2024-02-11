@@ -1,6 +1,8 @@
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:mohr_hr/presentation/Requests/Salary/View/salaryDetailsView.dart';
+import 'package:mohr_hr/presentation/resources/strings_manager.dart';
 import 'package:mohr_hr/presentation/resources/themes.dart';
 
 
@@ -53,7 +55,7 @@ Widget?  showCustomDialog(BuildContext context, {required ValueChanged onValue})
                             children: [
                               Center(
                                 child: Text(
-                                  "Salary Details",
+                                  AppStrings.salaryDetails.tr(),
                                   style: TextStyle(
                                     fontSize: 30,
                                     fontFamily: "Poppins",
@@ -67,20 +69,7 @@ Widget?  showCustomDialog(BuildContext context, {required ValueChanged onValue})
                                   child: salaryDetailsView()
                               ),
 
-                          //  Positioned(
-                          //   left: 0,
-                          //   right: 0,
-                          //   bottom: -30,
-                          //   child: CircleAvatar(
-                          //     radius: 16,
-                          //     backgroundColor: Colors.white,
-                          //     child: Icon(
-                          //       Icons.close,
-                          //       size: 20,
-                          //       color: Colors.black,
-                          //     ),
-                          //   ),
-                          // )
+
                   ],
                 ),
                         ),

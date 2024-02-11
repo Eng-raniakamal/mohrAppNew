@@ -61,8 +61,8 @@ class _vacationsViewState extends State<vacationsView> {
         child: Builder(
         builder: (context) =>
         Scaffold(
-            appBar: buildAppBarstart(context),
-        bottomNavigationBar:NavigatorBar(index: 0),
+            appBar: buildAppBar(context),
+        bottomNavigationBar:NavigatorBar(index: 0,notificationNumber: Constants.notificationNumber,),
     //     CurvedNavigationBar(items: item,
     //     index: 0,
     //

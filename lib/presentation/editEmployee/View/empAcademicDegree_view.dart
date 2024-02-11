@@ -481,6 +481,7 @@ class _AcademicDegreeViewState extends State<AcademicDegreeView> {
         return ClassicGeneralDialogWidget(
           titleText: AppStrings.Alerts.tr(),
           contentText: AppStrings.Was_Saved_Successfully.tr(),
+          positiveText:  AppStrings.confirm.tr(),
           onPositiveClick: () {
             Navigator.of(context).pop();
           },
@@ -502,6 +503,7 @@ class _AcademicDegreeViewState extends State<AcademicDegreeView> {
       builder: (BuildContext context) {
         return ClassicGeneralDialogWidget(
           //titleText: AppStrings.tr(),
+          positiveText:  AppStrings.confirm.tr(),
           contentText: AppStrings.saving_Failed,
           onPositiveClick: () {
             Navigator.of(context).pop();

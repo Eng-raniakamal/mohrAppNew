@@ -256,6 +256,7 @@ GovernoratyResponse _$GovernoratyResponseFromJson(Map<String, dynamic> json) =>
     GovernoratyResponse(
       json['Id'] as int?,
       json['Name'] as String?,
+      json['CountryId'] as int?,
     );
 
 Map<String, dynamic> _$GovernoratyResponseToJson(
@@ -263,18 +264,21 @@ Map<String, dynamic> _$GovernoratyResponseToJson(
     <String, dynamic>{
       'Id': instance.governoratyId,
       'Name': instance.governoratyname,
+      'CountryId':instance.countryId
     };
 
 DistrictResponse _$DistrictResponseFromJson(Map<String, dynamic> json) =>
     DistrictResponse(
       json['Id'] as int?,
       json['Name'] as String?,
+      json['GovernrateId'] as int?,
     );
 
 Map<String, dynamic> _$DistrictResponseToJson(DistrictResponse instance) =>
     <String, dynamic>{
       'Id': instance.districtId,
       'Name': instance.districtname,
+      'GovernrateId':instance.governoratyId
     };
 
 DisplayBasicDataResponse _$DisplayBasicDataResponseFromJson(

@@ -57,8 +57,8 @@ class _salaryViewState extends State<salaryView> {
         child: Builder(
         builder: (context) =>
         Scaffold(
-            appBar: buildAppBarstart(context),
-            bottomNavigationBar:NavigatorBar(index:0),
+            appBar: buildAppBar(context),
+            bottomNavigationBar:NavigatorBar(index: 0,notificationNumber: Constants.notificationNumber,),
             // CurvedNavigationBar(items: item,
             //     index: 0,
             //
@@ -228,6 +228,7 @@ class _salaryViewState extends State<salaryView> {
         return ClassicGeneralDialogWidget(
           titleText: AppStrings.Information.tr(),
           contentText: AppStrings.no_salary_found.tr(),
+          positiveText: AppStrings.confirm.tr(),
           onPositiveClick: () {
             Navigator.of(context).pop();
           },

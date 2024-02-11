@@ -13,12 +13,13 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:mohr_hr/domain/model/model.dart';
 import 'package:mohr_hr/presentation/Notification.dart';
 import 'package:mohr_hr/presentation/resources/language_manager.dart';
+import 'package:mohr_hr/presentation/resources/strings_manager.dart';
 import 'package:workmanager/workmanager.dart';
 import 'package:http/http.dart' as http;
 
 
 final FlutterLocalNotificationsPlugin  flutterLocalNotificationsPlugin=FlutterLocalNotificationsPlugin();
-//final AppPreferences _appPreferences = instance<AppPreferences>();
+final AppPreferences _appPreferences = instance<AppPreferences>();
 
 //String? userId;
 const simplePeriodicTask = "simplePeriodicTask";
@@ -28,15 +29,16 @@ void showNotification( v, flp) async {
   var android = AndroidNotificationDetails(
       'channel id', 'channel NAME',
       priority: Priority.high, importance: Importance.max);
-  //var iOS = IOSNotificationDetails();
-  var platform = NotificationDetails(android: android);
-  await flp.show(v, 'New MOHR Notification', '$v', platform,
+  var iOS = DarwinNotificationDetails();
+  var platform = NotificationDetails(android: android,iOS: iOS);
+  await flp.show(v, "new notifications here", '$v', platform,
       payload: 'VIS \n $v');
 }
 
 void callbackDispatcher() {
   Workmanager().executeTask((task, inputData) async {
-   // userId= await _appPreferences.getUserToken();
+    await initAppModule();
+    String userId= await _appPreferences.getUserToken();
     FlutterLocalNotificationsPlugin flp = FlutterLocalNotificationsPlugin();
     var android = AndroidInitializationSettings('@mipmap/ic_launcher');
     //var iOS = IOSInitializationSettings();
@@ -49,7 +51,8 @@ void callbackDispatcher() {
     var response = await http.get(
         uri, headers: <String, String>{
        'Content-Type': 'application/json; charset=UTF-8',
-       'userId': "b64f7a02-b625-46b7-8126-d3a20defdff8"
+      // 'userId': "b64f7a02-b625-46b7-8126-d3a20defdff8",
+       'userId': userId
     });
 
     final responseData = json.decode(response.body);
@@ -69,6 +72,7 @@ void callbackDispatcher() {
         }
       }
 
+
       Constants.notificationNumber=unSeenMessage;
       if(unSeenMessage!=0) {
         showNotification(unSeenMessage, flp);
@@ -85,7 +89,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await initAppModule();
   Notifications.initialize(flutterLocalNotificationsPlugin);
-  await Workmanager().initialize(callbackDispatcher, isInDebugMode: false); //to true if still in testing lev turn it to false whenever you are launching the app
+  await Workmanager().initialize(callbackDispatcher, isInDebugMode: false);
   await EasyLocalization.ensureInitialized();
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
@@ -103,8 +107,8 @@ Future<void> main() async {
   );
   ErrorWidget.builder=(FlutterErrorDetails details){
     return Container(
-      color:Colors.yellow[200],
-      child: SizedBox(child: Text("Error page")),
+      //color:Colors.yellow[200],
+      child: const Center(child: SizedBox(child: Text(""))),
     );
   };
 }

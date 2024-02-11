@@ -139,13 +139,15 @@ class CountryModel {
 class GovernorateModel {
   int? governorateId;
   String? governorateName;
-  GovernorateModel(this.governorateId,this.governorateName);
+  int? countryId;
+  GovernorateModel(this.governorateId,this.governorateName,this.countryId);
 }
 
 class DistrictsModel {
   int? districtId;
   String? districtName;
-  DistrictsModel (this.districtId,this.districtName);
+  int? governorateId;
+  DistrictsModel (this.districtId,this.districtName,this.governorateId);
 }
 
 class BasicDataModel{
@@ -448,7 +450,7 @@ class NotificationModel {
       title: json["Title"],
       details: json["Details"],
       notes: json["Notes"],
-      attachments:json["attachments"],
+      attachments:json["Attachments"],
       isCanceled: json["IsCanceled"],
       seen: json["Seen"],
       cancellationReason:json["CancellationReason"],

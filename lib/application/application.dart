@@ -8,19 +8,21 @@ import 'package:flutter/services.dart';
 import 'package:flutter_dynamic_icon/flutter_dynamic_icon.dart';
 import 'package:mohr_hr/application/app_prefs.dart';
 import 'package:mohr_hr/application/constants.dart';
-import 'package:mohr_hr/application/core.dart';
+
 import 'package:mohr_hr/application/di.dart';
 import 'package:mohr_hr/domain/model/model.dart';
 import 'package:mohr_hr/domain/model/user_preferences.dart';
 import 'package:mohr_hr/main.dart';
-import 'package:mohr_hr/presentation/Alert_Notification/ViewModel/notificationViewModel.dart';
-import 'package:mohr_hr/presentation/Attendance/view/attendanceAlert.dart';
+
+
 import 'package:mohr_hr/presentation/Notification.dart';
 import 'package:mohr_hr/presentation/resources/themes.dart';
 import 'package:mohr_hr/presentation/resources/routes.dart';
 import 'package:mohr_hr/presentation/splash/splash.dart';
 import 'package:workmanager/workmanager.dart';
 import 'package:http/http.dart' as http;
+
+import '../presentation/resources/strings_manager.dart';
 
 // ignore: must_be_immutable
 class MyApp extends StatefulWidget {
@@ -42,11 +44,11 @@ class _MyAppState extends State<MyApp> {
   final AppPreferences _appPreferences = instance<AppPreferences>();
   Timer? timer;
   List<NotificationModel>? notifications;
-  int? lengthOfList;
+  int? lengthOfList=0;
   int different=0;
   int differentflag=0;
   bool checked=false;
-  int? storedDataLength;
+  int? storedDataLength=0;
 
 
   @override
@@ -68,24 +70,24 @@ class _MyAppState extends State<MyApp> {
     timer = Timer.periodic(const Duration(minutes: 1), (
          Timer t) async => await checkNewNotifications());
 
-    Workmanager().registerPeriodicTask("5", "New MOHR Notifications",
-        existingWorkPolicy: ExistingWorkPolicy.append,
+    Workmanager().registerPeriodicTask("1", AppStrings.new_message_here.tr(),
+        existingWorkPolicy: ExistingWorkPolicy.replace,
 
         frequency: Duration(minutes: 15),//when should it check the link
-        initialDelay: Duration(seconds: 5),//duration before showing the notification
+        initialDelay: Duration(seconds: 1),//duration before showing the notification
         constraints: Constraints(
           networkType: NetworkType.connected,
-          requiresCharging: false,
+          requiresCharging: false
         ));
-
-
 }
 
   Future<void> checkNewNotifications() async {
 
     notifications= await getApiNotification();
     lengthOfList=await getUnSeenNotification(notifications!);
-    Constants.notificationNumber = lengthOfList!;
+    setState(()  {
+      Constants.notificationNumber = lengthOfList!;
+    });
 
 
     if( lengthOfList!=null) {
@@ -99,12 +101,11 @@ class _MyAppState extends State<MyApp> {
         });
           if(Constants.notificationNumber!=0)
             {
-          //setBatchNumber(context, Constants.notificationNumber);
-          Notifications.showBigTextNotification(
-            title: "MOHR", body: "$lengthOfList new message here",
+            setBatchNumber(context, lengthOfList!);
+            Notifications.showBigTextNotification(
+            title: "MOHR", body: "$lengthOfList"+" "+AppStrings.new_message_here.tr(),
             fln: flutterLocalNotificationsPlugin );
-
-         _appPreferences.setUserNotificationList(lengthOfList!);
+            _appPreferences.setUserNotificationList(lengthOfList!);
          }
            }
           else{
@@ -157,20 +158,24 @@ class _MyAppState extends State<MyApp> {
     setState(() {
       Constants.notificationNumber= unSeenMessage;
     });
-    setBatchNumber(context,unSeenMessage);
+    if(Constants.notificationNumber!=0) {
+     // setBatchNumber(context, unSeenMessage);
+    }
     return unSeenMessage;
   }
 
   setBatchNumber(BuildContext context, int num) async {
     try {
-      await FlutterDynamicIcon.setApplicationIconBadgeNumber(num);
+
+      if(num!=0) {
+        await FlutterDynamicIcon.setApplicationIconBadgeNumber(num);
+      }
     } on PlatformException {
       print('Exception:Platform not supported');
     } catch (e) {
       print(e);
     }
   }
-
 
   @override
   Widget build(BuildContext? context) {

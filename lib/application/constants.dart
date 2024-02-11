@@ -2,11 +2,13 @@
   class  Constants {
     static const String baseUrl= 'https://mohrapi.azurewebsites.net';
     static const String LoginUrl = '$baseUrl/api/Account/VerifyLogin';
+    static const String changePassword = '$baseUrl/api/Account/ChangePassword';
     static const String EmployeeUrl='$baseUrl/api/Employee';
     static const String getImageUrl='$baseUrl/api/Employee/Avatar';
     static const String postImageUrl='$baseUrl/api/Employee/Photo';
     static const String getAlertUrl='$baseUrl/api/Employee/GetAlerts';
     static const String getNotificationUrl='$baseUrl/api/Employee/GetEmployeeNotifications';
+    static const String getAttachmentUrl='$baseUrl/api/Employee/GetNotificationAttachments?ids=';
     static const String getMarkNotificationAsSeenUrl='$baseUrl/api/Employee/MarkAsSeen';
     static const String attendanceUrl='$baseUrl/api/Attendance?fromDate=';
     static const String SaveEmployeeBasicDataUrl='$baseUrl/api/Employee/PersonellData';

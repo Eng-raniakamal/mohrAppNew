@@ -493,6 +493,7 @@ Widget? displayDialoge()
       return ClassicGeneralDialogWidget(
         titleText: AppStrings.Alerts.tr(),
         contentText: AppStrings.Was_Saved_Successfully.tr(),
+         positiveText:  AppStrings.confirm.tr(),
         onPositiveClick: () {
           Navigator.of(context).pop();
         },
@@ -515,6 +516,7 @@ Widget? displayDialoge()
         return ClassicGeneralDialogWidget(
           titleText: "",
           contentText: AppStrings.saving_Failed,
+          positiveText: AppStrings.confirm.tr(),
           onPositiveClick: () {
             Navigator.of(context).pop();
           },

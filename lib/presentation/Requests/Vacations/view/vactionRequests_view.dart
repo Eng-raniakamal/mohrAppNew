@@ -7,19 +7,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:mohr_hr/application/app_prefs.dart';
+
 import 'package:mohr_hr/application/constants.dart';
 import 'package:mohr_hr/application/di.dart';
 import 'package:mohr_hr/domain/model/model.dart';
 import 'package:mohr_hr/domain/model/navigationManu.dart';
 
 import 'package:mohr_hr/presentation/Requests/Vacations/viewModel/VacationType_ViewModel.dart';
-import 'package:mohr_hr/presentation/editEmployee/View/empAcademicDegree_view.dart';
-import 'package:mohr_hr/presentation/editEmployee/ViewModel/empSkills_viewModel.dart';
-import 'package:mohr_hr/presentation/resources/colors.dart';
+
 import 'package:mohr_hr/presentation/resources/strings_manager.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:mohr_hr/presentation/widgets/appbar_widget.dart';
+
 import 'package:mohr_hr/presentation/widgets/profile_widget.dart';
 
 
@@ -32,7 +30,7 @@ class VacationRequestView extends StatefulWidget with NavigationStates
 
 class _VacationRequestViewState extends State<VacationRequestView>with TickerProviderStateMixin {
 
-  final AppPreferences _appPreferences = instance<AppPreferences>();
+ // final AppPreferences _appPreferences = instance<AppPreferences>();
   final VacationTypeViewModel _VacationTypeviewModel = instance<VacationTypeViewModel>();
 
   final _Formkey= GlobalKey<FormState>();
@@ -323,8 +321,8 @@ class _VacationRequestViewState extends State<VacationRequestView>with TickerPro
       barrierDismissible: true,
       builder: (BuildContext context) {
         return ClassicGeneralDialogWidget(
-          titleText: 'Information',
-          contentText: 'Sorry,You do not have permission to change your Photo',
+          titleText: AppStrings.Information.tr(),
+          contentText: AppStrings.permission_message.tr(),
           onPositiveClick: () {
             Navigator.of(context).pop();
           },

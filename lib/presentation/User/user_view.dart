@@ -4,6 +4,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:mohr_hr/application/app_prefs.dart';
 import 'package:mohr_hr/application/constants.dart';
+import 'package:mohr_hr/application/core.dart';
 import 'package:mohr_hr/application/di.dart';
 import 'package:mohr_hr/data/data_source/local_data_source.dart';
 import 'package:mohr_hr/domain/model/model.dart';
@@ -59,6 +60,7 @@ class _userViewState extends State<userView> {
   }
   @override
   void initState() {
+    checkNewNotifications();
     _bind();
     super.initState();
   }
@@ -70,29 +72,8 @@ class _userViewState extends State<userView> {
         Scaffold(
             extendBodyBehindAppBar: true,
             appBar: buildAppBar(context),
-            bottomNavigationBar:NavigatorBar(index: 1),
-            // CurvedNavigationBar(items: items,
-            //     index: 1,
-            //     buttonBackgroundColor: colorManager.primary,
-            //     backgroundColor: Colors.transparent,
-            //     color: colorManager.primary,
-            //     onTap: (int index) {
-            //       if(index==1)
-            //       {
-            //         Navigator.of(context).pushReplacementNamed(Routes.HomeRoute);
-            //       }
-            //       else
-            //       if(index==0)
-            //       {
-            //         Navigator.of(context).pushReplacementNamed(Routes.employee);
-            //       }
-            //       else
-            //         if(index==2)
-            //           {
-            //             Navigator.of(context).pushReplacementNamed(Routes.notification);
-            //           }
-            //     }
-            // ),
+            bottomNavigationBar:
+             NavigatorBar(index: 1,notificationNumber: Constants.notificationNumber,),
             body:
         StreamBuilder<FlowState>(
             stream: _viewModel.outputState,
@@ -110,28 +91,6 @@ class _userViewState extends State<userView> {
   }
   Widget _getContentWidget() {
      return
-    // Scaffold(
-    //   extendBodyBehindAppBar: true,
-    //   appBar: buildAppBar(context),
-    //   bottomNavigationBar:
-    //   CurvedNavigationBar(items: items,
-    //     index: 1,
-    //     buttonBackgroundColor: colorManager.primary,
-    //     backgroundColor: Colors.transparent,
-    //     color: colorManager.primary,
-    //     onTap: (int index) {
-    //       if(index==1)
-    //       {
-    //         Navigator.of(context).pushReplacementNamed(Routes.HomeRoute);
-    //       }
-    //       else
-    //       if(index==0)
-    //       {
-    //         Navigator.of(context).pushReplacementNamed(Routes.employee);
-    //       }
-    //       }
-    //   ),
-    //   body:
        StreamBuilder<EmployeeDataModel>(
            stream: _viewModel.outputUserData,
            builder: (context, snapshot) {
@@ -241,7 +200,7 @@ class _userViewState extends State<userView> {
                     fit: BoxFit.contain,
                   ),
                 ),
-                Text(AppStrings.Vacation.tr())
+                Center(child: Text(AppStrings.Vacation.tr()))
               ],
             )
         )
@@ -263,7 +222,7 @@ if(ReqName==AppStrings.Salary.tr())
                   fit: BoxFit.contain,
                 ),
               ),
-              Text(AppStrings.Salary.tr())
+              Center(child: Text(AppStrings.Salary.tr()))
             ],
           )
       )
@@ -280,12 +239,12 @@ if(ReqName==AppStrings.Salary.tr())
           child: Column(mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children:[
-              SizedBox(width: 70,height: 70,
+              const SizedBox(width: 70,height: 70,
                 child: Image(image: AssetImage(ImageAssets.attendance),
                   fit: BoxFit.contain,
                 ),
               ),
-              SizedBox(width: 90,height: 70,child: Text(AppStrings.Attendance.tr()))
+              SizedBox(width: 90,height: 70,child: Center(child: Text(AppStrings.Attendance.tr())))
             ],
           )
       )
@@ -303,12 +262,12 @@ if(ReqName==AppStrings.Requests.tr())
           },
           child: Column(
             children: [
-              SizedBox(width: 70,height: 70,
+              const SizedBox(width: 70,height: 70,
                 child: Image(image: AssetImage(ImageAssets.requests),
                   fit: BoxFit.contain,
                 ),
               ),
-              SizedBox(width:70,height: 70,child: Text(AppStrings.Requests.tr()))
+              SizedBox(width:70,height: 70,child: Center(child: Text(AppStrings.Requests.tr())))
             ],
           )
       )
@@ -487,14 +446,12 @@ return Container();
       );
     }
     else {
-
           URLimage=ImageAssets.noPhoto;
           Constants.imagePath= URLimage;
-      return ProfileWidget(
+          return ProfileWidget(
           imagePath: ImageAssets.noPhoto,
           isEdit: false,
           onClicked: () {
-
             resetModules();
             Navigator.of(context).pushReplacementNamed(Routes.editProfileRoute);
             //}
@@ -533,8 +490,9 @@ return Container();
       barrierDismissible: true,
       builder: (BuildContext context) {
         return ClassicGeneralDialogWidget(
-          titleText: 'Information',
-          contentText: 'Sorry,You do not have  permission to change your Photo',
+          titleText: AppStrings.Information.tr(),
+          contentText: AppStrings.permission_message.tr(),
+          positiveText:  AppStrings.confirm.tr(),
           onPositiveClick: () {
             Navigator.of(context).pop();
           },
@@ -544,8 +502,13 @@ return Container();
       ,curve: Curves.linear,
       duration: const Duration(seconds: 1),
     );
+    return null;
   }
 }
+
+
+
+
 
 
 
