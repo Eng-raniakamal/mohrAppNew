@@ -244,7 +244,7 @@ if(ReqName==AppStrings.Salary.tr())
                   fit: BoxFit.contain,
                 ),
               ),
-              SizedBox(width: 90,height: 70,child: Center(child: Text(AppStrings.Attendance.tr())))
+              SizedBox(width: 95,height: 70,child: Center(child: Text(AppStrings.Attendance.tr())))
             ],
           )
       )
@@ -255,10 +255,10 @@ if(ReqName==AppStrings.Requests.tr())
       transitionOnUserGestures: true,
       child: InkWell(
           onTap: () {
-           // Navigator.of(context).pushReplacementNamed(Routes.underConstraction);
-            Navigator.push(context,
+           // Navigator.of(context).pushReplacementNamed(Routes.VacationRequest);
+             Navigator.push(context,
               MaterialPageRoute(builder: (context) => const UnderConstructionScreen()),
-            );
+             );
           },
           child: Column(
             children: [
@@ -273,91 +273,7 @@ if(ReqName==AppStrings.Requests.tr())
       )
   );}
 return Container();
-    // switch (ReqName) {
-    //   case "Vacation":
-    //     return Hero(
-    //           tag: ReqName,
-    //           transitionOnUserGestures: true,
-    //           child: InkWell(
-    //               onTap: () {
-    //                 Navigator.of(context).pushReplacementNamed(Routes.Vacations);
-    //               },
-    //               child: Column(
-    //                 children: [
-    //                   SizedBox(width: 70,height: 70,
-    //                     child: Image(image: AssetImage(ImageAssets.Vacation),
-    //                       fit: BoxFit.contain,
-    //                     ),
-    //                   ),
-    //                   Text(AppStrings.Vacation.tr())
-    //                 ],
-    //               )
-    //           )
-    //
-    //     );
-    //   case "Salary":
-    //     return Hero(
-    //         tag: ReqName,
-    //         transitionOnUserGestures: true,
-    //         child: InkWell(
-    //             onTap: () {
-    //               Navigator.of(context).pushReplacementNamed(Routes.salary);
-    //             },
-    //             child: Column(
-    //               children:[
-    //                  SizedBox(width: 70,height: 70,
-    //                    child: Image(image: AssetImage(ImageAssets.salary),
-    //                     fit: BoxFit.contain,
-    //                 ),
-    //                  ),
-    //                 Text(AppStrings.Salary.tr())
-    //               ],
-    //             )
-    //         )
-    //     );
-    //   case "Attendance":
-    //     return Hero(
-    //         tag: ReqName,
-    //         transitionOnUserGestures: true,
-    //         child: InkWell(
-    //             onTap: () {
-    //
-    //             },
-    //             child: Column(mainAxisAlignment: MainAxisAlignment.center,
-    //               crossAxisAlignment: CrossAxisAlignment.center,
-    //               children:[
-    //                  SizedBox(width: 70,height: 70,
-    //                    child: Image(image: AssetImage(ImageAssets.attendance),
-    //                    fit: BoxFit.contain,
-    //                 ),
-    //                  ),
-    //                 SizedBox(width: 80,height: 70,child: Text(AppStrings.Attendance.tr()))
-    //               ],
-    //             )
-    //         )
-    //     );
-    //   case "Requests":
-    //     return Hero(
-    //         tag: ReqName,
-    //         transitionOnUserGestures: true,
-    //         child: InkWell(
-    //             onTap: () {
-    //             },
-    //             child: Column(
-    //               children: [
-    //                 SizedBox(width: 70,height: 70,
-    //                   child: Image(image: AssetImage(ImageAssets.requests),
-    //                     fit: BoxFit.contain,
-    //                   ),
-    //                 ),
-    //               SizedBox(width:70,height: 70,child: Text(AppStrings.Requests.tr()))
-    //               ],
-    //             )
-    //         )
-    //     );
-    //   default:
-    //     return Container();
-    // }
+
   }
   Widget buildcountaner(String reqName) {
     return
@@ -431,18 +347,10 @@ return Container();
           imagePath: URLimage,
           isEdit: false,
           onClicked: () {
-            // if(canEditImage == true)
-            // {
-            //   displayDialoge();
-            // }
-            // else
-            //   {
                 resetModules();
                 Navigator.of(context).pushReplacementNamed(Routes.editProfileRoute);
-              //}
           }
-        // Navigator.of(context).push(
-        //   MaterialPageRoute(builder: (context) => editProfileScreen()),
+
       );
     }
     else {
@@ -456,8 +364,7 @@ return Container();
             Navigator.of(context).pushReplacementNamed(Routes.editProfileRoute);
             //}
           }
-        // Navigator.of(context).push(
-        //   MaterialPageRoute(builder: (context) => editProfileScreen()),
+
       );
     }
   }

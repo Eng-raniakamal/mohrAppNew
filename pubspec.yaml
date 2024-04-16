@@ -81,6 +81,7 @@ dependencies:
   workmanager: ^0.5.2
   adaptive_scrollbar: ^2.1.2
   syncfusion_flutter_pdfviewer: ^23.1.41
+  rename: ^3.0.2
 
 dev_dependencies:
   flutter_test:

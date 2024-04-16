@@ -160,5 +160,10 @@
    "attachments" :"attachments",
   "canceled": "canceled",
    "cancellation_Reason":"cancellation_Reason",
-  "seen": "seen"
+  "seen": "seen",
+  "submit": "submit",
+  "check": "Check",
+   "Action_Type":"Action Type",
+ "Alert_Type":"Alert Type",
+  "Alert_Handling":"Alert Handling"
 }

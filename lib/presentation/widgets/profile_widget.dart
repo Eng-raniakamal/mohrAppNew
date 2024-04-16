@@ -49,18 +49,14 @@ class _ProfileWidgetState extends State<ProfileWidget> {
   Widget buildImage(BuildContext context) {
    // try {
     final  image;
-
     if(widget.imagePath != null)
     {
-    // var image;
-    // if(image!=null) {
     image = NetworkImage(widget.imagePath!);
     }
      else
       {
         image= AssetImage(ImageAssets.noPhoto);
       }
-
       return ClipOval(
         child: Material(
           color: Colors.transparent,
@@ -74,35 +70,19 @@ class _ProfileWidgetState extends State<ProfileWidget> {
           ),
         ),
       );
-   // }
-    // catch (e){
-    //   return ClipOval(
-    //     child: Material(
-    //       color: Colors.transparent,
-    //       child: Ink.image(
-    //         image:  const AssetImage(ImageAssets.noPhoto),
-    //         fit: BoxFit.cover,
-    //         width: 110,
-    //         height: 110,
-    //         child: InkWell(onTap:
-    //         onClicked),
-    //       ),
-    //     ),
-    //   );
-    //
-    // }
   }
 
   Widget buildEditIcon(Color color) => buildCircle(
         color: Colors.white,
-        all: 3,
+        all: 2,
         child: buildCircle(
           color: color,
-          all: 8,
-          child: Icon(
-            widget.isEdit ? Icons.add_a_photo : Icons.edit,
+          all: 0,
+          child: IconButton(onPressed:widget.onClicked,
+              padding: EdgeInsets.all(0.0),
+            icon:widget.isEdit ? Icon(Icons.add_a_photo,size: 20,) : Icon(Icons.edit,size: 20,),
             color: Colors.white,
-            size: 20,
+            //iconSize: 20,
           ),
         ),
       );

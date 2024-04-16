@@ -416,5 +416,5 @@ class UserAttendance {
         action:json["Action"],
         actiontime: json["ActionTime"]
     );
-}
+  }
 }

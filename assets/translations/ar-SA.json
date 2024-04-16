@@ -90,7 +90,7 @@
    "BirthData" :"تاريخ الميلاد",
    "NationalId": "الرقم القومى",
    "SocialId":"الرقم الاجتماعى",
-
+    "submit": "قدم الطلب",
    "Phone" : " رقم الهاتف",
    "EmergencyNumber" :"رقم الطوارىء",
    "Country":"المدينة",
@@ -167,5 +167,10 @@
   "attachments" :"الوثائق",
   "canceled": "ملغي",
   "cancellation_Reason":"سبب الإلغاء",
-  "seen": "الإطلاع"
+  "seen": "الإطلاع",
+  "days_hours":"أيام/ساعات",
+  "check": "اختر",
+  "Action_Type":"نوع الحركة",
+  "Alert_Type":"نوع التنبية",
+  "Alert_Handling":"التعامل مع التنبيه"
 }

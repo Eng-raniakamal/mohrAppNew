@@ -9,6 +9,7 @@
     static const String getAlertUrl='$baseUrl/api/Employee/GetAlerts';
     static const String getNotificationUrl='$baseUrl/api/Employee/GetEmployeeNotifications';
     static const String getAttachmentUrl='$baseUrl/api/Employee/GetNotificationAttachments?ids=';
+    static const String getAttendanceAlertUrl='$baseUrl/api/Attendance/GetEmployeeAlerts?date=';
     static const String getMarkNotificationAsSeenUrl='$baseUrl/api/Employee/MarkAsSeen';
     static const String attendanceUrl='$baseUrl/api/Attendance?fromDate=';
     static const String SaveEmployeeBasicDataUrl='$baseUrl/api/Employee/PersonellData';
@@ -26,6 +27,7 @@
     static const String salaryUrl='$baseUrl/api/Employee/GetSalaries';
     static const String salaryDetailsUrl='$baseUrl/api/Employee/GetSalary/';
     static const String AttendanceUrl='$baseUrl/api/Attendance?fromDate=';
+    static const String VacationTypeUrl='$baseUrl/Api/Vacation/VacationTypes';
     //1982-10-12T11:41:47.053Z&toDate=2023-10-12T11:41:47.053Z';
     static int notificationNumber = 0 ;
     static List<dynamic>? salary;

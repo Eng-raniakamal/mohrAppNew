@@ -61,7 +61,7 @@ class VacationViewModel extends BaseViewModel with
               (vacationdata){
             inputState.add(ContentState());
             inputVacation.add(VacationViewObject(
-                vacationdata.vacationsData.vactions));
+                vacationdata.vacationsData.vacations));
           }
       );}
     else

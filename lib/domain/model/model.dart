@@ -284,8 +284,8 @@ class Vacation
 }
 class  VacationsData
 {
-    List<Vacation> vactions;
-    VacationsData(this.vactions);
+    List<Vacation> vacations;
+    VacationsData(this.vacations);
    }
 class VacationsObject
 {

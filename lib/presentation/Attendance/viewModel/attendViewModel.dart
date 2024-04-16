@@ -53,8 +53,8 @@ class AttendanceViewModel extends BaseViewModel with
     uId=await _appPreferences.getUserToken();
     var attendanceObject;
     //attendanceObjects(uId!);
-    attendanceObject.userID;
-    if(attendanceObject.userID!=null)
+   // attendanceObject.userID;
+    if(uId!=null)
     {
       inputState.add(LoadingState(
           stateRendererType:StateRendererType.POPUP_LOADING_STATE)

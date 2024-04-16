@@ -1,21 +1,17 @@
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
-import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:mohr_hr/application/di.dart';
 import 'package:mohr_hr/domain/model/model.dart';
 import 'package:mohr_hr/presentation/common/state_renderer/state_render_impl.dart';
 import 'package:mohr_hr/presentation/resources/colors.dart';
-import 'package:mohr_hr/presentation/resources/routes.dart';
 import 'package:mohr_hr/presentation/resources/strings_manager.dart';
 import 'package:mohr_hr/presentation/underConstraction.dart';
 import 'package:mohr_hr/presentation/widgets/appbar_widget.dart';
-import 'package:mohr_hr/presentation/widgets/appbarstart.dart';
 import 'package:mohr_hr/presentation/widgets/navigator_bar.dart';
 import 'package:mohr_hr/presentation/widgets/profile_widget.dart';
 import '../../../../application/constants.dart';
 import '../viewModel/vacationViewModel.dart';
-import 'package:intl/intl.dart';
 
 
 double? allDays;
@@ -51,12 +47,12 @@ class _vacationsViewState extends State<vacationsView> {
 
   @override
   Widget build(BuildContext context) {
-    final item=<Widget>
-    [ const Icon(Icons.person,size: 30,color: colorManager.white,),
-      const Icon(Icons.home,size: 30,color: colorManager.white),
-      const Icon(Icons.notifications,size: 30,color: colorManager.white),
-
-    ];
+    // final item=<Widget>
+    // [ const Icon(Icons.person,size: 30,color: colorManager.white,),
+    //   const Icon(Icons.home,size: 30,color: colorManager.white),
+    //   const Icon(Icons.notifications,size: 30,color: colorManager.white),
+    //
+    // ];
     return ThemeSwitchingArea(
         child: Builder(
         builder: (context) =>
@@ -130,13 +126,12 @@ class _vacationsViewState extends State<vacationsView> {
                             Column(
                               children: [
                                 _getImageWidget(),
-                                NumbersWidget(),
-                                SizedBox(height: 10),
+                                //NumbersWidget(),
+                                const SizedBox(height: 10),
                                 SizedBox(height: 40,
                                   width: 150,
 
                                   child: FloatingActionButton(
-                                    child:Text(AppStrings.Vacation_Request.tr(),style: TextStyle(color: colorManager.white),),
                                     backgroundColor: colorManager.primary,//child widget inside this button
                                     shape:BeveledRectangleBorder(
                                         borderRadius: BorderRadius.circular(10)),
@@ -144,11 +139,11 @@ class _vacationsViewState extends State<vacationsView> {
                                      {
                                        Navigator.push(
                                            context,
+                                           //Navigator.of(context).pushReplacementNamed(Routes.VacationRequest) as Route<Object?> );
                                            MaterialPageRoute(builder: (context) => const UnderConstructionScreen()));
-                                      // MaterialPageRoute(builder: (_)=> UnderConstructionScreen());
-                                           //Navigator.pushReplacement(context,UnderConstructionScreen() as Route<Object?>);
-                                     // Navigator.of(context).pushReplacementNamed(UnderConstructionScreen() as String);
-                                      },)),
+
+                                      },
+                                    child:Text(AppStrings.Vacation_Request.tr(),style: const TextStyle(color: colorManager.white),),)),
 
                                 ],
                             ),
@@ -234,40 +229,40 @@ class _vacationsViewState extends State<vacationsView> {
 
 }
 
-DataTable _createVacationTable(List<Vacation> vacation) {
-  return DataTable(
-
-    columns: _createColumns(),
-    rows: _createRows(vacation),
-  );
-}
-List<DataColumn> _createColumns() {
-  return [
-      DataColumn(label: Text(AppStrings.Vacation_Type.tr())),
-      DataColumn(label: Text(AppStrings.Current.tr())),
-      DataColumn(label: Text(AppStrings.Transferred.tr())),
-      DataColumn(label: Text(AppStrings.Total.tr())),
-      DataColumn(label: Text(AppStrings.Consumed.tr())),
-      DataColumn(label: Text(AppStrings.Pending.tr()))
-        ];
-
-}
-List<DataRow> _createRows(List<Vacation> vacations) {
-
-    return vacations
-        .map((vacation) =>
-        DataRow(cells: [
-          DataCell(Text(vacation.vacationTypeName)),
-          DataCell(Text((vacation.vacationTypeDuration).toString())),
-          DataCell(Text((vacation.transferred).toString())),
-          DataCell(Text((vacation.total).toString())),
-          DataCell(Text((vacation.consumed).toString())),
-          DataCell(Text((vacation.pending).toString()))
-        ]))
-        .toList();
-
-
-}
+// DataTable _createVacationTable(List<Vacation> vacation) {
+//   return DataTable(
+//
+//     columns: _createColumns(),
+//     rows: _createRows(vacation),
+//   );
+// }
+// List<DataColumn> _createColumns() {
+//   return [
+//       DataColumn(label: Text(AppStrings.Vacation_Type.tr())),
+//       DataColumn(label: Text(AppStrings.Current.tr())),
+//       DataColumn(label: Text(AppStrings.Transferred.tr())),
+//       DataColumn(label: Text(AppStrings.Total.tr())),
+//       DataColumn(label: Text(AppStrings.Consumed.tr())),
+//       DataColumn(label: Text(AppStrings.Pending.tr()))
+//         ];
+//
+// }
+// List<DataRow> _createRows(List<Vacation> vacations) {
+//
+//     return vacations
+//         .map((vacation) =>
+//         DataRow(cells: [
+//           DataCell(Text(vacation.vacationTypeName)),
+//           DataCell(Text((vacation.vacationTypeDuration).toString())),
+//           DataCell(Text((vacation.transferred).toString())),
+//           DataCell(Text((vacation.total).toString())),
+//           DataCell(Text((vacation.consumed).toString())),
+//           DataCell(Text((vacation.pending).toString()))
+//         ]))
+//         .toList();
+//
+//
+// }
 double _calculateAllDays(List<Vacation> vacations)
 {
  double all=0;

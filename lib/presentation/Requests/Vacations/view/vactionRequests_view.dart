@@ -1,25 +1,26 @@
 
+import 'dart:convert';
 import 'dart:io';
-
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
-
+import 'package:mohr_hr/application/app_prefs.dart';
 import 'package:mohr_hr/application/constants.dart';
+import 'package:mohr_hr/presentation/resources/colors.dart';
 import 'package:mohr_hr/application/di.dart';
 import 'package:mohr_hr/domain/model/model.dart';
 import 'package:mohr_hr/domain/model/navigationManu.dart';
-
 import 'package:mohr_hr/presentation/Requests/Vacations/viewModel/VacationType_ViewModel.dart';
-
 import 'package:mohr_hr/presentation/resources/strings_manager.dart';
+import 'package:mohr_hr/presentation/widgets/appbarMain.dart';
 import 'package:permission_handler/permission_handler.dart';
-
 import 'package:mohr_hr/presentation/widgets/profile_widget.dart';
-
+import 'package:syncfusion_flutter_datepicker/datepicker.dart';
+import 'package:http/http.dart' as http;
 
 class VacationRequestView extends StatefulWidget with NavigationStates
 {
@@ -30,13 +31,33 @@ class VacationRequestView extends StatefulWidget with NavigationStates
 
 class _VacationRequestViewState extends State<VacationRequestView>with TickerProviderStateMixin {
 
- // final AppPreferences _appPreferences = instance<AppPreferences>();
+  final AppPreferences _appPreferences = instance<AppPreferences>();
   final VacationTypeViewModel _VacationTypeviewModel = instance<VacationTypeViewModel>();
 
   final _Formkey= GlobalKey<FormState>();
-   DateTime? startDateTime;
-   DateTime? endDateTime;
+
    var vacationTypeId;
+  DateTime Fromdate = DateTime(2023);
+  DateTime Todate = DateTime(2023);
+  bool oKPressed=false;
+  List<VacationType>? vacationType;
+
+  late String _startDate, _endDate;
+  final DateRangePickerController _controller = DateRangePickerController();
+  final TextEditingController _DurationEditingController = TextEditingController();
+  final TextEditingController _ReplacementEditingController = TextEditingController();
+  final TextEditingController _NoteEditingController = TextEditingController();
+  final TextEditingController _ReviewerEditingController = TextEditingController();
+  final TextEditingController _AttachmentEditingController = TextEditingController();
+
+  String? userId;
+  @override
+  void initState()
+  { final DateTime today = DateTime.now();
+    _startDate = DateFormat('dd-MM-yyyy').format(today.subtract(Duration(days: 1))).toString();
+    _endDate = DateFormat('dd-MM-yyyy').format(today).toString();
+  super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,85 +67,257 @@ class _VacationRequestViewState extends State<VacationRequestView>with TickerPro
           child: Builder(
             builder: (context) =>
                 Scaffold(
-                  //appBar: buildAppBarMain(context),
-                  //backgroundColor: colorManager.white,
+                  appBar: buildAppBarMain(context),
+                 // backgroundColor: colorManager.white,
                   body:
-                  Column(
-                        children: [
-                          Flexible(
-                            flex: 1,
-                            child:
-                            Container(
-                                padding: EdgeInsets.only(top:20),
-                                width: MediaQuery.of(context).size.width,
-                                child: Form(
-                                    key: _Formkey,
-                                    child: Container(
-                                      // height: MediaQuery.of(context).size.height,
-                                      child: Column(
-                                          children: [
-                                            SizedBox(height: 40,),
-                                            ProfileWidget(
-                                              imagePath: Constants.imagePath,
-                                              isEdit:true,
-                                              onClicked: () {
-                                                bool? canEditImage=Constants.canUpload;
-                                                if(canEditImage== false)
-                                                {
-                                                  displayDialoge();
-                                                }
-                                                setState(() {
-                                                  showImagePicker(context);
-                                                });
-
-                                              },
-                                            ),
-                                            //const SizedBox(height: 20),
-
-                                          ]
-                                      ),
-                                    )
-                                )
-                            ),
-                          ),
-                          Flexible(
-                            flex: 2,
+                  SingleChildScrollView(
+                    child: Column(
+                          children: [
+                            Align(
+                                alignment:Alignment.center,
+                                child: Text(AppStrings.Vacation_Request.tr(),
+                                  style: TextStyle(fontWeight: FontWeight.bold,
+                                      fontSize: 22,color: colorManager.lightprimary),)),
+                              Form(
                               child: Container(
-                                  alignment: AlignmentDirectional.topStart,
-                                  padding: const EdgeInsets.only(
-                                      top: 12,
-                                      left: 28,
-                                      right: 28),
-                                  child: Column(children:[
-                                     Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Text("Vacation Type", textAlign: TextAlign.start,),
-                                        StreamBuilder<VacationTypeObject>(
-                                          stream: _VacationTypeviewModel.outputVacationType,
-                                          builder: (context, snapshot) {
-                                            List<VacationTypeItem>? vacationType = snapshot.data?.vacationType.items;
-                                            return _getVacationType(vacationType);
-                                          },
-                                        ),
-                                        Text("Days/Hours", textAlign: TextAlign.start,),
-                                        getDropDownDurationItems(),
+                                      padding: const EdgeInsets.only(
+                                          top: 12,
+                                          left: 28,
+                                          right: 28),
+                                      child: Column(children:[
+                                        SizedBox(height:10),
+                                        Row(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                              
+                                            Text(AppStrings.Vacation_Type.tr()),
+                                             SizedBox(width: 25,),
+                                              StreamBuilder<VacationTypeObject>(
+                                                stream: _VacationTypeviewModel.outputVacationType,
+                                                builder: (context, snapshot) {
+                                                  List<VacationTypeItem>? vacationType = snapshot.data?.vacationType.items;
+                                                  return _getVacationType(vacationType);
+                                               },
+                                                                                       ),
+
+                                      ]),
+                                        SizedBox(height:10),
                                         Row(children: [
-                                          Text("From"),
-                                        ],)
+                                            Text(AppStrings.days_hours.tr()),
+                                            SizedBox(width: 15,),
+                                            getDropDownDurationItems(),
+                                        ],),
+                                        SizedBox(height:10),
+                                        Row(
+                                            children: [
+                                              Text(AppStrings.from.tr() +' : '),
+                                              Text(_startDate,style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold),),
+                                              SizedBox(width: 40,),
+                                              Text(AppStrings.to.tr() +' : '),
+                                              Text(_endDate,style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold))
+                                                      ]
+                                            ),
+                                        Row(
+                                            //crossAxisAlignment: CrossAxisAlignment.center,
+                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          children:[
+                                            SizedBox(height: 40,
+                                              width: 150,
+                                              child: FloatingActionButton(
+                                                  child:  Text(AppStrings.select_time_duration.tr()),
+                                                  onPressed: () async {
+                                                    //oKPressed=false;
+                                                    await showDialogDate();
+
+                                                    setState(() {
+
+                                                    });
+                                                  }),
+                                            ) ]),
+                                        SizedBox(height:10),
+                                        Row(
+                                          mainAxisAlignment: MainAxisAlignment.start,
+                                          children: [
+                                            Container(width:250,
+                                              child: TextFormField(
+                                                controller: _DurationEditingController,
+                                                keyboardType: TextInputType.number,
+                                                decoration:  InputDecoration(
+                                                    focusedBorder: OutlineInputBorder(
+                                                      borderSide: BorderSide(color: colorManager.greywithOpacity, width: 1.0),
+                                                    ),
+                                                    enabledBorder: OutlineInputBorder(
+                                                      borderSide: BorderSide(color: colorManager.greywithOpacity, width: 1.0),
+                                                    ),
+                                                    hintText:"1",
+                                                    label:   Text("المدة")),
+
+                                              ),
+                                            ),
 
 
-                                      ])]),)
-                            ),
+                                          ],),
+                                        SizedBox(height:10),
+                                        Row(
+                                          mainAxisAlignment: MainAxisAlignment.start,
+                                          children: [
+                                            Container(width:250,
+                                              child: TextFormField(
+                                                controller: _ReplacementEditingController,
+                                                keyboardType: TextInputType.text,
+                                                 decoration:  InputDecoration(
+                                                     focusedBorder: OutlineInputBorder(
+                                                   borderSide: BorderSide(color: colorManager.greywithOpacity, width: 1.0),
+                                                 ),
+                                                     enabledBorder: OutlineInputBorder(
+                                                       borderSide: BorderSide(color: colorManager.greywithOpacity, width: 1.0),
+                                                     ),
 
+                                                    label:   Text("النائب")),
 
-                         // ),
-                        ]),
+                                               ),
+                                            ),
+
+                                        ],),
+                                        SizedBox(height:10),
+                                        Row(
+                                          mainAxisAlignment: MainAxisAlignment.start,
+                                          children: [
+                                            Container(width:250,
+                                              child: TextFormField(
+                                                controller: _NoteEditingController,
+                                                keyboardType: TextInputType.text,
+                                                decoration:  InputDecoration(
+                                                    focusedBorder: OutlineInputBorder(
+                                                      borderSide: BorderSide(color: colorManager.greywithOpacity, width: 1.0),
+                                                    ),
+                                                    enabledBorder: OutlineInputBorder(
+                                                      borderSide: BorderSide(color: colorManager.greywithOpacity, width: 1.0),
+                                                    ),
+
+                                                    label: Text("الوصف")),
+
+                                              ),
+                                            ),
+
+                                          ],),
+                                        SizedBox(height:10),
+                                        Row(
+                                          mainAxisAlignment: MainAxisAlignment.start,
+                                          children: [
+                                            Container(width:250,
+                                              child: TextFormField(
+                                                controller: _ReviewerEditingController,
+                                                keyboardType: TextInputType.text,
+                                                decoration:  InputDecoration(
+                                                    focusedBorder: OutlineInputBorder(
+                                                      borderSide: BorderSide(color: colorManager.greywithOpacity, width: 1.0),
+                                                    ),
+                                                    enabledBorder: OutlineInputBorder(
+                                                      borderSide: BorderSide(color: colorManager.greywithOpacity, width: 1.0),
+                                                    ),
+
+                                                    label:   Text("المراجعين")),
+
+                                              ),
+                                            ),
+
+                                          ],),
+                                        SizedBox(height:10),
+                                        Row(
+                                          mainAxisAlignment: MainAxisAlignment.start,
+                                          children: [
+                                            Container(width:240,
+                                              child: TextFormField(
+                                                controller: _AttachmentEditingController,
+                                                keyboardType: TextInputType.url,
+                                                decoration:  InputDecoration(
+                                                      focusedBorder: OutlineInputBorder(
+                                                      borderSide: BorderSide(color: colorManager.greywithOpacity, width: 1.0),
+                                                    ),
+                                                      enabledBorder: OutlineInputBorder(
+                                                      borderSide: BorderSide(color: colorManager.greywithOpacity, width: 1.0),
+                                                    ),
+                                                    label:const Text("الوثائق")),
+
+                                              ),
+                                            ),
+                                            SizedBox(width: 5,),
+                                            FloatingActionButton(child:
+                                            Text("+"),onPressed: (){})
+                                          ],),
+                                        SizedBox(height:10),
+                                        Row(
+
+                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          children: [
+                                            FloatingActionButton(child:
+                                            Text(AppStrings.submit.tr()),onPressed: (){})
+                                          ],),
+                                      ]
+                                      )
+                              ),
+                            )
+
+                          ]),
+                  ),
                   ),
                 ),
           );
   }
+  void selectionChanged(DateRangePickerSelectionChangedArgs args) {
+    SchedulerBinding.instance.addPostFrameCallback((duration){
+      setState(() {
+        _startDate =
+            DateFormat('yyyy-MM-dd').format(args.value.startDate).toString();
+        _endDate = DateFormat('yyyy-MM-dd')
+            .format(args.value.endDate ?? args.value.startDate)
+            .toString();
+      });});
+  }
+  Widget getDateRangePicker() {
+    return  Card(
+        child:SfDateRangePicker(
+          view: DateRangePickerView.month,
+          controller: _controller,
+          selectionMode: DateRangePickerSelectionMode.range,
+          onSelectionChanged: selectionChanged,
+          allowViewNavigation: false,
+        ));
+  }
 
+  Future showDialogDate()
+  {
+    return
+      showDialog(
+          context: context,
+          builder: (context) => StatefulBuilder
+            (builder: (context,setState)=>
+              SizedBox(
+                  height: 350,
+                  child:
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      getDateRangePicker(),
+                      FloatingActionButton(
+                        backgroundColor: colorManager.primary,
+                        child: Text(AppStrings.ok.tr()),
+                        onPressed: () {
+                          // setState(() {
+                          oKPressed = true;
+                          //attendanceData = await getApiAttendance();
+                          Navigator.pop(context,true);
+                          // });
+                        },
+                      )
+                    ],
+
+                  )
+              )
+          ));
+
+  }
   final picker = ImagePicker();
 
   DropdownButton getDropDownDurationItems()
@@ -141,43 +334,22 @@ class _VacationRequestViewState extends State<VacationRequestView>with TickerPro
           value = value;
           if(value=="day/days")
           {
-            startDateTime=DateTime.now();
+           // startDateTime=DateTime.now();
 
           }
         });},
       );}
 
   _getVacationType(List<VacationTypeItem>? vacationTypes)
-  // {
-  //   var dropdownvalue;
-  //   return DropdownButton(
-  //     hint: Text("Choose a Vacation Type"),
-  //     items: items?.map(
-  //             (Item) {
-  //           dropdownvalue=Item.id.toString();
-  //           return DropdownMenuItem(
-  //             value: dropdownvalue,
-  //             child: Text(Item.name.toString()),);
-  //         }).toList(),
-  //     onChanged: (newvalue) {
-  //       setState(() {
-  //         dropdownvalue = newvalue;
-  //       });
-  //     },
-  //     value: dropdownvalue,
-  //   );
-  // }{{
   {
   //var  dropdownvalue;
       var items=vacationTypes?.map(
-              (gradeItem) {
+              (item) {
             return DropdownMenuItem(
-              value: gradeItem.id,
-              child: Text(gradeItem.name.toString()),);
+              value: item.id,
+              child: Text(item.name.toString()),);
           }).toList();
-
       return DropdownButton(
-        //hint: Text("Choose grade"),
         items:  items,
         onChanged: (newvalue) {
           setState(() {
@@ -313,7 +485,7 @@ class _VacationRequestViewState extends State<VacationRequestView>with TickerPro
       showImagePicker(context);
     }
   }
-  Widget? displayDialoge()
+  Widget? displayDialog()
   {
 
     showAnimatedDialog(
@@ -334,5 +506,48 @@ class _VacationRequestViewState extends State<VacationRequestView>with TickerPro
       duration: Duration(seconds: 1),
     );
   }
+  Future <List<VacationType>?> getVacationType() async {
+    List<VacationType>? a;
+    userId = await _appPreferences.getUserToken();
+    var response = await http.get(
+        Uri.parse(Constants.vacationTypeUrl), headers: <String, String>{'Content-Type': 'application/json; charset=UTF-8','userId':userId!});
+    var responseData = json.decode(response.body);
+    //.cast<Map<String, dynamic>>();
+    if(responseData['VacationType']!=null) {
+      var useVacationType = responseData['VacationType'] as List;
+      a = await useVacationType.map((jsonData) =>
+          VacationType.fromJson(jsonData)).toList();
+      List<VacationType>? b = List<VacationType>.from(a);
+      vacationType = b;
+      return vacationType;
+    } return null;
+  }
+}
 
+class VacationType {
+  final int id;
+  final String name;
+  final int type;
+  final int balance;
+  final int limit;
+  final bool requiredAttachment;
+
+  VacationType ({
+    required this.id,
+    required this.name,
+    required this.type,
+    required this.balance,
+    required this.limit,
+    required this.requiredAttachment,
+  });
+  factory VacationType.fromJson(Map<String, dynamic> json) {
+    return VacationType(
+        id: json["Id"],
+        name: json["name"],
+        type: json["type"],
+        balance: json["balance"],
+        limit: json["limit"],
+        requiredAttachment:json["requiredAttachment"]
+    );
+  }
 }

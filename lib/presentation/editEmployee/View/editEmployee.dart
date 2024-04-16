@@ -35,7 +35,6 @@ import 'empSkills_view.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart';
 import 'package:http/http.dart' as http;
-
 import 'package:async/async.dart';
 
 
@@ -67,8 +66,7 @@ class _EmployeeEditViewState extends State<EmployeeEditView>with TickerProviderS
 
   @override
   Widget build(BuildContext context) {
-   // userImage = Constants.imagePath;
-    //image.path=Constants.imagePath;
+
     final TabController _tabController = TabController(
         length: (3), vsync: this);
     // final item=<Widget>
@@ -200,13 +198,13 @@ class _EmployeeEditViewState extends State<EmployeeEditView>with TickerProviderS
                                                         .greywithOpacity,
                                                   ),
                                                   tabs: [
-                                                    Tab(text: AppStrings.BasicData
-                                                        .tr()),
-                                                    Tab(text: AppStrings.Skills
-                                                        .tr()),
+                                                    Tab(text: "  "+AppStrings.BasicData
+                                                        .tr()+"  "),
+                                                    Tab(text: "  "+AppStrings.Skills
+                                                        .tr()+"  "),
                                                     Tab(
-                                                      text: AppStrings.AcadmicDegree
-                                                          .tr(),)
+                                                      text: "  "+AppStrings.AcadmicDegree
+                                                          .tr()+"  ",)
                                                   ],
                                                 ),
                                               ),

@@ -84,7 +84,7 @@ class _EmployeeEditViewState extends State<AttendanceLayout>with TickerProviderS
                   Column(
                       children: [
                         Flexible(
-                           flex: 1,
+                          // flex: 1,
                           child:
                           Container(
                               padding: EdgeInsets.only(top: 20),
@@ -132,10 +132,10 @@ class _EmployeeEditViewState extends State<AttendanceLayout>with TickerProviderS
                                                     .greywithOpacity,
                                               ),
                                               tabs: [
-                                                Tab(text: AppStrings.attendance_Activity
-                                                    .tr()),
-                                                Tab(text: AppStrings.attendance_Alerts
-                                                    .tr()),
+                                                Tab(text:"  "+ AppStrings.attendance_Activity
+                                                    .tr()+"  "),
+                                                Tab(text:"  "+ AppStrings.attendance_Alerts
+                                                    .tr()+"  "),
 
                                               ],
                                             ),
@@ -146,13 +146,13 @@ class _EmployeeEditViewState extends State<AttendanceLayout>with TickerProviderS
                                   )
                               )
                           ),
-                        ),
+                       ),
                         Flexible(
-                          flex:2 ,
+                         // flex:2 ,
                           child:
                           Container(
                             width: MediaQuery.of(context).size.width,
-                            height: MediaQuery.of(context).size.height*3,
+                            height: MediaQuery.of(context).size.height*3.5,
                             child: TabBarView(
                               controller: _tabController,
                               children: const [

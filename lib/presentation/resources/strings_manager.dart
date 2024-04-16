@@ -51,7 +51,7 @@ class AppStrings {
   static const String new_password= "new_password";
   static const String confirm_password= "confirm_password";
   static const String change_password= "change_password";
-
+  static const String submit= "submit";
   static const String services = "services";
 
   static const String Loan = "Loan";
@@ -104,8 +104,7 @@ class AppStrings {
   static const String Add = "Add";
   static const String Skill = "Skill";
   static const String Grade_Name = "Grade_Name";
-//acadmic degree
-
+//academic degree
   static const String Academic_Degree = "Academic_Degree";
   static const String Choose_Academic_Degree  = "Choose_Academic_Degree";
   static const String University_Faculty_Institute = "University/Faculty/Institute";
@@ -151,6 +150,10 @@ class AppStrings {
   static const String type="Type";
   static const String Action="Action";
   static const String Action_Type="Action_Type";
+  static const String Alert_Type="Alert_Type";
+  static const String Alert_Handling="Alert_Handling";
+  static const String check="check";
+
 //Alert & notification
   static const String announcements="Announcements";
   static const String memos="Memos";
@@ -194,6 +197,8 @@ class AppStrings {
   static const String Password_Changed_Successfully = "Password_Changed_Successfully";
   static const String Invalid_Password ="Invalid Password";
   static const String Invalid_Device ="Invalid Device";
+
+  static const String days_hours ="days_hours";
 
 
 }

@@ -133,10 +133,10 @@ class _AlertViewState extends State<AlertLayout>with TickerProviderStateMixin {
                                                       .greywithOpacity,
                                                 ),
                                                 tabs: [
-                                                  Tab(text:AppStrings.memos
-                                                      .tr()),
-                                                  Tab(text: AppStrings.announcements
-                                                      .tr()),
+                                                  Tab(text:"  "+AppStrings.memos
+                                                      .tr()+"  "),
+                                                  Tab(text: "  "+AppStrings.announcements
+                                                      .tr()+"  "),
 
                                                 ],
                                               ),
