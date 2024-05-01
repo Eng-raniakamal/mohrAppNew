@@ -61,7 +61,6 @@ class _VacationRequestViewState extends State<VacationRequestView>with TickerPro
 
   @override
   Widget build(BuildContext context) {
-
     return
       ThemeSwitchingArea(
           child: Builder(
@@ -89,15 +88,15 @@ class _VacationRequestViewState extends State<VacationRequestView>with TickerPro
                                         Row(
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
-                              
                                             Text(AppStrings.Vacation_Type.tr()),
-                                             SizedBox(width: 25,),
+                                             const SizedBox(width: 25,),
                                               StreamBuilder<VacationTypeObject>(
                                                 stream: _VacationTypeviewModel.outputVacationType,
-                                                builder: (context, snapshot) {
+                                                builder: (context, snapshot)
+                                                {
                                                   List<VacationTypeItem>? vacationType = snapshot.data?.vacationType.items;
                                                   return _getVacationType(vacationType);
-                                               },
+                                                 },
                                                                                        ),
 
                                       ]),
@@ -128,9 +127,7 @@ class _VacationRequestViewState extends State<VacationRequestView>with TickerPro
                                                   onPressed: () async {
                                                     //oKPressed=false;
                                                     await showDialogDate();
-
                                                     setState(() {
-
                                                     });
                                                   }),
                                             ) ]),

@@ -5,22 +5,23 @@ import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
+import 'package:mohr_hr/application/app_prefs.dart';
 import 'package:mohr_hr/application/constants.dart';
 import 'package:mohr_hr/application/di.dart';
 import 'package:mohr_hr/domain/model/model.dart';
 import 'package:mohr_hr/domain/model/user.dart';
+import 'package:mohr_hr/presentation/common/state_renderer/state_render_impl.dart';
 import 'package:mohr_hr/presentation/editEmployee/ViewModel/displayEmpSkills_viewModel.dart';
 import 'package:mohr_hr/presentation/editEmployee/ViewModel/empSkills_viewModel.dart';
 import 'package:mohr_hr/presentation/editEmployee/ViewModel/qualification_viewModel.dart';
 import 'package:mohr_hr/presentation/editEmployee/ViewModel/grade_viewModel.dart';
 import 'package:mohr_hr/presentation/resources/colors.dart';
 import 'package:mohr_hr/presentation/resources/strings_manager.dart';
-import '../../../application/app_prefs.dart';
-import '../../common/state_renderer/state_render_impl.dart';
+
 import 'package:http/http.dart' as http;
 
+
 class EmployeeSkillsView extends StatefulWidget {
-  
   const EmployeeSkillsView({Key? key}) : super(key: key);
 
   @override
@@ -85,7 +86,7 @@ class _EmployeeSkillsViewState extends State<EmployeeSkillsView> {
     super.initState();
     _blind();
     setState(() {
-skillsUpdate;
+      skillsUpdate;
     });
   }
 
@@ -104,7 +105,7 @@ skillsUpdate;
               builder: (context) =>
                   Scaffold(
                     //appBar: buildAppBarMain(context),
-                   // backgroundColor: colorManager.white,
+                    // backgroundColor: colorManager.white,
                     body: StreamBuilder<FlowState>(
                       stream: _saveviewModel.outputState,
                       builder: (context, snapshot) {
@@ -144,7 +145,7 @@ skillsUpdate;
                     child: Column(
                       children: [
                         // qualification
-                          Container(
+                        Container(
                             alignment: AlignmentDirectional.topStart,
                             padding: const EdgeInsets.only(
                                 top: 12,
@@ -245,8 +246,8 @@ skillsUpdate;
                                         onPressed: () async{
                                           //skillsUpdate=snapshot.data?.skills;
 
-                                         await addingSkills();
-                                         await generateSkillsData() ;
+                                          await addingSkills();
+                                          await generateSkillsData() ;
 
                                           setState(() {
                                             skillsUpdate=skillsUpdate;
@@ -278,10 +279,10 @@ skillsUpdate;
 
                                       return
                                         Skillstable();
-                                      }
+                                    }
 
 
-                                      // ))
+                                  // ))
 
 
                                 )
@@ -314,9 +315,9 @@ skillsUpdate;
       hint: Text(AppStrings.Choose_a_Qualification.tr()),
       items: items,
       onChanged: (newvalue) {allowEdit! ?
-        setState(() {
-          qualificationid = newvalue;
-        }):null;
+      setState(() {
+        qualificationid = newvalue;
+      }):null;
       },
       value: qualificationid,
     );
@@ -328,8 +329,8 @@ skillsUpdate;
 
     gradeItems?.map(
             (gradeItem) {
-              if(gradeItem.value==gId){return gradeItem.text ;}
-            }).toList();
+          if(gradeItem.value==gId){return gradeItem.text ;}
+        }).toList();
     return null;
   }
 
@@ -358,9 +359,9 @@ skillsUpdate;
       items: items,
       //enableFeedback: ,
       onChanged: (newvalue) {allowEdit! ?
-        setState(() {
-          gradeId = newvalue;
-        }):null;
+      setState(() {
+        gradeId = newvalue;
+      }):null;
       },
       value: gradeId,
     );
@@ -387,7 +388,7 @@ skillsUpdate;
 
       );
     }else
-      {return Container();}
+    {return Container();}
   }
 
   List<DataColumn> _createColumns() {
@@ -426,20 +427,20 @@ skillsUpdate;
     var response = await http.post(
         uri,
         headers: <String, String>{
-       'Content-Type': 'application/json; charset=UTF-8','userId':userId!},
+          'Content-Type': 'application/json; charset=UTF-8','userId':userId!},
         body: jsonEncode(<String,dynamic>{
           'Date': datetext.toString(),
-           'GradeId': gradeId,
-           'QualificationTypeId': qualificationid,
-           'EmployeeId':empId!}));
+          'GradeId': gradeId,
+          'QualificationTypeId': qualificationid,
+          'EmployeeId':empId!}));
     // check the status code for the result
     if (response.statusCode == 200) {
       var x= result.fromJson(jsonDecode(response.body)) ;
       bool y =x.isValid;
       if(y==true) {
-       setState(() {
+        setState(() {
 
-      // skillsUpdate!.add(skillsModel(empId, QualificationName(qualificationid!), gradeName(gradeId!), qualificationid, datetext, gradeId));
+          // skillsUpdate!.add(skillsModel(empId, QualificationName(qualificationid!), gradeName(gradeId!), qualificationid, datetext, gradeId));
           addingSuccess=true;
           //skillsUpdate= await generateSkillsData();
 
@@ -447,12 +448,12 @@ skillsUpdate;
         });
 
         displayDialoge();
-       // print(response.body);
+        // print(response.body);
       }else
-        { displayFaileDialoge();}
+      { displayFaileDialoge();}
     } else {
       displayFaileDialoge();
-     // print('Request failed with status: ${response.statusCode}.');
+      // print('Request failed with status: ${response.statusCode}.');
     }
   }
   Widget Skillstable(){
@@ -484,28 +485,28 @@ skillsUpdate;
       );
   }
 
-Widget? displayDialoge()
-{
-  showAnimatedDialog(
-    context: context,
-    barrierDismissible: true,
-    builder: (BuildContext context) {
-      return ClassicGeneralDialogWidget(
-        titleText: AppStrings.Alerts.tr(),
-        contentText: AppStrings.Was_Saved_Successfully.tr(),
-         positiveText:  AppStrings.confirm.tr(),
-        onPositiveClick: () {
-          Navigator.of(context).pop();
-        },
+  Widget? displayDialoge()
+  {
+    showAnimatedDialog(
+      context: context,
+      barrierDismissible: true,
+      builder: (BuildContext context) {
+        return ClassicGeneralDialogWidget(
+          titleText: AppStrings.Alerts.tr(),
+          contentText: AppStrings.Was_Saved_Successfully.tr(),
+          positiveText:  AppStrings.confirm.tr(),
+          onPositiveClick: () {
+            Navigator.of(context).pop();
+          },
 
-      );
-    },
-    animationType: DialogTransitionType.fade,
-    curve: Curves.linear,
-    duration: Duration(seconds: 1),
-  );
-  return null;
-}
+        );
+      },
+      animationType: DialogTransitionType.fade,
+      curve: Curves.linear,
+      duration: Duration(seconds: 1),
+    );
+    return null;
+  }
 
   Widget? displayFaileDialoge()
   {
@@ -536,7 +537,7 @@ Widget? displayDialoge()
     var response = await http.get(
         Uri.parse(Constants.GetEmpSkillsUrl), headers: <String, String>{'Content-Type': 'application/json; charset=UTF-8','userId':userId!});
     var responseData = json.decode(response.body);
-        //.cast<Map<String, dynamic>>();
+    //.cast<Map<String, dynamic>>();
     if(responseData['skills']!=null) {
       var user_Skills = responseData['skills'] as List;
       a = await user_Skills.map((jsonData) =>
@@ -547,13 +548,13 @@ Widget? displayDialoge()
     } return null;
   }
 
-  }
-
+}
 class result {
   final bool isValid;
   final String message;
+
   const result({
-  required this.isValid, required this.message});
+    required this.isValid, required this.message});
 
   factory result.fromJson(Map<String, dynamic> json) {
     return result(

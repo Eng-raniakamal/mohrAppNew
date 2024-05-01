@@ -79,7 +79,7 @@ class _AlertViewState extends State<AlertLayout>with TickerProviderStateMixin {
                 Scaffold(
                   appBar: buildAppBar(context),
 
-                  bottomNavigationBar:NavigatorBar(index: 0,notificationNumber: Constants.notificationNumber,),
+                  bottomNavigationBar:NavigatorBar(index: 2,notificationNumber: Constants.notificationNumber,),
 
                   body:
                   SingleChildScrollView(
