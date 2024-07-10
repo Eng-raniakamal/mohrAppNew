@@ -1,0 +1,69 @@
+import 'package:animated_theme_switcher/animated_theme_switcher.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'package:essmohr/presentation/resources/strings_manager.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:essmohr/application/constants.dart';
+import 'package:essmohr/domain/model/user.dart';
+//import 'package:user_profile_ii_example/page/edit_profile_page.dart';
+import 'package:essmohr/domain/model/user_preferences.dart';
+import 'package:essmohr/presentation/widgets/appbar_widget.dart';
+import 'package:essmohr/presentation/widgets/button_widget.dart';
+import 'package:essmohr/presentation/widgets/numbers_widget.dart';
+import 'package:essmohr/presentation/widgets/profile_widget.dart';
+import 'package:essmohr/presentation/widgets/textfield_widget.dart';
+class editProfileScreen extends StatefulWidget {
+  @override
+  _editProfileScreenState createState() => _editProfileScreenState();
+}
+
+class _editProfileScreenState extends State<editProfileScreen> {
+  //User user = UserPreferences.myUser;
+
+  @override
+  Widget build(BuildContext context) =>
+      ThemeSwitchingArea(
+        child: Builder(
+          builder: (context) =>
+              Scaffold(
+                appBar: buildAppBar(context,AppStrings.BasicData.tr()),
+                body: ListView(
+                  padding: EdgeInsets.symmetric(horizontal: 32),
+                  physics: BouncingScrollPhysics(),
+                  children: [
+                    ProfileWidget(
+                      imagePath: Constants.imagePath,
+                      isEdit: false,
+                      onClicked: () async {},
+                    ),
+                    const SizedBox(height: 24),
+
+                    TextFieldWidget(
+                      label: 'English Name',
+                      text: "Rania kamal sayed",
+                      onChanged: (name) {},
+                    ),
+                    const SizedBox(height: 24),
+                    TextFieldWidget(
+                      label: 'Arabic Name',
+                      text: "رانيا كمال سيد",
+                      onChanged: (name) {},
+                    ),
+                    const SizedBox(height: 24),
+                    TextFieldWidget(
+                      label: "Email",
+                      text: 'raniakamal.84@gmail.com',
+                      onChanged: (email) {},
+                    ),
+                    const SizedBox(height: 24),
+                  ButtonWidget(buttonBgColor: Colors.orange,
+                  text: 'Update',
+                  onClicked: () {},
+                 )
+
+                  ],
+                ),
+              ),
+        ),
+      );
+}
