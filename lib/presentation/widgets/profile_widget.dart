@@ -49,14 +49,15 @@ class _ProfileWidgetState extends State<ProfileWidget> {
   Widget buildImage(BuildContext context) {
    // try {
     final  image;
-    if(widget.imagePath != null)
-    {
-    image = NetworkImage(widget.imagePath!);
-    }
-     else
-      {
-        image= AssetImage(ImageAssets.noPhoto);
-      }
+
+      if(widget.imagePath!="assets/images/profile_male.png")
+        {
+            image = NetworkImage(widget.imagePath);
+        }
+      else
+        {
+          image = AssetImage(widget.imagePath) ;}
+
       return ClipOval(
         child: Material(
           color: Colors.transparent,

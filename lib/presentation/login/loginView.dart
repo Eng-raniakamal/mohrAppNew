@@ -51,7 +51,7 @@ class _LoginViewState extends State<LoginView> {
         SchedulerBinding.instance.addPostFrameCallback((_) {
           _appPreferences.setIsUserLoggedIn();
           resetModules();
-          Navigator.of(context).pushReplacementNamed(Routes.HomeRoute);
+          Navigator.of(context).pushReplacementNamed(Routes.homeRoute);
         }
         );
       }else{Navigator.of(context).pushReplacementNamed(Routes.loginRoute);}

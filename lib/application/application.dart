@@ -7,20 +7,18 @@ import 'package:flutter/services.dart';
 import 'package:flutter_dynamic_icon/flutter_dynamic_icon.dart';
 import 'package:essmohr/application/app_prefs.dart';
 import 'package:essmohr/application/constants.dart';
-
 import 'package:essmohr/application/di.dart';
 import 'package:essmohr/domain/model/model.dart';
 import 'package:essmohr/domain/model/user_preferences.dart';
 import 'package:essmohr/main.dart';
-
 import 'package:essmohr/presentation/Notification.dart';
 import 'package:essmohr/presentation/resources/themes.dart';
 import 'package:essmohr/presentation/resources/routes.dart';
 import 'package:essmohr/presentation/splash/splash.dart';
 import 'package:workmanager/workmanager.dart';
 import 'package:http/http.dart' as http;
-
 import '../presentation/resources/strings_manager.dart';
+
 
 // ignore: must_be_immutable
 class MyApp extends StatefulWidget {
@@ -135,10 +133,11 @@ class _MyAppState extends State<MyApp> {
     }
     setState(() {
       Constants.notificationNumber = unSeenMessage;
-    });
+
     if (Constants.notificationNumber != 0) {
-      // setBatchNumber(context, unSeenMessage);
+       setBatchNumber(context, unSeenMessage);
     }
+    });
     return unSeenMessage;
   }
 
@@ -156,28 +155,29 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext? context) {
-    final user = UserPreferences.myUser;
+    const user = UserPreferences.myUser;
     //bool darkMode= false;
+
     return ThemeProvider(
       initTheme: user.isDarkMode! ? MyThemes.darkTheme : MyThemes.lightTheme,
       child: Builder(
-          builder: (context) => MaterialApp(
+          builder: (context) {
+
+            return MaterialApp(
                 localizationsDelegates: context.localizationDelegates,
                 debugShowCheckedModeBanner: false,
                 supportedLocales: context.supportedLocales,
                 locale: context.locale,
                 onGenerateRoute: RouteGenerator.getRoute,
-                home: SplashView(),
+                home: const SplashView(),
                 title: "Mohr",
-                theme: ThemeData(useMaterial3: true),
-              )),
+              );
+          }),
     );
   }
 }
-
 class LocaleModel extends ChangeNotifier {
   Locale? _locale;
-
   Locale? get locale => _locale;
 
   void set(Locale locale) {

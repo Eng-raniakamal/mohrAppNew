@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 //import 'package:flutter_dynamic_icon/flutter_dynamic_icon.dart';
 import 'package:essmohr/application/app_prefs.dart';
-import 'package:essmohr/application/application.dart';
 import 'package:essmohr/application/constants.dart';
 import 'package:essmohr/application/di.dart';
 import 'package:essmohr/domain/model/model.dart';
 import 'package:essmohr/main.dart';
 import 'package:essmohr/presentation/Alert_Notification/ViewModel/notificationViewModel.dart';
-import 'package:essmohr/presentation/Attendance/view/attendanceAlert.dart';
 import 'package:essmohr/presentation/Notification.dart';
+import 'package:flutter_dynamic_icon/flutter_dynamic_icon.dart';
+import 'package:path/path.dart';
 
 
 
@@ -42,7 +42,7 @@ AppPreferences appPreferences = instance<AppPreferences>();
           Constants.notificationNumber = lengthOfList!;
 
           if (lengthOfList! > 0) {
-            //setBatchNumber(context as BuildContext, Constants.notificationNumber);
+            setBatchNumber(context as BuildContext, Constants.notificationNumber);
             Notifications.showBigTextNotification(
                 title: "MOHR", body: "$lengthOfList New notification here",
                 fln: flutterLocalNotificationsPlugin);
@@ -61,7 +61,7 @@ AppPreferences appPreferences = instance<AppPreferences>();
   }
   setBatchNumber(BuildContext context, int num) async {
     try {
-    //  await FlutterDynamicIcon.setApplicationIconBadgeNumber(num);
+      await FlutterDynamicIcon.setApplicationIconBadgeNumber(num);
     } on PlatformException {
       print('Exception:Platform not supported');
     } catch (e) {

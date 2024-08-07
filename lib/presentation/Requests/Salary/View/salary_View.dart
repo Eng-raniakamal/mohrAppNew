@@ -1,9 +1,10 @@
+
 // ignore_for_file: camel_case_types
 
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:essmohr/presentation/widgets/profileImage.dart';
+import 'package:essmohr/presentation/resources/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
 import 'package:essmohr/application/di.dart';
@@ -11,10 +12,10 @@ import 'package:essmohr/domain/model/model.dart';
 import 'package:essmohr/presentation/Requests/Salary/View/salaryDetailsDialog.dart';
 import 'package:essmohr/presentation/common/state_renderer/state_render_impl.dart';
 import 'package:essmohr/presentation/resources/colors.dart';
-import 'package:essmohr/presentation/resources/routes.dart';
+
 import 'package:essmohr/presentation/resources/strings_manager.dart';
 import 'package:essmohr/presentation/widgets/appbar_widget.dart';
-import 'package:essmohr/presentation/widgets/appbarstart.dart';
+
 import 'package:essmohr/presentation/widgets/navigator_bar.dart';
 import 'package:essmohr/presentation/widgets/profile_widget.dart';
 import '../../../../application/constants.dart';
@@ -27,22 +28,12 @@ class salaryView extends StatefulWidget {
   @override
   State<salaryView> createState() => _salaryViewState();
 }
+final items=<Widget>
+[ const Icon(Icons.person,size: 30,),
+  const Icon(Icons.home,size: 30,),
+  const Icon(Icons.notifications,size: 30,),
 
-final items = <Widget>[
-  const Icon(
-    Icons.person,
-    size: 30,
-  ),
-  const Icon(
-    Icons.home,
-    size: 30,
-  ),
-  const Icon(
-    Icons.notifications,
-    size: 30,
-  ),
 ];
-
 class _salaryViewState extends State<salaryView> {
   final SalaryViewModel _viewModel = instance<SalaryViewModel>();
 
@@ -58,34 +49,45 @@ class _salaryViewState extends State<salaryView> {
 
   @override
   Widget build(BuildContext context) {
+    final item=<Widget>
+    [ const Icon(Icons.person,size: 30,color: colorManager.white,),
+      const Icon(Icons.home,size: 30,color: colorManager.white),
+      const Icon(Icons.notifications,size: 30,color: colorManager.white),
+
+    ];
     return ThemeSwitchingArea(
         child: Builder(
-            builder: (context) => Scaffold(
-                appBar: buildAppBar(context, AppStrings.Salary.tr()),
-                bottomNavigationBar: NavigatorBar(
-                  index: 1,
-                  notificationNumber: Constants.notificationNumber,
-                ),
-                body: SingleChildScrollView(
-                  scrollDirection: Axis.vertical,
-                  child: Column(children: [
-                    // child: SingleChildScrollView(
-                    StreamBuilder<FlowState>(
-                        stream: _viewModel.outputState,
-                        builder: (context, snapshot) {
-                          return snapshot.data?.getScreenWidget(
-                                  context, _getContentWidget(), () {
-                                _viewModel.start();
-                              }, () {}) ??
-                              _getContentWidget();
-                          //Container();
-                        }),
-                  ]),
-                ))));
+        builder: (context) =>
+        Scaffold(
+            appBar: buildAppBar(context),
+            bottomNavigationBar:NavigatorBar(index: 0,notificationNumber: Constants.notificationNumber,),
+
+            body:
+            SingleChildScrollView(
+              scrollDirection: Axis.vertical,
+              child: Column(
+
+                  children: [
+       // child: SingleChildScrollView(
+       StreamBuilder<FlowState>(
+          stream: _viewModel.outputState,
+          builder: (context, snapshot) {
+            return snapshot.data?.getScreenWidget(context, _getContentWidget(),
+                    () {
+                  _viewModel.start();
+                },
+                    () {
+                }) ??
+                _getContentWidget();
+            //Container();
+          }),
+                  ] ),
+            ))));
   }
 
   Widget _getContentWidget() {
-    return StreamBuilder<SalaryViewObject>(
+    return
+      StreamBuilder<SalaryViewObject>(
         stream: _viewModel.outputSalarys,
         builder: (context, snapshot) {
           return SingleChildScrollView(
@@ -99,15 +101,13 @@ class _salaryViewState extends State<salaryView> {
                   child: Column(
                     children: [
                       const Padding(padding: EdgeInsets.only(top: 50)),
-                      Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
+                      Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                        Column(
                           children: [
-                            Column(
-                              children: [
-                                _getImageWidget(),
-                              ],
-                            ),
-                          ]),
+                            _getImageWidget(),
+                          ],
+                        ),
+                      ]),
                       Container(child: _getSalary(snapshot.data?.salary)),
                     ],
                   ),
@@ -132,9 +132,9 @@ class _salaryViewState extends State<salaryView> {
                   child: Container(
                     width: 400,
                     child: DataTable(
-                        headingRowColor: MaterialStateColor.resolveWith(
+                        headingRowColor: WidgetStateColor.resolveWith(
                             (states) => colorManager.primary),
-                        columns: [
+                        columns:  [
                           DataColumn(
                               label: Text(
                             AppStrings.Month.tr(),
@@ -164,17 +164,20 @@ class _salaryViewState extends State<salaryView> {
                                             id.toString();
                                         initSalaryDetailsModule();
                                         showCustomDialog(context, onValue: (_) {
-                                          setState(() {});
+                                          setState(() {
+
+                                          });
                                         });
                                         // Navigator.of(context)
                                         //     .pushReplacementNamed(
                                         //     Routes.salaryDetails);
                                         //displayDialoge();
+
                                       }
                                       //else
                                       //   {displayDialoge();}
                                     },
-                                    child: Text(
+                                    child:  Text(
                                       AppStrings.More_Details.tr(),
                                       style: TextStyle(
                                           decoration: TextDecoration.underline,
@@ -194,7 +197,7 @@ class _salaryViewState extends State<salaryView> {
   }
 
   Widget _getImageWidget() {
-    return ProfileImageWidget(imagePath: Constants.imagePath);
+    return ProfileWidget(imagePath: Constants.imagePath, onClicked: () {});
   }
 
   Widget? displayDialoge() {
@@ -209,7 +212,11 @@ class _salaryViewState extends State<salaryView> {
           contentText: AppStrings.no_salary_found.tr(),
           positiveText: AppStrings.confirm.tr(),
           onPositiveClick: () {
-            Navigator.of(context).pop();
+            Navigator.of(context)
+                .pushReplacementNamed(
+                Routes.salary);
+            displayDialoge();
+           // Navigator.of(context).pop();
           },
         );
       },

@@ -18,8 +18,8 @@ enum StateRendererType {
   EMPTY_SCREEN_STATE // EMPTY VIEW WHEN WE RECEIVE NO DATA FROM API SIDE FOR LIST SCREEN
 }
 
-class StateRenderer extends StatelessWidget {
-  StateRendererType stateRendererType;
+class StateRenderer extends StatefulWidget {
+  StateRendererType? stateRendererType;
   String message;
   String title;
   Function? retryActionFunction;
@@ -37,42 +37,47 @@ class StateRenderer extends StatelessWidget {
         super(key: key);
 
   @override
+  State<StateRenderer> createState() => _StateRendererState();
+}
+
+class _StateRendererState extends State<StateRenderer> {
+  @override
   Widget build(BuildContext context) {
-    return _getStateWidget(context, this.onPopupClick);
+    return _getStateWidget(context, this.widget.onPopupClick);
   }
 
   Widget _getStateWidget(BuildContext context, Function onPopupClick) {
-    switch (stateRendererType) {
+    switch (widget.stateRendererType) {
       case StateRendererType.POPUP_LOADING_STATE:
         return _getPopUpDialog(
             context, [_getAnimatedImage(JsonAssets.loading)]);
       case StateRendererType.POPUP_ERROR_STATE:
         return _getPopUpDialog(context, [
           _getAnimatedImage(JsonAssets.error),
-          _getMessage(message),
+          _getMessage(widget.message),
           _getRetryButton(AppStrings.ok.tr(), context, onPopupClick)
         ]);
       case StateRendererType.POPUP_SUCCESS:
         return _getPopUpDialog(context, [
           _getAnimatedImage(JsonAssets.success),
-          _getMessage(title),
-          _getMessage(message),
+          _getMessage(widget.title),
+          _getMessage(widget.message),
           _getRetryButton(AppStrings.ok.tr(), context, onPopupClick)
         ]);
       case StateRendererType.FULL_SCREEN_LOADING_STATE:
         return _getItemsInColumn(
-            [_getAnimatedImage(JsonAssets.loading), _getMessage(message)]);
+            [_getAnimatedImage(JsonAssets.loading), _getMessage(widget.message)]);
       case StateRendererType.FULL_SCREEN_ERROR_STATE:
         return _getItemsInColumn([
           _getAnimatedImage(JsonAssets.error),
-          _getMessage(message),
+          _getMessage(widget.message),
           _getRetryButton(AppStrings.retry_again.tr(), context, onPopupClick)
         ]);
       case StateRendererType.CONTENT_SCREEN_STATE:
         return Container();
       case StateRendererType.EMPTY_SCREEN_STATE:
         return _getItemsInColumn(
-            [_getAnimatedImage(JsonAssets.empty), _getMessage(message)]);
+            [_getAnimatedImage(JsonAssets.empty), _getMessage(widget.message)]);
       default:
         return Container();
     }
@@ -138,9 +143,9 @@ class StateRenderer extends StatelessWidget {
           width: 180,
           child: ElevatedButton(
               onPressed: () {
-                if (stateRendererType ==
+                if (widget.stateRendererType ==
                     StateRendererType.FULL_SCREEN_ERROR_STATE) {
-                  retryActionFunction
+                  widget.retryActionFunction
                       ?.call(); // to call the API function again to retry
                 } else {
                   Navigator.of(context)

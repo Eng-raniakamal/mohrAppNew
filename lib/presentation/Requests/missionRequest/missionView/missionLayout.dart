@@ -74,7 +74,7 @@ class _EmployeeEditViewState extends State<MissionLayout>with TickerProviderStat
           child: Builder(
             builder: (context) =>
                 Scaffold(
-                  appBar: buildAppBar(context,"MIssion"),
+                  appBar: buildAppBar(context),
                   // backgroundColor: colorManager.white,
                   bottomNavigationBar:NavigatorBar(index: 0,notificationNumber: Constants.notificationNumber,)
                   ,body:

@@ -5,11 +5,11 @@ import 'package:essmohr/application/di.dart';
 import 'package:essmohr/application/app_prefs.dart';
 import 'package:essmohr/domain/usecase/saveAcademicDegree_UseCase.dart';
 import 'package:essmohr/presentation/Base/baseviewmodel.dart';
+import 'package:essmohr/presentation/common/freezed_data_classes.dart';
 import 'package:essmohr/presentation/common/state_renderer/state_render_impl.dart';
 import 'package:essmohr/data/networks/dio_factory.dart';
-import '../../../domain/usecase/empSkills_UseCase.dart';
-import '../../common/freezed_data_classes.dart';
-import '../../common/state_renderer/state_renderer.dart';
+import 'package:essmohr/presentation/common/state_renderer/state_renderer.dart';
+
 
 class SaveAcademicDegreeViewModel extends BaseViewModel implements
     AcademicDegreeViewModelInput,AcademicDegreeViewModelOutput

@@ -35,12 +35,9 @@ import '../resources/routes.dart';
 
 
 final items=<Widget>
-[ const Icon(Icons.person,size: 30,color: colorManager.white,),
-  const Icon(Icons.home,size: 30,color: colorManager.white),
-  const Icon(Icons.holiday_village,size: 30,color: colorManager.white),
-  const Icon(Icons.monetization_on,size: 30,color: colorManager.white),
-  const Icon(Icons.check_box,size: 30,color: colorManager.white),
-  const Icon(Icons.notifications,size: 30,color: colorManager.white),
+[ const Icon(Icons.person,size: 30,),
+  const Icon(Icons.home,size: 30,),
+  const Icon(Icons.notifications,size: 30,),
 
 ];
 class userView extends StatefulWidget implements NavigationStates{
@@ -74,9 +71,9 @@ class _userViewState extends State<userView> {
         builder: (context) =>
         Scaffold(
             extendBodyBehindAppBar: true,
-            appBar: buildAppBar(context,""),
+            appBar: buildAppBar(context),
             bottomNavigationBar:
-             NavigatorBar(index: 0,notificationNumber: Constants.notificationNumber,),
+             NavigatorBar(index: 1,notificationNumber: Constants.notificationNumber,),
             body:
         StreamBuilder<FlowState>(
             stream: _viewModel.outputState,
@@ -136,15 +133,23 @@ class _userViewState extends State<userView> {
                                                 Expanded(
                                                     flex: 1,
                                                     child:
-                                                    StreamBuilder<UserImageModel>(
+                                                    StreamBuilder<UserImageModel?>(
                                                         stream: _imageViewModel.outputUserImage,
                                                         builder: (context, snapshot) {
+                                                          if(snapshot.hasData){
                                                           return
                                                     SizedBox(width: 20, child:
                                                     _getImageWidget(
-                                                        snapshot.data),
+                                                        snapshot.data)
+                                                      ,
                                                     );}
-                                                    ))],
+                                                          else{
+                                                            return
+                                                              SizedBox(width: 20, child:
+                                                                _getImageWidget(
+                                                                null));
+                                                          }
+                                                   } ))],
                                             ),
                                           ),
                                         ]),
@@ -350,17 +355,17 @@ return Container();
           imagePath: URLimage,
           isEdit: false,
           onClicked: () {
-                resetModules();
-                Navigator.of(context).pushReplacementNamed(Routes.editProfileRoute);
+            resetModules();
+            Navigator.of(context).pushReplacementNamed(Routes.editProfileRoute);
           }
-
       );
     }
     else {
           URLimage=ImageAssets.noPhoto;
           Constants.imagePath= URLimage;
           return ProfileWidget(
-          imagePath: ImageAssets.noPhoto,
+          //imagePath: ImageAssets.noPhoto,
+            imagePath: Constants.imagePath,
           isEdit: false,
           onClicked: () {
             resetModules();

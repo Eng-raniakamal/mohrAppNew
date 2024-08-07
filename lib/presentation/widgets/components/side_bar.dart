@@ -63,7 +63,7 @@ class _SideBarState extends State<SideBar> {
                           });
                           switch (menu.title) {
                             case "HOME":
-                              Navigator.of(context).pushReplacementNamed(Routes.HomeRoute);
+                              Navigator.of(context).pushReplacementNamed(Routes.homeRoute);
                               //MaterialPageRoute(builder: (_) => const Home());
                               break;
                             case "My profile":

@@ -1,15 +1,19 @@
 import 'dart:async';
 import 'dart:ui';
+
+
 import 'package:flutter/material.dart';
 import 'package:essmohr/application/app_prefs.dart';
 import 'package:essmohr/application/di.dart';
 import 'package:essmohr/presentation/resources/assets_manager.dart';
+import 'package:essmohr/presentation/resources/colors.dart';
 import 'package:essmohr/presentation/resources/routes.dart';
 import 'package:rive/rive.dart';
-
+import 'package:workmanager/workmanager.dart';
 
 class SplashView extends StatefulWidget {
   const SplashView({Key? key}) : super(key: key);
+
   @override
   _SplashViewState createState() => _SplashViewState();
 }
@@ -27,7 +31,7 @@ class _SplashViewState extends State<SplashView> {
           if (isUserLoggedIn)
             {
               // navigate to main screen
-              Navigator.pushReplacementNamed(context, Routes.HomeRoute)
+              Navigator.pushReplacementNamed(context, Routes.homeRoute)
             }
           else
             {
@@ -53,6 +57,11 @@ class _SplashViewState extends State<SplashView> {
   void initState() {
     super.initState();
     _startDelay();
+
+    // Workmanager().registerPeriodicTask("control","control",
+    //     frequency: Duration(minutes: 15),
+    //     existingWorkPolicy: ExistingWorkPolicy.append
+    // );
   }
 
   @override
@@ -64,7 +73,9 @@ class _SplashViewState extends State<SplashView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+     // backgroundColor: colorManager.white,
       body:
+
       Stack(
         children: [
           Positioned(
@@ -97,19 +108,23 @@ class _SplashViewState extends State<SplashView> {
             child: const SafeArea(
               child: Padding(
                 padding: EdgeInsets.fromLTRB(50,200,50,50),
-                child:   Column
-                  (
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                                 Image(image: AssetImage(ImageAssets.startLogo))
-                              ],
-                  ),
+                child:   Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                   children: [
+
+                          Image(image: AssetImage(ImageAssets.startLogo))
+
+                        ],
+                      ),
+                  //  ),
+
+
                 ),
               ),
             ),
+         // ),
         ],
       ),
     );
   }
-
 }

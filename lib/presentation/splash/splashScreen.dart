@@ -25,11 +25,12 @@ class splashScreen extends StatelessWidget {
         Lottie.asset("assets/jsonFiles/splash.json"),
         nextRoute: Routes.loginRoute,
         nextScreen: LoginView(),
-        splashIconSize: 230,
-        duration: 3000,
-        splashTransition: SplashTransition.fadeTransition,
-        pageTransitionType: PageTransitionType.leftToRight,
-        animationDuration: const Duration(seconds: 3),
+
+       splashIconSize: 230,
+      duration: 3000,
+      splashTransition: SplashTransition.fadeTransition,
+      pageTransitionType: PageTransitionType.leftToRight,
+      animationDuration: const Duration(seconds: 3),
 
     );
 

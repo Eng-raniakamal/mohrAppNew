@@ -47,13 +47,13 @@ class AttendanceViewModel extends BaseViewModel implements
     super.dispose();
   }
 
+
   getAttendanceData()
   async{
     uId=await _appPreferences.getUserToken();
-
     var attendanceObject;
     //attendanceObjects(uId!);
-    attendanceObject.userID;
+    attendanceObject.userID=uId;
     if(uId!=null)
     {
       inputState.add(LoadingState(
@@ -95,8 +95,10 @@ class AttendanceViewModel extends BaseViewModel implements
   @override
   Sink get inputUserId => _UserIdStreamController.sink;
 
+  @override
   Sink get attendanceData => _AttendanceStreamController.sink;
 
+  @override
   Sink get inputattendance => _AttendanceStreamController.sink;
 
   @override

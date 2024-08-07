@@ -1,10 +1,9 @@
 import 'dart:async';
-
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:essmohr/application/constants.dart';
-import 'package:essmohr/presentation/widgets/profile_widget.dart';
+//import 'package:essmohr/presentation/widgets/profile_widget.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:essmohr/presentation/resources/strings_manager.dart';
 import 'package:essmohr/presentation/resources/colors.dart';
@@ -13,12 +12,9 @@ import 'package:essmohr/presentation/widgets/sidebar/menu_item.dart';
 import 'package:essmohr/presentation/resources/language_manager.dart';
 
 import 'dart:math' as math;
-import '../../../application/di.dart';
 import '../../resources/routes.dart';
-
-
-import 'package:flutter/material.dart';
 import 'package:essmohr/application/app_prefs.dart';
+
 import 'package:essmohr/application/di.dart';
 import 'package:essmohr/data/data_source/local_data_source.dart';
 
@@ -36,8 +32,8 @@ class _SideBarState extends State<SideBar> with SingleTickerProviderStateMixin<S
   late StreamSink<bool> isSidebarOpenedSink;
   final _animationDuration = const Duration(milliseconds: 500);
 
-  AppPreferences _appPreferences = instance<AppPreferences>();
-  LocalDataSource _localDataSource = instance<LocalDataSource>();
+  final AppPreferences _appPreferences = instance<AppPreferences>();
+  final LocalDataSource _localDataSource = instance<LocalDataSource>();
 
   @override
   void initState() {
@@ -120,7 +116,7 @@ class _SideBarState extends State<SideBar> with SingleTickerProviderStateMixin<S
                       child: Column(
                         children: [
                           const SizedBox(
-                            height: 100,
+                            height: 36,
                           ),
                            ListTile(
                             title: Text(
@@ -136,14 +132,15 @@ class _SideBarState extends State<SideBar> with SingleTickerProviderStateMixin<S
                             ),
                             // leading: CircleAvatar(
                             //   radius: 60,
+                        ///hide image rania
                             //   child:Image.network(Constants.imagePath),
-                             leading: ClipOval(
-                                 child: SizedBox.fromSize(
-                                   size: Size.fromRadius(30),
-                                 child: Image.network(Constants.imagePath, fit: BoxFit.cover),
-
-                                   ),
-                            ),
+                            //  leading: ClipOval(
+                            //      child: SizedBox.fromSize(
+                            //        size: Size.fromRadius(30),
+                            //      child: Image.network(Constants.imagePath, fit: BoxFit.cover),
+                            //
+                            //        ),
+                            //),
                           ),
                           Divider(
                             height: 64,
@@ -157,7 +154,7 @@ class _SideBarState extends State<SideBar> with SingleTickerProviderStateMixin<S
                             title: AppStrings.Home.tr(),
                             onTap: () {
                               onIconPressed();
-                              Navigator.of(context).pushReplacementNamed(Routes.HomeRoute);
+                              Navigator.of(context).pushReplacementNamed(Routes.homeRoute);
                              // BlocProvider.of<NavigationBloc>(context).add(NavigationEvents.HomePageClickedEvent);
                             },
                           ),
@@ -238,17 +235,17 @@ class _SideBarState extends State<SideBar> with SingleTickerProviderStateMixin<S
       ),
     );
   }
-  Widget _getImageWidget() {
-    String? URLimage ;
-      Constants.imagePath=URLimage!;
-      return ProfileWidget(
-          imagePath: URLimage,
-          isEdit: false,
-          onClicked: () {
-          }
-
-      );
-    }
+  // Widget _getImageWidget() {
+  //   String? URLimage ;
+  //     Constants.imagePath=URLimage!;
+  //     return ProfileWidget(
+  //         imagePath: URLimage,
+  //         isEdit: false,
+  //         onClicked: () {
+  //         }
+  //
+  //     );
+  //   }
 
 }
 

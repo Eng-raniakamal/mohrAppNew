@@ -69,15 +69,70 @@ class _EmployeeEditViewState extends State<EmployeeEditView>with TickerProviderS
 
     final TabController _tabController = TabController(
         length: (3), vsync: this);
-
+    // final item=<Widget>
+    // [ const Icon(Icons.person,size: 30,color: colorManager.white,),
+    //   const Icon(Icons.home,size: 30,color: colorManager.white),
+    //   Stack(
+    //     children: [
+    //       const Icon(Icons.notifications,size: 30),
+    //       Positioned(
+    //         right: 0,
+    //         child: Container(
+    //           padding: const EdgeInsets.all(1),
+    //           decoration: BoxDecoration(
+    //             color: Colors.red,
+    //             borderRadius: BorderRadius.circular(6),
+    //           ),
+    //           constraints: const BoxConstraints(
+    //             minWidth: 12,
+    //             minHeight: 12,
+    //           ),
+    //           child: Text(
+    //             Constants.notificationNumber.toString(),
+    //             style: const TextStyle(
+    //               color: Colors.white,
+    //               fontSize: 8,
+    //             ),
+    //             textAlign: TextAlign.center,
+    //           ),
+    //         ),
+    //       )
+    //     ],
+    //   ),
+    // //  const Icon(Icons.notifications,size: 30,color: colorManager.white),
+    //
+    // ];
     return
       ThemeSwitchingArea(
           child: Builder(
             builder: (context) =>
                 Scaffold(
-                  appBar: buildAppBar(context,AppStrings.BasicData.tr()),
+                  appBar: buildAppBar(context),
+                 // backgroundColor: colorManager.white,
+
                   bottomNavigationBar:
-                  NavigatorBar(index: 1,notificationNumber: Constants.notificationNumber,),
+                  NavigatorBar(index: 0,notificationNumber: Constants.notificationNumber,),
+                  // CurvedNavigationBar(items: item,
+                  //     index: 0,
+                  //
+                  //     buttonBackgroundColor: colorManager.primary,
+                  //     backgroundColor: Colors.transparent,
+                  //     color: colorManager.primary,
+                  //
+                  //
+                  //     onTap: (int index) {
+                  //       if(index==1)
+                  //       {
+                  //         // changeIndex(index);
+                  //         Navigator.of(context).pushReplacementNamed(Routes.HomeRoute);
+                  //       }
+                  //       else
+                  //       if(index==2)
+                  //       {
+                  //         Navigator.of(context).pushReplacementNamed(Routes.notification);
+                  //       }
+                  //     }
+                  // ),
                   body:
                   Container(
                     height: MediaQuery.of(context).size.height,
@@ -85,6 +140,9 @@ class _EmployeeEditViewState extends State<EmployeeEditView>with TickerProviderS
                       scrollDirection: Axis.vertical,
                       child: Column(
                           children: [
+                            // Flexible(
+                            //  // flex: 1,
+                            //   child:
                               Container(
                                   padding: const EdgeInsets.only(top: 20),
                                   width: MediaQuery
@@ -96,10 +154,17 @@ class _EmployeeEditViewState extends State<EmployeeEditView>with TickerProviderS
                                   child: Form(
                                       key: _Formkey,
                                       child: Container(
-
+                                         //height: 200,
+                                         //MediaQuery.of(context).size.height/3,
                                         child: Column(
                                             children: [
-
+                                              // ProfileWidget(
+                                              //   imagePath: userImage!,
+                                              //   isEdit: true,
+                                              //   onClicked: () async {
+                                              //     showImagePicker(context);
+                                              //   },
+                                              // ),
                                               StreamBuilder<UserImageModel>(
                                                   stream: _imageViewModel.outputUserImage,
                                                   builder: (context, snapshot) {

@@ -2,27 +2,31 @@ import 'dart:async';
 
 import 'package:essmohr/application/di.dart';
 import 'package:essmohr/application/app_prefs.dart';
+import 'package:essmohr/domain/usecase/empSkills_UseCase.dart';
 import 'package:essmohr/presentation/Base/baseviewmodel.dart';
+import 'package:essmohr/presentation/common/freezed_data_classes.dart';
 import 'package:essmohr/presentation/common/state_renderer/state_render_impl.dart';
 import 'package:essmohr/data/networks/dio_factory.dart';
 import 'package:essmohr/presentation/common/state_renderer/state_renderer.dart';
-import '../../../domain/usecase/empSkills_UseCase.dart';
-import '../../common/freezed_data_classes.dart';
 
-class EmployeeSkillsViewModel extends BaseViewModel
-    implements EmployeeSkillsViewModelInput, EmployeeSkillsViewModelOutput {
+
+class EmployeeSkillsViewModel extends BaseViewModel implements
+    EmployeeSkillsViewModelInput,EmployeeSkillsViewModelOutput
+{
   final AppPreferences _appPreferences = instance<AppPreferences>();
-  StreamController DateStreamController = StreamController<String>.broadcast();
-  StreamController GradeIdStreamController = StreamController<int>.broadcast();
-  StreamController QualificationIdStreamController =
-      StreamController<int>.broadcast();
-  StreamController EmployeeIdStreamController =
-      StreamController<int>.broadcast();
+  //the steamcontroller has many listener
+  StreamController DateStreamController=StreamController<String>.broadcast();
+  StreamController GradeIdStreamController=StreamController<int>.broadcast();
+  StreamController QualificationIdStreamController=StreamController<int>.broadcast();
+  StreamController EmployeeIdStreamController=StreamController<int>.broadcast();
+
 
   final EmployeeSkillsUseCase _employeeSkillsUseCase;
-  var EmployeeSkillsObject = empSkillsObject(UserId, "", 0, 0, 0);
+  var EmployeeSkillsObject=empSkillsObject(UserId,"",0,0,0);
 
   EmployeeSkillsViewModel(this._employeeSkillsUseCase);
+
+
 
 //--input
 
@@ -35,13 +39,19 @@ class EmployeeSkillsViewModel extends BaseViewModel
   @override
   Sink get inputQualificationId => QualificationIdStreamController.sink;
 
+
+
+
+
   @override
   void start() {
     inputState.add(ContentState());
+
   }
 
   @override
-  void dispose() {
+  void dispose()
+  {
     DateStreamController.close();
     GradeIdStreamController.close();
     QualificationIdStreamController.close();
@@ -51,122 +61,123 @@ class EmployeeSkillsViewModel extends BaseViewModel
   //--Output
 
   @override
-  Stream<bool> get outputEmployeeIdValid => EmployeeIdStreamController.stream
-      .map((empId) => _isEmployeeIdValid(empId));
+  Stream<bool> get outputEmployeeIdValid =>
+      EmployeeIdStreamController.stream.map(
+              (empId) => _isEmployeeIdValid(empId));
 
   @override
-  Stream<bool> get outputGradeIdValid =>
-      GradeIdStreamController.stream.map((gradId) => _isGradeIdValid(gradId));
+
+  Stream<bool> get outputGradeIdValid => GradeIdStreamController.stream
+  .map((gradId) => _isGradeIdValid(gradId));
 
   @override
-  Stream<bool> get outputQualificationIdValid =>
-      QualificationIdStreamController.stream
-          .map((qualificationId) => _isQualificationIdValid(qualificationId));
+  Stream<bool> get outputQualificationIdValid => QualificationIdStreamController.stream
+      .map((qualificationId) => _isQualificationIdValid(qualificationId));
 
   @override
-  Stream<bool> get outputDateValid =>
-      DateStreamController.stream.map((date) => _isDateValid(date));
+  Stream<bool> get outputDateValid => DateStreamController.stream.
+  map((date) => _isDateValid(date));
 
   @override
   Stream<String?> get outputErrorDate => outputDateValid
-      .map((isEmailValid) => isEmailValid ? null : "Invalid Date");
+      .map((isEmailValid)
+  => isEmailValid ? null : 'Invalid Date');
 
   //--Private functions
-  bool _isEmployeeIdValid(int empId) {
-    return empId > 0;
+ bool _isEmployeeIdValid(int empId){
+   return empId>0 ;
+ }
+  bool _isGradeIdValid(int gradeId){
+    return gradeId>0 ;
   }
-
-  bool _isGradeIdValid(int gradeId) {
-    return gradeId > 0;
+  bool _isQualificationIdValid(int qualificationId){
+    return qualificationId>0 ;
   }
-
-  bool _isQualificationIdValid(int qualificationId) {
-    return qualificationId > 0;
-  }
-
-  bool _isDateValid(String date) {
-    return date != null;
+  bool _isDateValid(String? date){
+   if(date!=null) {
+     return false;
+   }else
+     { return true;}
   }
 
   @override
-  setDate(String date) {
-    if (_isDateValid(date)) {
-      EmployeeSkillsObject = EmployeeSkillsObject.copyWith(Date: date);
-    } else {
-      EmployeeSkillsObject = EmployeeSkillsObject.copyWith(Date: date);
-    }
+  setDate(String? date) {
+ if(_isDateValid(date))
+   {EmployeeSkillsObject=EmployeeSkillsObject.copyWith(Date: date!);   }
+ else{
+   EmployeeSkillsObject=EmployeeSkillsObject.copyWith(Date: date!);
+ }
   }
 
   @override
   setEmployeeId(int employeeId) {
-    if (_isEmployeeIdValid(employeeId)) {
-      EmployeeSkillsObject =
-          EmployeeSkillsObject.copyWith(EmployeeId: employeeId);
-    } else {
-      EmployeeSkillsObject =
-          EmployeeSkillsObject.copyWith(EmployeeId: employeeId);
-    }
+if(_isEmployeeIdValid(employeeId)){
+  EmployeeSkillsObject=EmployeeSkillsObject.copyWith(EmployeeId: employeeId);
+}
+else{
+  EmployeeSkillsObject=EmployeeSkillsObject.copyWith(EmployeeId: employeeId);
+}
   }
 
   @override
   setGradeId(int gradeId) {
-    if (_isGradeIdValid(gradeId)) {
-      EmployeeSkillsObject = EmployeeSkillsObject.copyWith(GradeId: gradeId);
-    } else {
-      EmployeeSkillsObject = EmployeeSkillsObject.copyWith(GradeId: gradeId);
+    if(_isGradeIdValid(gradeId)){
+      EmployeeSkillsObject=EmployeeSkillsObject.copyWith(GradeId: gradeId);
     }
+    else{ EmployeeSkillsObject=EmployeeSkillsObject.copyWith(GradeId: gradeId);}
   }
 
   @override
   setQualificationId(int qualificationId) {
-    if (_isQualificationIdValid(qualificationId)) {
-      EmployeeSkillsObject =
-          EmployeeSkillsObject.copyWith(QualificationId: qualificationId);
-    } else {
-      EmployeeSkillsObject =
-          EmployeeSkillsObject.copyWith(QualificationId: qualificationId);
+    if(_isQualificationIdValid(qualificationId)){
+      EmployeeSkillsObject=EmployeeSkillsObject.copyWith(QualificationId: qualificationId);
+    }
+    else{
+      EmployeeSkillsObject=EmployeeSkillsObject.copyWith(QualificationId: qualificationId );
     }
   }
 
   @override
-  addSkills() async {
-    String userId = await _appPreferences.getUserToken();
-    int empId = await _appPreferences.getEmpIdToken();
+  addSkills() async{
+    String userId=await _appPreferences.getUserToken();
+    int empId=await _appPreferences.getEmpIdToken();
     EmployeeSkillsObject.userID;
     EmployeeSkillsObject.EmployeeId;
 
-    inputState.add(
-        LoadingState(stateRendererType: StateRendererType.POPUP_LOADING_STATE));
-    (await _employeeSkillsUseCase.execute(EmployeeSkillsUseCaseInput(
-            userId,
-            EmployeeSkillsObject.Date,
-            EmployeeSkillsObject.GradeId,
-            EmployeeSkillsObject.QualificationId,
-            empId)))
-        .fold(
-            (failure) => {
-                  inputState.add(ErrorState(
-                      StateRendererType.POPUP_ERROR_STATE as StateRendererType,
-                      failure.message)),
-                }, (data) {
-      inputState.add(ContentState());
+   inputState.add(
+       LoadingState(stateRendererType: StateRendererType.POPUP_LOADING_STATE));
+   (await _employeeSkillsUseCase.execute(
+     EmployeeSkillsUseCaseInput(
+        userId,
+         EmployeeSkillsObject.Date,
+         EmployeeSkillsObject.GradeId,
+         EmployeeSkillsObject.QualificationId,
+         empId)
+   ))
+   .fold((failure) => {inputState.add(
+       ErrorState(StateRendererType.POPUP_ERROR_STATE,failure.message)),
+  },(data)
+    {
+      {
+        inputState.add(ContentState());
+      }
     });
   }
 }
 
-abstract class EmployeeSkillsViewModelInput {
+abstract class EmployeeSkillsViewModelInput{
   Sink get inputDate;
   Sink get inputGradeId;
   Sink get inputQualificationId;
   Sink get inputEmployeeId;
-  addSkills();
+ addSkills();
   setDate(String date);
   setGradeId(int gradeId);
   setQualificationId(int qualificationId);
   setEmployeeId(int employeeId);
 }
 
-abstract class EmployeeSkillsViewModelOutput {
+abstract class EmployeeSkillsViewModelOutput{
   Stream<bool> get outputDateValid;
   Stream<bool> get outputGradeIdValid;
   Stream<bool> get outputQualificationIdValid;

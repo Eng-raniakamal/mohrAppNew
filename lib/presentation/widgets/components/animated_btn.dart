@@ -18,11 +18,14 @@ class AnimatedBtn extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+
       onTap: press,
       child: SizedBox(
+
         height: 64,
         width: 236,
         child: Stack(
+
           children: [
             RiveAnimation.asset(
               "assets/RiveAssets/buttonpink.riv",
@@ -38,7 +41,9 @@ class AnimatedBtn extends StatelessWidget {
                   const SizedBox(width: 8),
                   Text(
                     AppStrings.Start.tr(),
-                    style: Theme.of(context).textTheme.labelLarge,
+                   // style: Theme.of(context).textTheme,
+
+
                   )
                 ],
               ),

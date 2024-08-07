@@ -55,7 +55,7 @@ class _SettingsPageState extends State<SettingsPage> {
         child: Builder(
         builder: (context) =>
         Scaffold(
-          appBar: buildAppBar(context,AppStrings.settings.tr()),
+          appBar: buildAppBar(context),
           body:
                 ListView(
           padding: const EdgeInsets.all(AppPadding.p8),

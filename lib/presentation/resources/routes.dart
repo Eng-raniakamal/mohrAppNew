@@ -40,7 +40,7 @@ class Routes
   static const String splashRoute="/splash";
   static const String loginRoute="/login";
   static const String profileRoute="/user";
-  static const String HomeRoute="/home/Home.dart";
+  static const String homeRoute="/home/Home.dart";
   static const String notification="/Alert_Notification";
   static const String editProfileRoute="/user/layout";
   static const String main="/main";
@@ -59,10 +59,10 @@ class RouteGenerator {
   static Route<dynamic> getRoute(RouteSettings settings) {
     switch (settings.name) {
       case Routes.onboardingRoute:
-        return MaterialPageRoute(builder: (_)=> OnboadingScreen ());
+        return MaterialPageRoute(builder: (_)=> const OnboadingScreen ());
 
       case Routes.splashRoute:
-        return MaterialPageRoute(builder: (_)=> splashScreen());
+        return MaterialPageRoute(builder: (_)=> const splashScreen());
 
       case Routes.loginRoute:
         initLoginModule();
@@ -73,30 +73,31 @@ class RouteGenerator {
         initUserImageModule();
         return MaterialPageRoute(builder: (_)=>  const userView());
 
-      case Routes.HomeRoute:
+      case Routes.homeRoute:
         initUserModule();
         initUserImageModule();
         return MaterialPageRoute(builder: (_)=>  Home());
 
       case Routes.notification:
-        initUserModule();
-        initUserImageModule();
+
+       // initUserImageModule();
         return MaterialPageRoute(builder: (_)=>  AlertHome());
 
         case Routes.editProfileRoute:
-           initEmployeeBasicDataModule();
-
+          initUserModule();
+          initUserImageModule();
+          initEmployeeBasicDataModule();
           initEmployeeSkillsModule();
           initDisplayEmployeeSkillsModule();
-          initEmployeeBasicDataModule();
           initSaveEmpBasicDataModule();
           initDisplayAcademicDegreesModule();
           initSaveAcademicDegreesModule();
           initQualificationModule();
           initGradeModule();
-           initDegreeModule();
+          initDegreeModule();
 
-        return MaterialPageRoute(builder: (_)=>  Employee());
+
+      return MaterialPageRoute(builder: (_)=>  Employee());
 
       case Routes.settings:
           return MaterialPageRoute(builder: (_)=>  Settings());
@@ -108,11 +109,12 @@ class RouteGenerator {
 
       case Routes.attendance:
         initAttendanceModule();
-        return MaterialPageRoute(builder: (_)=> AttendanceHome());
+          return MaterialPageRoute(builder: (_) => AttendanceHome());
+
 
       case Routes.VacationRequest:
         initVacationTypeModule();
-        return MaterialPageRoute(builder: (_)=> VacationRequestView());
+        return MaterialPageRoute(builder: (_)=>  VacationRequestView());
 
       case Routes.salary:
         initSalaryModule();

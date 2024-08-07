@@ -1,6 +1,4 @@
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
-import 'package:easy_localization/easy_localization.dart';
-import 'package:essmohr/presentation/resources/strings_manager.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:essmohr/application/constants.dart';
@@ -26,7 +24,7 @@ class _editProfileScreenState extends State<editProfileScreen> {
         child: Builder(
           builder: (context) =>
               Scaffold(
-                appBar: buildAppBar(context,AppStrings.BasicData.tr()),
+                appBar: buildAppBar(context),
                 body: ListView(
                   padding: EdgeInsets.symmetric(horizontal: 32),
                   physics: BouncingScrollPhysics(),

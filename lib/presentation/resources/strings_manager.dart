@@ -40,7 +40,7 @@ class AppStrings {
   static const String register = "register";
   static const String contact_us = "Contact us";
   static const String home = "home";
-  static const String Notifications = "notification";
+  static const String Notifications = "Notification";
   static const String Alerts = "Alerts";
   static const String search = "search";
   static const String settings = "settings";
@@ -173,7 +173,7 @@ class AppStrings {
 
   // error handler
   static const String badRequestError = "bad request error";
-  static const String noContent = "no content";
+  static const String noContent = "noContent";
   static const String forbiddenError = "forbidden_error";
   static const String unauthorizedError = "unauthorized_error";
   static const String notFoundError = "not found error";

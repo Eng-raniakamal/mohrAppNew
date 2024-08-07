@@ -1,19 +1,20 @@
 import 'dart:async';
-
 import 'package:essmohr/presentation/common/state_renderer/state_render_impl.dart';
-import 'package:rxdart/rxdart.dart';
 
 abstract class BaseViewModel extends BaseViewModelInputs
     implements BaseViewModelOutputs {
   final StreamController _inputStateStreamController =
-  StreamController<FlowState>.broadcast();
+      StreamController<FlowState>.broadcast();
 
   @override
   Sink get inputState => _inputStateStreamController.sink;
-
+  ///
   @override
-  Stream<FlowState> get outputState =>
-      _inputStateStreamController.stream.map((flowState) => flowState);
+  Stream<FlowState>? get outputState =>
+
+    _inputStateStreamController.stream.map((flowState) => flowState);
+
+
 
   @override
   void dispose() {
@@ -30,5 +31,5 @@ abstract class BaseViewModelInputs {
 }
 
 abstract class BaseViewModelOutputs {
-  Stream<FlowState> get outputState;
+  Stream<FlowState>? get outputState;
 }

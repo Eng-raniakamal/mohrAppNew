@@ -9,14 +9,13 @@ import 'package:essmohr/presentation/widgets/clipPathWidget.dart';
 //import 'package:essmohr/themes/themes.dart';
 //import 'package:essmohr/model/user_preferences.dart';
 
-AppBar buildAppBar(BuildContext context,String titleName) {
+AppBar buildAppBar(BuildContext context) {
   final isDarkMode = Theme.of(context).brightness == Brightness.dark;
   final icon = CupertinoIcons.moon_stars;
 
   return AppBar(
     //shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
     //leading: BackButton(),
-    title: Center(child: Text(titleName,style: TextStyle(color:colorManager.white))),
     backgroundColor: colorManager.lightprimary,
    // flexibleSpace: Container(
    //  decoration: BoxDecoration( gradient: LinearGradient(

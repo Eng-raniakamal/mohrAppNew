@@ -28,7 +28,7 @@ class _singinScreenState extends State<singinScreen> {
         child: Builder(
         builder: (context) =>
         Scaffold(
-      appBar: buildAppBar(context,"login"),
+      appBar: buildAppBar(context),
 
       body: Container(
         padding: const EdgeInsets.all(50.0),

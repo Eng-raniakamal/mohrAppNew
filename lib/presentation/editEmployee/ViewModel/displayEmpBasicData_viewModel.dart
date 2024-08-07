@@ -1,3 +1,5 @@
+
+
 import 'dart:async';
 import 'package:essmohr/application/app_prefs.dart';
 import 'package:essmohr/application/di.dart';
@@ -9,18 +11,18 @@ import 'package:essmohr/presentation/common/state_renderer/state_renderer.dart';
 import '../../../domain/usecase/empBD_useCase.dart';
 import 'package:essmohr/presentation/common/freezed_data_classes.dart';
 
-class EmployeeBasicDataViewModel extends BaseViewModel
-    implements EmpBasicDataViewModelInputs, EmpBasicDataViewModelOutputs {
-  final StreamController _UserIdStreamController =
-      StreamController<String>.broadcast();
-  final StreamController _EmpIdStreamController =
-      StreamController<int>.broadcast();
+
+class EmployeeBasicDataViewModel extends BaseViewModel implements
+    EmpBasicDataViewModelInputs,EmpBasicDataViewModelOutputs {
+
+  final StreamController _UserIdStreamController= StreamController<String>.broadcast();
+  final StreamController _EmpIdStreamController= StreamController<int>.broadcast();
 
   //from rxdart
   final _BasicDataStreamController = BehaviorSubject<BasicDataModel>();
   final AppPreferences _appPreferences = instance<AppPreferences>();
   final BasicDataUseCase _BasicDataUseCase;
-  EmployeeBasicDataViewModel(this._BasicDataUseCase);
+  EmployeeBasicDataViewModel ( this._BasicDataUseCase);
   String? uId;
   int? empId;
   var empObject;
@@ -32,89 +34,110 @@ class EmployeeBasicDataViewModel extends BaseViewModel
     getEmpBasicData();
   }
 
+bool _isdispose=false;
   @override
-  void dispose() {
+  void dispose()
+  {
     _UserIdStreamController.close();
     _EmpIdStreamController.close();
+    _isdispose=true;
     super.dispose();
   }
+
 
   getEmpBasicData() async {
     uId = await _appPreferences.getUserToken();
     empId = await _appPreferences.getEmpIdToken();
     var empObject = EmpBasicDataObject(uId!, empId!);
+    if (_isdispose) { return;}
+    else {
+      if (empObject.empId != 0) {
+        inputState.add(LoadingState(
+            stateRendererType: StateRendererType.POPUP_LOADING_STATE)
+        );
+        (await _BasicDataUseCase.execute(
+            BasicdataInput(empObject.userID, empObject.empId)))
+            .fold((failure) =>
+        {
+          inputState.add(ErrorState(
+              StateRendererType.POPUP_ERROR_STATE, failure.message))
+        }, (data) {
+          if (_isdispose) { return;}
+          inputState.add(ContentState());
+          EmpBasicData.add(BasicDataModel(
+              data.employee,
+              data.allowEdit,
+              data.country,
+              data.selectedcountry,
+              data.governorate,
+              data.selectedgovernorate,
+              data.district,
+              data.selectedgovernorate,
+              data.address));
+        });
+      }
+      else {
+        empObject.userID;
+        empObject.empId;
+        inputState.add(
+            LoadingState(
+                stateRendererType: StateRendererType.POPUP_LOADING_STATE)
+        );
+        (await _BasicDataUseCase.execute
 
-    if (empObject.empId != 0) {
-      inputState.add(LoadingState(
-          stateRendererType: StateRendererType.POPUP_LOADING_STATE));
-      (await _BasicDataUseCase.execute(
-              BasicdataInput(empObject.userID, empObject.empId)))
-          .fold(
-              (failure) => {
-                    inputState.add(ErrorState(
-                        StateRendererType.POPUP_ERROR_STATE, failure.message))
-                  }, (data) {
-        inputState.add(ContentState());
-        EmpBasicData.add(BasicDataModel(
-            data.employee,
-            data.allowEdit,
-            data.country,
-            data.selectedcountry,
-            data.governorate,
-            data.selectedgovernorate,
-            data.district,
-            data.selectedgovernorate,
-            data.address));
-      });
-    } else {
-      empObject.userID;
-      empObject.empId;
-      inputState.add(LoadingState(
-          stateRendererType: StateRendererType.POPUP_LOADING_STATE));
-      (await _BasicDataUseCase.execute(
-              BasicdataInput(empObject.userID, empObject.empId)))
-          .fold(
-              (failure) => {
-                    inputState.add(ErrorState(
-                        StateRendererType.POPUP_ERROR_STATE, failure.message))
-                  }, (data) {
-        inputState.add(ContentState());
-        EmpBasicData.add(BasicDataModel(
-            data.employee,
-            data.allowEdit,
-            data.country,
-            data.selectedcountry,
-            data.governorate,
-            data.selectedgovernorate,
-            data.district,
-            data.selectedgovernorate,
-            data.address));
-      });
+          (BasicdataInput(empObject.userID, empObject.empId))).fold(
+                (failure) =>
+            { inputState.add
+              (ErrorState(StateRendererType.POPUP_ERROR_STATE, failure.message))
+            },
+                (data) {
+              inputState.add(ContentState());
+              EmpBasicData.add(BasicDataModel(
+                  data.employee,
+                  data.allowEdit,
+                  data.country,
+                  data.selectedcountry,
+                  data.governorate,
+                  data.selectedgovernorate
+                  ,
+                  data.district,
+                  data.selectedgovernorate,
+                  data.address));
+            }
+        );
+      }
     }
   }
 
   @override
   Sink get inputUserId => _UserIdStreamController.sink;
+
   @override
   Sink get inputEmpId => _EmpIdStreamController.sink;
-  @override
+
+
   Sink get EmpBasicData => _BasicDataStreamController.sink;
 
+
+
   @override
-  Stream<BasicDataModel> get outputEmpBasicData =>
-      _BasicDataStreamController.stream.map((data) => data);
+  Stream<BasicDataModel>? get outputEmpBasicData => _BasicDataStreamController.stream
+      .map((data) => data);
 }
 
-abstract class EmpBasicDataViewModelInputs {
+abstract class EmpBasicDataViewModelInputs{
   Sink get inputUserId;
   Sink get inputEmpId;
 }
 
-abstract class EmpBasicDataViewModelOutputs {
-  Stream<BasicDataModel> get outputEmpBasicData;
-}
+abstract class EmpBasicDataViewModelOutputs{
+  Stream<BasicDataModel>? get outputEmpBasicData;
 
-class EmpBasicDataViewObject {
+}
+class  EmpBasicDataViewObject {
   BasicDataModel employeeBasicData;
   EmpBasicDataViewObject(this.employeeBasicData);
 }
+
+
+

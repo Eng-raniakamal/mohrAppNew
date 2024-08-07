@@ -138,7 +138,7 @@ class _OnboadingScreenState extends State<OnboadingScreen> {
              // if user is already logged go to the home directly
                                if(isUserLoggedIn)
                                  {
-                                Navigator.of(context).pushReplacementNamed(Routes.HomeRoute)
+                                Navigator.of(context).pushReplacementNamed(Routes.homeRoute)
                               }
                             else
                                {

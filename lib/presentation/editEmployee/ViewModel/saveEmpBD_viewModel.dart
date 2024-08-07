@@ -9,10 +9,10 @@ import 'package:essmohr/data/request/request.dart';
 import 'package:essmohr/domain/model/model.dart';
 import 'package:essmohr/domain/usecase/saveEmpBD_useCase.dart';
 import 'package:essmohr/presentation/User/User_viewModel.dart';
+import 'package:essmohr/presentation/common/state_renderer/state_renderer.dart';
 import '../../Base/baseviewmodel.dart';
 import '../../common/state_renderer/state_render_impl.dart';
-import '../../common/freezed_data_classes.dart';
-import '../../common/state_renderer/state_renderer.dart';
+
 
 class saveBDViewModel extends BaseViewModel implements saveBDViewModelInputs,saveBDViewModelOutputs
 {

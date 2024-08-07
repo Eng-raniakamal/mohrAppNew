@@ -67,7 +67,7 @@ class _ChangePasswordState extends State<ChangePasswordPage> {
             child: Builder(
                 builder: (context) =>
                     Scaffold(
-                      appBar: buildAppBar(context,AppStrings.change_password.tr()),
+                      appBar: buildAppBar(context),
                       body:
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 30),
@@ -263,7 +263,7 @@ class _ChangePasswordState extends State<ChangePasswordPage> {
           positiveText:  AppStrings.confirm.tr(),
           onPositiveClick: () {
            // Navigator.of(context).pop();
-            Navigator.of(context).popAndPushNamed(Routes.HomeRoute);
+            Navigator.of(context).popAndPushNamed(Routes.homeRoute);
           },
 
         );

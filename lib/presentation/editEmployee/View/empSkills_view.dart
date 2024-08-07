@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:essmohr/presentation/common/state_renderer/state_render_impl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
 import 'package:essmohr/application/constants.dart';
@@ -16,7 +17,7 @@ import 'package:essmohr/presentation/editEmployee/ViewModel/grade_viewModel.dart
 import 'package:essmohr/presentation/resources/colors.dart';
 import 'package:essmohr/presentation/resources/strings_manager.dart';
 import '../../../application/app_prefs.dart';
-import '../../common/state_renderer/state_render_impl.dart';
+
 import 'package:http/http.dart' as http;
 
 class EmployeeSkillsView extends StatefulWidget {
@@ -103,8 +104,6 @@ skillsUpdate;
           child: Builder(
               builder: (context) =>
                   Scaffold(
-                    //appBar: buildAppBarMain(context),
-                   // backgroundColor: colorManager.white,
                     body: StreamBuilder<FlowState>(
                       stream: _saveviewModel.outputState,
                       builder: (context, snapshot) {

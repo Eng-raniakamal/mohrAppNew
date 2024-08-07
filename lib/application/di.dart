@@ -11,6 +11,7 @@ import 'package:essmohr/domain/usecase/VacatioType_useCase.dart';
 import 'package:essmohr/domain/usecase/attendance_UseCase.dart';
 import 'package:essmohr/domain/usecase/displaySkills_useCase.dart';
 import 'package:essmohr/domain/usecase/empAcademicDegree_useCase.dart';
+import 'package:essmohr/domain/usecase/empSkills_UseCase.dart';
 import 'package:essmohr/domain/usecase/grade_useCase.dart';
 import 'package:essmohr/domain/usecase/qualification_useCase.dart';
 import 'package:essmohr/domain/usecase/salaryDetails_UseCase.dart';
@@ -21,16 +22,21 @@ import 'package:essmohr/domain/usecase/login_usecase.dart';
 import 'package:essmohr/domain/usecase/saveAcademicDegree_UseCase.dart';
 import 'package:essmohr/domain/usecase/saveEmpBD_useCase.dart';
 import 'package:essmohr/domain/usecase/userImage_usecase.dart';
+import 'package:essmohr/domain/usecase/vacation_UseCase.dart';
 import 'package:essmohr/presentation/AddImage/viewModel/GetImage_ViewModel.dart';
 import 'package:essmohr/presentation/Alert_Notification/ViewModel/notificationViewModel.dart';
 import 'package:essmohr/presentation/Attendance/viewModel/attendViewModel.dart';
 import 'package:essmohr/presentation/Requests/Salary/ViewModel/salaryDetailsViewModel.dart';
+import 'package:essmohr/presentation/Requests/Salary/ViewModel/salaryViewModel.dart';
 import 'package:essmohr/presentation/Requests/Vacations/viewModel/VacationType_ViewModel.dart';
+import 'package:essmohr/presentation/Requests/Vacations/viewModel/vacationViewModel.dart';
 
 import 'package:essmohr/presentation/User/User_viewModel.dart';
 import 'package:essmohr/presentation/editEmployee/ViewModel/Degree_viewModel.dart';
 import 'package:essmohr/presentation/editEmployee/ViewModel/displayEmpAcademicDegree_ViewModel.dart';
+import 'package:essmohr/presentation/editEmployee/ViewModel/displayEmpBasicData_viewModel.dart';
 import 'package:essmohr/presentation/editEmployee/ViewModel/displayEmpSkills_viewModel.dart';
+import 'package:essmohr/presentation/editEmployee/ViewModel/empSkills_viewModel.dart';
 import 'package:essmohr/presentation/editEmployee/ViewModel/qualification_viewModel.dart';
 import 'package:essmohr/presentation/editEmployee/ViewModel/grade_viewModel.dart';
 import 'package:essmohr/presentation/editEmployee/ViewModel/saveEmpAcademicDegree_ViewModel.dart';
@@ -40,12 +46,8 @@ import 'package:internet_connection_checker/internet_connection_checker.dart';
 //import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../domain/usecase/empSkills_UseCase.dart';
-import '../domain/usecase/vacation_UseCase.dart';
-import '../presentation/Requests/Salary/ViewModel/salaryViewModel.dart';
-import '../presentation/Requests/Vacations/viewModel/vacationViewModel.dart';
-import '../presentation/editEmployee/ViewModel/displayEmpBasicData_viewModel.dart';
-import '../presentation/editEmployee/ViewModel/empSkills_viewModel.dart';
+
+
 //import '../presentation/editEmployee/ViewModel/saveEmpBD_viewModel.dart';
 import 'app_prefs.dart';
 
@@ -294,7 +296,7 @@ initSaveEmpBasicDataModule() {
       initUserModule();
       initUserImageModule();
       initEmployeeBasicDataModule();
-      //initSaveEmpBasicDataModule();
+      initSaveEmpBasicDataModule();
       initDisplayEmployeeSkillsModule();
       initEmployeeSkillsModule();
       initDisplayAcademicDegreesModule();
