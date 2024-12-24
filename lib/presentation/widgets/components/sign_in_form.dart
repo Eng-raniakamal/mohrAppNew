@@ -64,7 +64,7 @@ class _SignInFormState extends State<SignInForm> {
               // Navigate & hide confetti
               Future.delayed(const Duration(seconds: 1), () {
                 // Navigator.pop(context);
-                Navigator.push(
+                Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
                     builder: (context) => const splashScreen(),

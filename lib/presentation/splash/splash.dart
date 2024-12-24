@@ -8,7 +8,7 @@ import 'package:essmohr/application/di.dart';
 import 'package:essmohr/presentation/resources/assets_manager.dart';
 import 'package:essmohr/presentation/resources/colors.dart';
 import 'package:essmohr/presentation/resources/routes.dart';
-import 'package:rive/rive.dart';
+import 'package:rive/rive.dart'as Rive;
 import 'package:workmanager/workmanager.dart';
 
 class SplashView extends StatefulWidget {
@@ -92,7 +92,7 @@ class _SplashViewState extends State<SplashView> {
               child: const SizedBox(),
             ),
           ),
-          const RiveAnimation.asset(
+          const Rive.RiveAnimation.asset(
             "assets/RiveAssets/shapes.riv",
           ),
           Positioned.fill(

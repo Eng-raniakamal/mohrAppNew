@@ -4,7 +4,7 @@ import 'package:workmanager/workmanager.dart';
 class Notifications{
   static Future initialize(FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin) async {
     var androidInitialize = const AndroidInitializationSettings('mipmap/ic_launcher');
-    var iOSInitialize =  DarwinInitializationSettings();
+    var iOSInitialize =  const DarwinInitializationSettings();
     var initializationsSettings = InitializationSettings(android: androidInitialize,
       iOS: iOSInitialize
     );
@@ -18,8 +18,7 @@ class Notifications{
       '2',
       'channel_name',
 
-      playSound: true,
-      sound: RawResourceAndroidNotificationSound('notification'),
+      //sound: RawResourceAndroidNotificationSound('yourmp3files.mp3'),
       importance: Importance.max,
       priority: Priority.high,
     );

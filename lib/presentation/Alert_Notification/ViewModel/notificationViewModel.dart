@@ -24,7 +24,7 @@ class NotificationData {
       'userId': userId!
     });
 
-    final responseData = json.decode(response.body);
+    final responseData = json.decode(response.body.toString());
     if (responseData != null) {
       var userNotifications = responseData as List;
       a = userNotifications.map((data) => NotificationModel.fromJson(data))

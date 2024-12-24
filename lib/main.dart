@@ -12,7 +12,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:essmohr/domain/model/model.dart';
 import 'package:essmohr/presentation/Notification.dart';
 import 'package:essmohr/presentation/resources/language_manager.dart';
-import 'package:essmohr/presentation/resources/strings_manager.dart';
 import 'package:workmanager/workmanager.dart';
 import 'package:http/http.dart' as http;
 
@@ -25,10 +24,10 @@ const simplePeriodicTask = "simplePeriodicTask";
 // flutter local notification setup
 void showNotification( v, flp) async {
 
-  var android = AndroidNotificationDetails(
+  var android = const AndroidNotificationDetails(
       'channel id', 'channel NAME',
       priority: Priority.high, importance: Importance.max);
-  var iOS = DarwinNotificationDetails();
+  var iOS = const DarwinNotificationDetails();
   var platform = NotificationDetails(android: android,iOS: iOS);
   await flp.show(v, "new notifications here", '$v', platform,
       payload: 'VIS \n $v');
@@ -39,10 +38,10 @@ void callbackDispatcher() {
     await initAppModule();
     String userId= await _appPreferences.getUserToken();
     FlutterLocalNotificationsPlugin flp = FlutterLocalNotificationsPlugin();
-    var android = AndroidInitializationSettings('@mipmap/ic_launcher');
+    var android = const AndroidInitializationSettings('app_icon');
     //var iOS = IOSInitializationSettings();
-    var initSetttings = InitializationSettings(android: android);
-    flp.initialize(initSetttings);
+    var initSettings = InitializationSettings(android: android);
+    flp.initialize(initSettings);
 
     var uri = Uri.parse(Constants.getNotificationUrl);
     List<NotificationModel>? a;
@@ -53,7 +52,6 @@ void callbackDispatcher() {
       // 'userId': "b64f7a02-b625-46b7-8126-d3a20defdff8",
       'userId': userId
     });
-
     final responseData = json.decode(response.body);
     if (responseData != null) {
       var userNotifications = responseData as List;
@@ -62,7 +60,6 @@ void callbackDispatcher() {
       var notifications = List<NotificationModel>.from(a as Iterable);
       //return notifications;
       int unSeenMessage=0;
-
       for(var i = 0; i < notifications.length; i++)
       {
         if(notifications[i].seen==false)
@@ -70,8 +67,6 @@ void callbackDispatcher() {
           unSeenMessage++;
         }
       }
-
-
       Constants.notificationNumber=unSeenMessage;
       if(unSeenMessage!=0) {
         showNotification(unSeenMessage, flp);
@@ -84,7 +79,6 @@ void callbackDispatcher() {
 }
 
 Future<void> main() async {
-
   WidgetsFlutterBinding.ensureInitialized();
   await initAppModule();
   Notifications.initialize(flutterLocalNotificationsPlugin);
@@ -102,13 +96,9 @@ Future<void> main() async {
       path: ASSETS_PATH_LOCALISATIONS,
       child: Phoenix(
           child:MyApp()))
-
   );
   ErrorWidget.builder=(FlutterErrorDetails details){
-    return Container(
-      //color:Colors.yellow[200],
-      child: const Center(child: SizedBox(child: Text(""))),
-    );
+    return const Center(child: SizedBox(child: Text("")));
   };
 }
 

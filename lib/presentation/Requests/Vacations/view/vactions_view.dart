@@ -1,5 +1,7 @@
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:essmohr/presentation/Requests/Vacations/view/vactionRequests_view.dart';
+import 'package:essmohr/presentation/resources/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:essmohr/application/di.dart';
 import 'package:essmohr/domain/model/model.dart';
@@ -137,14 +139,13 @@ class _vacationsViewState extends State<vacationsView> {
                                         borderRadius: BorderRadius.circular(10)),
                                     onPressed: ()
                                      {
-                                       Navigator.push(
-                                           context,
-                                           //Navigator.of(context).pushReplacementNamed(Routes.VacationRequest) as Route<Object?> );
-                                           MaterialPageRoute(builder: (context) => const UnderConstructionScreen()));
+                                       // Navigator.push(
+                                       //     context,
+                                           Navigator.of(context).pushReplacementNamed(Routes.VacationRequest);
 
+                                          // MaterialPageRoute(builder: (context) => const UnderConstructionScreen()));
                                       },
                                     child:Text(AppStrings.Vacation_Request.tr(),style: const TextStyle(color: colorManager.white),),)),
-
                                 ],
                             ),
                           ]),

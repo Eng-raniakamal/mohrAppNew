@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +16,6 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:essmohr/presentation/resources/routes.dart';
 import 'package:http/http.dart' as http;
 import 'package:essmohr/presentation/resources/strings_manager.dart';
-
 
 
 // ignore: must_be_immutable
@@ -47,21 +45,21 @@ class _NavigatorBarState extends State<NavigatorBar> {
 
   @override
   void initState() {
-    checkNewNotifications();
-    getnotification();
+    //checkNewNotifications();
+   // getnotification();
 
     super.initState();
      setState(() {
        notificationNumber= Constants.notificationNumber;
      });
   }
-
   @override
   void dispose() {
-    _isdispose=false;
+    _isdispose=true;
     super.dispose();
-
   }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -82,7 +80,6 @@ class _NavigatorBarState extends State<NavigatorBar> {
       height: 50,
       index: widget.index,
       items: items,
-
       buttonBackgroundColor: colorManager.primary,
       backgroundColor: Colors.transparent,
       color: colorManager.primary,
@@ -93,11 +90,8 @@ class _NavigatorBarState extends State<NavigatorBar> {
           notificationNumber=Constants.notificationNumber;
         });
         changeRoute(index);
-
       }
-
       ,
-
     );
   }
   Widget notificationIcon(int notificationNumber) {
@@ -147,11 +141,11 @@ getnotification()
   async {
   if(notifications!=null) {
   lengthOfList = await _notificationData.getUnSeenNotification(notifications!);
-  // setState(()
-  // {
+   setState(()
+   {
     Constants.notificationNumber = lengthOfList;
     notificationNumber = Constants.notificationNumber;
-  // });
+   });
 }
   }
 
@@ -168,12 +162,13 @@ getnotification()
     storedDataLength=await _appPreferences.getUserNotificationList() ;
     if(lengthOfList!=storedDataLength)
     {
+      if(mounted){
       setState(()  {
         Constants.notificationNumber = lengthOfList;
-      });
+      });}
       if(Constants.notificationNumber!=0)
       {
-        // ignore: use_build_context_synchronously
+
         setBatchNumber(context, lengthOfList);
         Notifications.showBigTextNotification(
             title: "MOHR", body: "$lengthOfList"+" "+AppStrings.new_message_here.tr(),
@@ -208,7 +203,7 @@ getnotification()
       'userId': userId
     });
 
-    final responseData = json.decode(response.body);
+    final responseData = json.decode(response.body.toString());
     if (responseData != null) {
       var userNotifications = responseData as List;
       a = userNotifications.map((data) => NotificationModel.fromJson(data))
@@ -227,18 +222,21 @@ getnotification()
     for(var i = 0; i < notifyList.length; i++)
     {
       if(notifyList[i].seen==false)
-      {
+      {if(mounted) {
         setState(() {
-        unSeenMessage++;
-      });
+          unSeenMessage++;
+        });
+      }
       }
 
     }
 
       Constants.notificationNumber= unSeenMessage;
        //FlutterDynamicIcon.setApplicationIconBadgeNumber(unSeenMessage);
-
-   // setBatchNumber(context,unSeenMessage);
+if(mounted)
+  {
+    setBatchNumber(context,unSeenMessage);
+    }
     return unSeenMessage;
   }
 
@@ -253,7 +251,6 @@ getnotification()
       print(e);
     }
   }
-
 
 
 //  Future<void> checkNewNotifications() async {

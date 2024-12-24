@@ -39,6 +39,9 @@ class _MyAppState extends State<MyApp> {
   Timer? timer;
   List<NotificationModel>? notifications;
   int? lengthOfList = 0;
+  List<AlertModel>? noOfAlert;
+  int? alertNumber = 0;
+  int?all=0;
   int different = 0;
   int differentflag = 0;
   bool checked = false;
@@ -56,10 +59,11 @@ class _MyAppState extends State<MyApp> {
 
     Notifications.initialize(flutterLocalNotificationsPlugin);
     super.initState();
+    if (mounted) {
 
-    timer = Timer.periodic(const Duration(minutes: 1),
-        (Timer t) async => await checkNewNotifications());
-
+      timer = Timer.periodic(const Duration(minutes: 3),
+              (Timer t) async => await checkNewNotifications());
+    }
     Workmanager().registerPeriodicTask("1", AppStrings.new_message_here.tr(),
         existingWorkPolicy: ExistingWorkPolicy.replace,
         frequency: const Duration(minutes: 15), //when should it check the link
@@ -68,35 +72,42 @@ class _MyAppState extends State<MyApp> {
         constraints: Constraints(
             networkType: NetworkType.connected, requiresCharging: false));
   }
+  @override
+  void dispose() {
+    timer?.cancel();
+    super.dispose();
+  }
 
   Future<void> checkNewNotifications() async {
-    notifications = await getApiNotification();
-    lengthOfList = await getUnSeenNotification(notifications!);
+    // notifications = await getApiNotification();
+    // lengthOfList = await getUnSeenNotification(notifications!);
+    all=await getUnSeenNotificationAndAlerts();
+
     setState(() {
-      Constants.notificationNumber = lengthOfList!;
+      Constants.notificationNumber = all!;
     });
 
-    if (lengthOfList != null) {
+    if (all != null) {
       storedDataLength = await _appPreferences.getUserNotificationList();
 
-      if (lengthOfList != storedDataLength) {
+      if (all != storedDataLength) {
         setState(() {
-          Constants.notificationNumber = lengthOfList!;
+          Constants.notificationNumber = all!;
         });
         if (Constants.notificationNumber != 0) {
-          setBatchNumber(context, lengthOfList!);
+          setBatchNumber(context, all!);
           Notifications.showBigTextNotification(
               title: "MOHR",
-              body: "$lengthOfList" + " " + AppStrings.new_message_here.tr(),
+              body: "$all" + " " + AppStrings.new_message_here.tr(),
               fln: flutterLocalNotificationsPlugin);
-          _appPreferences.setUserNotificationList(lengthOfList!);
+          _appPreferences.setUserNotificationList(all!);
         }
       } else {
         setState(() {
-          Constants.notificationNumber = lengthOfList!;
+          Constants.notificationNumber = all!;
         });
 
-        _appPreferences.setUserNotificationList(lengthOfList!);
+        _appPreferences.setUserNotificationList(all!);
       }
     }
   }
@@ -104,7 +115,32 @@ class _MyAppState extends State<MyApp> {
   Future<List<NotificationModel>?> getApiNotification() async {
     String userId = await _appPreferences.getUserToken();
     var uri = Uri.parse(Constants.getNotificationUrl);
-    List<NotificationModel>? a;
+    List<dynamic>? a;
+
+    var response = await http.get(uri, headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+      'userId': userId
+    });
+//fromJson(jsonresponse[0]);
+    final responseData = json.decode(response.body);
+    if (responseData != null) {
+      var userNotifications = responseData! ;
+
+      a = userNotifications
+          .map((data) {
+            return NotificationModel.fromJson(data as Map<String, dynamic>);
+          })
+          .toList();
+      var notifications = List<NotificationModel>.from(a as Iterable);
+      return notifications;
+    }
+    return null;
+  }
+
+  Future<List<AlertModel>?> getApiAlerts() async {
+    String userId = await _appPreferences.getUserToken();
+    var uri = Uri.parse(Constants.getAlertUrl);
+    List<AlertModel>? a;
 
     var response = await http.get(uri, headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
@@ -115,10 +151,10 @@ class _MyAppState extends State<MyApp> {
     if (responseData != null) {
       var userNotifications = responseData as List;
       a = userNotifications
-          .map((data) => NotificationModel.fromJson(data))
+          .map((data) => AlertModel.fromJson(data))
           .toList();
-      var notifications = List<NotificationModel>.from(a as Iterable);
-      return notifications;
+      var Alerts = List<AlertModel>.from(a as Iterable);
+      return Alerts;
     }
     return null;
   }
@@ -131,14 +167,44 @@ class _MyAppState extends State<MyApp> {
         unSeenMessage++;
       }
     }
-    setState(() {
-      Constants.notificationNumber = unSeenMessage;
+    // setState(() {
+    //   Constants.notificationNumber = unSeenMessage;
+    // });
+    // if (Constants.notificationNumber != 0) {
+    //    setBatchNumber(context, unSeenMessage);
+    // }
 
-    if (Constants.notificationNumber != 0) {
-       setBatchNumber(context, unSeenMessage);
-    }
-    });
     return unSeenMessage;
+  }
+
+  Future<int> getNumberOfAlerts(List<AlertModel> alertList) async {
+    int numberOfAlert = alertList.length ;
+
+    // setState(() {
+    //   Constants.notificationNumber = numberOfAlert;
+    // });
+    // if (Constants.notificationNumber != 0) {
+    //   setBatchNumber(context, numberOfAlert);
+    // }
+
+    return numberOfAlert;
+  }
+
+  Future<int?> getUnSeenNotificationAndAlerts()async
+  {
+    notifications = await getApiNotification();
+    lengthOfList = await getUnSeenNotification(notifications!);
+    noOfAlert= await getApiAlerts();
+     alertNumber=await getNumberOfAlerts(noOfAlert!);
+
+     all=  lengthOfList! + alertNumber!;
+    setState(() {
+      Constants.notificationNumber = all!;
+    });
+    if (Constants.notificationNumber != 0) {
+      setBatchNumber(context, all!);
+    }
+    return all;
   }
 
   setBatchNumber(BuildContext context, int num) async {
@@ -169,7 +235,7 @@ class _MyAppState extends State<MyApp> {
                 supportedLocales: context.supportedLocales,
                 locale: context.locale,
                 onGenerateRoute: RouteGenerator.getRoute,
-                home: const SplashView(),
+                home:  SplashView(),
                 title: "Mohr",
               );
           }),

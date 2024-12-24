@@ -21,7 +21,7 @@ class VacationScreen extends StatelessWidget implements NavigationStates{
         child:
         Stack(
           children: [
-            vacationsView(),
+            const vacationsView(),
             //EmployeeEditView() ,
             SideBar(),
           ],
@@ -30,10 +30,10 @@ class VacationScreen extends StatelessWidget implements NavigationStates{
     );
   }
   final item=<Widget>
-  [    const Icon(Icons.person,size: 30,color: colorManager.white,),
-  const Icon(Icons.home,size: 30,color: colorManager.white),
-  const Icon(Icons.notifications,size: 30,color: colorManager.white),
-
+  [
+    const Icon(Icons.person,size: 30,color: colorManager.white,),
+    const Icon(Icons.home,size: 30,color: colorManager.white),
+    const Icon(Icons.notifications,size: 30,color: colorManager.white),
   ];
 }
 

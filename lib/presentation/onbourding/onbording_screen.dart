@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:essmohr/presentation/resources/assets_manager.dart';
 import 'package:essmohr/presentation/resources/routes.dart';
 import 'package:essmohr/presentation/widgets/components/animated_btn.dart';
-import 'package:rive/rive.dart';
+import 'package:rive/rive.dart 'as Rive;
 import 'package:essmohr/presentation/resources/strings_manager.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -19,7 +19,7 @@ class OnboadingScreen extends StatefulWidget {
 }
 
 class _OnboadingScreenState extends State<OnboadingScreen> {
-  late RiveAnimationController _btnAnimationController;
+  late Rive.RiveAnimationController _btnAnimationController;
 
   bool isShowSignInDialog = false;
   final AppPreferences _appPreferences = instance<AppPreferences>();
@@ -41,7 +41,7 @@ class _OnboadingScreenState extends State<OnboadingScreen> {
   @override
   void initState() {
     _bind();
-    _btnAnimationController = OneShotAnimation(
+    _btnAnimationController = Rive.OneShotAnimation(
       "active",
       autoplay: false,
     );
@@ -67,7 +67,7 @@ class _OnboadingScreenState extends State<OnboadingScreen> {
               child: const SizedBox(),
             ),
           ),
-          const RiveAnimation.asset(
+          const Rive.RiveAnimation.asset(
             "assets/RiveAssets/shapes.riv",
           ),
           Positioned.fill(

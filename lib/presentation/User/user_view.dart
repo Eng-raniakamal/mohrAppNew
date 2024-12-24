@@ -264,7 +264,7 @@ if(ReqName==AppStrings.Requests.tr())
       child: InkWell(
           onTap: () {
            // Navigator.of(context).pushReplacementNamed(Routes.VacationRequest);
-             Navigator.push(context,
+             Navigator.pushReplacement(context,
               MaterialPageRoute(builder: (context) => const UnderConstructionScreen()),
              );
           },

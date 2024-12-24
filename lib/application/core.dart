@@ -42,7 +42,8 @@ AppPreferences appPreferences = instance<AppPreferences>();
           Constants.notificationNumber = lengthOfList!;
 
           if (lengthOfList! > 0) {
-            setBatchNumber(context as BuildContext, Constants.notificationNumber);
+
+            //setBatchNumber(context as BuildContext, Constants.notificationNumber);
             Notifications.showBigTextNotification(
                 title: "MOHR", body: "$lengthOfList New notification here",
                 fln: flutterLocalNotificationsPlugin);

@@ -184,7 +184,6 @@ class AppStrings {
   static const String defaultError = "default error";
   static const String cacheError = "cache error";
   static const String noInternetError = "no internet error";
-
   static const String title = "title";
   static const String notes = "notes";
   static const String attachments = "attachments";
@@ -197,8 +196,10 @@ class AppStrings {
   static const String Password_Changed_Successfully = "Password_Changed_Successfully";
   static const String Invalid_Password ="Invalid Password";
   static const String Invalid_Device ="Invalid Device";
-
+  static const String Invalid_Vacation ="Invalid_Vacation";
   static const String days_hours ="days_hours";
   static const String period="period";
+  static const String Replacement="Replacement";
+  static const String Reviewers="Reviewers";
 
 }

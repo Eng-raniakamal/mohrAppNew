@@ -23,11 +23,14 @@
     static const String GetAcademic='$baseUrl/api/Employee/GetAcademicDegreesLookup';
     static const String EmployeePhotoUrl='$baseUrl/api/Employee/Avatar';
     static const String vacationUrl='$baseUrl/api/Employee/GetVacations';
-    static const String vacationTypeUrl='$baseUrl/api/Employee/GetVacationTypes';
+    static const String vacationTypeUrl='$baseUrl/api/Vacation/VacationTypes?forEmployee=true';
     static const String salaryUrl='$baseUrl/api/Employee/GetSalaries';
     static const String salaryDetailsUrl='$baseUrl/api/Employee/GetSalary/';
     static const String AttendanceUrl='$baseUrl/api/Attendance?fromDate=';
     static const String VacationTypeUrl='$baseUrl/Api/Vacation/VacationTypes';
+    static const String employeeReviewers ='$baseUrl/api/Employee/GetDefaultReviewers?date=';
+    static const String validateVacation ='$baseUrl/api/Vacation/VaildateVacation?vacationTypeId=';
+    static const String saveVacation ='$baseUrl/api/Vacation/PostVacation';
     //1982-10-12T11:41:47.053Z&toDate=2023-10-12T11:41:47.053Z';
     static int notificationNumber = 0 ;
     static List<dynamic>? salary;

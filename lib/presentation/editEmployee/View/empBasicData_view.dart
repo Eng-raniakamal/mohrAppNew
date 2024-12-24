@@ -815,7 +815,7 @@ setState(() {
           positiveText: AppStrings.confirm.tr(),
           contentText: AppStrings.Was_Saved_Successfully.tr(),
           onPositiveClick: () {
-            Navigator.of(context).pop();
+            Navigator.pop(context,true);
           },
         );
       },
