@@ -462,3 +462,69 @@ class NotificationModel {
     );
   }
 }
+
+
+class SaveVacation{
+
+  final int vacationTypeId;
+  final String fromDate;
+  final String toDate;
+  final int duration;
+  final String notes;
+  final List <Reviewers> reviewers;
+
+
+  SaveVacation({
+    required this.vacationTypeId,
+    required this.fromDate,
+    required this.toDate,
+    required this.duration,
+    required this.notes,
+    required this.reviewers
+
+  });
+
+  factory SaveVacation.fromJson(Map<String, dynamic> json) {
+    return SaveVacation(
+        vacationTypeId: json["vacationTypeId"],
+        fromDate: json["fromDate"],
+        toDate: json["toDate"],
+        duration: json["duration"],
+        notes: json["notes"],
+        reviewers: json["reviewers"]
+    );
+  }
+}
+
+class Reviewers{
+  final int employeeId;
+  final String code;
+  final String name;
+  Reviewers(this.employeeId,this.code,this.name);
+}
+class ValidationVacationModel
+{
+  final bool? isValid;
+  final String? message;
+  final int? duration;
+  final int? overBalance;
+  final int? handlingId;
+
+  ValidationVacationModel ({
+    required this.isValid,
+    required this.message,
+    required this.duration,
+    required this.overBalance,
+    required this.handlingId,
+
+  });
+  factory ValidationVacationModel.fromJson(Map<String, dynamic> json) {
+    return ValidationVacationModel(
+      isValid: json["IsValid"],
+      message: json["Message"],
+      duration: json["Duration"],
+      overBalance: json["OverBalance"],
+      handlingId: json["HandlingId"],
+    );
+  }
+}

@@ -1,4 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:essmohr/presentation/Requests/missionRequest/missionView/missionView.dart';
 import 'package:flutter/material.dart';
 import 'package:essmohr/application/di.dart';
 import 'package:essmohr/presentation/Alert_Notification/View/alertView.dart';
@@ -52,6 +53,7 @@ class Routes
   static const String VacationRequest="/Requests/Vacations/vacationRequests_view.dart";
   static const String salary="/Requests/Salary/View/salary_View.dart";
   static const String salaryDetails="/Requests/Salary/View/salaryDetailsDialog.dart";
+  static const String missionRequest="/Requests/missionRequest/missionView/missionView.dart";
 }
 
 
@@ -124,6 +126,11 @@ class RouteGenerator {
       case Routes.salaryDetails:
         initSalaryDetailsModule();
         return MaterialPageRoute(builder: (_)=>  salaryDetailsView());
+
+
+      case Routes.missionRequest:
+        initVacationTypeModule();
+        return MaterialPageRoute(builder: (_)=>  MissionRequestView());
 
 
       case Routes.underConstraction:

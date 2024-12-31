@@ -6,6 +6,7 @@ import 'dart:io';
 
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:essmohr/domain/model/model.dart';
 import 'package:essmohr/presentation/widgets/appbarstart.dart';
 import 'package:essmohr/presentation/widgets/autoCompleteTextField.dart';
 import 'package:essmohr/presentation/widgets/profile_widget.dart';
@@ -316,17 +317,15 @@ class _VacationRequestViewState extends State<VacationRequestView>with TickerPro
                                         Text(AppStrings.submit.tr(),
                                           textAlign: TextAlign.center,),
                                         onPressed: () async {
-                                          bool? x = await getValidateVacation('2023-08-27',"2023-08-28",572,0,2);
-                                          if(x==false)
-                                            {
-                                              displayDialog();
-                                            }
-                                          else
-                                            {
-                                              addingVacationRequest();
-
-                                            }
-
+                                          bool? x = await getValidateVacation(
+                                              '2023-08-27', "2023-08-28", 572,
+                                              0, 2);
+                                          if (x == false) {
+                                            displayDialog();
+                                          }
+                                          else {
+                                            addingVacationRequest();
+                                          }
                                         })
                                   ],),
                               ]
@@ -582,83 +581,130 @@ class _VacationRequestViewState extends State<VacationRequestView>with TickerPro
   Future<bool?> getValidateVacation(String startDate, String endDate,
       int vacationTypeId, int id, int duration) async {
     List<ValidationVacationModel> validationVacation = [];
-bool? flag=false;
+    bool? flag = false;
     userId = await _appPreferences.getUserToken();
     final response = await http.get(
-        //{{baseUrl}}/api/Vacation/VaildateVacation?vacationTypeId=572&fromDate=2023-08-27&toDate=2023-08-28&id=0&duration=2
-        Uri.parse('${Constants.validateVacation}${vacationTypeId}&fromDate=${startDate}&toDate=${endDate}&id=${id}&duration=${duration}'),
+      //{{baseUrl}}/api/Vacation/VaildateVacation?vacationTypeId=572&fromDate=2023-08-27&toDate=2023-08-28&id=0&duration=2
+        Uri.parse('${Constants
+            .validateVacation}$vacationTypeId&fromDate=$startDate&toDate=$endDate&id=$id&duration=$duration'),
         headers: <String, String>
-    {'Content-Type': 'application/json; charset=UTF-8', 'userId': userId!});
-    Map<String, dynamic>  responseData;
+        {'Content-Type': 'application/json; charset=UTF-8', 'userId': userId!});
+    Map<String, dynamic> responseData;
 
     String jsonsDataString = response.body.toString();
     responseData = json.decode(jsonsDataString);
 
 
     if (response.statusCode == 200) {
-     flag= responseData.values.toList().first;
+      flag = responseData.values
+          .toList()
+          .first;
     }
 
-      //   validationVacation.clear();
-      //   for (var i in responseData.values) {
-      //     validationVacation.add(ValidationVacationModel.fromJson(i));
-      //   }
-      //   return validationVacation[0].isValid ;
-      // } else {
-         return flag;
-      // }
+    //   validationVacation.clear();
+    //   for (var i in responseData.values) {
+    //     validationVacation.add(ValidationVacationModel.fromJson(i));
+    //   }
+    //   return validationVacation[0].isValid ;
+    // } else {
+    return flag;
+    // }
 
+  }
+
+
+  Future addingVacationRequest() async
+  {
+    userId = await _appPreferences.getUserToken();
+
+    // String? major=_MajorEditingController.text;
+    // String? university=_UniversityEditingController.text;
+    // String? notes=_NotesEditingController.text;
+    // string to uri
+    var uri = Uri.parse(Constants.saveVacation);
+
+    // create multipart request
+    // var request = http.Request("POST", uri);
+
+    var response = await http.post(
+        uri,
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8', 'userId': userId!},
+        body: jsonEncode(<String, dynamic>{
+          "vacationTypeId": 626,
+          "fromDate": _startDate,
+          "toDate": _endDate,
+          "duration": _DurationEditingController.text,
+          "notes": _NoteEditingController.text,
+          "request": {
+            "reviewers": [
+              {"id": 121, "code": "", "name": ""},
+              {"id": 121, "code": "", "name": ""}
+            ]
+          }
+        }));
+    if (response.statusCode == 200) {
+      var x = Result.fromJson(jsonDecode(response.body));
+      bool y = x.isValid;
+      if (y == true) {
+        displayDialoge();
+        setState(() {
+         // addingSuccess = true;
+        });
+      } else {
+        displayFaileDialoge();
+      }
     }
+    else {
+      displayFaileDialoge();
+    }
+  }
 
 
-Future addingVacationRequest() async
-{
-  userId = await _appPreferences.getUserToken();
+  Widget? displayDialoge()
+  {
+    showAnimatedDialog(
+      context: context,
+      barrierDismissible: true,
+      builder: (BuildContext context) {
+        return ClassicGeneralDialogWidget(
+          titleText: AppStrings.Alerts.tr(),
+          contentText: AppStrings.Was_Saved_Successfully.tr(),
+          positiveText:  AppStrings.confirm.tr(),
+          onPositiveClick: () {
+            Navigator.of(context).pop();
+          },
 
-  // String? major=_MajorEditingController.text;
-  // String? university=_UniversityEditingController.text;
-  // String? notes=_NotesEditingController.text;
-  // string to uri
-  var uri = Uri.parse(Constants.saveVacation);
+        );
+      },
+      animationType: DialogTransitionType.fade,
+      curve: Curves.linear,
+      duration: Duration(seconds: 1),
+    );
+    return null;
+  }
 
-  // create multipart request
-  // var request = http.Request("POST", uri);
+  Widget? displayFaileDialoge()
+  {
+    showAnimatedDialog(
+      context: context,
+      barrierDismissible: true,
+      builder: (BuildContext context) {
+        return ClassicGeneralDialogWidget(
+          //titleText: AppStrings.tr(),
+          positiveText:  AppStrings.confirm.tr(),
+          contentText: AppStrings.saving_Failed,
+          onPositiveClick: () {
+            Navigator.of(context).pop();
+          },
 
-  var response = await http.post(
-      uri,
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8','userId':userId!},
-      body: jsonEncode(<String,dynamic>{
-
-        "vacationTypeId": 626,
-        "fromDate": _startDate,
-        "toDate": _endDate,
-        "duration":_DurationEditingController.text,
-        "notes": _NoteEditingController.text,
-        "request": {
-          "reviewers" : [
-            {"id": 121, "code": "", "name": ""},
-            {"id": 121, "code": "", "name": ""}
-          ]
-        }
-      }));
-  // check the status code for the result
-  // if (response.statusCode == 200) {
-  //   var x= result.fromJson(jsonDecode(response.body)) ;
-  //   bool y =x.isValid;
-  //   if(y==true) {
-  //     displayDialoge();
-  //     setState(() {
-  //
-  //       addingSuccess=true;
-  //     });
-  //   }else
-  //   { displayFaileDialoge();}
-  // } else {
-  //   displayFaileDialoge();
-  //   //print('Request failed with status: ${response.statusCode}.');
-  // }
-}
+        );
+      },
+      animationType: DialogTransitionType.sizeFade,
+      curve: Curves.linear,
+      duration: Duration(seconds: 1),
+    );
+  }
 
     void showImagePicker(BuildContext context) {
       showModalBottomSheet(
@@ -726,9 +772,7 @@ Future addingVacationRequest() async
                                     ),
                                   ),
                                 ),
-                              ],
-
-
+                              ]
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -872,33 +916,7 @@ class VacationType {
   }
 }
 
-class ValidationVacationModel
-{
-  final bool? isValid;
-  final String? message;
-  final int? duration;
-  final int? overBalance;
-  final int? handlingId;
 
-  ValidationVacationModel ({
-    required this.isValid,
-    required this.message,
-    required this.duration,
-    required this.overBalance,
-    required this.handlingId,
-
-  });
-  factory ValidationVacationModel.fromJson(Map<String, dynamic> json) {
-    return ValidationVacationModel(
-        isValid: json["IsValid"],
-        message: json["Message"],
-        duration: json["Duration"],
-        overBalance: json["OverBalance"],
-        handlingId: json["HandlingId"],
-
-    );
-  }
-}
 
 //________________save vacation________________________
   class Result {
@@ -921,39 +939,47 @@ class ValidationVacationModel
 
   }
 
-  class SaveVacation{
+  // class SaveVacation{
+  //
+  // final int vacationTypeId;
+  // final String fromDate;
+  // final String toDate;
+  // final int duration;
+  // final String notes;
+  //
+  // final String  major;
+  // final String university;
+  // SaveVacation({
+  // required this.vacationTypeId,
+  // required this.fromDate,
+  // required this.toDate,
+  // required this.duration,
+  // required this.notes,
+  // required this.major,
+  // required this.university
+  // });
+  //
+  // factory SaveVacation.fromJson(Map<String, dynamic> json) {
+  // return SaveVacation(
+  //     vacationTypeId: json["vacationTypeId"],
+  //     fromDate: json["fromDate"],
+  //     toDate: json["toDate"],
+  //     duration: json["duration"],
+  //     notes: json["notes"],
+  //
+  // major: json["Major"],
+  // university: json["University"]
+  // );
+  // }
+  // }
 
-  final int vacationTypeId;
-  final String fromDate;
-  final String toDate;
-  final int duration;
-  final String notes;
-
-  final String  major;
-  final String university;
-  SaveVacation({
-  required this.vacationTypeId,
-  required this.fromDate,
-  required this.toDate,
-  required this.duration,
-  required this.notes,
-  required this.major,
-  required this.university
-  });
-
-  factory SaveVacation.fromJson(Map<String, dynamic> json) {
-  return SaveVacation(
-      vacationTypeId: json["vacationTypeId"],
-      fromDate: json["fromDate"],
-      toDate: json["toDate"],
-      duration: json["duration"],
-      notes: json["notes"],
-
-  major: json["Major"],
-  university: json["University"]
-  );
-  }
-  }
-
-
+// "vacationTypeId": 626,
+// "fromDate": "2024-03-21",
+// "toDate": "2024-03-22",
+// "duration":2,
+// "notes": "asddfasdfdsaf df sadf dasf sdaf dsafd saf dasf af sdf ",
+// "request": {
+// "reviewers" : [
+// {"employeeId": 121, "code": "", "name": ""},
+// {"employeeId": 122, "code": "", "name": ""}
 
