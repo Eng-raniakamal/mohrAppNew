@@ -133,7 +133,7 @@
   "no_salary_found":"No salary found",
   "Salary_Details": "Salary Details",
   "Information":"Information",
-  "days":"days",
+
   "Benefits": "Benefits",
   "Deducted": "Deducted",
   "Total of Deductions" : "Total of Deductions",
@@ -171,5 +171,7 @@
   "period":"period",
   "days_hours": "days/hours",
   "Replacement":"Replacement",
-  "Reviewers":"Reviewers"
+  "Reviewers":"Reviewers",
+  "days": "days",
+  "day": "day"
 }

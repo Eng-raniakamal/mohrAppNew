@@ -31,6 +31,7 @@
     static const String employeeReviewers ='$baseUrl/api/Employee/GetDefaultReviewers?date=';
     static const String validateVacation ='$baseUrl/api/Vacation/VaildateVacation?vacationTypeId=';
     static const String saveVacation ='$baseUrl/api/Vacation/PostVacation';
+    static const String saveMission ='$baseUrl/Api/Mission/PostMission';
     //1982-10-12T11:41:47.053Z&toDate=2023-10-12T11:41:47.053Z';
     static int notificationNumber = 0 ;
     static List<dynamic>? salary;

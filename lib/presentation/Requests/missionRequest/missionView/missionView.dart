@@ -444,7 +444,8 @@ class _MissionRequestViewState extends State<MissionRequestView>with TickerProvi
   final picker = ImagePicker();
 
   DropdownButton getDropDownDurationItems() {
-    List<String> list = <String>['day/days', '1/2 day', '1/4 day'];
+    List<String> list = <String>[AppStrings.days.tr().toString()+"/"+AppStrings.day.tr().toString(),
+      '1/2'+AppStrings.day.tr().toString(), '1/4'+ AppStrings.day.tr().toString()];
     return DropdownButton<String>(
       value: dropDownValue,
       //icon: const Icon(Icons.arrow_downward),
@@ -908,6 +909,54 @@ class _MissionRequestViewState extends State<MissionRequestView>with TickerProvi
     if (statuses[Permission.storage]!.isGranted &&
         statuses[Permission.camera]!.isGranted) {
       showImagePicker(context);
+    }
+  }
+
+  Future addingMissionRequest() async
+  {
+    userId = await _appPreferences.getUserToken();
+
+    // String? major=_MajorEditingController.text;
+    // String? university=_UniversityEditingController.text;
+    // String? notes=_NotesEditingController.text;
+    // string to uri
+    var uri = Uri.parse(Constants.saveMission);
+
+    // create multipart request
+    // var request = http.Request("POST", uri);
+
+    var response = await http.post(
+        uri,
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8', 'userId': userId!},
+        body: jsonEncode(<String, dynamic>{
+          "MissionTypeId": 626,
+          "fromDate": _startDate,
+          "toDate": _endDate,
+          "duration": _DurationEditingController.text,
+          "unit": 1,
+          "notes": _NoteEditingController.text,
+          "request": {
+            "reviewers": [
+              {"id": 121, "code": "", "name": ""},
+              {"id": 121, "code": "", "name": ""}
+            ]
+          }
+        }));
+    if (response.statusCode == 200) {
+      var x = Result.fromJson(jsonDecode(response.body));
+      bool y = x.isValid;
+      if (y == true) {
+        displayDialoge();
+        setState(() {
+          // addingSuccess = true;
+        });
+      } else {
+        displayFaileDialoge();
+      }
+    }
+    else {
+      displayFaileDialoge();
     }
   }
 }

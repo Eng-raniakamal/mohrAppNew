@@ -343,9 +343,7 @@ class _VacationRequestViewState extends State<VacationRequestView>with TickerPro
   int daysBetween(DateTime from, DateTime to) {
     from = DateTime(from.year, from.month, from.day);
     to = DateTime(to.year, to.month, to.day);
-    return (to
-        .difference(from)
-        .inHours / 24).round();
+    return (to.difference(from).inHours / 24).round();
   }
 
   void selectionChanged(DateRangePickerSelectionChangedArgs args) {
@@ -363,7 +361,7 @@ class _VacationRequestViewState extends State<VacationRequestView>with TickerPro
             .toString());
 
         final data = daysBetween(start!, end!);
-        durtionValue = data;
+        durtionValue = data+1;
         _DurationEditingController.text = durtionValue
             .toString(); //Duration difference = _endDate(_startDate);
 
@@ -421,7 +419,8 @@ class _VacationRequestViewState extends State<VacationRequestView>with TickerPro
   final picker = ImagePicker();
 
   DropdownButton getDropDownDurationItems() {
-    List<String> list = <String>['day/days', '1/2 day', '1/4 day'];
+    List<String> list = <String>[AppStrings.days.tr().toString()+"/"+AppStrings.day.tr().toString(),
+                        '1/2'+AppStrings.day.tr().toString(), '1/4'+ AppStrings.day.tr().toString()];
     return DropdownButton<String>(
       value: dropDownValue,
       //icon: const Icon(Icons.arrow_downward),

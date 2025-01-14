@@ -202,4 +202,6 @@ class AppStrings {
   static const String Replacement="Replacement";
   static const String Reviewers="Reviewers";
 
+  static const String day="day";
+
 }

@@ -131,7 +131,7 @@
   "More_Details": "التفاصيل...",
   "no_salary_found": "لا يوجد مرتب متاح",
   "Information": "معلومة",
-  "days": "يوم",
+  "day": "يوم",
   "Salary_Details": "تفاصيل المرتب",
   "Benefits": "الاستحقاقات",
   "Deducted": "الاستقطاعات",
@@ -164,5 +164,6 @@
   "Alert_Handling": "التعامل مع التنبيه",
   "period": "المدة",
   "Replacement":"النائب",
-  "Reviewers":"المراجعين"
+  "Reviewers":"المراجعين",
+  "days": "أيام"
 }
