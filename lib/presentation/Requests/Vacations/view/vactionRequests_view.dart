@@ -1,9 +1,7 @@
 
 import 'dart:convert';
 import 'dart:core';
-
 import 'dart:io';
-
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:essmohr/domain/model/model.dart';
@@ -34,10 +32,8 @@ class VacationRequestView extends StatefulWidget implements NavigationStates
 }
 
 class _VacationRequestViewState extends State<VacationRequestView>with TickerProviderStateMixin {
-
   final AppPreferences _appPreferences = instance<AppPreferences>();
-  final VacationTypeViewModel _VacationTypeviewModel = instance<
-      VacationTypeViewModel>();
+  final VacationTypeViewModel _VacationTypeviewModel = instance<VacationTypeViewModel>();
   final _Formkey = GlobalKey<FormState>();
   String? dropDownValue;
   int selectedOption = 1;
@@ -45,15 +41,19 @@ class _VacationRequestViewState extends State<VacationRequestView>with TickerPro
   DateTime Fromdate = DateTime(2023);
   DateTime Todate = DateTime(2023);
   bool oKPressed = false;
-  List<String>? vacationType;
+  List<VacationType> vacationType=[];
+    List<VacationType> items=[];
   late Future<List<VacationType>> _future;
-  String? _selectedVacationType;
+  int? _selectedVacationType;
   var _currentIndex = 0;
+  String? message;
   String? selectedVacationType;
   String selectedTimeType = "please select time type";
   late String _startDate, _endDate;
   late int durtionValue;
   final DateRangePickerController _controller = DateRangePickerController();
+  late TextEditingController _StartDateController = TextEditingController();
+  final TextEditingController _EndDateController = TextEditingController();
   final TextEditingController _DurationEditingController = TextEditingController();
   final TextEditingController _ReplacementEditingController = TextEditingController();
   final TextEditingController _NoteEditingController = TextEditingController();
@@ -107,13 +107,17 @@ class _VacationRequestViewState extends State<VacationRequestView>with TickerPro
                                   right: 28),
                               child: Column(children: [
                                 const SizedBox(height: 10),
-
+                                Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    crossAxisAlignment: CrossAxisAlignment.start
+                                  , children: [
                                 StatefulBuilder(
                                     builder: (context, setState) =>
                                         getVacationTypeDDL())
-
-                                , const SizedBox(height: 5),
+                                ]),
+                                const SizedBox(height: 5),
                                 Row(
+                                  mainAxisSize: MainAxisSize.min,
                                   crossAxisAlignment: CrossAxisAlignment.center
                                   , children: [
                                   Text(AppStrings.days_hours.tr()),
@@ -186,10 +190,11 @@ class _VacationRequestViewState extends State<VacationRequestView>with TickerPro
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
                                     Container(width: 250,
-                                        child: AutoCompleteTextField(
+                                        child: const AutoCompleteTextField(
                                           date: "2024-10-30",
                                           typeId: 0,
                                           type: 1,)
+
                                       // TextFormField(
                                       //   controller: _ReplacementEditingController,
                                       //   keyboardType: TextInputType.text,
@@ -318,8 +323,11 @@ class _VacationRequestViewState extends State<VacationRequestView>with TickerPro
                                           textAlign: TextAlign.center,),
                                         onPressed: () async {
                                           bool? x = await getValidateVacation(
-                                              '2023-08-27', "2023-08-28", 572,
-                                              0, 2);
+                                              _StartDateController.text,
+                                              _EndDateController.text,
+                                              _selectedVacationType!,
+                                              0,
+                                              int.parse(_DurationEditingController.text));
                                           if (x == false) {
                                             displayDialog();
                                           }
@@ -351,11 +359,15 @@ class _VacationRequestViewState extends State<VacationRequestView>with TickerPro
       setState(() {
         _startDate =
             DateFormat('yyyy-MM-dd').format(args.value.startDate).toString();
+        _StartDateController.text=_startDate;
+
         DateTime? start = DateTime.tryParse(
             DateFormat('yyyy-MM-dd').format(args.value.startDate).toString());
         _endDate = DateFormat('yyyy-MM-dd')
             .format(args.value.endDate ?? args.value.startDate)
             .toString();
+        _EndDateController.text=_endDate;
+
         DateTime? end = DateTime.tryParse(DateFormat('yyyy-MM-dd')
             .format(args.value.endDate ?? args.value.startDate)
             .toString());
@@ -418,6 +430,16 @@ class _VacationRequestViewState extends State<VacationRequestView>with TickerPro
 
   final picker = ImagePicker();
 
+
+  List<DropdownMenuItem<String>> getDropdownItems() {
+    return items.map((item) {
+      return DropdownMenuItem<String>(
+        value: item.id.toString(), // Use the `id` as the value
+        child: Text(item.name.toString()), // Use the `name` as the display text
+      );
+    }).toList();
+  }
+
   DropdownButton getDropDownDurationItems() {
     List<String> list = <String>[AppStrings.days.tr().toString()+"/"+AppStrings.day.tr().toString(),
                         '1/2'+AppStrings.day.tr().toString(), '1/4'+ AppStrings.day.tr().toString()];
@@ -455,35 +477,85 @@ class _VacationRequestViewState extends State<VacationRequestView>with TickerPro
           if (snapshot.data == null) {
             return const CircularProgressIndicator();
           }
-          return Padding(
+          return    Expanded( // Forces the child to take available space
+              child: Padding(
               padding: const EdgeInsets.all(5.0),
               child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Row(
+                    Row( mainAxisSize: MainAxisSize.min,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(AppStrings.Vacation_Type.tr()),
-                        SizedBox(
-                            width: 15),
+                        const SizedBox(
+                            width: 30),
+
+
+        //                 DropdownButton<int>(
+        //                  // value: _selectedVacationType,
+        //                   //hint:  Text("Select an option"),
+        //                   isExpanded: true,
+        //                 //  onChanged: (int? newValue)
+        //                   // {
+        //                   //   setState(() {
+        //                   //     _selectedVacationType = newValue;
+        //                   //   });
+        //                  // },
+        // onChanged: (newValue) =>
+        //                                 setState(() =>
+        //                                 _selectedVacationType = newValue),
+        //                             value: _selectedVacationType,
+        //                             items: [
+        //                               ...snapshot.data!.map(
+        //                                     (item) =>
+        //                                     DropdownMenuItem(
+        //                                       value: item.id,
+        //                                       child: Text(item.type.toString()),
+        //                                     ),
+        //                               )
+        //                             ],
+        //                           ),
+        //                   // items: vacationType.map((item) {
+        //                   //   return DropdownMenuItem<int>(
+        //                   //     value: item.id,
+        //                   //     child: Text(item.type.toString()),
+        //                   //   );
+        //                   // }).toList(),
+        //                 ]),
+        //                 SizedBox(height: 20),
+        //                 ElevatedButton(
+        //                   onPressed: () {
+        //                     if (_selectedVacationType!= null) {
+        //                       print("Selected Value: $_selectedVacationType");
+        //                       ScaffoldMessenger.of(context).showSnackBar(
+        //                         SnackBar(content: Text("Selected Value: $_selectedVacationType")),
+        //                       );
+        //                     } else {
+        //                       print("No value selected");
+        //                     }
+        //                   },
+        //                   child: Text("Get Selected Value"),
+        //                 ),
+
+
 
                         DropdownButton(
                           //hint: const Text('-- select value --'),
                           onChanged: (vacationType) =>
                               setState(() =>
-                              selectedVacationType = vacationType!),
-                          value: selectedVacationType,
+                              _selectedVacationType = vacationType!),
+                          value: _selectedVacationType,
                           items: [
                             ...snapshot.data!.map(
                                   (item) =>
                                   DropdownMenuItem(
-                                    value: item,
-                                    child: Text(item),
+                                    value: item.id,
+                                    child: Text(item.name.toString()),
                                   ),
                             )
                           ],
                         ),
-                        // ),
+                        ]),
 
                         // Expanded(
                         //    child: ListView.separated(
@@ -518,8 +590,8 @@ class _VacationRequestViewState extends State<VacationRequestView>with TickerPro
                         //    ),
                         //  ),
                       ],
-                    ),
-                  ]));
+                    )
+          ));
         });
   }
 
@@ -530,7 +602,7 @@ class _VacationRequestViewState extends State<VacationRequestView>with TickerPro
       builder: (BuildContext context) {
         return ClassicGeneralDialogWidget(
           titleText: AppStrings.Information.tr(),
-          contentText: AppStrings.Invalid_Vacation.tr(),
+          contentText:message,
           onPositiveClick: () {
             Navigator.of(context).pop();
           },
@@ -543,41 +615,50 @@ class _VacationRequestViewState extends State<VacationRequestView>with TickerPro
     return null;
   }
 
-  Future<List<String>?> getVacationType() async {
-    // List<VacationType> a;
+  Future<List<VacationType>> getVacationType() async {
+
     List<String> b = ["please select"];
     userId = await _appPreferences.getUserToken();
     var response = await http.get(
         Uri.parse(Constants.vacationTypeUrl), headers: <String, String>
     {'Content-Type': 'application/json; charset=UTF-8', 'userId': userId!});
     var responseData;
-    // setState(() {
-    String jsonsDataString = response.body.toString();
-    responseData = json.decode(jsonsDataString);
-    // });
+    if (response.statusCode == 200) {
+      List<dynamic> data = jsonDecode(response.body);
 
-
-    if (responseData != null) {
-      final a = (responseData as Iterable).map((data) {
-        return VacationType.fromJson(data as Map<String, dynamic>);
-      }).toList();
-
-
-      for (var item in a) {
-        b.add(item.name.toString());
-      }
+      // Convert JSON list to List<VacationType>
+      return data.map((json) => VacationType.fromJson(json)).toList();
+    } else {
+      throw Exception('Failed to load vacation types');
     }
+    // setState(() {
+    // String jsonsDataString = response.body.toString();
+    // responseData = json.decode(jsonsDataString);
+    // // });
+    //
+    //
+    // if (responseData != null) {
+    //   final a = (responseData as Iterable).map((data) {
+    //     return VacationType.fromJson(data as Map<String, dynamic>);
+    //   }).toList();
+    //
+    //    items=a;
+    //
+    //   for (var item in a) {
+    //     b.add(item.name.toString());
+    //   }
+    //}
 
 
     //List<String> b = List<VacationType>.from(a['name'].toList());
-
     //setState(() {
-    vacationType = b;
-    //});
-    return vacationType;
+    // vacationType = b;
+    // //});
+    // return vacationType;
   }
 
-  Future<bool?> getValidateVacation(String startDate, String endDate,
+  Future<bool?> getValidateVacation(String startDate,
+      String endDate,
       int vacationTypeId, int id, int duration) async {
     List<ValidationVacationModel> validationVacation = [];
     bool? flag = false;
@@ -598,6 +679,10 @@ class _VacationRequestViewState extends State<VacationRequestView>with TickerPro
       flag = responseData.values
           .toList()
           .first;
+      setState(() {
+        message=responseData["Message"].toString();
+      });
+
     }
 
     //   validationVacation.clear();
@@ -615,22 +700,15 @@ class _VacationRequestViewState extends State<VacationRequestView>with TickerPro
   Future addingVacationRequest() async
   {
     userId = await _appPreferences.getUserToken();
-
-    // String? major=_MajorEditingController.text;
-    // String? university=_UniversityEditingController.text;
-    // String? notes=_NotesEditingController.text;
-    // string to uri
     var uri = Uri.parse(Constants.saveVacation);
 
-    // create multipart request
-    // var request = http.Request("POST", uri);
 
     var response = await http.post(
         uri,
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8', 'userId': userId!},
         body: jsonEncode(<String, dynamic>{
-          "vacationTypeId": 626,
+          "vacationTypeId": vacationTypeId,
           "fromDate": _startDate,
           "toDate": _endDate,
           "duration": _DurationEditingController.text,
@@ -648,7 +726,7 @@ class _VacationRequestViewState extends State<VacationRequestView>with TickerPro
       if (y == true) {
         displayDialoge();
         setState(() {
-         // addingSuccess = true;
+         message=x.message;
         });
       } else {
         displayFaileDialoge();
@@ -659,7 +737,6 @@ class _VacationRequestViewState extends State<VacationRequestView>with TickerPro
     }
   }
 
-
   Widget? displayDialoge()
   {
     showAnimatedDialog(
@@ -668,7 +745,7 @@ class _VacationRequestViewState extends State<VacationRequestView>with TickerPro
       builder: (BuildContext context) {
         return ClassicGeneralDialogWidget(
           titleText: AppStrings.Alerts.tr(),
-          contentText: AppStrings.Was_Saved_Successfully.tr(),
+          contentText: message,
           positiveText:  AppStrings.confirm.tr(),
           onPositiveClick: () {
             Navigator.of(context).pop();
@@ -692,7 +769,7 @@ class _VacationRequestViewState extends State<VacationRequestView>with TickerPro
         return ClassicGeneralDialogWidget(
           //titleText: AppStrings.tr(),
           positiveText:  AppStrings.confirm.tr(),
-          contentText: AppStrings.saving_Failed,
+          contentText: message,
           onPositiveClick: () {
             Navigator.of(context).pop();
           },
@@ -827,7 +904,6 @@ class _VacationRequestViewState extends State<VacationRequestView>with TickerPro
           }
       );
     }
-
     _imgFromGallery() async {
       await picker.pickImage(
           source: ImageSource.gallery, imageQuality: 50
@@ -837,7 +913,6 @@ class _VacationRequestViewState extends State<VacationRequestView>with TickerPro
         }
       });
     }
-
     _imgFromCamera() async {
       await picker.pickImage(
           source: ImageSource.camera, imageQuality: 50
@@ -847,7 +922,6 @@ class _VacationRequestViewState extends State<VacationRequestView>with TickerPro
         }
       });
     }
-
     _cropImage(File imgFile) async {
       final croppedFile = await ImageCropper().cropImage(
           sourcePath: imgFile.path,
@@ -876,7 +950,6 @@ class _VacationRequestViewState extends State<VacationRequestView>with TickerPro
         // reload();
       }
     }
-
     void selectImage(BuildContext context) async {
       Map<Permission, PermissionStatus> statuses = await [
         Permission.storage, Permission.camera].request();

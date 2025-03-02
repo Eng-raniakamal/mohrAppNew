@@ -44,14 +44,12 @@ class _AutoCompleteTextFieldState extends State<AutoCompleteTextField> {
 
     final List<String>? stringData = await getAutoReviewers("2024-10-30",0,1);
 
-    //final List<dynamic> json = jsonDecode(stringData);
-
-
-
-    setState(() {
-      isLoading = false;
-      autoCompleteData = stringData!;
-    });
+    if (mounted) {
+      setState(() {
+        isLoading = false;
+        autoCompleteData = stringData!;
+      });
+    }
   }
 
   @override
