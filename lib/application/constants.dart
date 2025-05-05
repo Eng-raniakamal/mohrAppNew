@@ -1,6 +1,6 @@
 
   class  Constants {
-    static const String baseUrl= 'http://mohrapi.azurewebsites.net';
+    static const String baseUrl= 'https://mohrapi.azurewebsites.net';
     static const String LoginUrl = '$baseUrl/api/Account/VerifyLogin';
     static const String changePassword = '$baseUrl/api/Account/ChangePassword';
     static const String EmployeeUrl='$baseUrl/api/Employee';
@@ -30,8 +30,22 @@
     static const String VacationTypeUrl='$baseUrl/Api/Vacation/VacationTypes';
     static const String employeeReviewers ='$baseUrl/api/Employee/GetDefaultReviewers?date=';
     static const String validateVacation ='$baseUrl/api/Vacation/VaildateVacation?vacationTypeId=';
+    //{{baseUrl}}/api/Vacation/CheckIfAttachRequired/626
+    static const String checkIfAttachRequired='$baseUrl/api/Vacation/CheckIfAttachRequired/';
     static const String saveVacation ='$baseUrl/api/Vacation/PostVacation';
     static const String saveMission ='$baseUrl/Api/Mission/PostMission';
+    static const String validateMission ='$baseUrl/Api/Mission/ValidateMission?from=';
+    static const String getMission='$baseUrl/Api/Mission/Requests/Employee/false';
+    static const String getReviewMission='$baseUrl/Api/Mission/Requests/Reviewer/false';
+    static const String getReviewedMission='$baseUrl/Api/Mission/Requests/Reviewer/true';
+    static const String savePermission ='$baseUrl/Api/Permission/PostPermission';
+    static const String validatePermission ='$baseUrl/Api/Permission/ValidatePermission?from=';
+    static const String permissionTypeUrl='$baseUrl/Api/Permission/GetAllowedPermission';
+    static const String getPermission='$baseUrl/Api/Permission/Requests/Employee/false';
+    static const String getReviewPermission='$baseUrl/Api/Permission/Requests/Reviewer/false';
+    static const String getReviewedPermission='$baseUrl/Api/Permission/Requests/Reviewer/true';
+
+
     //1982-10-12T11:41:47.053Z&toDate=2023-10-12T11:41:47.053Z';
     static int notificationNumber = 0 ;
     static List<dynamic>? salary;

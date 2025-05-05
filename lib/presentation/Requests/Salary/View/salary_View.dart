@@ -213,7 +213,7 @@ class _salaryViewState extends State<salaryView> {
           positiveText: AppStrings.confirm.tr(),
           onPositiveClick: () {
             Navigator.of(context)
-                .pushReplacementNamed(
+                .pushNamed(
                 Routes.salary);
             displayDialoge();
            // Navigator.of(context).pop();
@@ -225,29 +225,7 @@ class _salaryViewState extends State<salaryView> {
     );
   }
 }
-// DataTable _createSalaryTable(List<SalaryItems> salary) {
-//   return DataTable(
-//     columns: _createColumns(),
-//     rows: _createRows(salary),
-//   );
-// }
-// List<DataColumn> _createColumns() {
-//   return [
-//     const DataColumn(label: Text("Month ")),
-//     const DataColumn(label: Text("Salary Value")),
-//
-//   ];
-//
-// }
-// List<DataRow> _createRows(List<SalaryItems> salary) {
-//   return salary
-//       .map((salary) =>
-//       DataRow(cells: [
-//         DataCell(Text((salary.Month).toString())),
-//         DataCell(Text((salary.Value).toString())),
-//       ]))
-//       .toList();
-// }
+
 
 String? getMonthName(String? date) {
   String? month;

@@ -1,18 +1,15 @@
 
-import 'package:essmohr/presentation/Requests/missionRequest/missionView/missionView.dart';
+import 'package:essmohr/presentation/Requests/Permissions/Layout/permissionLayout.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:essmohr/domain/model/navigationManu.dart';
+
 import 'package:essmohr/presentation/widgets/sidebar/slideWidget.dart';
 import 'package:essmohr/presentation/resources/colors.dart';
 
-
-
-class MissionLayout extends StatelessWidget implements NavigationStates{
-
+class PermissionHome extends StatelessWidget implements NavigationStates{
   @override
   Widget build(BuildContext context) {
-    //  var initialState;
     return Scaffold(
       body: BlocProvider<NavigationBloc>(
         create:(BuildContext context) => NavigationBloc(),
@@ -20,8 +17,8 @@ class MissionLayout extends StatelessWidget implements NavigationStates{
         child:
         Stack(
           children: [
-             const MissionView(),
-             SideBar(),
+            PermissionLayout() ,
+            SideBar(),
           ],
         ),
       ),
@@ -34,3 +31,6 @@ class MissionLayout extends StatelessWidget implements NavigationStates{
     const Icon(Icons.notifications,size: 30,color: colorManager.white),
   ];
 }
+
+
+

@@ -67,7 +67,7 @@ class _SideBarState extends State<SideBar> {
                               //MaterialPageRoute(builder: (_) => const Home());
                               break;
                             case "My profile":
-                              Navigator.of(context).pushReplacementNamed(Routes.editProfileRoute);
+                              Navigator.of(context).pushNamed(Routes.editProfileRoute);
                               MaterialPageRoute(builder: (_) =>  editProfileScreen());
                               break;
                             case "Change Language":

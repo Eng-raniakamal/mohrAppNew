@@ -134,7 +134,7 @@ class _SettingsPageState extends State<SettingsPage> {
    async {
      await _appPreferences.setLanguageChanged();
 
-       Navigator.of(context).pushReplacementNamed(Routes.settings);
+       Navigator.of(context).pushNamed(Routes.settings);
     }
 
       //Phoenix.rebirth(context);;

@@ -33,7 +33,6 @@ class VacationRequestView extends StatefulWidget implements NavigationStates
 
 class _VacationRequestViewState extends State<VacationRequestView>with TickerProviderStateMixin {
   final AppPreferences _appPreferences = instance<AppPreferences>();
-  final VacationTypeViewModel _VacationTypeviewModel = instance<VacationTypeViewModel>();
   final _Formkey = GlobalKey<FormState>();
   String? dropDownValue;
   int selectedOption = 1;
@@ -41,6 +40,7 @@ class _VacationRequestViewState extends State<VacationRequestView>with TickerPro
   DateTime Fromdate = DateTime(2023);
   DateTime Todate = DateTime(2023);
   bool oKPressed = false;
+
   List<VacationType> vacationType=[];
     List<VacationType> items=[];
   late Future<List<VacationType>> _future;
@@ -621,7 +621,7 @@ class _VacationRequestViewState extends State<VacationRequestView>with TickerPro
     userId = await _appPreferences.getUserToken();
     var response = await http.get(
         Uri.parse(Constants.vacationTypeUrl), headers: <String, String>
-    {'Content-Type': 'application/json; charset=UTF-8', 'userId': userId!});
+    {'Content-Type': 'application/json; charset=UTF-8', 'userId': userId!}).timeout(Duration(seconds: 15));
     var responseData;
     if (response.statusCode == 200) {
       List<dynamic> data = jsonDecode(response.body);
@@ -659,7 +659,8 @@ class _VacationRequestViewState extends State<VacationRequestView>with TickerPro
 
   Future<bool?> getValidateVacation(String startDate,
       String endDate,
-      int vacationTypeId, int id, int duration) async {
+      int vacationTypeId, int id, int duration) async
+  {
     List<ValidationVacationModel> validationVacation = [];
     bool? flag = false;
     userId = await _appPreferences.getUserToken();
@@ -685,12 +686,6 @@ class _VacationRequestViewState extends State<VacationRequestView>with TickerPro
 
     }
 
-    //   validationVacation.clear();
-    //   for (var i in responseData.values) {
-    //     validationVacation.add(ValidationVacationModel.fromJson(i));
-    //   }
-    //   return validationVacation[0].isValid ;
-    // } else {
     return flag;
     // }
 

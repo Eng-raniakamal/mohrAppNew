@@ -165,5 +165,20 @@
   "period": "المدة",
   "Replacement":"النائب",
   "Reviewers":"المراجعين",
-  "days": "أيام"
+  "days": "أيام",
+  "hours": "ساعات",
+  "Destination": "الواجهة",
+  "permissionType": "نوع الأذن",
+  "permissionRequest":"طلب أذن",
+  "view":"عرض",
+  "Review":"قيد الاعتماد",
+  "Reviewed": "تم الاعتماد",
+  "Submit": "تقديم طلب",
+  "missions": " مأموريات",
+  "permissions": "أذونات",
+  "vacations": "أجازات",
+  "selectHours": "اختار الساعة"
+
+
+
 }

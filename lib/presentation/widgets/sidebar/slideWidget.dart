@@ -121,7 +121,7 @@ class _SideBarState extends State<SideBar> with SingleTickerProviderStateMixin<S
                            ListTile(
                             title: Text(
                               AppStrings.Welcome.tr(),
-                              style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w800),
+                              style: const TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w800),
                             ),
                             subtitle: Text(
                               AppStrings.Mohr.tr(),
@@ -154,7 +154,7 @@ class _SideBarState extends State<SideBar> with SingleTickerProviderStateMixin<S
                             title: AppStrings.Home.tr(),
                             onTap: () {
                               onIconPressed();
-                              Navigator.of(context).pushReplacementNamed(Routes.homeRoute);
+                              Navigator.of(context).pushNamed(Routes.homeRoute);
                              // BlocProvider.of<NavigationBloc>(context).add(NavigationEvents.HomePageClickedEvent);
                             },
                           ),
@@ -163,7 +163,7 @@ class _SideBarState extends State<SideBar> with SingleTickerProviderStateMixin<S
                             title: AppStrings.profile.tr(),
                             onTap: () {
                               onIconPressed();
-                              Navigator.of(context).pushReplacementNamed(Routes.employee);
+                              Navigator.of(context).pushNamed(Routes.employee);
                             },
                           ),
                           MenuItems(
@@ -171,7 +171,7 @@ class _SideBarState extends State<SideBar> with SingleTickerProviderStateMixin<S
                             title: AppStrings.Settings.tr(),
                             onTap: () {
                               onIconPressed();
-                              Navigator.of(context).pushReplacementNamed(Routes.settings);
+                              Navigator.of(context).pushNamed(Routes.settings);
                               },
                           ),
 
@@ -180,7 +180,7 @@ class _SideBarState extends State<SideBar> with SingleTickerProviderStateMixin<S
                             title:AppStrings.resetPassword.tr(),
                             onTap: () {
                               onIconPressed();
-                              Navigator.of(context).pushReplacementNamed(Routes.changePassword);
+                              Navigator.of(context).pushNamed(Routes.changePassword);
                             },
                           ),
 

@@ -20,7 +20,9 @@ AppBar buildAppBarstart(BuildContext context) {
     backgroundColor:Colors.transparent,
     leading: BackButton(
       color: colorManager.primary,
-        onPressed: () => Navigator.of(context).pop()
+
+        onPressed: () =>Navigator.of(context, rootNavigator: true).pop()
+            //Navigator.of(context).pop()
       ),
 
 
@@ -31,7 +33,7 @@ AppBar buildAppBarstart(BuildContext context) {
         builder: (context) => IconButton(
           icon: Icon(icon,color: colorManager.primary),
           onPressed: () {
-            final user = UserPreferences.myUser;
+            const user = UserPreferences.myUser;
 
             final theme = isDarkMode ? MyThemes.lightTheme : MyThemes.darkTheme;
             final switcher = ThemeSwitcher.of(context);

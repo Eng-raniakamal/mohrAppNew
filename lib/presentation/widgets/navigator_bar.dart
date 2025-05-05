@@ -1,4 +1,6 @@
+import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -193,32 +195,46 @@ getnotification()
 
   Future <List<NotificationModel>?> getApiNotification() async
   {
+    try
+    {
     String userId = await _appPreferences.getUserToken();
     var uri = Uri.parse(Constants.getNotificationUrl);
     List<NotificationModel>? a;
 
-    var response = await http.get(
-        uri, headers: <String, String>{
-      'Content-Type': 'application/json; charset=UTF-8',
-      'userId': userId
-    });
+      var response = await http.get(
+          uri, headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'userId': userId
+      });
+          //.timeout(Duration(seconds: 40));
 
-    final responseData = json.decode(response.body.toString());
-    if (responseData != null) {
-      var userNotifications = responseData as List;
-      a = userNotifications.map((data) => NotificationModel.fromJson(data))
-          .toList();
-      var notifications = List<NotificationModel>.from(a as Iterable);
-      return notifications;
+      final responseData = json.decode(response.body.toString());
+      if (responseData != null) {
+        var userNotifications = responseData as List;
+        a = userNotifications.map((data) => NotificationModel.fromJson(data))
+            .toList();
+        var notifications = List<NotificationModel>.from(a as Iterable);
+        return notifications;
+      }
+       return null;
     }
-    return null;
-  }
+    on TimeoutException catch (e) {
+      print('Timeout Error: $e');
+      throw Exception('Time out ');
+    } on SocketException catch (e) {
+      print('Socket Error: $e');
+      throw Exception('no internet');
+    } catch (e) {
+      print('General Error: $e');
+      throw Exception('Failed');
+    }
+
+}
 
 
   Future <int> getUnSeenNotification(List<NotificationModel> notifyList) async
   {
     int unSeenMessage=0;
-
     for(var i = 0; i < notifyList.length; i++)
     {
       if(notifyList[i].seen==false)
@@ -300,14 +316,14 @@ if(mounted)
   changeRoute(int index) async {
    // await Future.delayed(Duration(milliseconds: 500), () {
       if (index == 0) {
-          Navigator.of(context).pushReplacementNamed(Routes.editProfileRoute);
+          Navigator.of(context).pushNamed(Routes.editProfileRoute);
       }
       else if (index == 1) {
-          Navigator.of(context).pushReplacementNamed(Routes.homeRoute);
+          Navigator.of(context).pushNamed(Routes.homeRoute);
       }
       else if (index == 2) {
         Constants.notificationNumber=0;
-          Navigator.of(context).pushReplacementNamed(Routes.notification);
+          Navigator.of(context).pushNamed(Routes.notification);
       }
     }
     //);

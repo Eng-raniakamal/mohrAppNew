@@ -1,38 +1,26 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:essmohr/presentation/Requests/Permissions/Layout/permissionLayout.dart';
+import 'package:essmohr/presentation/Requests/missionRequest/Layout/missionLayout.dart';
+
 import 'package:essmohr/presentation/Requests/missionRequest/missionView/missionView.dart';
 import 'package:flutter/material.dart';
 import 'package:essmohr/application/di.dart';
-import 'package:essmohr/presentation/Alert_Notification/View/alertView.dart';
 import 'package:essmohr/presentation/Alert_Notification/View/alert_notfiHome.dart';
 import 'package:essmohr/presentation/Attendance/view/AttendanceHome.dart';
-import 'package:essmohr/presentation/Attendance/view/AttendanceLayout.dart';
-import 'package:essmohr/presentation/Attendance/view/attendanceView.dart';
-import 'package:essmohr/presentation/ChangePassword/changePassword.dart';
 import 'package:essmohr/presentation/Requests/Salary/Layout/salaryLayout.dart';
-import 'package:essmohr/presentation/Requests/Salary/View/salaryDetailsDialog.dart';
 import 'package:essmohr/presentation/Requests/Salary/View/salaryDetailsView.dart';
-import 'package:essmohr/presentation/Requests/Salary/View/salary_View.dart';
 import 'package:essmohr/presentation/Requests/Vacations/view/vactionRequests_view.dart';
 import 'package:essmohr/presentation/User/user_view.dart';
-//import 'package:essmohr/presentation/home/home_Screen.dart';
 import 'package:essmohr/presentation/home/Home.dart';
-//import 'package:essmohr/presentation/onboarding/onbording_screen.dart';
 import 'package:essmohr/presentation/onbourding/onbording_screen.dart';
 import 'package:essmohr/presentation/resources/strings_manager.dart';
-//import 'package:essmohr/presentation/profile/profileScreen.dart';
 import 'package:essmohr/presentation/splash/splashScreen.dart';
 import 'package:essmohr/presentation/underConstraction.dart';
-//import 'package:essmohr/presentation/profile/editProfileScreen.dart';
-
 import '../ChangePassword/layout/changePasswordLayout.dart';
 import '../Requests/Vacations/Layout/vacationLayout.dart';
-import '../Requests/Vacations/view/vactions_view.dart';
 import '../User/layout/employeeLayout.dart';
-import '../editEmployee/View/editEmployee.dart';
-import '../editEmployee/View/empSkills_view.dart';
 import '../login/loginView.dart';
 import '../settings/layout/settingsLayout.dart';
-import '../settings/settings_Screen.dart';
 
 class Routes
 {
@@ -54,6 +42,7 @@ class Routes
   static const String salary="/Requests/Salary/View/salary_View.dart";
   static const String salaryDetails="/Requests/Salary/View/salaryDetailsDialog.dart";
   static const String missionRequest="/Requests/missionRequest/missionView/missionView.dart";
+  static const String PermissionRequest="/Requests/Permissions/PermissionView/Permissions_View.dart";
 }
 
 
@@ -97,6 +86,7 @@ class RouteGenerator {
           initQualificationModule();
           initGradeModule();
           initDegreeModule();
+          initVacationTypeModule();
 
 
       return MaterialPageRoute(builder: (_)=>  Employee());
@@ -130,7 +120,14 @@ class RouteGenerator {
 
       case Routes.missionRequest:
         initVacationTypeModule();
-        return MaterialPageRoute(builder: (_)=>  MissionRequestView());
+
+        return MaterialPageRoute(builder: (_)=>   MissionLayout());
+
+      case Routes.PermissionRequest:
+        initVacationTypeModule();
+        return MaterialPageRoute(builder: (_)=>   PermissionLayout());
+
+
 
 
       case Routes.underConstraction:

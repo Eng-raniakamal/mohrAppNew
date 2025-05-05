@@ -43,7 +43,7 @@ class StateRenderer extends StatefulWidget {
 class _StateRendererState extends State<StateRenderer> {
   @override
   Widget build(BuildContext context) {
-    return _getStateWidget(context, this.widget.onPopupClick);
+    return _getStateWidget(context, widget.onPopupClick);
   }
 
   Widget _getStateWidget(BuildContext context, Function onPopupClick) {

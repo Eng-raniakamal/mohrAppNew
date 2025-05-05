@@ -11,6 +11,9 @@ class AppStrings {
   static const String grade="Grade";
   static const String qualification="Qualification";
   static const String employee = "Employee";
+  static const String empCode = "empCode";
+  static const String empDepartment="empDepartment";
+  static const String jobTitle="jobTitle";
   static const String loading = "loading";
   static const String addSkills =  "Add Skills";
   static const String addBasicData =  "Add Data";
@@ -119,6 +122,7 @@ class AppStrings {
   static const String All = "All";
   static const String Used = "Used";
   static const String Vacation_Type = "Vacation_Type";
+  static const String Vacations = "Vacations";
   static const String Vacation_Request = "Vacation_Request";
   static const String Current = "Current";
   static const String Transferred = "Transferred";
@@ -203,5 +207,25 @@ class AppStrings {
   static const String Reviewers="Reviewers";
 
   static const String day="day";
+  static const String dayS="day";
+  static const String hours="hours";
+  //mission
+  static const String destination="Destination";
+  static const String decision="Decision";
+  static const String mission="mission";
+  static const String missions="missions";
+  static const String missionRequest="missionRequest";
+  //permission
+  static const String permissions="permissions";
+  static const String permission_Request="permissionRequest";
+  static const String permission_Type="permissionType";
+  static const String view ="view";
+  static const String Review="Review";
+  static const String Reviewed="Reviewed";
+  static const String Submit="Submit";
+  static const String Department="Department";
+  static const String JobTitle="JobTitle";
+  static const String selectHours= "selectHours";
+
 
 }

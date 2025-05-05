@@ -49,38 +49,14 @@ class _vacationsViewState extends State<vacationsView> {
 
   @override
   Widget build(BuildContext context) {
-    // final item=<Widget>
-    // [ const Icon(Icons.person,size: 30,color: colorManager.white,),
-    //   const Icon(Icons.home,size: 30,color: colorManager.white),
-    //   const Icon(Icons.notifications,size: 30,color: colorManager.white),
-    //
-    // ];
+
     return ThemeSwitchingArea(
         child: Builder(
         builder: (context) =>
         Scaffold(
             appBar: buildAppBar(context),
         bottomNavigationBar:NavigatorBar(index: 0,notificationNumber: Constants.notificationNumber,),
-    //     CurvedNavigationBar(items: item,
-    //     index: 0,
-    //
-    //     buttonBackgroundColor: colorManager.primary,
-    //     backgroundColor: Colors.transparent,
-    //     color: colorManager.primary,
-    //
-    //
-    //     onTap: (int index) {
-    //   if(index==1)
-    //   {
-    //     // changeIndex(index);
-    //     Navigator.of(context).pushReplacementNamed(Routes.HomeRoute);
-    //   }
-    //   else
-    //   if(index==2)
-    //   {
-    //     Navigator.of(context).pushReplacementNamed(Routes.notification);
-    //   }
-    // }
+
     // ),
     body:
     SingleChildScrollView(
@@ -141,7 +117,7 @@ class _vacationsViewState extends State<vacationsView> {
                                      {
                                        // Navigator.push(
                                        //     context,
-                                           Navigator.of(context).pushReplacementNamed(Routes.VacationRequest);
+                                           Navigator.of(context).pushNamed(Routes.VacationRequest);
 
                                           // MaterialPageRoute(builder: (context) => const UnderConstructionScreen()));
                                       },

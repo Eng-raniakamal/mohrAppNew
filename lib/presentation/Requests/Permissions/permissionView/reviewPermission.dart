@@ -12,18 +12,18 @@ import 'package:essmohr/domain/model/navigationManu.dart';
 import 'package:essmohr/presentation/resources/strings_manager.dart';
 import 'package:http/http.dart' as http;
 
-class ReviewedMission extends StatefulWidget implements NavigationStates
+class ReviewPermission extends StatefulWidget implements NavigationStates
 {
-  const ReviewedMission ({Key? key}) : super(key: key);
+  const ReviewPermission ({Key? key}) : super(key: key);
   @override
-  State<ReviewedMission> createState() => _ReviewedMissioniewState();
+  State<ReviewPermission> createState() => _ReviewPermissioniewState();
 }
 
-class _ReviewedMissioniewState extends State<ReviewedMission>with TickerProviderStateMixin {
+class _ReviewPermissioniewState extends State<ReviewPermission>with TickerProviderStateMixin {
 
   final AppPreferences _appPreferences = instance<AppPreferences>();
   String? userId;
-  List<ReviewedMissions>? MissionsData;
+  List<ReviewPermissions>? permissionsData;
 
 
   @override
@@ -54,7 +54,7 @@ class _ReviewedMissioniewState extends State<ReviewedMission>with TickerProvider
                                   crossAxisAlignment: CrossAxisAlignment.start
                                   , children: [
                                 const SizedBox(height: 30),
-                                MissionTable()
+                                permissionTable()
 
                               ]
                               )
@@ -68,10 +68,10 @@ class _ReviewedMissioniewState extends State<ReviewedMission>with TickerProvider
       );
   }
 
-  Widget MissionTable(){
+  Widget permissionTable(){
     return
       FutureBuilder(
-          future:getReviewedMissionRequests(),
+          future:getReviewPermissionRequests(),
           builder:(context,snapshot) {
             switch (snapshot.connectionState) {
               case ConnectionState.waiting:
@@ -82,23 +82,23 @@ class _ReviewedMissioniewState extends State<ReviewedMission>with TickerProvider
                   return Text('Error: ${snapshot.error}');
                 else
                   return Center(
-                      child: _createMissionsTable(MissionsData!)
+                      child: _createPermissionsTable(permissionsData!)
                   );
             }
           });
   }
 
-  Widget _createMissionsTable(List<ReviewedMissions> Mission) {
-    if(Mission.isEmpty==false) {
+  Widget _createPermissionsTable(List<ReviewPermissions> permission) {
+    if(permission.isEmpty==false) {
       return DataTable(
         headingRowColor: MaterialStateColor.resolveWith((states) =>
         colorManager.lightprimary),
         columns: _createColumns(),
-        rows: _createRows(Mission),
+        rows: _createRows(permission),
 
       );
     }else
-    {return Container(child: Text("No Data Found"),);}
+    {return Container(child: Text(AppStrings.noContent),);}
   }
 
   List<DataColumn> _createColumns() {
@@ -131,36 +131,36 @@ class _ReviewedMissioniewState extends State<ReviewedMission>with TickerProvider
     ];
   }
 
-  List<DataRow> _createRows(List<ReviewedMissions> Mission) {
+  List<DataRow> _createRows(List<ReviewPermissions> permission) {
 
-    return Mission
-        .map((Mission) =>
+    return permission
+        .map((permission) =>
         DataRow(cells: [
 
-          DataCell(Text((Mission.empName).toString())),
-          DataCell(Text((Mission.empCode).toString())),
-          DataCell(Column(mainAxisSize: MainAxisSize.min, children: [Text(DateFormat('dd-MM-yyyy').format(DateTime.tryParse(Mission.date
+          DataCell(Text((permission.empName).toString())),
+          DataCell(Text((permission.empCode).toString())),
+          DataCell(Column(mainAxisSize: MainAxisSize.min, children: [Text(DateFormat('dd-MM-yyyy').format(DateTime.tryParse(permission.date
           !)!).toString()),
           ])),
-          DataCell(Text((Mission.empDepartment).toString())),
-          DataCell(Text((Mission.jobTitle).toString())),
+          DataCell(Text((permission.empDepartment).toString())),
+          DataCell(Text((permission.jobTitle).toString())),
           DataCell(Column(mainAxisSize: MainAxisSize.min, children: [
-            Text(DateFormat('dd-MM-yyyy').format(DateTime.tryParse(Mission.from!)!).toString()),
-            Text(DateFormat('kk:mm').format(DateTime.tryParse(Mission.from!)!).toString())
+            Text(DateFormat('dd-MM-yyyy').format(DateTime.tryParse(permission.from!)!).toString()),
+            Text(DateFormat('kk:mm').format(DateTime.tryParse(permission.from!)!).toString())
           ])),
           DataCell(Column(mainAxisSize: MainAxisSize.min, children: [
-            Text(DateFormat('dd-MM-yyyy').format(DateTime.tryParse(Mission.to!)!).toString()),
-            Text(DateFormat('kk:mm').format(DateTime.tryParse(Mission.to!)!).toString())
+            Text(DateFormat('dd-MM-yyyy').format(DateTime.tryParse(permission.to!)!).toString()),
+            Text(DateFormat('kk:mm').format(DateTime.tryParse(permission.to!)!).toString())
           ])),
-          DataCell(Text((Mission.duration).toString())),
-          DataCell(Column(mainAxisSize: MainAxisSize.min, children: ReviewedersList(Mission.reviewers))),
-          DataCell(Text((Mission.attachments).toString())),
-          DataCell(Text((Mission.notes).toString())),
-          DataCell(Text((Mission.status).toString())),
+          DataCell(Text((permission.duration).toString())),
+          DataCell(Column(mainAxisSize: MainAxisSize.min, children: reviewersList(permission.reviewers))),
+          DataCell(Text((permission.attachments).toString())),
+          DataCell(Text((permission.notes).toString())),
+          DataCell(Text((permission.status).toString())),
         ]))
         .toList();
   }
-  List<Widget> ReviewedersList(List<dynamic> items) {
+  List<Widget> reviewersList(List<dynamic> items) {
     return items.map((item) {
       final value = item["Name"] ?? '';
       return
@@ -168,21 +168,21 @@ class _ReviewedMissioniewState extends State<ReviewedMission>with TickerProvider
     }).toList();
 
   }
-  Future <List<ReviewedMissions>?> getReviewedMissionRequests() async {
-    List<ReviewedMissions>? a;
+  Future <List<ReviewPermissions>?> getReviewPermissionRequests() async {
+    List<ReviewPermissions>? a;
     userId = await _appPreferences.getUserToken();
     var response = await http.get(
-        Uri.parse(Constants.getReviewedMission), headers: <String, String>{'Content-Type': 'application/json; charset=UTF-8','userId':userId!});
+        Uri.parse(Constants.getReviewPermission), headers: <String, String>{'Content-Type': 'application/json; charset=UTF-8','userId':userId!});
 
     var responseData = json.decode(response.body);
     //.cast<Map<String, dynamic>>();
     if(responseData!=null) {
-      var missions = responseData as List;
-      a = (await missions.map((jsonData) =>
-          Missions.fromJson(jsonData)).toList()).cast<ReviewedMissions>();
-      List<ReviewedMissions>? b = List<ReviewedMissions>.from(a as Iterable);
-      MissionsData = b;
-      return MissionsData;
+      var permissions = responseData as List;
+      a = (await permissions.map((jsonData) =>
+          Permissions.fromJson(jsonData)).toList()).cast<ReviewPermissions>();
+         List<ReviewPermissions>? b = List<ReviewPermissions>.from(a as Iterable);
+      permissionsData = b;
+      return permissionsData;
     } return null;
   }
 }

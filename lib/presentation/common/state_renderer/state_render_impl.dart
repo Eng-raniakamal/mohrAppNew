@@ -84,6 +84,8 @@ class SuccessState extends FlowState {
 extension FlowStateExtension on FlowState {
   Widget getScreenWidget(BuildContext context, Widget contentScreenWidget,
       Function retryActionFunction, Function onPopupClick) {
+
+
     switch (runtimeType) {
       case LoadingState:
         {
@@ -157,12 +159,17 @@ extension FlowStateExtension on FlowState {
   _isThereCurrentDialogShowing(BuildContext context) =>
       ModalRoute.of(context)?.isCurrent != true;
 
-
   dismissDialog(BuildContext context) {
     if (_isThereCurrentDialogShowing(context)) {
-      Navigator.of(context, rootNavigator: true).pop(true);
+      Navigator.of(context, rootNavigator: true).pop(); // no value returned
     }
   }
+  // dismissDialog(BuildContext context) {
+  //   if (_isThereCurrentDialogShowing(context)) {
+  //
+  //     Navigator.of(context, rootNavigator: true).pop(true);
+  //   }
+  // }
   showPopUp(BuildContext context, StateRendererType stateRendererType,
       String message, Function onPopupClick,{String title = EMPTY}) {
     WidgetsBinding.instance.addPostFrameCallback((_) => showDialog(

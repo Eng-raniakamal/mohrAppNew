@@ -1,6 +1,12 @@
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
-import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+
 import 'package:easy_localization/easy_localization.dart';
+
+import 'package:essmohr/presentation/Requests/Permissions/permissionView/permissionsView.dart';
+
+import 'package:essmohr/presentation/Requests/Vacations/view/vactionRequests_view.dart';
+import 'package:essmohr/presentation/Requests/missionRequest/missionView/missionView.dart';
+
 import 'package:flutter/material.dart';
 import 'package:essmohr/application/app_prefs.dart';
 import 'package:essmohr/application/constants.dart';
@@ -10,26 +16,17 @@ import 'package:essmohr/data/data_source/local_data_source.dart';
 import 'package:essmohr/domain/model/model.dart';
 import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
 import 'package:essmohr/presentation/AddImage/viewModel/GetImage_ViewModel.dart';
-import 'package:essmohr/presentation/User/editProfileScreen.dart';
+
 import 'package:essmohr/presentation/common/state_renderer/state_render_impl.dart';
 import 'package:essmohr/presentation/User/User_viewModel.dart';
 import 'package:essmohr/presentation/resources/colors.dart';
 import 'package:essmohr/presentation/resources/strings_manager.dart';
-import 'package:essmohr/presentation/settings/settings_Screen.dart';
-import 'package:essmohr/presentation/splash/splashScreen.dart';
-import 'package:essmohr/presentation/underConstraction.dart';
-import 'package:essmohr/presentation/widgets/IconButtonWidgets.dart';
-//import 'package:essmohr/User/editProfileScreen.dart';
-import 'package:essmohr/presentation/widgets/appbarMain.dart';
 import 'package:essmohr/presentation/widgets/appbar_widget.dart';
 import 'package:essmohr/presentation/widgets/button_widget.dart';
 import 'package:essmohr/presentation/widgets/clipPathWidget.dart';
 import 'package:essmohr/presentation/widgets/navigator_bar.dart';
 import 'package:essmohr/presentation/widgets/profile_widget.dart';
-import 'package:essmohr/presentation/Requests/Vacations/view/vactions_view.dart';
-import 'package:scroll_snap_list/scroll_snap_list.dart';
 import '../../domain/model/navigationManu.dart';
-import '../editEmployee/View/empSkills_view.dart';
 import '../resources/assets_manager.dart';
 import '../resources/routes.dart';
 
@@ -47,6 +44,7 @@ class userView extends StatefulWidget implements NavigationStates{
 }
 
 class _userViewState extends State<userView> {
+
   final EmployeeViewModel _viewModel = instance<EmployeeViewModel>();
   final EmployeeImageViewModel _imageViewModel = instance<EmployeeImageViewModel>();
   final AppPreferences _appPreferences = instance<AppPreferences>();
@@ -78,13 +76,44 @@ class _userViewState extends State<userView> {
         StreamBuilder<FlowState>(
             stream: _viewModel.outputState,
             builder: (context, snapshot) {
-              return
-                  snapshot.data?.getScreenWidget(
-                      context, _getContentWidget(),
-                          () {_viewModel.start();},
-                          () {
-                      }) ??
-                      _getContentWidget();
+
+              final data = snapshot.data;
+              if (data is FlowState) {
+                return data.getScreenWidget(
+                  context,
+                  _getContentWidget(),
+                  _viewModel.start,
+                      () {}, // onPopupClick
+                );
+              } else {
+                // Log or handle unexpected types safely
+                return _getContentWidget(); // fallback UI
+              }
+// solving error this is the old code
+              // if (snapshot.hasData && snapshot.data is FlowState) {
+              //   return snapshot.data!.getScreenWidget(
+              //     context,
+              //     _getContentWidget(),
+              //     _viewModel.start,
+              //         () {},
+              //   );
+              // }
+              // return _getContentWidget();
+
+
+
+
+
+
+
+              // return
+              //     snapshot.data?.getScreenWidget(
+              //         context, _getContentWidget(),
+              //             () {_viewModel.start();},
+              //             () {
+              //         }) ??
+              //         _getContentWidget();
+//-----------------------------
             }
         )
     )));
@@ -199,7 +228,7 @@ class _userViewState extends State<userView> {
         transitionOnUserGestures: true,
         child: InkWell(
             onTap: () {
-              Navigator.of(context).pushReplacementNamed(Routes.Vacations);
+              Navigator.of(context).pushNamed(Routes.Vacations);
             },
             child: Column(
               children: [
@@ -221,7 +250,7 @@ if(ReqName==AppStrings.Salary.tr())
       transitionOnUserGestures: true,
       child: InkWell(
           onTap: () {
-            Navigator.of(context).pushReplacementNamed(Routes.salary);
+            Navigator.of(context).pushNamed(Routes.salary);
           },
           child: Column(
             children:[
@@ -242,7 +271,7 @@ if(ReqName==AppStrings.Salary.tr())
       transitionOnUserGestures: true,
       child: InkWell(
           onTap: () {
-            Navigator.of(context).pushReplacementNamed(Routes.attendance);
+            Navigator.of(context).pushNamed(Routes.attendance);
           },
           child: Column(mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -261,9 +290,10 @@ if(ReqName==AppStrings.Requests.tr())
   {return Hero(
       tag: ReqName,
       transitionOnUserGestures: true,
-      child: InkWell(
-          onTap: () {
-            Navigator.of(context).pushReplacementNamed(Routes.missionRequest);
+      child: GestureDetector(
+                onTapDown: (TapDownDetails details) {
+                showCustomDropdown(context, details.globalPosition);
+          //  Navigator.of(context).pushReplacementNamed(Routes.missionRequest);
            //   Navigator.pushReplacement(context,
            //    MaterialPageRoute(builder: (context) => const UnderConstructionScreen()),
             // );
@@ -305,42 +335,84 @@ return Container();
     );
   }
   Widget _getEmployeeDataWidget(EmployeeDataModel? userData) {
+    // if (userData != null) {
+    //   var empData = userData.userDataModel;
+    //   //var empImageData = userData.userDataModel.masterImage;
+    //
+    //
+    //   var empImageData = empData.masterImage;
+    //   //String? URLimage= userData.userDataModel.masterImage.toString();
+    //   String? URLimage = empImageData.toString();
+    //   Constants.imagePath=URLimage;
+    //
+    //   if (empImageData is Map<String, dynamic>) {
+    //     Constants.canUpload = empImageData["CanUploadMasterImage"];
+    //     canEditImage = empImageData["CanUploadMasterImage"];
+    //   }else if(empData.masterImage is bool) {
+    //     Constants.canUpload = empData.masterImage?["CanUploadMasterImage"];
+    //     canEditImage = empData.masterImage?["CanUploadMasterImage"];
+    //   } else {
+    //     Constants.canUpload = false;
+    //     canEditImage = false;
+    //   }
+    //   // Constants.canUpload=empData.masterImage?["CanUploadMasterImage"];
+    //   // canEditImage=empData.masterImage?["CanUploadMasterImage"];
+    //   //
+    //
+    //
+    //
+    //   String Name;
+    //   String? language=_appPreferences.getLanguage();
+    //   if(language=="en")
+    //     {
+    //    Name=empData.EnglishName.toString();}
+    //   else
+    //     {
+    //       Name=empData.ArabicName.toString();
+    //     }
+    //   String Email=empData.UserName.toString();
+    //   String Code=empData.EmployeeCode.toString();
+    //  return Column(
+    //       children: [
+    //        Text(Name,
+    //        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20,
+    //            color: colorManager.white),
+    // ),
+    //        const SizedBox(height: 3),
+    //       Text(Email,
+    //        style: const TextStyle(color: colorManager.white),
+    //     ),
+    //        const SizedBox(height: 3),
+    //       Text(Code,
+    //         style: const TextStyle(color: colorManager.white),)],
+    //  );}
+    // else
+    //   {
+    //     return Container();
+    //   }
+
     if (userData != null) {
       var empData = userData.userDataModel;
-      var empImageData = userData.userDataModel.masterImage;
-     String? URLimage= userData.userDataModel.masterImage.toString();
-      Constants.imagePath=URLimage;
-      Constants.canUpload=empData.masterImage?["CanUploadMasterImage"];
-      canEditImage=empData.masterImage?["CanUploadMasterImage"];
-      String Name;
-      String? language=_appPreferences.getLanguage();
-      if(language=="en")
-        {
-       Name=empData.EnglishName.toString();}
-      else
-        {
-          Name=empData.ArabicName.toString();
-        }
-      String Email=empData.UserName.toString();
-      String Code=empData.EmployeeCode.toString();
-     return Column(
-          children: [
-           Text(Name,
-           style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20,
-               color: colorManager.white),
-    ),
-           const SizedBox(height: 3),
-          Text(Email,
-           style: const TextStyle(color: colorManager.white),
-        ),
-           const SizedBox(height: 3),
-          Text(Code,
-            style: const TextStyle(color: colorManager.white),)],
-     );}
-    else
-      {
-        return Container();
-      }
+      Constants.canUpload = empData.masterImage["CanUploadMasterImage"];
+      canEditImage = empData.masterImage["CanUploadMasterImage"];
+      String name = _appPreferences.getLanguage() == "en"
+          ? empData.EnglishName
+          : empData.ArabicName;
+      String email = empData.UserName.toString();
+      String code = empData.EmployeeCode.toString();
+
+      return Column(
+        children: [
+          Text(name, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: colorManager.white)),
+          const SizedBox(height: 3),
+          Text(email, style: const TextStyle(color: colorManager.white)),
+          const SizedBox(height: 3),
+          Text(code, style: const TextStyle(color: colorManager.white)),
+        ],
+      );
+    }
+    return Container();
+
     }
   Widget _getImageWidget(UserImageModel? userImage) {
     String? URLimage ;
@@ -356,7 +428,7 @@ return Container();
           isEdit: false,
           onClicked: () {
             resetModules();
-            Navigator.of(context).pushReplacementNamed(Routes.editProfileRoute);
+            Navigator.of(context).pushNamed(Routes.editProfileRoute);
           }
       );
     }
@@ -369,7 +441,7 @@ return Container();
           isEdit: false,
           onClicked: () {
             resetModules();
-            Navigator.of(context).pushReplacementNamed(Routes.editProfileRoute);
+            Navigator.of(context).pushNamed(Routes.editProfileRoute);
           }
 
       );
@@ -393,11 +465,13 @@ return Container();
         )
     );
   }
+
   @override
   void dispose() {
     _viewModel.dispose();
     super.dispose();
   }
+
   Widget? displayDialoge() {
     showAnimatedDialog(
       context: context,
@@ -418,7 +492,57 @@ return Container();
     );
     return null;
   }
+
+  final List<Map<String, dynamic>> screens =
+  [
+    {'title': 'vacations', 'screen':  VacationRequestView()},
+    {'title': 'permission', 'screen': PermissionView(),},
+    {'title': 'Mission', 'screen': MissionView (), },
+  ];
+
+  void showCustomDropdown(BuildContext context, Offset position) {
+    showMenu(
+      context: context,
+      position: RelativeRect.fromLTRB(position.dx, position.dy, position.dx + 50, position.dy + 50),
+      items: screens.map((item) {
+        return PopupMenuItem<Map<String, dynamic>>(
+          value: item,
+          child: Row(
+            children: [
+              // Image.asset(item['image']!, width: 30, height: 30),
+              // SizedBox(width: 10),
+              Text(item['title']!),
+            ],
+          ),
+        );
+      }).toList(),
+    ).then((selectedScreen) async{
+      if (selectedScreen != null) {
+       // Navigator.push(context, MaterialPageRoute(builder: (context) => selectedScreen['screen']),);
+       //  Future.microtask(() {
+       //    switch (selectedScreen['title'].toString()) {
+       //      case 'vacations':
+       //        // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => selectedScreen['screen']));
+       //        Navigator.of(context).pushReplacementNamed(Routes.VacationRequest);
+       //      case 'permissions':
+       //        Navigator.of(context).pushReplacementNamed(
+       //            Routes.PermissionRequest);
+       //      case 'Mission':
+       //        Navigator.of(context).pushReplacementNamed(Routes.missionRequest);
+       //    }
+       //  }
+        Future.microtask(() {
+          Navigator.push(context, MaterialPageRoute(
+              builder: (context) => selectedScreen['screen']));
+        });
+
+        }
+        //);
+      }
+    );}
+
 }
+
 
 
 

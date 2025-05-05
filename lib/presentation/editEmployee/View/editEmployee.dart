@@ -49,7 +49,6 @@ class EmployeeEditView extends StatefulWidget implements NavigationStates
 
 class _EmployeeEditViewState extends State<EmployeeEditView>with TickerProviderStateMixin {
 
-
   final _Formkey = GlobalKey<FormState>();
   String? userId;
   String? userImage;
@@ -69,39 +68,7 @@ class _EmployeeEditViewState extends State<EmployeeEditView>with TickerProviderS
 
     final TabController _tabController = TabController(
         length: (3), vsync: this);
-    // final item=<Widget>
-    // [ const Icon(Icons.person,size: 30,color: colorManager.white,),
-    //   const Icon(Icons.home,size: 30,color: colorManager.white),
-    //   Stack(
-    //     children: [
-    //       const Icon(Icons.notifications,size: 30),
-    //       Positioned(
-    //         right: 0,
-    //         child: Container(
-    //           padding: const EdgeInsets.all(1),
-    //           decoration: BoxDecoration(
-    //             color: Colors.red,
-    //             borderRadius: BorderRadius.circular(6),
-    //           ),
-    //           constraints: const BoxConstraints(
-    //             minWidth: 12,
-    //             minHeight: 12,
-    //           ),
-    //           child: Text(
-    //             Constants.notificationNumber.toString(),
-    //             style: const TextStyle(
-    //               color: Colors.white,
-    //               fontSize: 8,
-    //             ),
-    //             textAlign: TextAlign.center,
-    //           ),
-    //         ),
-    //       )
-    //     ],
-    //   ),
-    // //  const Icon(Icons.notifications,size: 30,color: colorManager.white),
-    //
-    // ];
+
     return
       ThemeSwitchingArea(
           child: Builder(
@@ -109,30 +76,9 @@ class _EmployeeEditViewState extends State<EmployeeEditView>with TickerProviderS
                 Scaffold(
                   appBar: buildAppBar(context),
                  // backgroundColor: colorManager.white,
-
                   bottomNavigationBar:
                   NavigatorBar(index: 0,notificationNumber: Constants.notificationNumber,),
-                  // CurvedNavigationBar(items: item,
-                  //     index: 0,
-                  //
-                  //     buttonBackgroundColor: colorManager.primary,
-                  //     backgroundColor: Colors.transparent,
-                  //     color: colorManager.primary,
-                  //
-                  //
-                  //     onTap: (int index) {
-                  //       if(index==1)
-                  //       {
-                  //         // changeIndex(index);
-                  //         Navigator.of(context).pushReplacementNamed(Routes.HomeRoute);
-                  //       }
-                  //       else
-                  //       if(index==2)
-                  //       {
-                  //         Navigator.of(context).pushReplacementNamed(Routes.notification);
-                  //       }
-                  //     }
-                  // ),
+
                   body:
                   Container(
                     height: MediaQuery.of(context).size.height,
@@ -140,9 +86,7 @@ class _EmployeeEditViewState extends State<EmployeeEditView>with TickerProviderS
                       scrollDirection: Axis.vertical,
                       child: Column(
                           children: [
-                            // Flexible(
-                            //  // flex: 1,
-                            //   child:
+
                               Container(
                                   padding: const EdgeInsets.only(top: 20),
                                   width: MediaQuery
@@ -198,13 +142,13 @@ class _EmployeeEditViewState extends State<EmployeeEditView>with TickerProviderS
                                                         .greywithOpacity,
                                                   ),
                                                   tabs: [
-                                                    Tab(text: "  "+AppStrings.BasicData
-                                                        .tr()+"  "),
-                                                    Tab(text: "  "+AppStrings.Skills
-                                                        .tr()+"  "),
+                                                    Tab(text: "  ${AppStrings.BasicData
+                                                        .tr()}  "),
+                                                    Tab(text: "  ${AppStrings.Skills
+                                                        .tr()}  "),
                                                     Tab(
-                                                      text: "  "+AppStrings.AcadmicDegree
-                                                          .tr()+"  ",)
+                                                      text: "  ${AppStrings.AcadmicDegree
+                                                          .tr()}  ",)
                                                   ],
                                                 ),
                                               ),
@@ -400,7 +344,7 @@ class _EmployeeEditViewState extends State<EmployeeEditView>with TickerProviderS
         if (imageFile != null)
         {
           upload(File(croppedFile.path));
-          Navigator.of(this.context).pushReplacementNamed(Routes.editProfileRoute);
+          Navigator.of(this.context).pushNamed(Routes.editProfileRoute);
         }
       });
       //});
