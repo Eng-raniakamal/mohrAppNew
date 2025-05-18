@@ -75,15 +75,19 @@ class _ReviewedMissioniewState extends State<ReviewedMission>with TickerProvider
           builder:(context,snapshot) {
             switch (snapshot.connectionState) {
               case ConnectionState.waiting:
-                return Center(
+                return const Center(
                     child: CircularProgressIndicator());
               default:
                 if (snapshot.hasError)
                   return Text('Error: ${snapshot.error}');
-                else
-                  return Center(
-                      child: _createMissionsTable(MissionsData!)
+                else {
+                  return SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Center(
+                        child: _createMissionsTable(MissionsData!)
+                    ),
                   );
+                }
             }
           });
   }
@@ -166,7 +170,6 @@ class _ReviewedMissioniewState extends State<ReviewedMission>with TickerProvider
       return
         Text((value).toString());
     }).toList();
-
   }
   Future <List<ReviewedMissions>?> getReviewedMissionRequests() async {
     List<ReviewedMissions>? a;
@@ -179,7 +182,7 @@ class _ReviewedMissioniewState extends State<ReviewedMission>with TickerProvider
     if(responseData!=null) {
       var missions = responseData as List;
       a = (await missions.map((jsonData) =>
-          Missions.fromJson(jsonData)).toList()).cast<ReviewedMissions>();
+          ReviewedMissions.fromJson(jsonData)).toList());
       List<ReviewedMissions>? b = List<ReviewedMissions>.from(a as Iterable);
       MissionsData = b;
       return MissionsData;
@@ -187,14 +190,14 @@ class _ReviewedMissioniewState extends State<ReviewedMission>with TickerProvider
   }
 }
 
-class result {
+class Result {
   final bool isValid;
   final String message;
-  const result({
+  const Result({
     required this.isValid, required this.message});
 
-  factory result.fromJson(Map<String, dynamic> json) {
-    return result(
+  factory Result.fromJson(Map<String, dynamic> json) {
+    return Result(
       isValid: json['IsValid'],
       message: json['Message'],
     );

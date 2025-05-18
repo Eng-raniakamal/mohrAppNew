@@ -88,8 +88,10 @@ class _viewPermissioniewState extends State<ViewPermission>with TickerProviderSt
                 if (snapshot.hasError)
                   return Text('Error: ${snapshot.error}');
                 else
-                  return Center(
-                      child: _createPermissionsTable(permissionsData!)
+                  return SingleChildScrollView(scrollDirection: Axis.horizontal,
+                    child: Center(
+                        child: _createPermissionsTable(permissionsData!)
+                    ),
                   );
             }
           });
@@ -97,14 +99,14 @@ class _viewPermissioniewState extends State<ViewPermission>with TickerProviderSt
   Widget _createPermissionsTable(List<Permissions> permission) {
     if (permission.isEmpty == false) {
       return DataTable(
-        headingRowColor: MaterialStateColor.resolveWith((states) =>
+        headingRowColor: WidgetStateColor.resolveWith((states) =>
         colorManager.lightprimary),
         columns: _createColumns(),
         rows: _createRows(permission),
 
       );
     } else {
-      return Container(child: Text("No Data Found"),);
+      return Text(AppStrings.noContent.tr());
     }
   }
   List<DataColumn> _createColumns() {

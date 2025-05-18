@@ -44,6 +44,19 @@
     static const String getPermission='$baseUrl/Api/Permission/Requests/Employee/false';
     static const String getReviewPermission='$baseUrl/Api/Permission/Requests/Reviewer/false';
     static const String getReviewedPermission='$baseUrl/Api/Permission/Requests/Reviewer/true';
+    static const String getViewVacations='$baseUrl/api/Vacation/Requests/Reviewer/true';
+    //financial
+    static const String getFinancialTypes='$baseUrl/Api/Requests/GetRequestTypes?requestType=6';
+    static const String saveFinancial ='$baseUrl/Api/Requests';
+    static const String getViewFinancial ='$baseUrl/api/Financial/Requests/Employee/true';
+    static const String getReviewedFinancial='$baseUrl/api/Financial/Requests/Reviewer/true';
+    static const String getReviewFinancial='$baseUrl/api/Financial/Requests/Reviewer/false';
+    //Admin
+    static const String getAdminTypes='$baseUrl/Api/Requests/GetRequestTypes?requestType=5';
+    static const String saveAdmin ='$baseUrl/Api/Requests';
+    static const String getViewAdmin ='$baseUrl/api/Administrative/Requests/Employee/true';
+    static const String getReviewedAdmin='$baseUrl/api/Administrative/Requests/Reviewer/true';
+    static const String getReviewAdmin='$baseUrl/api/Administrative/Requests/Reviewer/false';
 
 
     //1982-10-12T11:41:47.053Z&toDate=2023-10-12T11:41:47.053Z';

@@ -2,10 +2,11 @@
 import 'dart:convert';
 
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:essmohr/presentation/common/state_renderer/state_render_impl.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
+
 import 'package:essmohr/application/constants.dart';
 import 'package:essmohr/application/di.dart';
 import 'package:essmohr/domain/model/model.dart';
@@ -446,12 +447,12 @@ skillsUpdate;
 
         });
 
-        displayDialoge();
+       displayDialoge(context);
        // print(response.body);
       }else
-        { displayFaileDialoge();}
+        { displayFaileDialoge(context);}
     } else {
-      displayFaileDialoge();
+      displayFaileDialoge(context);
      // print('Request failed with status: ${response.statusCode}.');
     }
   }
@@ -484,50 +485,32 @@ skillsUpdate;
       );
   }
 
-Widget? displayDialoge()
-{
-  showAnimatedDialog(
-    context: context,
-    barrierDismissible: true,
-    builder: (BuildContext context) {
-      return ClassicGeneralDialogWidget(
-        titleText: AppStrings.Alerts.tr(),
-        contentText: AppStrings.Was_Saved_Successfully.tr(),
-         positiveText:  AppStrings.confirm.tr(),
-        onPositiveClick: () {
-          Navigator.of(context).pop();
-        },
-
-      );
-    },
-    animationType: DialogTransitionType.fade,
-    curve: Curves.linear,
-    duration: Duration(seconds: 1),
-  );
-  return null;
-}
-
-  Widget? displayFaileDialoge()
-  {
-    showAnimatedDialog(
+  void displayDialoge(BuildContext context) {
+    AwesomeDialog(
       context: context,
-      barrierDismissible: true,
-      builder: (BuildContext context) {
-        return ClassicGeneralDialogWidget(
-          titleText: "",
-          contentText: AppStrings.saving_Failed,
-          positiveText: AppStrings.confirm.tr(),
-          onPositiveClick: () {
-            Navigator.of(context).pop();
-          },
-
-        );
+      dialogType: DialogType.success,
+      animType: AnimType.scale,
+      title: AppStrings.Alerts.tr(),
+      desc: AppStrings.Was_Saved_Successfully.tr(),
+      btnOkText: AppStrings.confirm.tr(),
+      btnOkOnPress: () {
+        Navigator.of(context).pop();
       },
-      animationType: DialogTransitionType.fade,
-      curve: Curves.linear,
-      duration: Duration(seconds: 1),
-    );
-    return null;
+    ).show();
+  }
+
+  void displayFaileDialoge(BuildContext context) {
+    AwesomeDialog(
+      context: context,
+      dialogType: DialogType.error,
+      animType: AnimType.scale,
+      title: AppStrings.Alerts.tr(),
+      desc: AppStrings.saving_Failed.tr(),
+      btnOkText: AppStrings.confirm.tr(),
+      btnOkOnPress: () {
+        Navigator.of(context).pop();
+      },
+    ).show();
   }
 
   Future <List<UserSkills>?> generateSkillsData() async {

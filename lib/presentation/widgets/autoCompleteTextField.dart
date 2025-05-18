@@ -10,6 +10,8 @@ import 'package:substring_highlight/substring_highlight.dart';
 
 import 'package:http/http.dart' as http;
 
+import '../../domain/model/model.dart';
+
 class AutoCompleteTextField extends StatefulWidget {
   final String date;
   final int typeId;
@@ -167,46 +169,3 @@ class _AutoCompleteTextFieldState extends State<AutoCompleteTextField> {
   }
 }
 
-class EmployeeReviewers {
-  final int? id;
-  final int? employeeId;
-  final String? name;
-  final String? code;
-  final String? picPath;
-  final int? order;
-  final bool? singleApprovalEnabled;
-  final bool? isCurrent;
-  // "Id": 19775,
-  // "EmployeeId": 19775,
-  // "Name": "menna khaled fathy",
-  // "Code": "0000",
-  // "PicPath": "/Content/Images/employeeIcon.png",
-  // "Order": 1,
-  // "SingleApprovalEnabled": false,
-  //"IsCurrent": true
-
-  EmployeeReviewers(
- {
-   required this.id,
-   required this.employeeId,
-   required this.name,
-   required this.code,
-   required this.picPath,
-   required this.order,
-   required this.singleApprovalEnabled,
-   required this.isCurrent,
-  });
-
-  factory EmployeeReviewers.fromJson(Map<String, dynamic> json) {
-    return EmployeeReviewers(
-        id: json["Id"],
-        employeeId: json["employeeId"],
-        name: json["Name"],
-        code: json["code"],
-        picPath: json["picPath"],
-        order: json["Order"],
-        singleApprovalEnabled: json["SingleApprovalEnabled"],
-        isCurrent: json["IsCurrent"]
-    );
-  }
-}

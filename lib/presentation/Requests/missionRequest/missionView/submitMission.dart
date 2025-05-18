@@ -3,14 +3,15 @@ import 'dart:convert';
 import 'dart:core';
 import 'dart:io';
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:essmohr/domain/model/model.dart';
 import 'package:essmohr/presentation/widgets/autoCompleteTextField.dart';
-import 'package:essmohr/presentation/widgets/dateTime.dart';
+
 import 'package:essmohr/presentation/widgets/profile_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
+
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:essmohr/application/app_prefs.dart';
@@ -75,8 +76,6 @@ class _MissionSubmitState extends State<MissionSubmit>with TickerProviderStateMi
     super.initState();
 
   }
-
-
   @override
   Widget build(BuildContext context) {
     return
@@ -315,7 +314,7 @@ class _MissionSubmitState extends State<MissionSubmit>with TickerProviderStateMi
                                               2);
                                               //int.parse(_DurationEditingController.text));
                                           if (x == false) {
-                                            displayDialog();
+                                            displayDialog(context);
                                           }
                                           else {
                                             addingMissionRequest();
@@ -323,17 +322,7 @@ class _MissionSubmitState extends State<MissionSubmit>with TickerProviderStateMi
 
 
                                         }
-                                        // {
-                                        //   // bool? x = await getValidateMission(
-                                        //   //     '2023-08-27', "2023-08-28", 572,
-                                        //   //     0, 2);
-                                        //   if (x == false) {
-                                        //     displayDialog();
-                                        //   }
-                                        //   else {
-                                        //    // addingMissionRequest();
-                                        //   }
-                                        // }
+
                                         )
                                   ],),
                               ]
@@ -347,7 +336,6 @@ class _MissionSubmitState extends State<MissionSubmit>with TickerProviderStateMi
         ),
       );
   }
-
   int daysBetween(DateTime from, DateTime to) {
     from = DateTime(from.year, from.month, from.day);
     to = DateTime(to.year, to.month, to.day);
@@ -355,7 +343,6 @@ class _MissionSubmitState extends State<MissionSubmit>with TickerProviderStateMi
         .difference(from)
         .inHours / 24).round();
   }
-
   void selectionChanged(DateRangePickerSelectionChangedArgs args) {
     SchedulerBinding.instance.addPostFrameCallback((duration) {
       setState(() {
@@ -381,7 +368,6 @@ class _MissionSubmitState extends State<MissionSubmit>with TickerProviderStateMi
       });
     });
   }
-
   Widget getDateRangePicker() {
     return Card(
         child: SfDateRangePicker(
@@ -392,59 +378,6 @@ class _MissionSubmitState extends State<MissionSubmit>with TickerProviderStateMi
           allowViewNavigation: false,
         ));
   }
-
-  // Widget buildHoursCard() {
-  //   DateTime start =;
-  //   return Column(
-  //       children: List.generate(
-  //       DateTime.parse(_endDate).difference()DateTime.parse(_startDate).inDays + 1,
-  //               (index) {
-  //             DateTime day = DateTime.parse(_startDate).add(Duration(days: index));
-  //             return Card(
-  //               child: ListTile(
-  //                 title: Text(DateFormat('yyyy-MM-dd').format(day)),
-  //                 subtitle: Row(
-  //                   children: [
-  //                     Text(AppStrings.from),
-  //                     ElevatedButton(
-  //                       onPressed: () async {
-  //                         TimeOfDay? time = await showTimePicker(
-  //                           context: context,
-  //                           initialTime: TimeOfDay(hour: 9, minute: 0),
-  //                         );
-  //                         if (time != null) {
-  //                           setState(() {
-  //                             selectedHours.add(time);
-  //                           });
-  //                         }
-  //                       },
-  //                       child: Text("اختار الساعة من"),
-  //                     ),
-  //                     Text(AppStrings.to),
-  //                     ElevatedButton(
-  //                       onPressed: () async {
-  //                         TimeOfDay? time = await showTimePicker(
-  //                           context: context,
-  //                           initialTime: TimeOfDay(hour: 17, minute: 0),
-  //                         );
-  //                         if (time != null) {
-  //                           setState(() {
-  //                             selectedHours.add(time);
-  //                           });
-  //                         }
-  //                       },
-  //                       child: Text("اختار الساعة إلى"),
-  //                     ),
-  //                   ],
-  //                 ),
-  //               ),
-  //             );
-  //           }
-  //   )
-  //   );
-  // }
-
-
   Future showDialogDate() {
     return
       showDialog(
@@ -463,9 +396,8 @@ class _MissionSubmitState extends State<MissionSubmit>with TickerProviderStateMi
                             backgroundColor: colorManager.primary,
                             child: Text(AppStrings.ok.tr()),
                             onPressed: () {
-                              // setState(() {
                               oKPressed = true;
-                              //attendanceData = await getApiAttendance();
+
 
 
                               Navigator.of(context, rootNavigator: true).pop(
@@ -480,9 +412,7 @@ class _MissionSubmitState extends State<MissionSubmit>with TickerProviderStateMi
                   )
               ));
   }
-
   Map<String, Map<String, TimeOfDay>> selectedHoursPerDay = {};
-
   Future buildHoursCard() {
     return showDialog(
       context: context,
@@ -491,8 +421,7 @@ class _MissionSubmitState extends State<MissionSubmit>with TickerProviderStateMi
           int totalDays = DateTime.parse(fixDateFormat(_endDate))
               .difference(DateTime.parse(fixDateFormat(_startDate)))
               .inDays + 1;
-
-          return SizedBox(
+           return SizedBox(
             height: 400,
             child: Column(
               children: [
@@ -501,7 +430,8 @@ class _MissionSubmitState extends State<MissionSubmit>with TickerProviderStateMi
                     itemCount: totalDays,
                     itemBuilder: (context, index) {
                       DateTime day = DateTime.parse(fixDateFormat(_startDate)).add(Duration(days: index));
-                      String dayStr = DateFormat('yyyy-mm-dd').format(day);
+                      String dayStr =_startDate.toString();
+                      //DateFormat('dd-mm-yyyy').format(day);
 
                       return Card(
                         child: ListTile(
@@ -513,7 +443,7 @@ class _MissionSubmitState extends State<MissionSubmit>with TickerProviderStateMi
                                 onPressed: () async {
                                   TimeOfDay? fromTime = await showTimePicker(
                                     context: context,
-                                    initialTime: TimeOfDay(hour: 9, minute: 0),
+                                    initialTime: const TimeOfDay(hour: 9, minute: 0),
                                   );
                                   if (fromTime != null) {
                                     setState(() {
@@ -526,7 +456,7 @@ class _MissionSubmitState extends State<MissionSubmit>with TickerProviderStateMi
                                       _startTime=fromTime;
                                       _startTimeStr=formattedTime;
 
-                                      _StartDateController.text=_startDate + _startTimeStr!;
+
                                     });
                                   }
                                 },
@@ -553,7 +483,7 @@ class _MissionSubmitState extends State<MissionSubmit>with TickerProviderStateMi
 
                                       _endTime=toTime;
                                       _endTimeStr=formattedTime;
-                                      _EndDateController.text=_endDate + _endTimeStr!;
+
 
                                     });
                                   }
@@ -571,8 +501,19 @@ class _MissionSubmitState extends State<MissionSubmit>with TickerProviderStateMi
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    print(selectedHoursPerDay); // You can use it as needed
-                    Navigator.pop(context);
+                    if(_endTime!.isAfter(_startTime!)) {
+                      print(selectedHoursPerDay); // You can use it as needed
+                      Navigator.pop(context);
+                      _StartDateController.text=_startDate + _startTimeStr!;
+                      _EndDateController.text=_endDate + _endTimeStr!;
+                    }
+                    else
+                    {
+                      displayTimeFaileDialoge(context);
+                      _StartDateController.text=" ";
+                    _EndDateController.text=" ";
+
+                    }
                   },
                   child: Text(AppStrings.ok.tr()),
                 ),
@@ -583,226 +524,11 @@ class _MissionSubmitState extends State<MissionSubmit>with TickerProviderStateMi
       ),
     );
   }
-
-
-
-  // late Future<DateTime?> _selectedDate;
-  //
-  //
-  // Future<void> showCustomDateTimePicker(BuildContext context) async {
-  //   DateTime initialDate = DateTime.now();
-  //
-  //   await showDialog(
-  //     context: context,
-  //     builder: (context) {
-  //       return StatefulBuilder(
-  //         builder: (context, setState) {
-  //           return AlertDialog(
-  //             title: Text('اختر التاريخ والوقت'),
-  //             content: SingleChildScrollView( // ✅ هذا يمنع مشاكل overflow
-  //               child: SizedBox(
-  //                 width: double.maxFinite, // اختياري لتوسيع العرض
-  //                 child: Column(
-  //                   mainAxisSize: MainAxisSize.min,
-  //                   children: [
-  //                     CalendarDatePicker(
-  //                       initialDate: initialDate,
-  //                       firstDate: DateTime(2020),
-  //                       lastDate: DateTime(2100),
-  //                       onDateChanged: (date) {
-  //                         setState(() {
-  //                           _selectedDate = Future.value(date);
-  //                         });
-  //                       },
-  //                     ),
-  //                     SizedBox(height: 16),
-  //                     Row(
-  //                       children: [
-  //                         Text("من: "),
-  //                         TextButton(
-  //                           onPressed: () async {
-  //                             TimeOfDay? time = await showTimePicker(
-  //                               context: context,
-  //                               initialTime: TimeOfDay(hour: 9, minute: 0),
-  //                             );
-  //                             if (time != null) {
-  //                               setState(() {
-  //                                 _startTime = time;
-  //                               });
-  //                             }
-  //                           },
-  //                           child: Text(_startTime == null
-  //                               ? "اختيار"
-  //                               : _startTime!.format(context)),
-  //                         ),
-  //                       ],
-  //                     ),
-  //                     Row(
-  //                       children: [
-  //                         Text("إلى: "),
-  //                         TextButton(
-  //                           onPressed: () async {
-  //                             TimeOfDay? time = await showTimePicker(
-  //                               context: context,
-  //                               initialTime: TimeOfDay(hour: 17, minute: 0),
-  //                             );
-  //                             if (time != null) {
-  //                               setState(() {
-  //                                 _endTime = time;
-  //                               });
-  //                             }
-  //                           },
-  //                           child: Text(_endTime == null
-  //                               ? "اختيار"
-  //                               : _endTime!.format(context)),
-  //                         ),
-  //                       ],
-  //                     ),
-  //                   ],
-  //                 ),
-  //               ),
-  //             ),
-  //             actions: [
-  //               TextButton(
-  //                 onPressed: () => Navigator.of(context).pop(),
-  //                 child: Text("إلغاء"),
-  //               ),
-  //               ElevatedButton(
-  //                 onPressed: () async {
-  //                   DateTime? date = await _selectedDate;
-  //                   if (date != null && _startTime != null && _endTime != null) {
-  //                     DateTime from = DateTime(date.year, date.month, date.day,
-  //                         _startTime!.hour, _startTime!.minute);
-  //                     DateTime to = DateTime(date.year, date.month, date.day,
-  //                         _endTime!.hour, _endTime!.minute);
-  //                     print("التاريخ المختار: $date");
-  //                     print("من: $from");
-  //                     print("إلى: $to");
-  //                     Navigator.of(context).pop();
-  //                   }
-  //                 },
-  //                 child: Text("تم"),
-  //               ),
-  //             ],
-  //           );
-  //         },
-  //       );
-  //     },
-  //   );
-  // }
-  // Future<void> showCustomDateTimePicker1(BuildContext context) async {
-  //   DateTime selectedDate = DateTime.now();
-  //   TimeOfDay? startTime;
-  //   TimeOfDay? endTime;
-  //
-  //   await showDialog(
-  //     context: context,
-  //     builder: (context) {
-  //       return AlertDialog(
-  //         title: Text('اختر التاريخ والوقت'),
-  //       content: SingleChildScrollView( // ✅ هذا يمنع مشاكل overflow
-  //       child: SizedBox(
-  //       width: double.maxFinite, // اختياري لتوسيع العرض
-  //       child: Column(
-  //             mainAxisSize: MainAxisSize.min,
-  //             children: [
-  //               CalendarDatePicker(
-  //                 initialDate: selectedDate,
-  //                 firstDate: DateTime(2020),
-  //                 lastDate: DateTime(2100),
-  //                 onDateChanged: (date) {
-  //                   selectedDate = date;
-  //                 },
-  //               ),
-  //               SizedBox(height: 16),
-  //               Row(
-  //                 children: [
-  //                   Text("من: "),
-  //                   TextButton(
-  //                     onPressed: () async {
-  //                       TimeOfDay? picked = await showTimePicker(
-  //                         context: context,
-  //                         initialTime: TimeOfDay(hour: 9, minute: 0),
-  //                       );
-  //                       if (picked != null) {
-  //                         startTime = picked;
-  //                       }
-  //                     },
-  //                     child: Text(
-  //                       startTime == null
-  //                           ? "اختيار"
-  //                           : startTime!.format(context),
-  //                     ),
-  //                   ),
-  //                 ],
-  //               ),
-  //               Row(
-  //                 children: [
-  //                   Text("إلى: "),
-  //                   TextButton(
-  //                     onPressed: () async {
-  //                       TimeOfDay? picked = await showTimePicker(
-  //                         context: context,
-  //                         initialTime: TimeOfDay(hour: 17, minute: 0),
-  //                       );
-  //                       if (picked != null) {
-  //                         endTime = picked;
-  //                       }
-  //                     },
-  //                     child: Text(
-  //                       endTime == null
-  //                           ? "اختيار"
-  //                           : endTime!.format(context),
-  //                     ),
-  //                   ),
-  //                 ],
-  //               ),
-  //             ],
-  //           ),
-  //         ),
-  //    ),
-  //         actions: [
-  //           TextButton(
-  //             onPressed: () => Navigator.of(context).pop(),
-  //             child: Text("إلغاء"),
-  //           ),
-  //           ElevatedButton(
-  //             onPressed: () {
-  //               if (startTime != null && endTime != null) {
-  //                 final from = DateTime(
-  //                   selectedDate.year,
-  //                   selectedDate.month,
-  //                   selectedDate.day,
-  //                   startTime!.hour,
-  //                   startTime!.minute,
-  //                 );
-  //                 final to = DateTime(
-  //                   selectedDate.year,
-  //                   selectedDate.month,
-  //                   selectedDate.day,
-  //                   endTime!.hour,
-  //                   endTime!.minute,
-  //                 );
-  //                 print("من: $from");
-  //                 print("إلى: $to");
-  //                 Navigator.of(context).pop();
-  //               }
-  //             },
-  //             child: Text("تم"),
-  //           ),
-  //         ],
-  //       );
-  //     },
-  //   );
-  // }
-
   String fixDateFormat(String date) {
     DateTime parsedDate = DateFormat('dd-MM-yyyy').parse(date);
     return DateFormat('yyyy-MM-dd').format(parsedDate);
   }
-
   final picker = ImagePicker();
-
   DropdownButton getDropDownDurationItems() {
     // List<String> list = <String>[AppStrings.days.tr().toString()+"/"+AppStrings.day.tr().toString(),
     //   '1/2'+AppStrings.day.tr().toString(), '1/4'+ AppStrings.day.tr().toString()];
@@ -822,26 +548,6 @@ class _MissionSubmitState extends State<MissionSubmit>with TickerProviderStateMi
         );
       }).toList(),
     );
-  }
-
-  Widget? displayDialog() {
-    showAnimatedDialog(
-      context: context,
-      barrierDismissible: true,
-      builder: (BuildContext context) {
-        return ClassicGeneralDialogWidget(
-          titleText: AppStrings.Information.tr(),
-          contentText: AppStrings.ok,
-          onPositiveClick: () {
-            Navigator.of(context).pop();
-          },
-        );
-      },
-      animationType: DialogTransitionType.fade,
-      curve: Curves.linear,
-      duration: const Duration(seconds: 1),
-    );
-    return null;
   }
 
   Future<bool?> getValidateMission(String startDate, String endDate,
@@ -880,50 +586,62 @@ class _MissionSubmitState extends State<MissionSubmit>with TickerProviderStateMi
   }
 
 
-  Widget? displayDialoge()
-  {
-    showAnimatedDialog(
+  void displayDialoge(BuildContext context) {
+    AwesomeDialog(
       context: context,
-      barrierDismissible: true,
-      builder: (BuildContext context) {
-        return ClassicGeneralDialogWidget(
-          titleText: AppStrings.Alerts.tr(),
-          contentText: AppStrings.Was_Saved_Successfully.tr(),
-          positiveText:  AppStrings.confirm.tr(),
-          onPositiveClick: () {
-            Navigator.of(context).pop();
-          },
-
-        );
+      dialogType: DialogType.success,
+      animType: AnimType.scale,
+      title: AppStrings.Alerts.tr(),
+      desc: AppStrings.Was_Saved_Successfully.tr(),
+      btnOkText: AppStrings.confirm.tr(),
+      btnOkOnPress: () {
+        Navigator.of(context).pop();
       },
-      animationType: DialogTransitionType.fade,
-      curve: Curves.linear,
-      duration: Duration(seconds: 1),
-    );
-    return null;
+    ).show();
   }
 
-  Widget? displayFaileDialoge()
-  {
-    showAnimatedDialog(
+  void displayTimeFaileDialoge(BuildContext context) {
+    AwesomeDialog(
       context: context,
-      barrierDismissible: true,
-      builder: (BuildContext context) {
-        return ClassicGeneralDialogWidget(
-          //titleText: AppStrings.tr(),
-          positiveText:  AppStrings.confirm.tr(),
-          contentText: AppStrings.saving_Failed,
-          onPositiveClick: () {
-            Navigator.of(context).pop();
-          },
-
-        );
+      dialogType: DialogType.warning,
+      animType: AnimType.scale,
+      title: AppStrings.Alerts.tr(),
+      desc: AppStrings.saving_Failed.tr(),
+      btnOkText: AppStrings.confirm.tr(),
+      btnOkOnPress: () {
+        Navigator.of(context).pop();
       },
-      animationType: DialogTransitionType.sizeFade,
-      curve: Curves.linear,
-      duration: Duration(seconds: 1),
-    );
+    ).show();
   }
+
+  void displayFaileDialoge(BuildContext context) {
+    AwesomeDialog(
+      context: context,
+      dialogType: DialogType.error,
+      animType: AnimType.scale,
+      title: AppStrings.Alerts.tr(),
+      desc: AppStrings.saving_Failed.tr(),
+      btnOkText: AppStrings.confirm.tr(),
+      btnOkOnPress: () {
+        Navigator.of(context).pop();
+      },
+    ).show();
+  }
+
+  void displayDialog(BuildContext context) {
+    AwesomeDialog(
+      context: context,
+      dialogType: DialogType.info,
+      animType: AnimType.scale,
+      title: AppStrings.Information.tr(),
+      desc: AppStrings.ok.tr(),
+      btnOkText: AppStrings.confirm.tr(),
+      btnOkOnPress: () {
+        Navigator.of(context).pop();
+      },
+    ).show();
+  }
+
 
   void showImagePicker(BuildContext context) {
     showModalBottomSheet(
@@ -1047,7 +765,6 @@ class _MissionSubmitState extends State<MissionSubmit>with TickerProviderStateMi
         }
     );
   }
-
   _imgFromGallery() async {
     await picker.pickImage(
         source: ImageSource.gallery, imageQuality: 50
@@ -1106,9 +823,6 @@ class _MissionSubmitState extends State<MissionSubmit>with TickerProviderStateMi
     }
   }
 
-
-
-
   Future addingMissionRequest()  async
   {
     userId = await _appPreferences.getUserToken();
@@ -1137,16 +851,16 @@ class _MissionSubmitState extends State<MissionSubmit>with TickerProviderStateMi
       var x = Result.fromJson(jsonDecode(response.body));
       bool y = x.isValid;
       if (y == true) {
-        displayDialoge();
+        displayDialoge(context);
         setState(() {
        //   message=x.message;
         });
       } else {
-        displayFaileDialoge();
+        displayFaileDialoge(context);
       }
     }
     else {
-      displayFaileDialoge();
+      displayFaileDialoge(context);
     }
   }
 }

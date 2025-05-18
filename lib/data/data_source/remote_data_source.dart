@@ -40,7 +40,6 @@ class RemoteDataSourceImplementer implements RemoteDataSource {
 
   @override
   Future<AuthenticationResponse> login(LoginRequest loginRequest) async {
-
     DeviceInfo deviceDetails = await getDeviceDetails();
     String device_id=deviceDetails.identifier;
     return await _appServiceClient.login(
@@ -51,7 +50,6 @@ class RemoteDataSourceImplementer implements RemoteDataSource {
     String Id=userReq.userId.toString();
     return await _appServiceClient.getUserDataResponse(Id);
   }
-
   @override
   Future<BasicDataResponse> getBasicData(BasicDataRequest empBDRequest) async {
     int? empId=empBDRequest.empId;

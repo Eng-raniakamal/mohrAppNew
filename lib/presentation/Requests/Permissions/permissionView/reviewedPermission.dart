@@ -81,8 +81,11 @@ class _ReviewedPermissioniewState extends State<ReviewedPermission>with TickerPr
                 if (snapshot.hasError)
                   return Text('Error: ${snapshot.error}');
                 else
-                  return Center(
-                      child: _createPermissionsTable(permissionsData!)
+                  return SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Center(
+                        child: _createPermissionsTable(permissionsData!)
+                    ),
                   );
             }
           });
@@ -91,14 +94,14 @@ class _ReviewedPermissioniewState extends State<ReviewedPermission>with TickerPr
   Widget _createPermissionsTable(List<ReviewedPermissions> permission) {
     if(permission.isEmpty==false) {
       return DataTable(
-        headingRowColor: MaterialStateColor.resolveWith((states) =>
+        headingRowColor: WidgetStateColor.resolveWith((states) =>
         colorManager.lightprimary),
         columns: _createColumns(),
         rows: _createRows(permission),
 
       );
     }else
-    {return Container(child: Text("No Data Found"),);}
+    {return const Text("No Data Found");}
   }
 
   List<DataColumn> _createColumns() {
@@ -153,14 +156,14 @@ class _ReviewedPermissioniewState extends State<ReviewedPermission>with TickerPr
             Text(DateFormat('kk:mm').format(DateTime.tryParse(permission.to!)!).toString())
           ])),
           DataCell(Text((permission.duration).toString())),
-          DataCell(Column(mainAxisSize: MainAxisSize.min, children: ReviewedersList(permission.reviewers))),
+          DataCell(Column(mainAxisSize: MainAxisSize.min, children: ReviewersList(permission.reviewers))),
           DataCell(Text((permission.attachments).toString())),
           DataCell(Text((permission.notes).toString())),
           DataCell(Text((permission.status).toString())),
         ]))
         .toList();
   }
-  List<Widget> ReviewedersList(List<dynamic> items) {
+  List<Widget> ReviewersList(List<dynamic> items) {
     return items.map((item) {
       final value = item["Name"] ?? '';
       return
@@ -178,8 +181,8 @@ class _ReviewedPermissioniewState extends State<ReviewedPermission>with TickerPr
     //.cast<Map<String, dynamic>>();
     if(responseData!=null) {
       var permissions = responseData as List;
-      a = (await permissions.map((jsonData) =>
-          Permissions.fromJson(jsonData)).toList()).cast<ReviewedPermissions>();
+      a = ( permissions.map((jsonData) =>
+          ReviewedPermissions.fromJson(jsonData)).toList());
       List<ReviewedPermissions>? b = List<ReviewedPermissions>.from(a as Iterable);
       permissionsData = b;
       return permissionsData;

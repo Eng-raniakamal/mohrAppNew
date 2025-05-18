@@ -38,8 +38,7 @@ class _ReviewMissioniewState extends State<ReviewMission>with TickerProviderStat
         child: Builder(
           builder: (context) =>
               Scaffold(
-                // appBar: buildAppBarstart(context),
-                // backgroundColor: colorManager.white,
+
                 body:
                 SingleChildScrollView(
                   child: Column(
@@ -75,15 +74,19 @@ class _ReviewMissioniewState extends State<ReviewMission>with TickerProviderStat
           builder:(context,snapshot) {
             switch (snapshot.connectionState) {
               case ConnectionState.waiting:
-                return Center(
+                return const Center(
                     child: CircularProgressIndicator());
               default:
-                if (snapshot.hasError)
+                if (snapshot.hasError) {
                   return Text('Error: ${snapshot.error}');
-                else
-                  return Center(
-                      child: _createPermissionsTable(missionsData!)
+                } else {
+                  return SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Center(
+                        child: _createPermissionsTable(missionsData!)
+                    ),
                   );
+                }
             }
           });
   }
@@ -91,24 +94,24 @@ class _ReviewMissioniewState extends State<ReviewMission>with TickerProviderStat
   Widget _createPermissionsTable(List<ReviewMissions> permission) {
     if(permission.isEmpty==false) {
       return DataTable(
-        headingRowColor: MaterialStateColor.resolveWith((states) =>
+        headingRowColor: WidgetStateColor.resolveWith((states) =>
         colorManager.lightprimary),
         columns: _createColumns(),
         rows: _createRows(permission),
 
       );
     }else
-    {return Container(child: Text("No Data Found"),);}
+    {return const Text("No Data Found");}
   }
 
   List<DataColumn> _createColumns() {
     return [
       DataColumn(
-          label: Text(AppStrings.employee.tr(), style: TextStyle(color: colorManager.white),)),
+          label: Text(AppStrings.employee.tr(), style: const TextStyle(color: colorManager.white),)),
       DataColumn(
-          label: Text(AppStrings.empCode.tr(), style: TextStyle(color: colorManager.white),)),
+          label: Text(AppStrings.empCode.tr(), style: const TextStyle(color: colorManager.white),)),
       DataColumn(
-          label: Text(AppStrings.date.tr(), style: TextStyle(color: colorManager.white),)),
+          label: Text(AppStrings.date.tr(), style: const TextStyle(color: colorManager.white),)),
       DataColumn(
           label: Text(AppStrings.empDepartment.tr(), style: TextStyle(color: colorManager.white),)),
       DataColumn(label: Text(
@@ -179,7 +182,7 @@ class _ReviewMissioniewState extends State<ReviewMission>with TickerProviderStat
     if(responseData!=null) {
       var permissions = responseData as List;
       a = (await permissions.map((jsonData) =>
-          Permissions.fromJson(jsonData)).toList()).cast<ReviewMissions>();
+          ReviewMissions.fromJson(jsonData)).toList());
       List<ReviewMissions>? b = List<ReviewMissions>.from(a as Iterable);
       missionsData = b;
       return missionsData;
@@ -187,14 +190,14 @@ class _ReviewMissioniewState extends State<ReviewMission>with TickerProviderStat
   }
 }
 
-class result {
+class Result {
   final bool isValid;
   final String message;
-  const result({
+  const Result({
     required this.isValid, required this.message});
 
-  factory result.fromJson(Map<String, dynamic> json) {
-    return result(
+  factory Result.fromJson(Map<String, dynamic> json) {
+    return Result(
       isValid: json['IsValid'],
       message: json['Message'],
     );

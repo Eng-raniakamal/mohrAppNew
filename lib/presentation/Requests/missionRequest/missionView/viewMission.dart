@@ -74,7 +74,6 @@ class _viewMissioniewState extends State<ViewMission>with TickerProviderStateMix
       );
   }
 
-
   Widget MissionTable() {
     return
       FutureBuilder(
@@ -82,29 +81,32 @@ class _viewMissioniewState extends State<ViewMission>with TickerProviderStateMix
           builder: (context, snapshot) {
             switch (snapshot.connectionState) {
               case ConnectionState.waiting:
-                return Center(
+                return const Center(
                     child: CircularProgressIndicator());
               default:
                 if (snapshot.hasError)
                   return Text('Error: ${snapshot.error}');
-                else
-                  return Center(
-                      child: _createMissionsTable(MissionsData!)
+                else {
+                  return SingleChildScrollView(scrollDirection: Axis.horizontal,
+                    child: Center(
+                        child: _createMissionsTable(MissionsData!)
+                    ),
                   );
+                }
             }
           });
   }
-  Widget _createMissionsTable(List<Missions> Mission) {
-    if (Mission.isEmpty == false) {
+  Widget _createMissionsTable(List<Missions> mission) {
+    if (mission.isEmpty == false) {
       return DataTable(
-        headingRowColor: MaterialStateColor.resolveWith((states) =>
+        headingRowColor: WidgetStateColor.resolveWith((states) =>
         colorManager.lightprimary),
         columns: _createColumns(),
-        rows: _createRows(Mission),
+        rows: _createRows(mission),
 
       );
     } else {
-      return Container(child: Text("No Data Found"),);
+      return const Text("No Data Found");
     }
   }
   List<DataColumn> _createColumns() {

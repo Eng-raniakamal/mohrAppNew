@@ -14,7 +14,7 @@ import 'package:essmohr/application/core.dart';
 import 'package:essmohr/application/di.dart';
 import 'package:essmohr/data/data_source/local_data_source.dart';
 import 'package:essmohr/domain/model/model.dart';
-import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
+
 import 'package:essmohr/presentation/AddImage/viewModel/GetImage_ViewModel.dart';
 
 import 'package:essmohr/presentation/common/state_renderer/state_render_impl.dart';
@@ -27,6 +27,9 @@ import 'package:essmohr/presentation/widgets/clipPathWidget.dart';
 import 'package:essmohr/presentation/widgets/navigator_bar.dart';
 import 'package:essmohr/presentation/widgets/profile_widget.dart';
 import '../../domain/model/navigationManu.dart';
+import '../Requests/Admin_Request/AdminViews/AdminHome.dart';
+import '../Requests/Financial_Requests/FinancialViews/FinancialHome.dart';
+import '../Requests/Vacations/view/VacationHome.dart' show vacationHome;
 import '../resources/assets_manager.dart';
 import '../resources/routes.dart';
 
@@ -71,7 +74,7 @@ class _userViewState extends State<userView> {
             extendBodyBehindAppBar: true,
             appBar: buildAppBar(context),
             bottomNavigationBar:
-             NavigatorBar(index: 1,notificationNumber: Constants.notificationNumber,),
+             NavigatorBar(index: 1,notificationNumber: Constants.notificationNumber),
             body:
         StreamBuilder<FlowState>(
             stream: _viewModel.outputState,
@@ -89,30 +92,8 @@ class _userViewState extends State<userView> {
                 // Log or handle unexpected types safely
                 return _getContentWidget(); // fallback UI
               }
-// solving error this is the old code
-              // if (snapshot.hasData && snapshot.data is FlowState) {
-              //   return snapshot.data!.getScreenWidget(
-              //     context,
-              //     _getContentWidget(),
-              //     _viewModel.start,
-              //         () {},
-              //   );
-              // }
-              // return _getContentWidget();
 
 
-
-
-
-
-
-              // return
-              //     snapshot.data?.getScreenWidget(
-              //         context, _getContentWidget(),
-              //             () {_viewModel.start();},
-              //             () {
-              //         }) ??
-              //         _getContentWidget();
 //-----------------------------
             }
         )
@@ -313,7 +294,7 @@ if(ReqName==AppStrings.Requests.tr())
 return Container();
 
   }
-  Widget buildcountaner(String reqName) {
+  Widget buildCountaner(String reqName) {
     return
     Container(
       child: Row(
@@ -335,61 +316,6 @@ return Container();
     );
   }
   Widget _getEmployeeDataWidget(EmployeeDataModel? userData) {
-    // if (userData != null) {
-    //   var empData = userData.userDataModel;
-    //   //var empImageData = userData.userDataModel.masterImage;
-    //
-    //
-    //   var empImageData = empData.masterImage;
-    //   //String? URLimage= userData.userDataModel.masterImage.toString();
-    //   String? URLimage = empImageData.toString();
-    //   Constants.imagePath=URLimage;
-    //
-    //   if (empImageData is Map<String, dynamic>) {
-    //     Constants.canUpload = empImageData["CanUploadMasterImage"];
-    //     canEditImage = empImageData["CanUploadMasterImage"];
-    //   }else if(empData.masterImage is bool) {
-    //     Constants.canUpload = empData.masterImage?["CanUploadMasterImage"];
-    //     canEditImage = empData.masterImage?["CanUploadMasterImage"];
-    //   } else {
-    //     Constants.canUpload = false;
-    //     canEditImage = false;
-    //   }
-    //   // Constants.canUpload=empData.masterImage?["CanUploadMasterImage"];
-    //   // canEditImage=empData.masterImage?["CanUploadMasterImage"];
-    //   //
-    //
-    //
-    //
-    //   String Name;
-    //   String? language=_appPreferences.getLanguage();
-    //   if(language=="en")
-    //     {
-    //    Name=empData.EnglishName.toString();}
-    //   else
-    //     {
-    //       Name=empData.ArabicName.toString();
-    //     }
-    //   String Email=empData.UserName.toString();
-    //   String Code=empData.EmployeeCode.toString();
-    //  return Column(
-    //       children: [
-    //        Text(Name,
-    //        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20,
-    //            color: colorManager.white),
-    // ),
-    //        const SizedBox(height: 3),
-    //       Text(Email,
-    //        style: const TextStyle(color: colorManager.white),
-    //     ),
-    //        const SizedBox(height: 3),
-    //       Text(Code,
-    //         style: const TextStyle(color: colorManager.white),)],
-    //  );}
-    // else
-    //   {
-    //     return Container();
-    //   }
 
     if (userData != null) {
       var empData = userData.userDataModel;
@@ -420,9 +346,6 @@ return Container();
        URLimage = userImage.data;
 
     Constants.imagePath=URLimage;
-    //Constants.canUpload!=empData?["CanUploadMasterImage"];
-   // bool canEditImage=empData?["CanUploadMasterImage"];
-     // String imagePath=" ";
      return ProfileWidget(
           imagePath: URLimage,
           isEdit: false,
@@ -472,32 +395,15 @@ return Container();
     super.dispose();
   }
 
-  Widget? displayDialoge() {
-    showAnimatedDialog(
-      context: context,
-      barrierDismissible: true,
-      builder: (BuildContext context) {
-        return ClassicGeneralDialogWidget(
-          titleText: AppStrings.Information.tr(),
-          contentText: AppStrings.permission_message.tr(),
-          positiveText:  AppStrings.confirm.tr(),
-          onPositiveClick: () {
-            Navigator.of(context).pop();
-          },
-        );
-      },
-      animationType: DialogTransitionType.fade
-      ,curve: Curves.linear,
-      duration: const Duration(seconds: 1),
-    );
-    return null;
-  }
+
 
   final List<Map<String, dynamic>> screens =
   [
-    {'title': 'vacations', 'screen':  VacationRequestView()},
+    {'title': 'vacations', 'screen':  vacationHome()},
     {'title': 'permission', 'screen': PermissionView(),},
     {'title': 'Mission', 'screen': MissionView (), },
+    {'title': 'Financial', 'screen': FinancialHome (), },
+    {'title': 'Administrative', 'screen': AdminHome (), },
   ];
 
   void showCustomDropdown(BuildContext context, Offset position) {

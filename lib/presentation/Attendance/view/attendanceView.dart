@@ -8,7 +8,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:http/http.dart' as http;
-import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
+
 import 'package:essmohr/application/app_prefs.dart';
 import 'package:essmohr/application/di.dart';
 import 'package:essmohr/domain/model/model.dart';

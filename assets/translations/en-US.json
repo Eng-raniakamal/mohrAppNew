@@ -69,7 +69,7 @@
   "Home": "Home",
   "profile": "My profile",
   "Settings": "Settings",
-  "new_message_here": "new message",
+  "new message": "new messages",
   "Errands": "Errands",
   "Vacation": "Vacations",
   "noAttachments": "No Attachments",
@@ -186,5 +186,13 @@
   "missions": "Missions",
   "permissions": "Permissions",
   "vacations": "Vacations",
-  "selectHours": "select hours"
+  "selectHours": "select hours",
+
+  "FinancialRequest":"Financial Request",
+  "FinancialType": "Financial Type",
+  "value":"value",
+
+  "Administrative": "Administrative",
+  "AdministrativeRequest":"Administrative Request",
+  "AdministrativeType":"Administrative Type"
 }

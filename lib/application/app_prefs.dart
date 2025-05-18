@@ -136,7 +136,7 @@ class AppPreferences {
     _sharedPreferences.setInt(PREFS_List_Notification,lengthOfList);
   }
 
-  Future<int> getUserNotificationList() async {
+  Future <int> getUserNotificationList() async {
     return _sharedPreferences.getInt(PREFS_List_Notification) ?? 0;
   }
 

@@ -9,7 +9,7 @@ import 'package:essmohr/presentation/resources/assets_manager.dart';
 import 'package:essmohr/presentation/resources/colors.dart';
 import 'package:essmohr/presentation/resources/routes.dart';
 import 'package:rive/rive.dart'as Rive;
-import 'package:workmanager/workmanager.dart';
+//import 'package:workmanager/workmanager.dart';
 
 class SplashView extends StatefulWidget {
   const SplashView({Key? key}) : super(key: key);

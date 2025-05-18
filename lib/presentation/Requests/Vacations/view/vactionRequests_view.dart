@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:core';
 import 'dart:io';
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:essmohr/domain/model/model.dart';
 import 'package:essmohr/presentation/widgets/appbarstart.dart';
@@ -10,7 +11,7 @@ import 'package:essmohr/presentation/widgets/autoCompleteTextField.dart';
 import 'package:essmohr/presentation/widgets/profile_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
+
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:essmohr/application/app_prefs.dart';
@@ -24,14 +25,14 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import 'package:http/http.dart' as http;
 
-class VacationRequestView extends StatefulWidget implements NavigationStates
+class VacationSubmit extends StatefulWidget implements NavigationStates
 {
-  const VacationRequestView ({Key? key}) : super(key: key);
+  const VacationSubmit ({Key? key}) : super(key: key);
   @override
-  State<VacationRequestView > createState() => _VacationRequestViewState();
+  State<VacationSubmit > createState() => _VacationRequestViewState();
 }
 
-class _VacationRequestViewState extends State<VacationRequestView>with TickerProviderStateMixin {
+class _VacationRequestViewState extends State<VacationSubmit>with TickerProviderStateMixin {
   final AppPreferences _appPreferences = instance<AppPreferences>();
   final _Formkey = GlobalKey<FormState>();
   String? dropDownValue;
@@ -41,15 +42,21 @@ class _VacationRequestViewState extends State<VacationRequestView>with TickerPro
   DateTime Todate = DateTime(2023);
   bool oKPressed = false;
 
-  List<VacationType> vacationType=[];
-    List<VacationType> items=[];
-  late Future<List<VacationType>> _future;
+  List<VacationsType> vacationType=[];
+    List<VacationsType> items=[];
+  late Future<List<VacationsType>> _future;
   int? _selectedVacationType;
   var _currentIndex = 0;
+  String daysOrHours="days";
   String? message;
   String? selectedVacationType;
-  String selectedTimeType = "please select time type";
+  //String selectedTimeType = "please select time type";
   late String _startDate, _endDate;
+  //String? message;
+  String? _startTimeStr;
+  String? _endTimeStr;
+  TimeOfDay? _startTime;
+  TimeOfDay? _endTime;
   late int durtionValue;
   final DateRangePickerController _controller = DateRangePickerController();
   late TextEditingController _StartDateController = TextEditingController();
@@ -102,10 +109,12 @@ class _VacationRequestViewState extends State<VacationRequestView>with TickerPro
                         Form(
                           child: Container(
                               padding: const EdgeInsets.only(
-                                  top: 12,
+                                  //top: 12,
                                   left: 28,
                                   right: 28),
-                              child: Column(children: [
+                              child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start
+                                  ,children: [
                                 const SizedBox(height: 10),
                                 Row(
                                     mainAxisSize: MainAxisSize.min,
@@ -149,8 +158,12 @@ class _VacationRequestViewState extends State<VacationRequestView>with TickerPro
                                                 AppStrings.select_time_duration
                                                     .tr()),
                                             onPressed: () async {
-                                              //oKPressed=false;
-                                              await showDialogDate();
+                                              if(daysOrHours=="days" || daysOrHours=="أيام") {
+                                                await showDialogDate();
+                                              }else {
+                                                await showDialogDate();
+                                                await buildHoursCard();
+                                              }
                                               setState(() {});
                                             }),
                                       )
@@ -195,25 +208,6 @@ class _VacationRequestViewState extends State<VacationRequestView>with TickerPro
                                           typeId: 0,
                                           type: 1,)
 
-                                      // TextFormField(
-                                      //   controller: _ReplacementEditingController,
-                                      //   keyboardType: TextInputType.text,
-                                      //   decoration: InputDecoration(
-                                      //       focusedBorder: OutlineInputBorder(
-                                      //         borderSide: BorderSide(
-                                      //             color: colorManager
-                                      //                 .greywithOpacity,
-                                      //             width: 1.0),
-                                      //       ),
-                                      //       enabledBorder: OutlineInputBorder(
-                                      //         borderSide: BorderSide(
-                                      //             color: colorManager
-                                      //                 .greywithOpacity,
-                                      //             width: 1.0),
-                                      //       ),
-                                      //       label: Text(
-                                      //           AppStrings.Replacement.tr())),
-                                      // ),
                                     ),
 
                                   ],),
@@ -255,27 +249,7 @@ class _VacationRequestViewState extends State<VacationRequestView>with TickerPro
                                           date: "2024-10-30",
                                           typeId: 0,
                                           type: 1,)
-                                      // child: TextFormField(
-                                      //   controller: _ReviewerEditingController,
-                                      //   keyboardType: TextInputType.text,
-                                      //   decoration: InputDecoration(
-                                      //       focusedBorder: OutlineInputBorder(
-                                      //         borderSide: BorderSide(
-                                      //             color: colorManager
-                                      //                 .greywithOpacity,
-                                      //             width: 1.0),
-                                      //       ),
-                                      //       enabledBorder: OutlineInputBorder(
-                                      //         borderSide: BorderSide(
-                                      //             color: colorManager
-                                      //                 .greywithOpacity,
-                                      //             width: 1.0),
-                                      //       ),
-                                      //
-                                      //       label: Text(
-                                      //           AppStrings.Reviewers.tr())),
-                                      //
-                                      // ),
+
                                     ),
 
                                   ],),
@@ -329,7 +303,7 @@ class _VacationRequestViewState extends State<VacationRequestView>with TickerPro
                                               0,
                                               int.parse(_DurationEditingController.text));
                                           if (x == false) {
-                                            displayDialog();
+                                            displayDialoge(context);
                                           }
                                           else {
                                             addingVacationRequest();
@@ -353,7 +327,122 @@ class _VacationRequestViewState extends State<VacationRequestView>with TickerPro
     to = DateTime(to.year, to.month, to.day);
     return (to.difference(from).inHours / 24).round();
   }
+  String fixDateFormat(String date) {
+    DateTime parsedDate = DateFormat('dd-MM-yyyy').parse(date);
+    return DateFormat('yyyy-MM-dd').format(parsedDate);
+  }
+  Map<String, Map<String, TimeOfDay>> selectedHoursPerDay = {};
+  Future buildHoursCard() {
+    return showDialog(
+      context: context,
+      builder: (context) => StatefulBuilder(
+        builder: (context, setState) {
+          int totalDays = DateTime.parse(fixDateFormat(_endDate))
+              .difference(DateTime.parse(fixDateFormat(_startDate)))
+              .inDays + 1;
+          return SizedBox(
+            height: 400,
+            child: Column(
+              children: [
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: totalDays,
+                    itemBuilder: (context, index) {
+                      DateTime day = DateTime.parse(fixDateFormat(_startDate)).add(Duration(days: index));
+                      String dayStr =_startDate.toString();
+                      //DateFormat('dd-mm-yyyy').format(day);
 
+                      return Card(
+                        child: ListTile(
+                          title: Text(dayStr),
+                          subtitle: Row(
+                            children: [
+                              Text(AppStrings.from.tr()),
+                              ElevatedButton(
+                                onPressed: () async {
+                                  TimeOfDay? fromTime = await showTimePicker(
+                                    context: context,
+                                    initialTime: const TimeOfDay(hour: 9, minute: 0),
+                                  );
+                                  if (fromTime != null) {
+                                    setState(() {
+                                      selectedHoursPerDay[dayStr] ??= {};
+                                      selectedHoursPerDay[dayStr]!['from'] = fromTime;
+
+                                      final hour = fromTime.hour.toString().padLeft(2, '0');
+                                      final minute = fromTime.minute.toString().padLeft(2, '0');
+                                      String formattedTime = "$hour:$minute";
+                                      _startTime=fromTime;
+                                      _startTimeStr=formattedTime;
+
+
+                                    });
+                                  }
+                                },
+                                child: Text(
+                                  selectedHoursPerDay[dayStr]?['from']?.format(context) ?? AppStrings.selectHours.tr(),
+                                ),
+                              ),
+                              SizedBox(width: 10),
+                              Text(AppStrings.to.tr()),
+                              ElevatedButton(
+                                onPressed: () async {
+                                  TimeOfDay? toTime = await showTimePicker(
+                                    context: context,
+                                    initialTime: TimeOfDay(hour: 17, minute: 0),
+                                  );
+                                  if (toTime != null) {
+                                    setState(() {
+                                      selectedHoursPerDay[dayStr] ??= {};
+                                      selectedHoursPerDay[dayStr]!['to'] = toTime;
+
+                                      final hour = toTime.hour.toString().padLeft(2, '0');
+                                      final minute = toTime.minute.toString().padLeft(2, '0');
+                                      String formattedTime = "$hour:$minute";
+
+                                      _endTime=toTime;
+                                      _endTimeStr=formattedTime;
+
+
+                                    });
+                                  }
+                                },
+                                child: Text(
+                                  selectedHoursPerDay[dayStr]?['to']?.format(context) ?? AppStrings.selectHours.tr(),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    if(_endTime!.isAfter(_startTime!)) {
+                      print(selectedHoursPerDay); // You can use it as needed
+                      Navigator.pop(context);
+                      _StartDateController.text=_startDate + _startTimeStr!;
+                      _EndDateController.text=_endDate + _endTimeStr!;
+                    }
+                    else
+                    {
+                      displayFaileDialoge(context);
+                      _StartDateController.text=" ";
+                      _EndDateController.text=" ";
+
+                    }
+                  },
+                  child: Text(AppStrings.ok.tr()),
+                ),
+              ],
+            ),
+          );
+        },
+      ),
+    );
+  }
   void selectionChanged(DateRangePickerSelectionChangedArgs args) {
     SchedulerBinding.instance.addPostFrameCallback((duration) {
       setState(() {
@@ -441,21 +530,35 @@ class _VacationRequestViewState extends State<VacationRequestView>with TickerPro
   }
 
   DropdownButton getDropDownDurationItems() {
-    List<String> list = <String>[AppStrings.days.tr().toString()+"/"+AppStrings.day.tr().toString(),
-                        '1/2'+AppStrings.day.tr().toString(), '1/4'+ AppStrings.day.tr().toString()];
+    List<String> list = <String>[AppStrings.days.tr().toString(),
+                        AppStrings.hours.tr().toString(),];
+    // return DropdownButton<String>(
+    //   value: dropDownValue,
+    //   //icon: const Icon(Icons.arrow_downward),
+    //   //elevation: 16,
+    //   //style: const TextStyle(color: Colors.deepPurple),
+    //   underline: Container(
+    //     // height: 2,
+    //     // color: Colors.deepPurpleAccent,
+    //   ),
+    //   onChanged: (String? value) {
+    //     // This is called when the user selects an item.
+    //     setState(() {
+    //       dropDownValue = value!;
+    //     });
+    //   },
+    //   items: list.map<DropdownMenuItem<String>>((String value) {
+    //     return DropdownMenuItem<String>(
+    //       value: value,
+    //       child: Text(value),
+    //     );
+    //   }).toList(),
+    // );
     return DropdownButton<String>(
-      value: dropDownValue,
-      //icon: const Icon(Icons.arrow_downward),
-      //elevation: 16,
-      //style: const TextStyle(color: Colors.deepPurple),
-      underline: Container(
-        // height: 2,
-        // color: Colors.deepPurpleAccent,
-      ),
+      value: daysOrHours,
       onChanged: (String? value) {
-        // This is called when the user selects an item.
         setState(() {
-          dropDownValue = value!;
+          daysOrHours = value!;
         });
       },
       items: list.map<DropdownMenuItem<String>>((String value) {
@@ -490,55 +593,6 @@ class _VacationRequestViewState extends State<VacationRequestView>with TickerPro
                         const SizedBox(
                             width: 30),
 
-
-        //                 DropdownButton<int>(
-        //                  // value: _selectedVacationType,
-        //                   //hint:  Text("Select an option"),
-        //                   isExpanded: true,
-        //                 //  onChanged: (int? newValue)
-        //                   // {
-        //                   //   setState(() {
-        //                   //     _selectedVacationType = newValue;
-        //                   //   });
-        //                  // },
-        // onChanged: (newValue) =>
-        //                                 setState(() =>
-        //                                 _selectedVacationType = newValue),
-        //                             value: _selectedVacationType,
-        //                             items: [
-        //                               ...snapshot.data!.map(
-        //                                     (item) =>
-        //                                     DropdownMenuItem(
-        //                                       value: item.id,
-        //                                       child: Text(item.type.toString()),
-        //                                     ),
-        //                               )
-        //                             ],
-        //                           ),
-        //                   // items: vacationType.map((item) {
-        //                   //   return DropdownMenuItem<int>(
-        //                   //     value: item.id,
-        //                   //     child: Text(item.type.toString()),
-        //                   //   );
-        //                   // }).toList(),
-        //                 ]),
-        //                 SizedBox(height: 20),
-        //                 ElevatedButton(
-        //                   onPressed: () {
-        //                     if (_selectedVacationType!= null) {
-        //                       print("Selected Value: $_selectedVacationType");
-        //                       ScaffoldMessenger.of(context).showSnackBar(
-        //                         SnackBar(content: Text("Selected Value: $_selectedVacationType")),
-        //                       );
-        //                     } else {
-        //                       print("No value selected");
-        //                     }
-        //                   },
-        //                   child: Text("Get Selected Value"),
-        //                 ),
-
-
-
                         DropdownButton(
                           //hint: const Text('-- select value --'),
                           onChanged: (vacationType) =>
@@ -557,65 +611,16 @@ class _VacationRequestViewState extends State<VacationRequestView>with TickerPro
                         ),
                         ]),
 
-                        // Expanded(
-                        //    child: ListView.separated(
-                        //      itemBuilder: (context, index) => ElevatedButton(
-                        //        onPressed: () => setState(
-                        //                () => _selectedVacationType = snapshot.data![index]),
-                        //        style: identical(
-                        //            _selectedVacationType, snapshot.data![index])
-                        //            ? ButtonStyle(
-                        //          backgroundColor: MaterialStateProperty.all(
-                        //              Colors.blue[400]),
-                        //          overlayColor: MaterialStateProperty.all(
-                        //              Colors.black12),
-                        //        )
-                        //            : ButtonStyle(
-                        //          backgroundColor:
-                        //          MaterialStateProperty.all(Colors.white),
-                        //          overlayColor: MaterialStateProperty.all(
-                        //              Colors.black12),
-                        //        ),
-                        //        child: Padding(
-                        //          padding: const EdgeInsets.all(4.0),
-                        //              child: Text(
-                        //                '${snapshot.data![index]}',
-                        //                style: const TextStyle(color: Colors.black),
-                        //              ),
-                        //        ),
-                        //      ),
-                        //      separatorBuilder: (context, _) =>
-                        //      const SizedBox(height: 12),
-                        //      itemCount: snapshot.data!.length,
-                        //    ),
-                        //  ),
+
                       ],
                     )
           ));
         });
   }
 
-  Widget? displayDialog() {
-    showAnimatedDialog(
-      context: context,
-      barrierDismissible: true,
-      builder: (BuildContext context) {
-        return ClassicGeneralDialogWidget(
-          titleText: AppStrings.Information.tr(),
-          contentText:message,
-          onPositiveClick: () {
-            Navigator.of(context).pop();
-          },
-        );
-      },
-      animationType: DialogTransitionType.fade,
-      curve: Curves.linear,
-      duration: const Duration(seconds: 1),
-    );
-    return null;
-  }
 
-  Future<List<VacationType>> getVacationType() async {
+
+  Future<List<VacationsType>> getVacationType() async {
 
     List<String> b = ["please select"];
     userId = await _appPreferences.getUserToken();
@@ -627,36 +632,11 @@ class _VacationRequestViewState extends State<VacationRequestView>with TickerPro
       List<dynamic> data = jsonDecode(response.body);
 
       // Convert JSON list to List<VacationType>
-      return data.map((json) => VacationType.fromJson(json)).toList();
+      return data.map((json) => VacationsType.fromJson(json)).toList();
     } else {
       throw Exception('Failed to load vacation types');
     }
-    // setState(() {
-    // String jsonsDataString = response.body.toString();
-    // responseData = json.decode(jsonsDataString);
-    // // });
-    //
-    //
-    // if (responseData != null) {
-    //   final a = (responseData as Iterable).map((data) {
-    //     return VacationType.fromJson(data as Map<String, dynamic>);
-    //   }).toList();
-    //
-    //    items=a;
-    //
-    //   for (var item in a) {
-    //     b.add(item.name.toString());
-    //   }
-    //}
-
-
-    //List<String> b = List<VacationType>.from(a['name'].toList());
-    //setState(() {
-    // vacationType = b;
-    // //});
-    // return vacationType;
   }
-
   Future<bool?> getValidateVacation(String startDate,
       String endDate,
       int vacationTypeId, int id, int duration) async
@@ -665,7 +645,6 @@ class _VacationRequestViewState extends State<VacationRequestView>with TickerPro
     bool? flag = false;
     userId = await _appPreferences.getUserToken();
     final response = await http.get(
-      //{{baseUrl}}/api/Vacation/VaildateVacation?vacationTypeId=572&fromDate=2023-08-27&toDate=2023-08-28&id=0&duration=2
         Uri.parse('${Constants
             .validateVacation}$vacationTypeId&fromDate=$startDate&toDate=$endDate&id=$id&duration=$duration'),
         headers: <String, String>
@@ -674,7 +653,6 @@ class _VacationRequestViewState extends State<VacationRequestView>with TickerPro
 
     String jsonsDataString = response.body.toString();
     responseData = json.decode(jsonsDataString);
-
 
     if (response.statusCode == 200) {
       flag = responseData.values
@@ -687,16 +665,12 @@ class _VacationRequestViewState extends State<VacationRequestView>with TickerPro
     }
 
     return flag;
-    // }
-
   }
-
 
   Future addingVacationRequest() async
   {
     userId = await _appPreferences.getUserToken();
     var uri = Uri.parse(Constants.saveVacation);
-
 
     var response = await http.post(
         uri,
@@ -719,63 +693,65 @@ class _VacationRequestViewState extends State<VacationRequestView>with TickerPro
       var x = Result.fromJson(jsonDecode(response.body));
       bool y = x.isValid;
       if (y == true) {
-        displayDialoge();
+        displayDialoge(context);
         setState(() {
          message=x.message;
         });
       } else {
-        displayFaileDialoge();
+        displayFaileDialoge(context);
       }
     }
     else {
-      displayFaileDialoge();
+      displayFaileDialoge(context);
     }
   }
 
-  Widget? displayDialoge()
-  {
-    showAnimatedDialog(
-      context: context,
-      barrierDismissible: true,
-      builder: (BuildContext context) {
-        return ClassicGeneralDialogWidget(
-          titleText: AppStrings.Alerts.tr(),
-          contentText: message,
-          positiveText:  AppStrings.confirm.tr(),
-          onPositiveClick: () {
-            Navigator.of(context).pop();
-          },
 
-        );
+
+  void displayDialoge(BuildContext context) {
+    AwesomeDialog(
+      context: context,
+      dialogType: DialogType.success,
+      animType: AnimType.scale,
+      title: AppStrings.Alerts.tr(),
+      desc: AppStrings.Was_Saved_Successfully.tr(),
+      btnOkText: AppStrings.confirm.tr(),
+      btnOkOnPress: () {
+        Navigator.of(context).pop();
       },
-      animationType: DialogTransitionType.fade,
-      curve: Curves.linear,
-      duration: Duration(seconds: 1),
-    );
-    return null;
+    ).show();
   }
 
-  Widget? displayFaileDialoge()
-  {
-    showAnimatedDialog(
+  void displayTimeFaileDialoge(BuildContext context) {
+    AwesomeDialog(
       context: context,
-      barrierDismissible: true,
-      builder: (BuildContext context) {
-        return ClassicGeneralDialogWidget(
-          //titleText: AppStrings.tr(),
-          positiveText:  AppStrings.confirm.tr(),
-          contentText: message,
-          onPositiveClick: () {
-            Navigator.of(context).pop();
-          },
-
-        );
+      dialogType: DialogType.warning,
+      animType: AnimType.scale,
+      title: AppStrings.Alerts.tr(),
+      desc: AppStrings.saving_Failed.tr(),
+      btnOkText: AppStrings.confirm.tr(),
+      btnOkOnPress: () {
+        Navigator.of(context).pop();
       },
-      animationType: DialogTransitionType.sizeFade,
-      curve: Curves.linear,
-      duration: Duration(seconds: 1),
-    );
+    ).show();
   }
+
+  void displayFaileDialoge(BuildContext context) {
+    AwesomeDialog(
+      context: context,
+      dialogType: DialogType.error,
+      animType: AnimType.scale,
+      title: AppStrings.Alerts.tr(),
+      desc: AppStrings.saving_Failed.tr(),
+      btnOkText: AppStrings.confirm.tr(),
+      btnOkOnPress: () {
+        Navigator.of(context).pop();
+      },
+    ).show();
+  }
+
+
+
 
     void showImagePicker(BuildContext context) {
       showModalBottomSheet(
@@ -956,32 +932,7 @@ class _VacationRequestViewState extends State<VacationRequestView>with TickerPro
   }
 
 
-class VacationType {
-  final int? id;
-  final String? name;
-  final int? type;
-  final int? balance;
-  final int? limit;
-  final bool? requiredAttachment;
-  VacationType ({
-    required this.id,
-    required this.name,
-    required this.type,
-    required this.balance,
-    required this.limit,
-    required this.requiredAttachment,
-  });
-  factory VacationType.fromJson(Map<String, dynamic> json) {
-    return VacationType(
-        id: json["Id"],
-        name: json["Name"],
-        type: json["Type"],
-        balance: json["Balance"],
-        limit: json["Limit"],
-        requiredAttachment:json["RequiredAttachment"]
-    );
-  }
-}
+
 
 
 
@@ -1005,48 +956,4 @@ class VacationType {
 
 
   }
-
-  // class SaveVacation{
-  //
-  // final int vacationTypeId;
-  // final String fromDate;
-  // final String toDate;
-  // final int duration;
-  // final String notes;
-  //
-  // final String  major;
-  // final String university;
-  // SaveVacation({
-  // required this.vacationTypeId,
-  // required this.fromDate,
-  // required this.toDate,
-  // required this.duration,
-  // required this.notes,
-  // required this.major,
-  // required this.university
-  // });
-  //
-  // factory SaveVacation.fromJson(Map<String, dynamic> json) {
-  // return SaveVacation(
-  //     vacationTypeId: json["vacationTypeId"],
-  //     fromDate: json["fromDate"],
-  //     toDate: json["toDate"],
-  //     duration: json["duration"],
-  //     notes: json["notes"],
-  //
-  // major: json["Major"],
-  // university: json["University"]
-  // );
-  // }
-  // }
-
-// "vacationTypeId": 626,
-// "fromDate": "2024-03-21",
-// "toDate": "2024-03-22",
-// "duration":2,
-// "notes": "asddfasdfdsaf df sadf dasf sdaf dsafd saf dasf af sdf ",
-// "request": {
-// "reviewers" : [
-// {"employeeId": 121, "code": "", "name": ""},
-// {"employeeId": 122, "code": "", "name": ""}
 

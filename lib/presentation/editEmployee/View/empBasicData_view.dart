@@ -1,11 +1,11 @@
 
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:essmohr/application/app_prefs.dart';
 import 'package:essmohr/presentation/common/state_renderer/state_render_impl.dart';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
 import 'package:essmohr/application/di.dart';
 import 'package:essmohr/domain/model/model.dart';
 import 'package:essmohr/domain/usecase/saveEmpBD_useCase.dart';
@@ -609,7 +609,7 @@ class BasicDataViewState extends State<BasicDataView> {
                                                 2,
                                                 _pOBoxEditingController.text.toString(),
                                                 _zipCodeEditingController.text.toString());
-                                            displayDialog();
+                                            displayDialoge(context);
                                           }
                                         // : null,
                                       );
@@ -801,29 +801,35 @@ setState(() {
 
   }
 
-
-
-  Widget? displayDialog() {
-    showAnimatedDialog(
+  void displayDialoge(BuildContext context) {
+    AwesomeDialog(
       context: context,
-
-      // builder: context,
-      barrierDismissible: true,
-      builder: (BuildContext context) {
-        return ClassicGeneralDialogWidget(
-          titleText: "",
-          positiveText: AppStrings.confirm.tr(),
-          contentText: AppStrings.Was_Saved_Successfully.tr(),
-          onPositiveClick: () {
-            Navigator.pop(context,true);
-          },
-        );
+      dialogType: DialogType.success,
+      animType: AnimType.scale,
+      title: AppStrings.Alerts.tr(),
+      desc: AppStrings.Was_Saved_Successfully.tr(),
+      btnOkText: AppStrings.confirm.tr(),
+      btnOkOnPress: () {
+        Navigator.of(context).pop();
       },
-      animationType: DialogTransitionType.fade, curve: Curves.linear,
-      duration: const Duration(seconds: 1),
-    );
-    return null;
+    ).show();
   }
+
+  void displayFaileDialoge(BuildContext context) {
+    AwesomeDialog(
+      context: context,
+      dialogType: DialogType.error,
+      animType: AnimType.scale,
+      title: AppStrings.Alerts.tr(),
+      desc: AppStrings.saving_Failed.tr(),
+      btnOkText: AppStrings.confirm.tr(),
+      btnOkOnPress: () {
+        Navigator.of(context).pop();
+      },
+    ).show();
+  }
+
+
 
 }
 

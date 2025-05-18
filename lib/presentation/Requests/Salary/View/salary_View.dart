@@ -2,11 +2,12 @@
 // ignore_for_file: camel_case_types
 
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:essmohr/presentation/resources/routes.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
+
 import 'package:essmohr/application/di.dart';
 import 'package:essmohr/domain/model/model.dart';
 import 'package:essmohr/presentation/Requests/Salary/View/salaryDetailsDialog.dart';
@@ -158,7 +159,7 @@ class _salaryViewState extends State<salaryView> {
                                       // String url= Constants.salaryDetailsUrl;
                                       // url=url+id.toString();
                                       if (id == 0) {
-                                        displayDialoge();
+                                        displayDialoge(context);
                                       } else {
                                         Constants.salaryDetailsId =
                                             id.toString();
@@ -200,30 +201,21 @@ class _salaryViewState extends State<salaryView> {
     return ProfileWidget(imagePath: Constants.imagePath, onClicked: () {});
   }
 
-  Widget? displayDialoge() {
-    showAnimatedDialog(
+  void displayDialoge(BuildContext context) {
+    AwesomeDialog(
       context: context,
-
-      // builder: context,
-      barrierDismissible: true,
-      builder: (BuildContext context) {
-        return ClassicGeneralDialogWidget(
-          titleText: AppStrings.Information.tr(),
-          contentText: AppStrings.no_salary_found.tr(),
-          positiveText: AppStrings.confirm.tr(),
-          onPositiveClick: () {
-            Navigator.of(context)
-                .pushNamed(
-                Routes.salary);
-            displayDialoge();
-           // Navigator.of(context).pop();
-          },
-        );
+      dialogType: DialogType.success,
+      animType: AnimType.scale,
+      title: AppStrings.Alerts.tr(),
+      desc: AppStrings.Was_Saved_Successfully.tr(),
+      btnOkText: AppStrings.confirm.tr(),
+      btnOkOnPress: () {
+        Navigator.of(context).pop();
       },
-      animationType: DialogTransitionType.fade, curve: Curves.linear,
-      duration: const Duration(seconds: 1),
-    );
+    ).show();
   }
+
+
 }
 
 

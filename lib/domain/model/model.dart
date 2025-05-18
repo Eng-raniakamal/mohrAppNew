@@ -398,7 +398,6 @@ class SalaryDetailsObject
  SalaryDetailsObject(this.data);
 }
 
-
 class AlertModel {
   String content;
   String link;
@@ -413,7 +412,6 @@ class AlertModel {
     );
   }
 }
-
 
 class NotificationModel {
   int? id;
@@ -463,6 +461,57 @@ class NotificationModel {
   }
 }
 
+class Reviewers{
+  final int employeeId;
+  final String code;
+  final String name;
+  Reviewers(this.employeeId,this.code,this.name);
+}
+
+class EmployeeReviewers {
+  final int? id;
+  final int? employeeId;
+  final String? name;
+  final String? code;
+  final String? picPath;
+  final int? order;
+  final bool? singleApprovalEnabled;
+  final bool? isCurrent;
+  // "Id": 19775,
+  // "EmployeeId": 19775,
+  // "Name": "menna khaled fathy",
+  // "Code": "0000",
+  // "PicPath": "/Content/Images/employeeIcon.png",
+  // "Order": 1,
+  // "SingleApprovalEnabled": false,
+  //"IsCurrent": true
+
+  EmployeeReviewers(
+      {
+        required this.id,
+        required this.employeeId,
+        required this.name,
+        required this.code,
+        required this.picPath,
+        required this.order,
+        required this.singleApprovalEnabled,
+        required this.isCurrent,
+      });
+
+  factory EmployeeReviewers.fromJson(Map<String, dynamic> json) {
+    return EmployeeReviewers(
+        id: json["Id"],
+        employeeId: json["employeeId"],
+        name: json["Name"],
+        code: json["code"],
+        picPath: json["picPath"],
+        order: json["Order"],
+        singleApprovalEnabled: json["SingleApprovalEnabled"],
+        isCurrent: json["IsCurrent"]
+    );
+  }
+}
+
 
 class SaveVacation{
 
@@ -495,15 +544,7 @@ class SaveVacation{
     );
   }
 }
-
-class Reviewers{
-  final int employeeId;
-  final String code;
-  final String name;
-  Reviewers(this.employeeId,this.code,this.name);
-}
-class ValidationVacationModel
-{
+class ValidationVacationModel {
   final bool? isValid;
   final String? message;
   final int? duration;
@@ -528,41 +569,95 @@ class ValidationVacationModel
     );
   }
 }
+class VacationRequests {
+  final String? requestDate;
+  final int? id;
+  final String? employeeName;
+  final String? employeeCode;
+  final String? department;
+  final String? jobTitle;
+  final String? from;
+  final String? to;
+  final double? duration;
+  final  String? attachments;
+  final Map<String,dynamic> balance;
+  final String? vacationTypeName;
+  final String? replacementName;
+  final  int? requestedId;
+  final String? status;
+  final  bool? editable;
+  final List<dynamic> reviewers;
 
-
-class ValidationMissionModel
-{
-  final bool? isValid;
-
-
-  ValidationMissionModel ({
-    required this.isValid,
+  VacationRequests ({
+    required this.requestDate,
+    required this.id,
+    required this.employeeName,
+    required this.employeeCode,
+    required this.department,
+    required this.jobTitle,
+    required this.from,
+    required this.to,
+    required this.duration,
+    required this.attachments,
+    required this.balance,
+    required this.vacationTypeName,
+    required this.replacementName,
+    required this.requestedId,
+    required this.editable,
+    required this.status,
+    required this.reviewers
   });
-  factory ValidationMissionModel.fromJson(Map<String, dynamic> json) {
-    return ValidationMissionModel(
-      isValid: json["IsValid"]);
+  factory VacationRequests.fromJson(Map<String, dynamic> json) {
+    return VacationRequests(
+      requestDate: json["RequestDate"],
+      id:json["Id"],
+      employeeName:json["EmployeeName"],
+      employeeCode:json["EmployeeCode"],
+      department:json["Department"],
+      jobTitle:json["JobTitle"],
+      from: json["From"],
+      to: json["To"],
+      duration: json["Duration"],
+      attachments: json["Attachments"],
+      balance:json["Balance"],
+      vacationTypeName:json["VacationTypeName"],
+      replacementName:json["ReplacementName"],
+      requestedId:json["ReplacementName"],
+      editable: json["Editable"],
+      status: json["Status"],
+      reviewers: json["Reviewers"],
 
+    );
+  }
+}
+class VacationsType {
+  final int? id;
+  final String? name;
+  final int? type;
+  final int? balance;
+  final int? limit;
+  final bool? requiredAttachment;
+  VacationsType ({
+    required this.id,
+    required this.name,
+    required this.type,
+    required this.balance,
+    required this.limit,
+    required this.requiredAttachment,
+  });
+  factory VacationsType.fromJson(Map<String, dynamic> json) {
+    return VacationsType(
+        id: json["Id"],
+        name: json["Name"],
+        type: json["Type"],
+        balance: json["Balance"],
+        limit: json["Limit"],
+        requiredAttachment:json["RequiredAttachment"]
+    );
   }
 }
 
 
-class ValidationPermissionModel
-{
-  final String? message;
-  final bool? isValid;
-
-
-  ValidationPermissionModel ({
-    required this.message,
-    required this.isValid,
-  });
-  factory ValidationPermissionModel.fromJson(Map<String, dynamic> json) {
-    return ValidationPermissionModel(
-        message: json["message"],
-        isValid: json["IsValid"]);
-
-  }
-}
 class Permissions {
   final String? requestDate;
   final String? permissionTypeName;
@@ -605,32 +700,22 @@ class Permissions {
     );
   }
 }
+class ValidationPermissionModel {
+  final String? message;
+  final bool? isValid;
 
-// {
-// "RequestDate": "2025-04-23T11:13:39.347",
-// "Id": 1256232,
-// "EmployeeName": "shams",
-// "EmployeeCode": "372019",
-// "Department": "Technical office ",
-// "JobTitle": "مهندس مكتب  فني",
-// "From": "2025-04-24T00:00:00",
-// "To": "2025-04-25T23:59:59",
-// "Destination": "tttttttt",
-// "Attachments": "",
-// "Duration": "2 Days",
-// "Notes": "",
-// "RequestedId": 232636,
-// "Editable": true,
-// "Status": "",
-// "Reviewers": [
-// {
-// "Name": "Zain Elabdein Abdelhamid",
-// "Status": "Pending",
-// "Note": ""
-// }
-// ]
-// // }
 
+  ValidationPermissionModel ({
+    required this.message,
+    required this.isValid,
+  });
+  factory ValidationPermissionModel.fromJson(Map<String, dynamic> json) {
+    return ValidationPermissionModel(
+        message: json["message"],
+        isValid: json["IsValid"]);
+
+  }
+}
 class ReviewPermissions {
   final String? date;
   final int? id;
@@ -736,7 +821,7 @@ class ReviewedPermissions {
   }
 }
 
-//
+
 class Missions {
   final String? requestDate;
   final String? from;
@@ -786,7 +871,7 @@ class ReviewMissions {
   final String? from;
   final String? to;
   final String? destination;
-  final  double? duration;
+  final  String? duration;
   final  String? notes;
   final bool editable;
   final  String? attachments;
@@ -840,10 +925,10 @@ class ReviewedMissions {
   final String? jobTitle;
   final String? from;
   final String? to;
-  final  double? duration;
-  final  String? notes;
+  final String? duration;
+  final String? notes;
   final bool editable;
-  final  String? attachments;
+  final String? attachments;
   final String? status;
   final List<dynamic> reviewers;
 
@@ -875,6 +960,372 @@ class ReviewedMissions {
       from: json["From"],
       to: json["To"],
       duration: json["Duration"],
+      notes: json["Notes"],
+      attachments: json["Attachments"],
+      editable: json["Editable"],
+      status: json["Status"],
+      reviewers: json["Reviewers"],
+    );
+  }
+}
+class ValidationMissionModel {
+  final bool? isValid;
+
+
+  ValidationMissionModel ({
+    required this.isValid,
+  });
+  factory ValidationMissionModel.fromJson(Map<String, dynamic> json) {
+    return ValidationMissionModel(
+        isValid: json["IsValid"]);
+
+  }
+}
+
+
+class FinancialType {
+  final int? id;
+  final String? name;
+  final bool? isEditableByEmployee;
+  final double? defaultValue;
+
+  FinancialType ({
+    required this.id,
+    required this.name,
+    required this.isEditableByEmployee,
+    required this.defaultValue
+
+  });
+  factory FinancialType.fromJson(Map<String, dynamic> json) {
+    return FinancialType(
+        id: json["Id"],
+        name: json["Name"],
+        isEditableByEmployee: json["IsEditableByEmployee"],
+        defaultValue: json["DefaultValue"]
+
+    );
+  }
+}
+class SaveFinancial {
+  final int? requestType;
+  final String? date;
+  final List<Reviewers> reviewers;
+
+  SaveFinancial({
+    required this.requestType,
+    required this.date,
+    required this.reviewers
+  });
+  factory SaveFinancial.fromJson(Map<String, dynamic> json) {
+    return SaveFinancial(
+      requestType: json["requestType"],
+      date: json["date"],
+      reviewers: json["reviewers"],
+
+    );
+  }
+}
+class Financial {
+  final String? requestDate;
+  final String? requestType;
+  final String? date;
+  final String? value;
+  final  String? notes;
+  final  String? attachments;
+  final  bool? editable;
+  final String? status;
+  final List<Reviewers> reviewers;
+
+  Financial ({
+    required this.requestDate,
+    required this.requestType,
+    required this.date,
+    required this.value,
+    required this.notes,
+    required this.attachments,
+    required this.editable,
+    required this.status,
+    required this.reviewers
+  });
+  factory Financial.fromJson(Map<String, dynamic> json) {
+    return Financial(
+      requestDate: json["RequestDate"],
+      requestType: json["RequestType"],
+      date: json["Date"],
+      value: json["Value"],
+      notes: json["Notes"],
+      attachments: json["Attachments"],
+      editable: json["Editable"],
+      status: json["Status"],
+      reviewers: json["Reviewers"],
+    );
+  }
+}
+class ReviewFinancialModel {
+  final String? date;
+  final int? id;
+  final String? empName;
+  final String? empCode;
+  final String? empDepartment;
+  final String? jobTitle;
+  final String? type;
+  final  String? value;
+  final  String? notes;
+  final bool editable;
+  final  String? attachments;
+  final String? status;
+  final List<dynamic> reviewers;
+
+  ReviewFinancialModel ({
+    required this.date,
+    required this.id,
+    required this.empName,
+    required this.empCode,
+    required this.empDepartment,
+    required this.jobTitle,
+    required this.type,
+    required this.value,
+    required this.notes,
+    required this.editable,
+    required this.attachments,
+    required this.status,
+    required this.reviewers
+  });
+  factory ReviewFinancialModel.fromJson(Map<String, dynamic> json) {
+    return ReviewFinancialModel(
+
+      date: json["RequestDate"],
+      id: json["Id"],
+      empName: json["EmployeeName"],
+      empCode: json["EmployeeCode"],
+      empDepartment: json["Department"],
+      jobTitle: json["JobTitle"],
+      type: json["Type"],
+      value: json["Value"],
+      notes: json["Notes"],
+      attachments: json["Attachments"],
+      editable: json["Editable"],
+      status: json["Status"],
+      reviewers: json["Reviewers"],
+    );
+  }
+}
+class ReviewedFinancialModel {
+  final String? date;
+  final int? id;
+  final String? empName;
+  final String? empCode;
+  final String? empDepartment;
+  final String? jobTitle;
+  final String? type;
+  final  String? value;
+  final  String? notes;
+  final bool editable;
+  final  String? attachments;
+  final String? status;
+  final List<dynamic> reviewers;
+
+  ReviewedFinancialModel ({
+    required this.date,
+    required this.id,
+    required this.empName,
+    required this.empCode,
+    required this.empDepartment,
+    required this.jobTitle,
+    required this.type,
+    required this.value,
+    required this.notes,
+    required this.editable,
+    required this.attachments,
+    required this.status,
+    required this.reviewers
+  });
+  factory ReviewedFinancialModel.fromJson(Map<String, dynamic> json) {
+    return ReviewedFinancialModel(
+
+      date: json["RequestDate"],
+      id: json["Id"],
+      empName: json["EmployeeName"],
+      empCode: json["EmployeeCode"],
+      empDepartment: json["Department"],
+      jobTitle: json["JobTitle"],
+      type: json["Type"],
+      value: json["Value"],
+      notes: json["Notes"],
+      attachments: json["Attachments"],
+      editable: json["Editable"],
+      status: json["Status"],
+      reviewers: json["Reviewers"],
+    );
+  }
+}
+
+
+class AdminType {
+  final int? id;
+  final String? name;
+  final bool? isEditableByEmployee;
+  final double? defaultValue;
+
+  AdminType ({
+    required this.id,
+    required this.name,
+    required this.isEditableByEmployee,
+    required this.defaultValue
+
+  });
+  factory AdminType.fromJson(Map<String, dynamic> json) {
+    return AdminType(
+        id: json["Id"],
+        name: json["Name"],
+        isEditableByEmployee: json["IsEditableByEmployee"],
+        defaultValue: json["DefaultValue"]
+
+    );
+  }
+}
+class SaveAdmin {
+  final int? requestType;
+  final String? date;
+  final List<Reviewers> reviewers;
+
+  SaveAdmin({
+    required this.requestType,
+    required this.date,
+    required this.reviewers
+  });
+  factory SaveAdmin.fromJson(Map<String, dynamic> json) {
+    return SaveAdmin(
+      requestType: json["requestType"],
+      date: json["date"],
+      reviewers: json["reviewers"],
+
+    );
+  }
+}
+class Admin {
+  final String? requestDate;
+  final String? requestType;
+  final String? date;
+  final  String? notes;
+  final  String? attachments;
+  final  bool? editable;
+  final String? status;
+  final List<Reviewers> reviewers;
+
+  Admin ({
+    required this.requestDate,
+    required this.requestType,
+    required this.date,
+    required this.notes,
+    required this.attachments,
+    required this.editable,
+    required this.status,
+    required this.reviewers
+  });
+  factory Admin.fromJson(Map<String, dynamic> json) {
+    return Admin(
+      requestDate: json["RequestDate"],
+      requestType: json["RequestType"],
+      date: json["Date"],
+      notes: json["Notes"],
+      attachments: json["Attachments"],
+      editable: json["Editable"],
+      status: json["Status"],
+      reviewers: json["Reviewers"],
+    );
+  }
+}
+class ReviewAdminModel {
+  final String? date;
+  final int? id;
+  final String? empName;
+  final String? empCode;
+  final String? empDepartment;
+  final String? jobTitle;
+  final String? type;
+  final  String? value;
+  final  String? notes;
+  final bool editable;
+  final  String? attachments;
+  final String? status;
+  final List<dynamic> reviewers;
+
+  ReviewAdminModel ({
+    required this.date,
+    required this.id,
+    required this.empName,
+    required this.empCode,
+    required this.empDepartment,
+    required this.jobTitle,
+    required this.type,
+    required this.value,
+    required this.notes,
+    required this.editable,
+    required this.attachments,
+    required this.status,
+    required this.reviewers
+  });
+  factory ReviewAdminModel.fromJson(Map<String, dynamic> json) {
+    return ReviewAdminModel(
+
+      date: json["RequestDate"],
+      id: json["Id"],
+      empName: json["EmployeeName"],
+      empCode: json["EmployeeCode"],
+      empDepartment: json["Department"],
+      jobTitle: json["JobTitle"],
+      type: json["Type"],
+      value: json["Value"],
+      notes: json["Notes"],
+      attachments: json["Attachments"],
+      editable: json["Editable"],
+      status: json["Status"],
+      reviewers: json["Reviewers"],
+    );
+  }
+}
+class ReviewedAdminModel {
+  final String? date;
+  final int? id;
+  final String? empName;
+  final String? empCode;
+  final String? empDepartment;
+  final String? jobTitle;
+  final String? type;
+  final  String? value;
+  final  String? notes;
+  final bool editable;
+  final  String? attachments;
+  final String? status;
+  final List<dynamic> reviewers;
+
+  ReviewedAdminModel ({
+    required this.date,
+    required this.id,
+    required this.empName,
+    required this.empCode,
+    required this.empDepartment,
+    required this.jobTitle,
+    required this.type,
+    required this.value,
+    required this.notes,
+    required this.editable,
+    required this.attachments,
+    required this.status,
+    required this.reviewers
+  });
+  factory ReviewedAdminModel.fromJson(Map<String, dynamic> json) {
+    return ReviewedAdminModel(
+
+      date: json["RequestDate"],
+      id: json["Id"],
+      empName: json["EmployeeName"],
+      empCode: json["EmployeeCode"],
+      empDepartment: json["Department"],
+      jobTitle: json["JobTitle"],
+      type: json["Type"],
+      value: json["Value"],
       notes: json["Notes"],
       attachments: json["Attachments"],
       editable: json["Editable"],

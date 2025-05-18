@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
-import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:essmohr/application/app_prefs.dart';
 import 'package:essmohr/application/constants.dart';
 import 'package:essmohr/application/di.dart';
@@ -228,74 +228,55 @@ class _ChangePasswordState extends State<ChangePasswordPage> {
       var x= result.fromJson(jsonDecode(response.body)) ;
       String? y =x.data;
       if(y=="PasswordChangedSuccessfully") {
-        displayDialoge(AppStrings.Password_Changed_Successfully.tr());
+        displayDialog(AppStrings.Password_Changed_Successfully.tr());
 
       }
 
         if (x.errormessage == "InvalidUserNameOrPassword") {
-          displayDialoge(AppStrings.Invalid_Password.tr());
+          displayDialog(AppStrings.Invalid_Password.tr());
 
         }
         if (x.errormessage == "InvalidDevice") {
-          displayDialoge(AppStrings.Invalid_Device.tr());
+          displayDialog(AppStrings.Invalid_Device.tr());
         }
 
 
     }
     else
       {
-        displayFaileDialoge("يوجد خطاء فى ادخال البيانات");
+        displayFailureDialog("يوجد خطاء فى ادخال البيانات");
       }
   }
 
 
 
 
-  Widget? displayDialoge( String message)
-  {
-    showAnimatedDialog(
+  void displayDialog(String message) {
+    AwesomeDialog(
       context: context,
-      barrierDismissible: true,
-      builder: (BuildContext context) {
-        return ClassicGeneralDialogWidget(
-          //titleText: AppStrings.Alerts.tr(),
-          contentText: message,
-          positiveText:  AppStrings.confirm.tr(),
-          onPositiveClick: () {
-           // Navigator.of(context).pop();
-            Navigator.of(context).popAndPushNamed(Routes.homeRoute);
-          },
-
-        );
+      dialogType: DialogType.success,
+      animType: AnimType.scale,
+      title: AppStrings.confirm.tr(),
+      desc: message,
+      btnOkText: AppStrings.confirm.tr(),
+      btnOkOnPress: () {
+        Navigator.of(context).popAndPushNamed(Routes.homeRoute);
       },
-      animationType: DialogTransitionType.fade,
-      curve: Curves.linear,
-      duration: Duration(seconds: 1),
-    );
-    return null;
+    ).show();
   }
 
-  Widget? displayFaileDialoge( String msg)
-  {
-    showAnimatedDialog(
+  void displayFailureDialog(String message) {
+    AwesomeDialog(
       context: context,
-      barrierDismissible: true,
-      builder: (BuildContext context) {
-        return ClassicGeneralDialogWidget(
-          titleText: "",
-          contentText: msg,
-          positiveText:  AppStrings.confirm.tr(),
-          onPositiveClick: () {
-            Navigator.of(context).pop();
-          },
-
-        );
+      dialogType: DialogType.error,
+      animType: AnimType.scale,
+      title: AppStrings.Alerts.tr(),
+      desc: message,
+      btnOkText: AppStrings.confirm.tr(),
+      btnOkOnPress: () {
+        Navigator.of(context).pop();
       },
-      animationType: DialogTransitionType.fade,
-      curve: Curves.linear,
-      duration: Duration(seconds: 1),
-    );
-    return null;
+    ).show();
   }
 }
 

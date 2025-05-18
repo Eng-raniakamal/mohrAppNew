@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'dart:core';
 import 'dart:io';
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:essmohr/domain/model/model.dart';
 import 'package:essmohr/presentation/widgets/appbarstart.dart';
@@ -11,7 +12,7 @@ import 'package:essmohr/presentation/widgets/autoCompleteTextField.dart';
 import 'package:essmohr/presentation/widgets/profile_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
+
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:essmohr/application/app_prefs.dart';
@@ -47,16 +48,21 @@ class _permissionSubmitState extends State<PermissionSubmit>with TickerProviderS
   DateTime Fromdate = DateTime(2023);
   DateTime Todate = DateTime(2023);
   bool oKPressed = false;
-
+  String selectedTimeType = "please select time type";
   List<PermissionType> permissionType=[];
   List<PermissionType> items=[];
   late Future<List<PermissionType>> _future;
   int? _selectedPermissionType;
   var _currentIndex = 0;
-  String? message;
-  String? selectedpermissionType;
-  String selectedTimeType = "please select time type";
+  String daysOrHours="days";
+  String? selectedMissionType;
+  //String selectedTimeType = "please select time type";
   late String _startDate, _endDate;
+  String? message;
+  String? _startTimeStr;
+  String? _endTimeStr;
+  TimeOfDay? _startTime;
+  TimeOfDay? _endTime;
   late int durtionValue;
   final DateRangePickerController _controller = DateRangePickerController();
   late TextEditingController _StartDateController = TextEditingController();
@@ -130,6 +136,15 @@ class _permissionSubmitState extends State<PermissionSubmit>with TickerProviderS
                                 ]),
                                 const SizedBox(height: 5),
                                 Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  crossAxisAlignment: CrossAxisAlignment.center
+                                  , children: [
+                                  Text(AppStrings.days_hours.tr()),
+                                  const SizedBox(width: 15,),
+                                  getDropDownDurationItems(),
+                                ],),
+                                const SizedBox(height: 5),
+                                Row(
                                     children: [
                                        Text('${AppStrings.from.tr()} : '),
                                        Text(_startDate, style: const TextStyle(
@@ -153,8 +168,12 @@ class _permissionSubmitState extends State<PermissionSubmit>with TickerProviderS
                                                 AppStrings.select_time_duration
                                                     .tr()),
                                              onPressed: () async {
-                                              //oKPressed=false;
-                                              await showDialogDate();
+                                               if(daysOrHours=="days" || daysOrHours=="أيام") {
+                                                 await showDialogDate();
+                                               }else {
+                                                 await showDialogDate();
+                                                 await buildHoursCard();
+                                               }
                                               setState(() {});
                                             }),
                                       )
@@ -280,7 +299,8 @@ class _permissionSubmitState extends State<PermissionSubmit>with TickerProviderS
                                               0,
                                               int.parse(_DurationEditingController.text));
                                           if (x == false) {
-                                            displayDialog();
+                                            displayDialoge(context);
+
                                           }
                                           else {
                                             addingPermissionRequest();
@@ -305,6 +325,27 @@ class _permissionSubmitState extends State<PermissionSubmit>with TickerProviderS
     return (to
         .difference(from)
         .inHours / 24).round();
+  }
+
+  DropdownButton getDropDownDurationItems() {
+    // List<String> list = <String>[AppStrings.days.tr().toString()+"/"+AppStrings.day.tr().toString(),
+    //   '1/2'+AppStrings.day.tr().toString(), '1/4'+ AppStrings.day.tr().toString()];
+    List<String> list = <String>[AppStrings.days.tr().toString(),
+      AppStrings.hours.tr().toString() ];
+    return DropdownButton<String>(
+      value: daysOrHours,
+      onChanged: (String? value) {
+        setState(() {
+          daysOrHours = value!;
+        });
+      },
+      items: list.map<DropdownMenuItem<String>>((String value) {
+        return DropdownMenuItem<String>(
+          value: value,
+          child: Text(value),
+        );
+      }).toList(),
+    );
   }
 
   void selectionChanged(DateRangePickerSelectionChangedArgs args) {
@@ -427,10 +468,6 @@ class _permissionSubmitState extends State<PermissionSubmit>with TickerProviderS
                             Text(AppStrings.permission_Type.tr()),
                             const SizedBox(
                                 width: 30),
-
-
-
-
                             DropdownButton(
                               //hint: const Text('-- select value --'),
                               onChanged: (permissionType) =>
@@ -455,25 +492,7 @@ class _permissionSubmitState extends State<PermissionSubmit>with TickerProviderS
         });
   }
 
-  Widget? displayDialog() {
-    showAnimatedDialog(
-      context: context,
-      barrierDismissible: true,
-      builder: (BuildContext context) {
-        return ClassicGeneralDialogWidget(
-          titleText: AppStrings.Information.tr(),
-          contentText: "Invalid_permission",
-          onPositiveClick: () {
-            Navigator.of(context).pop();
-          },
-        );
-      },
-      animationType: DialogTransitionType.fade,
-      curve: Curves.linear,
-      duration: const Duration(seconds: 1),
-    );
-    return null;
-  }
+
   //
   Future<List<PermissionType>>getPermissionType() async {
     try {
@@ -537,7 +556,6 @@ class _permissionSubmitState extends State<PermissionSubmit>with TickerProviderS
 
   }
 
-
   Future addingPermissionRequest() async
   {
     userId = await _appPreferences.getUserToken();
@@ -565,62 +583,180 @@ class _permissionSubmitState extends State<PermissionSubmit>with TickerProviderS
       var x = Result.fromJson(jsonDecode(response.body));
       bool y = x.isValid;
       if (y == true) {
-        displayDialoge();
+        displayDialoge(context);
         setState(() {
           // addingSuccess = true;
         });
       } else {
-        displayFaileDialoge();
+        displayFaileDialoge(context);
       }
     }
     else {
-      displayFaileDialoge();
+      displayFaileDialoge(context);
     }
   }
 
 
-  Widget? displayDialoge()
-  {
-    showAnimatedDialog(
-      context: context,
-      barrierDismissible: true,
-      builder: (BuildContext context) {
-        return ClassicGeneralDialogWidget(
-          titleText: AppStrings.Alerts.tr(),
-          contentText: AppStrings.Was_Saved_Successfully.tr(),
-          positiveText:  AppStrings.confirm.tr(),
-          onPositiveClick: () {
-            Navigator.of(context).pop();
-          },
 
-        );
+  void displayDialoge(BuildContext context) {
+    AwesomeDialog(
+      context: context,
+      dialogType: DialogType.success,
+      animType: AnimType.scale,
+      title: AppStrings.Alerts.tr(),
+      desc: AppStrings.Was_Saved_Successfully.tr(),
+      btnOkText: AppStrings.confirm.tr(),
+      btnOkOnPress: () {
+        Navigator.of(context).pop();
       },
-      animationType: DialogTransitionType.fade,
-      curve: Curves.linear,
-      duration: Duration(seconds: 1),
-    );
-    return null;
+    ).show();
   }
 
-  Widget? displayFaileDialoge()
-  {
-    showAnimatedDialog(
+  void displayTimeFaileDialoge(BuildContext context) {
+    AwesomeDialog(
       context: context,
-      barrierDismissible: true,
-      builder: (BuildContext context) {
-        return ClassicGeneralDialogWidget(
-          //titleText: AppStrings.tr(),
-          positiveText:  AppStrings.confirm.tr(),
-          contentText: AppStrings.saving_Failed,
-          onPositiveClick: () {
-            Navigator.of(context).pop();
-          },
-
-        );
+      dialogType: DialogType.warning,
+      animType: AnimType.scale,
+      title: AppStrings.Alerts.tr(),
+      desc: AppStrings.saving_Failed.tr(),
+      btnOkText: AppStrings.confirm.tr(),
+      btnOkOnPress: () {
+        Navigator.of(context).pop();
       },
-      animationType: DialogTransitionType.sizeFade,
-      curve: Curves.linear,
-      duration: Duration(seconds: 1),
+    ).show();
+  }
+
+  void displayFaileDialoge(BuildContext context) {
+    AwesomeDialog(
+      context: context,
+      dialogType: DialogType.error,
+      animType: AnimType.scale,
+      title: AppStrings.Alerts.tr(),
+      desc: AppStrings.saving_Failed.tr(),
+      btnOkText: AppStrings.confirm.tr(),
+      btnOkOnPress: () {
+        Navigator.of(context).pop();
+      },
+    ).show();
+  }
+
+
+
+
+  String fixDateFormat(String date) {
+    DateTime parsedDate = DateFormat('dd-MM-yyyy').parse(date);
+    return DateFormat('yyyy-MM-dd').format(parsedDate);
+  }
+  Map<String, Map<String, TimeOfDay>> selectedHoursPerDay = {};
+  Future buildHoursCard() {
+    return showDialog(
+      context: context,
+      builder: (context) => StatefulBuilder(
+        builder: (context, setState) {
+          int totalDays = DateTime.parse(fixDateFormat(_endDate))
+              .difference(DateTime.parse(fixDateFormat(_startDate)))
+              .inDays + 1;
+          return SizedBox(
+            height: 400,
+            child: Column(
+              children: [
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: totalDays,
+                    itemBuilder: (context, index) {
+                      DateTime day = DateTime.parse(fixDateFormat(_startDate)).add(Duration(days: index));
+                      String dayStr =_startDate.toString();
+                      //DateFormat('dd-mm-yyyy').format(day);
+
+                      return Card(
+                        child: ListTile(
+                          title: Text(dayStr),
+                          subtitle: Row(
+                            children: [
+                              Text(AppStrings.from.tr()),
+                              ElevatedButton(
+                                onPressed: () async {
+                                  TimeOfDay? fromTime = await showTimePicker(
+                                    context: context,
+                                    initialTime: const TimeOfDay(hour: 9, minute: 0),
+                                  );
+                                  if (fromTime != null) {
+                                    setState(() {
+                                      selectedHoursPerDay[dayStr] ??= {};
+                                      selectedHoursPerDay[dayStr]!['from'] = fromTime;
+
+                                      final hour = fromTime.hour.toString().padLeft(2, '0');
+                                      final minute = fromTime.minute.toString().padLeft(2, '0');
+                                      String formattedTime = "$hour:$minute";
+                                      _startTime=fromTime;
+                                      _startTimeStr=formattedTime;
+
+
+                                    });
+                                  }
+                                },
+                                child: Text(
+                                  selectedHoursPerDay[dayStr]?['from']?.format(context) ?? AppStrings.selectHours.tr(),
+                                ),
+                              ),
+                              SizedBox(width: 10),
+                              Text(AppStrings.to.tr()),
+                              ElevatedButton(
+                                onPressed: () async {
+                                  TimeOfDay? toTime = await showTimePicker(
+                                    context: context,
+                                    initialTime: TimeOfDay(hour: 17, minute: 0),
+                                  );
+                                  if (toTime != null) {
+                                    setState(() {
+                                      selectedHoursPerDay[dayStr] ??= {};
+                                      selectedHoursPerDay[dayStr]!['to'] = toTime;
+
+                                      final hour = toTime.hour.toString().padLeft(2, '0');
+                                      final minute = toTime.minute.toString().padLeft(2, '0');
+                                      String formattedTime = "$hour:$minute";
+
+                                      _endTime=toTime;
+                                      _endTimeStr=formattedTime;
+
+
+                                    });
+                                  }
+                                },
+                                child: Text(
+                                  selectedHoursPerDay[dayStr]?['to']?.format(context) ?? AppStrings.selectHours.tr(),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    if(_endTime!.isAfter(_startTime!)) {
+                      print(selectedHoursPerDay); // You can use it as needed
+                      Navigator.pop(context);
+                      _StartDateController.text=_startDate + _startTimeStr!;
+                      _EndDateController.text=_endDate + _endTimeStr!;
+                    }
+                    else
+                    {
+                      displayTimeFaileDialoge(context);
+                      _StartDateController.text=" ";
+                      _EndDateController.text=" ";
+
+                    }
+                  },
+                  child: Text(AppStrings.ok.tr()),
+                ),
+              ],
+            ),
+          );
+        },
+      ),
     );
   }
 
@@ -804,27 +940,18 @@ class _permissionSubmitState extends State<PermissionSubmit>with TickerProviderS
       showImagePicker(context);
     }
   }
+
 }
-
-
 class PermissionType {
-
-  // "Text": "Late",
-  // "Value": "Late",
-  // "value": 2,
-  // "Duration": 120
-
   final String? text;
   final String? value;
   final int? valueNumber;
   final int? duration;
-
   PermissionType ({
     required this.text,
     required this.value,
     required this.valueNumber,
     required this.duration,
-
   });
   factory PermissionType.fromJson(Map<String, dynamic> json) {
     return PermissionType(
@@ -832,13 +959,9 @@ class PermissionType {
       value: json["Value"],
       valueNumber: json["value"],
       duration: json["Duration"],
-
     );
   }
 }
-
-
-
 //________________save permission________________________
 class Result {
   final String message;

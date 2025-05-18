@@ -81,8 +81,10 @@ class _ReviewPermissioniewState extends State<ReviewPermission>with TickerProvid
                 if (snapshot.hasError)
                   return Text('Error: ${snapshot.error}');
                 else
-                  return Center(
-                      child: _createPermissionsTable(permissionsData!)
+                  return SingleChildScrollView(scrollDirection: Axis.horizontal,
+                    child: Center(
+                        child: _createPermissionsTable(permissionsData!)
+                    ),
                   );
             }
           });
@@ -91,14 +93,14 @@ class _ReviewPermissioniewState extends State<ReviewPermission>with TickerProvid
   Widget _createPermissionsTable(List<ReviewPermissions> permission) {
     if(permission.isEmpty==false) {
       return DataTable(
-        headingRowColor: MaterialStateColor.resolveWith((states) =>
+        headingRowColor: WidgetStateColor.resolveWith((states) =>
         colorManager.lightprimary),
         columns: _createColumns(),
         rows: _createRows(permission),
 
       );
     }else
-    {return Container(child: Text(AppStrings.noContent),);}
+    {return Text(AppStrings.noContent.tr());}
   }
 
   List<DataColumn> _createColumns() {
@@ -178,8 +180,8 @@ class _ReviewPermissioniewState extends State<ReviewPermission>with TickerProvid
     //.cast<Map<String, dynamic>>();
     if(responseData!=null) {
       var permissions = responseData as List;
-      a = (await permissions.map((jsonData) =>
-          Permissions.fromJson(jsonData)).toList()).cast<ReviewPermissions>();
+      a = (permissions.map((jsonData) =>
+          ReviewPermissions.fromJson(jsonData)).toList());
          List<ReviewPermissions>? b = List<ReviewPermissions>.from(a as Iterable);
       permissionsData = b;
       return permissionsData;

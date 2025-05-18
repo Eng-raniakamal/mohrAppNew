@@ -18,6 +18,7 @@ import 'package:essmohr/presentation/splash/splashScreen.dart';
 import 'package:essmohr/presentation/underConstraction.dart';
 import '../ChangePassword/layout/changePasswordLayout.dart';
 import '../Requests/Vacations/Layout/vacationLayout.dart';
+import '../Requests/Vacations/view/vactions_view.dart' show vacationsView;
 import '../User/layout/employeeLayout.dart';
 import '../login/loginView.dart';
 import '../settings/layout/settingsLayout.dart';
@@ -97,7 +98,7 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_)=>  ChangePassword());
       case Routes.Vacations:
         initVacationModule();
-        return MaterialPageRoute(builder: (_)=> VacationScreen());
+        return MaterialPageRoute(builder: (_)=> vacationsView());
 
       case Routes.attendance:
         initAttendanceModule();
@@ -106,7 +107,7 @@ class RouteGenerator {
 
       case Routes.VacationRequest:
         initVacationTypeModule();
-        return MaterialPageRoute(builder: (_)=>  VacationRequestView());
+        return MaterialPageRoute(builder: (_)=>  VacationLayout());
 
       case Routes.salary:
         initSalaryModule();

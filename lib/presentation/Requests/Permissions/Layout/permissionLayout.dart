@@ -20,7 +20,7 @@ class PermissionLayout extends StatelessWidget implements NavigationStates{
         child:
         Stack(
           children: [
-             PermissionView(),
+            PermissionView(),
             SideBar(),
           ],
         ),

@@ -196,7 +196,7 @@ class AppStrings {
   static const String cancellation_Reason = "cancellation_Reason";
   static const String seen = "seen";
   static const String permission_message="permission_message";
-  static const String new_message_here="new_message_here";
+  static const String new_message_here="new message";
   static const String Password_Changed_Successfully = "Password_Changed_Successfully";
   static const String Invalid_Password ="Invalid Password";
   static const String Invalid_Device ="Invalid Device";
@@ -226,6 +226,18 @@ class AppStrings {
   static const String Department="Department";
   static const String JobTitle="JobTitle";
   static const String selectHours= "selectHours";
+  //Financial
+  static const String financial="Financial";
+  static const String financial_Request="FinancialRequest";
+  static const String Financial_Type="FinancialType";
+  static const String value="value";
+
+  //Admin
+  static const String Admin="Administrative";
+  static const String Admin_Request="AdministrativeRequest";
+  static const String Admin_Type="AdministrativeType";
+
+
 
 
 }
