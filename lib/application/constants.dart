@@ -57,6 +57,13 @@
     static const String getViewAdmin ='$baseUrl/api/Administrative/Requests/Employee/true';
     static const String getReviewedAdmin='$baseUrl/api/Administrative/Requests/Reviewer/true';
     static const String getReviewAdmin='$baseUrl/api/Administrative/Requests/Reviewer/false';
+    //Change Shift
+    static const String getShiftTypes='$baseUrl/Api/ChangeShift/GetEmployeeShifts?date=';
+    static const String saveChangeShift ='$baseUrl/Api/ChangeShift';
+    static const String getViewChangeShift ='$baseUrl/api/ChangeShift/Requests/Employee/true';
+    static const String getReviewedChangeShift='$baseUrl/api/ChangeShift/Requests/Reviewer/true';
+    static const String getReviewChangeShift='$baseUrl/api/ChangeShift/Requests/Reviewer/false';
+
 
 
     //1982-10-12T11:41:47.053Z&toDate=2023-10-12T11:41:47.053Z';

@@ -337,8 +337,8 @@ class _VacationRequestViewState extends State<VacationSubmit>with TickerProvider
       context: context,
       builder: (context) => StatefulBuilder(
         builder: (context, setState) {
-          int totalDays = DateTime.parse(fixDateFormat(_endDate))
-              .difference(DateTime.parse(fixDateFormat(_startDate)))
+          int totalDays = DateTime.parse(_endDate)
+              .difference(DateTime.parse(_startDate))
               .inDays + 1;
           return SizedBox(
             height: 400,
@@ -349,8 +349,8 @@ class _VacationRequestViewState extends State<VacationSubmit>with TickerProvider
                     itemCount: totalDays,
                     itemBuilder: (context, index) {
                       DateTime day = DateTime.parse(fixDateFormat(_startDate)).add(Duration(days: index));
-                      String dayStr =_startDate.toString();
-                      //DateFormat('dd-mm-yyyy').format(day);
+                      String dayStr =day.toString();
+                      //
 
                       return Card(
                         child: ListTile(

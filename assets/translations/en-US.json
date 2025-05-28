@@ -78,6 +78,7 @@
   "Requests": "Requests",
 "close": "close",
   "salaryDetails": "Salary Details",
+  "lastSalary": "Last Salary",
   "BasicData": "Basic Data",
   "Skills": "Skills",
   "AcadmicDegree": "Acadmic Degree",
@@ -194,5 +195,9 @@
 
   "Administrative": "Administrative",
   "AdministrativeRequest":"Administrative Request",
-  "AdministrativeType":"Administrative Type"
+  "AdministrativeType":"Administrative Type",
+
+  "ChangeShift": "ChangeShift",
+  "ChangeShiftRequest":"ChangeShift Request",
+  "ShiftType":"Shift"
 }

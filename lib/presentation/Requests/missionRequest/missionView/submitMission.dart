@@ -418,106 +418,115 @@ class _MissionSubmitState extends State<MissionSubmit>with TickerProviderStateMi
       context: context,
       builder: (context) => StatefulBuilder(
         builder: (context, setState) {
-          int totalDays = DateTime.parse(fixDateFormat(_endDate))
-              .difference(DateTime.parse(fixDateFormat(_startDate)))
-              .inDays + 1;
-           return SizedBox(
-            height: 400,
-            child: Column(
-              children: [
-                Expanded(
-                  child: ListView.builder(
-                    itemCount: totalDays,
-                    itemBuilder: (context, index) {
-                      DateTime day = DateTime.parse(fixDateFormat(_startDate)).add(Duration(days: index));
-                      String dayStr =_startDate.toString();
-                      //DateFormat('dd-mm-yyyy').format(day);
+          DateTime startDate = DateTime.parse(_startDate);
+          DateTime endDate = DateTime.parse(_endDate);
+          int totalDays = endDate.difference(startDate).inDays +1;
 
-                      return Card(
-                        child: ListTile(
-                          title: Text(dayStr),
-                          subtitle: Row(
-                            children: [
-                              Text(AppStrings.from.tr()),
-                              ElevatedButton(
-                                onPressed: () async {
-                                  TimeOfDay? fromTime = await showTimePicker(
-                                    context: context,
-                                    initialTime: const TimeOfDay(hour: 9, minute: 0),
-                                  );
-                                  if (fromTime != null) {
-                                    setState(() {
-                                      selectedHoursPerDay[dayStr] ??= {};
-                                      selectedHoursPerDay[dayStr]!['from'] = fromTime;
-
-                                        final hour = fromTime.hour.toString().padLeft(2, '0');
-                                        final minute = fromTime.minute.toString().padLeft(2, '0');
-                                      String formattedTime = "$hour:$minute";
-                                      _startTime=fromTime;
-                                      _startTimeStr=formattedTime;
-
-
-                                    });
-                                  }
-                                },
-                                child: Text(
-                                  selectedHoursPerDay[dayStr]?['from']?.format(context) ?? AppStrings.selectHours.tr(),
+          return AlertDialog(
+            contentPadding: EdgeInsets.all(8),
+            content: SizedBox(
+              height: 400,
+              width: double.maxFinite,
+              child: Column(
+                children: [
+                  Expanded(
+                    child: ListView.builder(
+                      itemCount: totalDays,
+                      itemBuilder: (context, index) {
+                        DateTime currentDate = startDate.add(Duration(days: index));
+                        String formattedDate =DateFormat('yyyy-mm-dd').format(currentDate);
+                        String formatted_Date=fixDateFormat(currentDate.toString());
+                        return Card(
+                          child: ListTile(
+                            title: Text('$formatted_Date'),
+                            subtitle: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  children: [
+                                    Text('${AppStrings.from.tr()}: '),
+                                    ElevatedButton(
+                                      onPressed: () async {
+                                        TimeOfDay? fromTime = await showTimePicker(
+                                          context: context,
+                                          initialTime: const TimeOfDay(hour: 9, minute: 0),
+                                        );
+                                        if (fromTime != null) {
+                                          setState(() {
+                                            selectedHoursPerDay[formattedDate] ??= {};
+                                            selectedHoursPerDay[formattedDate]!['from'] = fromTime;
+                                          });
+                                        }
+                                      },
+                                      child: Text(
+                                        selectedHoursPerDay[formattedDate]?['from']?.format(context) ?? AppStrings.selectHours.tr(),
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                              ),
-                              SizedBox(width: 10),
-                              Text(AppStrings.to.tr()),
-                              ElevatedButton(
-                                onPressed: () async {
-                                  TimeOfDay? toTime = await showTimePicker(
-                                    context: context,
-                                    initialTime: TimeOfDay(hour: 17, minute: 0),
-                                  );
-                                  if (toTime != null) {
-                                    setState(() {
-                                      selectedHoursPerDay[dayStr] ??= {};
-                                      selectedHoursPerDay[dayStr]!['to'] = toTime;
-
-                                      final hour = toTime.hour.toString().padLeft(2, '0');
-                                      final minute = toTime.minute.toString().padLeft(2, '0');
-                                      String formattedTime = "$hour:$minute";
-
-                                      _endTime=toTime;
-                                      _endTimeStr=formattedTime;
-
-
-                                    });
-                                  }
-                                },
-                                child: Text(
-                                  selectedHoursPerDay[dayStr]?['to']?.format(context) ?? AppStrings.selectHours.tr(),
+                                SizedBox(height: 8),
+                                Row(
+                                  children: [
+                                    Text('${AppStrings.to.tr()}: '),
+                                    ElevatedButton(
+                                      onPressed: () async {
+                                        TimeOfDay? toTime = await showTimePicker(
+                                          context: context,
+                                          initialTime: const TimeOfDay(hour: 17, minute: 0),
+                                        );
+                                        if (toTime != null) {
+                                          setState(() {
+                                            selectedHoursPerDay[formattedDate] ??= {};
+                                            selectedHoursPerDay[formattedDate]!['to'] = toTime;
+                                          });
+                                        }
+                                      },
+                                      child: Text(
+                                        selectedHoursPerDay[formattedDate]?['to']?.format(context) ?? AppStrings.selectHours.tr(),
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
-                        ),
-                      );
-                    },
+                        );
+                      },
+                    ),
                   ),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    if(_endTime!.isAfter(_startTime!)) {
-                      print(selectedHoursPerDay); // You can use it as needed
-                      Navigator.pop(context);
-                      _StartDateController.text=_startDate + _startTimeStr!;
-                      _EndDateController.text=_endDate + _endTimeStr!;
-                    }
-                    else
-                    {
-                      displayTimeFaileDialoge(context);
-                      _StartDateController.text=" ";
-                    _EndDateController.text=" ";
+                  ElevatedButton(
+                    onPressed: () {
+                      bool allValid = true;
 
-                    }
-                  },
-                  child: Text(AppStrings.ok.tr()),
-                ),
-              ],
+                      for (var entry in selectedHoursPerDay.entries) {
+                        final from = entry.value['from'];
+                        final to = entry.value['to'];
+
+                        if (from == null || to == null || !to.isAfter(from)) {
+                          allValid = false;
+                          break;
+                        }
+                      }
+
+                      if (allValid) {
+                        print(selectedHoursPerDay);
+                        Navigator.pop(context);
+
+                        // في حال أردت تعبئة حقل البداية والنهاية بالنطاق الكامل:
+                        _StartDateController.text =
+                        '${_startDate} ${selectedHoursPerDay[_startDate]?['from']?.format(context) ?? ''}';
+                        _EndDateController.text =
+                        '${_endDate} ${selectedHoursPerDay[_endDate]?['to']?.format(context) ?? ''}';
+                      } else {
+                        displayTimeFaileDialoge(context);
+                        _StartDateController.text = " ";
+                        _EndDateController.text = " ";
+                      }
+                    },
+                    child: Text(AppStrings.ok.tr()),
+                  ),
+                ],
+              ),
             ),
           );
         },

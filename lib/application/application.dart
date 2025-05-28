@@ -18,6 +18,7 @@ import 'package:essmohr/presentation/resources/routes.dart';
 import 'package:essmohr/presentation/splash/splash.dart';
 //import 'package:workmanager/workmanager.dart';
 import 'package:http/http.dart' as http;
+import '../presentation/newDesign/core/utils/import_file.dart';
 import '../presentation/resources/strings_manager.dart';
 //
 
@@ -227,7 +228,11 @@ class _MyAppState extends State<MyApp> {
       child: Builder(
           builder: (context) {
 
-            return MaterialApp(
+            return  ScreenUtilInit(
+                designSize: Size(375, 812), // or your UI's design size
+                builder: (context, child)
+                {
+                  return  MaterialApp(
                 localizationsDelegates: context.localizationDelegates,
                 debugShowCheckedModeBanner: false,
                 supportedLocales: context.supportedLocales,
@@ -235,8 +240,12 @@ class _MyAppState extends State<MyApp> {
                 onGenerateRoute: RouteGenerator.getRoute,
                 home:  SplashView(),
                 title: "Mohr",
-              );
-          }),
+
+                );
+                }
+            );}
+          ),
+
     );
   }
 }

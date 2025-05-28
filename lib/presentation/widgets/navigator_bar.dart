@@ -112,13 +112,13 @@ class _NavigatorBarState extends State<NavigatorBar>
     // });
 
     if (notificationNumber == 0) {
-      return Icon(Icons.notifications, size: 30, color: colorManager.white);
+      return Icon(Icons.notifications_none, size: 30, color: colorManager.white);
     }
     else {
 
       return Stack(
         children: [
-          Icon(Icons.notifications, size: 30, color: colorManager.white),
+          Icon(Icons.notifications_none, size: 30, color: colorManager.white),
           Positioned(
             right: 0,
             child: Container(

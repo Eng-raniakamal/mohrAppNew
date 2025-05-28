@@ -6,6 +6,7 @@ import 'package:essmohr/presentation/Requests/Permissions/permissionView/permiss
 
 import 'package:essmohr/presentation/Requests/Vacations/view/vactionRequests_view.dart';
 import 'package:essmohr/presentation/Requests/missionRequest/missionView/missionView.dart';
+import 'package:essmohr/presentation/newDesign/core/utils/import_file.dart';
 
 import 'package:flutter/material.dart';
 import 'package:essmohr/application/app_prefs.dart';
@@ -28,8 +29,12 @@ import 'package:essmohr/presentation/widgets/navigator_bar.dart';
 import 'package:essmohr/presentation/widgets/profile_widget.dart';
 import '../../domain/model/navigationManu.dart';
 import '../Requests/Admin_Request/AdminViews/AdminHome.dart';
+import '../Requests/ChangeShiftRequest/ChangeShiftViews/ChangeShiftHome.dart';
 import '../Requests/Financial_Requests/FinancialViews/FinancialHome.dart';
 import '../Requests/Vacations/view/VacationHome.dart' show vacationHome;
+import '../newDesign/feature/home/presentation/widget/header_home_widget.dart';
+import '../newDesign/feature/home/presentation/widget/last_salary_widget.dart';
+import '../newDesign/feature/home/presentation/widget/no_report_widget.dart';
 import '../resources/assets_manager.dart';
 import '../resources/routes.dart';
 
@@ -72,9 +77,9 @@ class _userViewState extends State<userView> {
         builder: (context) =>
         Scaffold(
             extendBodyBehindAppBar: true,
-            appBar: buildAppBar(context),
-            bottomNavigationBar:
-             NavigatorBar(index: 1,notificationNumber: Constants.notificationNumber),
+          //  appBar: buildAppBar(context),
+          //   bottomNavigationBar:
+          //    NavigatorBar(index: 1,notificationNumber: Constants.notificationNumber),
             body:
         StreamBuilder<FlowState>(
             stream: _viewModel.outputState,
@@ -105,195 +110,206 @@ class _userViewState extends State<userView> {
            stream: _viewModel.outputUserData,
            builder: (context, snapshot) {
              return
-          Container(
-            child: ListView(
-                  physics:  BouncingScrollPhysics(),
-                  children: [
-                             Column(
-                                  children: [
-                                    Stack(
-                                        children: [
-                                          const SizedBox(width: 10, height: 10,),
-                                          const clipPathWidgets(),
-                                          const SizedBox(width: 10, height: 10,),
-                                          Padding(
-                                            padding: const EdgeInsets.all(12.0),
-                                            child: Row(
-                                              mainAxisAlignment: MainAxisAlignment
-                                                  .start,
-                                              children: [
-                                                Flexible(
-                                                    flex: 2,
+               Container(
+                 //       child: ListView(
+                 //            physics:  BouncingScrollPhysics(),
+                   child: SingleChildScrollView(
+                       child:
+                       // Padding(
+                       //   padding: const EdgeInsets.symmetric(
+                       //       horizontal: 20.0, vertical: 25),
+                       //   child:
+                         Column(
+                             children: [
+                               //  //                           Stack(
+                               //   //                              children: [
+                               // //                                  const SizedBox(width: 10, height: 10,),
+                               //  //                                 const clipPathWidgets(),
+                               //   //                                const SizedBox(width: 10, height: 10,),
+                               //                                   Padding(
+                               //                                     padding: const EdgeInsets.all(12.0),
+                               //                                     child: Row(
+                               //                                       mainAxisAlignment: MainAxisAlignment
+                               //                                           .start,
+                               //                                       children: [
+                               //                                         Flexible(
+                               //                                             flex: 2,
+                               //
+                               //                                             child:
+                               StreamBuilder<EmployeeDataModel>(
+                                   stream: _viewModel.outputUserData,
+                                   builder: (context, snapshot) {
+                                     return
+                                       //
+                                       // Padding(
+                                       //   padding: const EdgeInsets
+                                       //       .only(right: 10.0,
+                                       //       left: 20.0, bottom: 0),
+                                        // child:
+                                     _getEmployeeDataWidget(
+                                             snapshot.data)
+                                   //    );
+                                   ;})
 
-                                                    child:
-                          StreamBuilder<EmployeeDataModel>(
-                          stream: _viewModel.outputUserData,
-                          builder: (context, snapshot) {
-                          return
+                               // ),
+                               // Expanded(
+                               //     flex: 1,
+                               //     child:
+                               //     StreamBuilder<UserImageModel?>(
+                               //         stream: _imageViewModel.outputUserImage,
+                               //         builder: (context, snapshot) {
+                               //           if(snapshot.hasData){
+                               //           return
+                               //     SizedBox(width: 20, child:
+                               //     _getImageWidget(
+                               //         snapshot.data)
+                               //       ,
+                               //     );}
+                               //           else{
+                               //             return
+                               //               SizedBox(width: 20, child:
+                               //                 _getImageWidget(
+                               //                 null));
+                               //           }
+                               //    } ))],
+                               //   ),
+                               //  ),
+                               //  ]),
+                               // const SizedBox(height: 20),
+                               // ]
+                             ]),
+                         // ;
 
-                                                    Padding(
-                                                      padding: const EdgeInsets
-                                                          .only(right: 10.0,
-                                                          left: 20.0, bottom: 0),
-                                                        child: _getEmployeeDataWidget(
-                                                          snapshot.data),
-                                                    );})
+                         //                     const SizedBox(height: 10,),
+                         //                      Container(
+                         //                            child: SingleChildScrollView(
+                         //                              scrollDirection: Axis.horizontal,
+                         //                              child: Column(children:[
+                         //                               Row(children:[
+                         //                               //SizedBox(width:5),
+                         //                                Center(child:SizedBox(width: 200,
+                         //                                  child:
+                         //                                 buildUpgradeButton(AppStrings.Vacation.tr(),colorManager.greywithOpacity))),
+                         //                                Center(child:SizedBox(width: 200,
+                         //                                  child:
+                         //                                  buildUpgradeButton(AppStrings.Salary.tr(),colorManager.lightprimary),
+                         //                              ))]),
+                         //                                const SizedBox(height: 70),
+                         //                               Row(children:[
+                         //                                Center(child:SizedBox(width: 200,
+                         //                                    child:
+                         //                                    buildUpgradeButton(AppStrings.Attendance.tr(),colorManager.lightprimary))),
+                         //                                Center(child:SizedBox(width: 200,
+                         //                                    child:
+                         //                                    buildUpgradeButton(AppStrings.Requests.tr(),colorManager.lightprimary),
+                         //                                )
+                         //                                )
+                         //                               ]),
+                         //
+                         //  ]),
+                         //                            ),
+                         //  ),
+                         // // ]),
 
-                                                ),
-                                                Expanded(
-                                                    flex: 1,
-                                                    child:
-                                                    StreamBuilder<UserImageModel?>(
-                                                        stream: _imageViewModel.outputUserImage,
-                                                        builder: (context, snapshot) {
-                                                          if(snapshot.hasData){
-                                                          return
-                                                    SizedBox(width: 20, child:
-                                                    _getImageWidget(
-                                                        snapshot.data)
-                                                      ,
-                                                    );}
-                                                          else{
-                                                            return
-                                                              SizedBox(width: 20, child:
-                                                                _getImageWidget(
-                                                                null));
-                                                          }
-                                                   } ))],
-                                            ),
-                                          ),
-                                        ]),
-                                    const SizedBox(height: 20),
-                                  ]
-                              ),
-                           // ;
+                       )
+                   //)
+               );
+           });
+             }
 
-                        const SizedBox(height: 10,),
-                        Container(
-                              child: SingleChildScrollView(
-                                scrollDirection: Axis.horizontal,
-                                child: Column(children:[
-                                 Row(children:[
-                                 //SizedBox(width:5),
-                                  Center(child:SizedBox(width: 200,
-                                    child:
-                                   buildUpgradeButton(AppStrings.Vacation.tr(),colorManager.greywithOpacity))),
-                                  Center(child:SizedBox(width: 200,
-                                    child:
-                                    buildUpgradeButton(AppStrings.Salary.tr(),colorManager.lightprimary),
-                                ))]),
-                                  const SizedBox(height: 70),
-                                 Row(children:[
-                                  Center(child:SizedBox(width: 200,
-                                      child:
-                                      buildUpgradeButton(AppStrings.Attendance.tr(),colorManager.lightprimary))),
-                                  Center(child:SizedBox(width: 200,
-                                      child:
-                                      buildUpgradeButton(AppStrings.Requests.tr(),colorManager.lightprimary),
-                                  )
-                                  )
-                                 ]),
-
-    ]),
-                              ),
-    ),
-    ]),
-
-    );});
-  }
-  Widget buildUpgradeButton(String ReqName,Color bgColor) {
- if(ReqName==AppStrings.Vacation.tr())
-  {
-    return Hero(
-        tag: ReqName,
-        transitionOnUserGestures: true,
-        child: InkWell(
-            onTap: () {
-              Navigator.of(context).pushNamed(Routes.Vacations);
-            },
-            child: Column(
-              children: [
-                const SizedBox(width: 70,height: 70,
-                  child: Image(image: AssetImage(ImageAssets.Vacation),
-                    fit: BoxFit.contain,
-                  ),
-                ),
-                Center(child: Text(AppStrings.Vacation.tr()))
-              ],
-            )
-        )
-
-    );
-  }
-if(ReqName==AppStrings.Salary.tr())
-  { return Hero(
-      tag: ReqName,
-      transitionOnUserGestures: true,
-      child: InkWell(
-          onTap: () {
-            Navigator.of(context).pushNamed(Routes.salary);
-          },
-          child: Column(
-            children:[
-              const SizedBox(width: 70,height: 70,
-                child: Image(image: AssetImage(ImageAssets.salary),
-                  fit: BoxFit.contain,
-                ),
-              ),
-              Center(child: Text(AppStrings.Salary.tr()))
-            ],
-          )
-      )
-  );}
-
- if(ReqName==AppStrings.Attendance.tr())
-  {  return Hero(
-      tag: ReqName,
-      transitionOnUserGestures: true,
-      child: InkWell(
-          onTap: () {
-            Navigator.of(context).pushNamed(Routes.attendance);
-          },
-          child: Column(mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children:[
-              const SizedBox(width: 70,height: 70,
-                child: Image(image: AssetImage(ImageAssets.attendance),
-                  fit: BoxFit.contain,
-                ),
-              ),
-              SizedBox(width: 95,height: 70,child: Center(child: Text(AppStrings.Attendance.tr())))
-            ],
-          )
-      )
-  );}
-if(ReqName==AppStrings.Requests.tr())
-  {return Hero(
-      tag: ReqName,
-      transitionOnUserGestures: true,
-      child: GestureDetector(
-                onTapDown: (TapDownDetails details) {
-                showCustomDropdown(context, details.globalPosition);
-          //  Navigator.of(context).pushReplacementNamed(Routes.missionRequest);
-           //   Navigator.pushReplacement(context,
-           //    MaterialPageRoute(builder: (context) => const UnderConstructionScreen()),
-            // );
-          },
-          child: Column(
-            children: [
-              const SizedBox(width: 70,height: 70,
-                child: Image(image: AssetImage(ImageAssets.requests),
-                  fit: BoxFit.contain,
-                ),
-              ),
-              SizedBox(width:70,height: 70,child: Center(child: Text(AppStrings.Requests.tr())))
-            ],
-          )
-      )
-  );}
-return Container();
-
-  }
+//   Widget buildUpgradeButton(String ReqName,Color bgColor) {
+//  if(ReqName==AppStrings.Vacation.tr())
+//   {
+//     return Hero(
+//         tag: ReqName,
+//         transitionOnUserGestures: true,
+//         child: InkWell(
+//             onTap: () {
+//               Navigator.of(context).pushNamed(Routes.Vacations);
+//             },
+//             child: Column(
+//               children: [
+//                 const SizedBox(width: 70,height: 70,
+//                   child: Image(image: AssetImage(ImageAssets.Vacation),
+//                     fit: BoxFit.contain,
+//                   ),
+//                 ),
+//                 Center(child: Text(AppStrings.Vacation.tr()))
+//               ],
+//             )
+//         )
+//
+//     );
+//   }
+// if(ReqName==AppStrings.Salary.tr())
+//   { return Hero(
+//       tag: ReqName,
+//       transitionOnUserGestures: true,
+//       child: InkWell(
+//           onTap: () {
+//             Navigator.of(context).pushNamed(Routes.salary);
+//           },
+//           child: Column(
+//             children:[
+//               const SizedBox(width: 70,height: 70,
+//                 child: Image(image: AssetImage(ImageAssets.salary),
+//                   fit: BoxFit.contain,
+//                 ),
+//               ),
+//               Center(child: Text(AppStrings.Salary.tr()))
+//             ],
+//           )
+//       )
+//   );}
+//
+//  if(ReqName==AppStrings.Attendance.tr())
+//   {  return Hero(
+//       tag: ReqName,
+//       transitionOnUserGestures: true,
+//       child: InkWell(
+//           onTap: () {
+//             Navigator.of(context).pushNamed(Routes.attendance);
+//           },
+//           child: Column(mainAxisAlignment: MainAxisAlignment.center,
+//             crossAxisAlignment: CrossAxisAlignment.center,
+//             children:[
+//               const SizedBox(width: 70,height: 70,
+//                 child: Image(image: AssetImage(ImageAssets.attendance),
+//                   fit: BoxFit.contain,
+//                 ),
+//               ),
+//               SizedBox(width: 95,height: 70,child: Center(child: Text(AppStrings.Attendance.tr())))
+//             ],
+//           )
+//       )
+//   );}
+// if(ReqName==AppStrings.Requests.tr())
+//   {return Hero(
+//       tag: ReqName,
+//       transitionOnUserGestures: true,
+//       child: GestureDetector(
+//                 onTapDown: (TapDownDetails details) {
+//                 showCustomDropdown(context, details.globalPosition);
+//           //  Navigator.of(context).pushReplacementNamed(Routes.missionRequest);
+//            //   Navigator.pushReplacement(context,
+//            //    MaterialPageRoute(builder: (context) => const UnderConstructionScreen()),
+//             // );
+//           },
+//           child: Column(
+//             children: [
+//               const SizedBox(width: 70,height: 70,
+//                 child: Image(image: AssetImage(ImageAssets.requests),
+//                   fit: BoxFit.contain,
+//                 ),
+//               ),
+//               SizedBox(width:70,height: 70,child: Center(child: Text(AppStrings.Requests.tr())))
+//             ],
+//           )
+//       )
+//   );}
+// return Container();
+//
+//   }
   Widget buildCountaner(String reqName) {
     return
     Container(
@@ -324,17 +340,47 @@ return Container();
       String name = _appPreferences.getLanguage() == "en"
           ? empData.EnglishName
           : empData.ArabicName;
-      String email = empData.UserName.toString();
-      String code = empData.EmployeeCode.toString();
+      // String email = empData.UserName.toString();
+      // String code = empData.EmployeeCode.toString();
 
-      return Column(
+      return SafeArea(
+          child: SingleChildScrollView(
+          child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 25).r,
+    child: Column(
+
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(name, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: colorManager.white)),
-          const SizedBox(height: 3),
-          Text(email, style: const TextStyle(color: colorManager.white)),
-          const SizedBox(height: 3),
-          Text(code, style: const TextStyle(color: colorManager.white)),
+          HeaderHomeWidget(title: name),
+          NoReportWidget(),
+          // ReportWidget(
+          //   typeReport: "تقرير الطلبات",
+          //   nameReport: "طلب سلفة",
+          //   isRequestAdvance: true,
+          //   isCertified: true,
+          //   numberOfInstallments: 3,
+          //   amount: 234,
+          //   not: "تقبل الله منكم الحج وقد تم اعتماد الاجازة",
+          // ),
+          // ReportWidget(
+          //   typeReport: "تقرير الاجازات",
+          //   nameReport: "اجازة مرضية",
+          //   isUnderReview: true,
+          //   isSickLeave: true,
+          //   numberOfInstallments: 2,
+          //   amount: 20,
+          // ),
+          SizedBox(height: 20),
+          LastSalaryWidget()
+          // Text(name, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: colorManager.white)),
+          // const SizedBox(height: 3),
+          // Text(email, style: const TextStyle(color: colorManager.white)),
+          // const SizedBox(height: 3),
+          // Text(code, style: const TextStyle(color: colorManager.white)),
         ],
+    ),
+          ),
+          ),
       );
     }
     return Container();
@@ -395,15 +441,16 @@ return Container();
     super.dispose();
   }
 
-
-
   final List<Map<String, dynamic>> screens =
   [
-    {'title': 'vacations', 'screen':  vacationHome()},
-    {'title': 'permission', 'screen': PermissionView(),},
-    {'title': 'Mission', 'screen': MissionView (), },
-    {'title': 'Financial', 'screen': FinancialHome (), },
-    {'title': 'Administrative', 'screen': AdminHome (), },
+    {'title': AppStrings.Vacation.tr(), 'screen':  vacationHome()},
+    {'title': AppStrings.Permissions.tr(), 'screen': PermissionView(),},
+    {'title': AppStrings.missions.tr(), 'screen': MissionView (), },
+    {'title': AppStrings.Financial.tr(), 'screen': FinancialHome (), },
+    {'title': AppStrings.Admin.tr(), 'screen': AdminHome (), },
+    {'title': AppStrings.ChangeShift.tr(), 'screen': ChangeShiftHome (), },
+    // {'title': AppStrings.TimeSheet.tr(), 'screen': TimeSheetHome (), },
+    // {'title': AppStrings.overTime.tr(), 'screen': overTimeHome (), },
   ];
 
   void showCustomDropdown(BuildContext context, Offset position) {
@@ -415,8 +462,7 @@ return Container();
           value: item,
           child: Row(
             children: [
-              // Image.asset(item['image']!, width: 30, height: 30),
-              // SizedBox(width: 10),
+
               Text(item['title']!),
             ],
           ),
@@ -424,19 +470,7 @@ return Container();
       }).toList(),
     ).then((selectedScreen) async{
       if (selectedScreen != null) {
-       // Navigator.push(context, MaterialPageRoute(builder: (context) => selectedScreen['screen']),);
-       //  Future.microtask(() {
-       //    switch (selectedScreen['title'].toString()) {
-       //      case 'vacations':
-       //        // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => selectedScreen['screen']));
-       //        Navigator.of(context).pushReplacementNamed(Routes.VacationRequest);
-       //      case 'permissions':
-       //        Navigator.of(context).pushReplacementNamed(
-       //            Routes.PermissionRequest);
-       //      case 'Mission':
-       //        Navigator.of(context).pushReplacementNamed(Routes.missionRequest);
-       //    }
-       //  }
+
         Future.microtask(() {
           Navigator.push(context, MaterialPageRoute(
               builder: (context) => selectedScreen['screen']));

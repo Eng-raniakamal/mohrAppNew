@@ -1334,3 +1334,175 @@ class ReviewedAdminModel {
     );
   }
 }
+
+
+//change shift
+class ChangeShiftType {
+  final int? id;
+  final String? name;
+
+  ChangeShiftType ({
+    required this.id,
+    required this.name,
+  });
+  factory ChangeShiftType.fromJson(Map<String, dynamic> json) {
+    return ChangeShiftType(
+        id: json["PlanId"],
+        name: json["Name"],
+    );
+  }
+}
+class SaveChangeShift {
+  final int requestType;
+  final String? date;
+  final int? shiftValue;
+  final String? note;
+  final List<Reviewers> reviewers;
+
+  SaveChangeShift({
+    required this.requestType,
+    required this.date,
+    required this.shiftValue,
+    required this.note,
+    required this.reviewers
+  });
+  factory SaveChangeShift.fromJson(Map<String, dynamic> json) {
+    return SaveChangeShift(
+      requestType:json["requestType"],
+      date: json["date"],
+      shiftValue:json["value"],
+      note:json["note"],
+      reviewers: json["reviewers"],
+
+    );
+  }
+}
+class ChangeShift {
+  final String? requestDate;
+  final int? value;
+  final  String? notes;
+  final  String? attachments;
+  final  bool? editable;
+  final String? status;
+  final List<Reviewers> reviewers;
+
+  ChangeShift ({
+    required this.requestDate,
+    required this.value,
+    required this.notes,
+    required this.attachments,
+    required this.editable,
+    required this.status,
+    required this.reviewers
+  });
+  factory ChangeShift.fromJson(Map<String, dynamic> json) {
+    return ChangeShift(
+      requestDate: json["RequestDate"],
+      value: json["Value"],
+      notes: json["Notes"],
+      attachments: json["Attachments"],
+      editable: json["Editable"],
+      status: json["Status"],
+      reviewers: json["Reviewers"],
+    );
+  }
+}
+class ReviewChangeShiftModel {
+  final String? date;
+  final int? id;
+  final String? empName;
+  final String? empCode;
+  final String? empDepartment;
+  final String? jobTitle;
+  final String? type;
+  final  String? value;
+  final  String? notes;
+  final bool editable;
+  final  String? attachments;
+  final String? status;
+  final List<dynamic> reviewers;
+
+  ReviewChangeShiftModel ({
+    required this.date,
+    required this.id,
+    required this.empName,
+    required this.empCode,
+    required this.empDepartment,
+    required this.jobTitle,
+    required this.type,
+    required this.value,
+    required this.notes,
+    required this.editable,
+    required this.attachments,
+    required this.status,
+    required this.reviewers
+  });
+  factory ReviewChangeShiftModel.fromJson(Map<String, dynamic> json) {
+    return ReviewChangeShiftModel(
+
+      date: json["RequestDate"],
+      id: json["Id"],
+      empName: json["EmployeeName"],
+      empCode: json["EmployeeCode"],
+      empDepartment: json["Department"],
+      jobTitle: json["JobTitle"],
+      type: json["Type"],
+      value: json["Value"],
+      notes: json["Notes"],
+      attachments: json["Attachments"],
+      editable: json["Editable"],
+      status: json["Status"],
+      reviewers: json["Reviewers"],
+    );
+  }
+}
+class ReviewedChangeShiftModel {
+  final String? date;
+  final int? id;
+  final String? empName;
+  final String? empCode;
+  final String? empDepartment;
+  final String? jobTitle;
+  final String? type;
+  final  String? value;
+  final  String? notes;
+  final bool editable;
+  final  String? attachments;
+  final String? status;
+  final List<dynamic> reviewers;
+
+  ReviewedChangeShiftModel ({
+    required this.date,
+    required this.id,
+    required this.empName,
+    required this.empCode,
+    required this.empDepartment,
+    required this.jobTitle,
+    required this.type,
+    required this.value,
+    required this.notes,
+    required this.editable,
+    required this.attachments,
+    required this.status,
+    required this.reviewers
+  });
+  factory ReviewedChangeShiftModel.fromJson(Map<String, dynamic> json) {
+    return ReviewedChangeShiftModel(
+
+      date: json["RequestDate"],
+      id: json["Id"],
+      empName: json["EmployeeName"],
+      empCode: json["EmployeeCode"],
+      empDepartment: json["Department"],
+      jobTitle: json["JobTitle"],
+      type: json["Type"],
+      value: json["Value"],
+      notes: json["Notes"],
+      attachments: json["Attachments"],
+      editable: json["Editable"],
+      status: json["Status"],
+      reviewers: json["Reviewers"],
+    );
+  }
+}
+

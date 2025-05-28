@@ -16,6 +16,8 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:essmohr/presentation/widgets/clipPath.dart';
 
+import '../newDesign/feature/login/presentation/widget/header_widget.dart';
+
 
 
 bool?  _passwordVisible;
@@ -70,9 +72,10 @@ class _LoginViewState extends State<LoginView> {
       ThemeSwitchingArea(
       child: Builder(
           builder: (context) =>
-       Scaffold(bottomSheet:
+       Scaffold(
+         //bottomSheet:
 
-       Image.asset("assets/Backgrounds/countries.png"),
+      // Image.asset("assets/Backgrounds/countries.png"),
         //fit: BoxFit.cover,
 
          //appBar: buildAppBarMain(context),
@@ -98,46 +101,52 @@ class _LoginViewState extends State<LoginView> {
 
 
   Widget _getContentWidget() {
-    return Container(
-
-        padding: const EdgeInsets.all(0.0),
+    return
+      LayoutBuilder(
+          builder: (context, constraints) {return
+      Container(
         child: SingleChildScrollView(
           child: Form(
             key: _formKey,
             child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                SizedBox(height: 30),
                   Padding(
-                   padding: const EdgeInsets.all(2.0),
+                   padding: const EdgeInsets.all(20.0),
  /////////////////////////////////////////////////////
                       child: Stack(
                        children: [
-                         ClipPath(
-                           clipper: CustomClipPathOpecity(),
-                           child: Container(
-                             width: MediaQuery.of(context).size.width,
-                             height: 170,
-                             decoration:  BoxDecoration(color:Colors.grey[300],
-                             ),
-                           ),),
-                         ClipPath(
-                           clipper: CustomClipPath(),
-                           child: Container(
-                        width: MediaQuery.of(context).size.width,
-                        height: 150,
-                        decoration:  BoxDecoration(
-                          gradient: LinearGradient(
-                              colors: [colorManager.primary, colorManager.lightprimary, colorManager.grey],
-                              begin: Alignment.topRight,
-                              end: Alignment.bottomLeft),
-                        ),
-                      ),),
-
+                         SizedBox(height: 50, width: double.infinity),
+                         HeaderWidget(),
+                         SizedBox(height: 24),
+                      //    ClipPath(
+                      //      clipper: CustomClipPathOpecity(),
+                      //      child: Container(
+                      //        width: MediaQuery.of(context).size.width,
+                      //        height: 170,
+                      //        decoration:  BoxDecoration(color:Colors.grey[300],
+                      //        ),
+                      //      ),),
+                      //    ClipPath(
+                      //      clipper: CustomClipPath(),
+                      //      child: Container(
+                      //   width: MediaQuery.of(context).size.width,
+                      //   height: 150,
+                      //   decoration:  BoxDecoration(
+                      //     gradient: LinearGradient(
+                      //         colors: [colorManager.primary, colorManager.lightprimary, colorManager.grey],
+                      //         begin: Alignment.topRight,
+                      //         end: Alignment.bottomLeft),
+                      //   ),
+                      // ),),
+                      //
 
                        ])
 ///////////////////////////////////////////////////////
                          ),
 //delete the  log
-                  const Image(image: AssetImage(ImageAssets.startLogo),width: 180,),
+               //   const Image(image: AssetImage(ImageAssets.startLogo),width: 180,),
                 // const SizedBox(height: AppSize.s28),
 
                 Container(
@@ -247,7 +256,7 @@ class _LoginViewState extends State<LoginView> {
                     )
                 ),])
 
-                )])),));
+                )])),));});
 
   }
 

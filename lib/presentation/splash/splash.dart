@@ -46,7 +46,7 @@ class _SplashViewState extends State<SplashView> {
                         else
                           {
                             Navigator.pushReplacementNamed(
-                                context, Routes.onboardingRoute)
+                                context, Routes.onboarding1Route)
                           }
                       })
             }

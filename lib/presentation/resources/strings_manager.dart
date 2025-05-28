@@ -143,6 +143,8 @@ class AppStrings {
   static const String Net_Salary = "Net Salary";
   static const String Was_Saved_Successfully = "Was Saved Successfully";
   static const String saving_Failed="saving Failed";
+  static const String lastSalary="lastSalary";
+
   //Attendance
   static const String attendance_Alerts="attendance_Alerts";
   static const String attendance_Activity="attendance_Activity";
@@ -236,6 +238,11 @@ class AppStrings {
   static const String Admin="Administrative";
   static const String Admin_Request="AdministrativeRequest";
   static const String Admin_Type="AdministrativeType";
+
+  //change shift
+  static const String ChangeShift="ChangeShift";
+  static const String ChangeShift_Request="ChangeShiftRequest";
+  static const String ChangeShift_Type="ShiftType";
 
 
 

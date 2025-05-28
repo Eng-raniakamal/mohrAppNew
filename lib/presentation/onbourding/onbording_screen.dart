@@ -142,7 +142,7 @@ class _OnboadingScreenState extends State<OnboadingScreen> {
                               }
                             else
                                {
-                                Navigator.of(context).pushReplacementNamed(Routes.loginRoute)
+                                Navigator.of(context).pushReplacementNamed(Routes.onboarding2Route)
                                 }
 
                           },
@@ -167,7 +167,7 @@ class _OnboadingScreenState extends State<OnboadingScreen> {
   void changeLanguage() async{
 
     await _appPreferences.setLanguageChanged();
-    Navigator.of(context).pushReplacementNamed(Routes.onboardingRoute);
+    Navigator.of(context).pushReplacementNamed(Routes.onboarding1Route);
     //Phoenix.rebirth(context);
   }
 }

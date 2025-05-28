@@ -5,6 +5,7 @@ import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:essmohr/presentation/newDesign/core/utils/import_file.dart';
 import 'package:essmohr/presentation/resources/routes.dart';
 import 'package:flutter/material.dart';
 
@@ -20,21 +21,23 @@ import 'package:essmohr/presentation/widgets/appbar_widget.dart';
 import 'package:essmohr/presentation/widgets/navigator_bar.dart';
 import 'package:essmohr/presentation/widgets/profile_widget.dart';
 import '../../../../application/constants.dart';
+import '../../../newDesign/feature/salary/widget/salary_widget.dart';
+import '../../../newDesign/feature/salary/widget/title_widget.dart';
 import '../ViewModel/salaryViewModel.dart';
 
-// ignore: camel_case_types
+
 class salaryView extends StatefulWidget {
   const salaryView({Key? key}) : super(key: key);
 
   @override
   State<salaryView> createState() => _salaryViewState();
 }
-final items=<Widget>
-[ const Icon(Icons.person,size: 30,),
-  const Icon(Icons.home,size: 30,),
-  const Icon(Icons.notifications,size: 30,),
-
-];
+// final items=<Widget>
+// [ const Icon(Icons.person,size: 30,),
+//   const Icon(Icons.home,size: 30,),
+//   const Icon(Icons.notifications,size: 30,),
+//
+// ];
 class _salaryViewState extends State<salaryView> {
   final SalaryViewModel _viewModel = instance<SalaryViewModel>();
 
@@ -50,19 +53,26 @@ class _salaryViewState extends State<salaryView> {
 
   @override
   Widget build(BuildContext context) {
-    final item=<Widget>
-    [ const Icon(Icons.person,size: 30,color: colorManager.white,),
-      const Icon(Icons.home,size: 30,color: colorManager.white),
-      const Icon(Icons.notifications,size: 30,color: colorManager.white),
 
-    ];
     return ThemeSwitchingArea(
         child: Builder(
         builder: (context) =>
         Scaffold(
-            appBar: buildAppBar(context),
-            bottomNavigationBar:NavigatorBar(index: 0,notificationNumber: Constants.notificationNumber,),
+            //appBar: buildAppBar(context),
+           // bottomNavigationBar:NavigatorBar(index: 0,notificationNumber: Constants.notificationNumber,),
+            appBar: AppBar(
+              backgroundColor: Color(0xffEDF9FF),
+                title: SingleChildScrollView(scrollDirection: Axis.horizontal,
+                    child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [Container(
 
+                      //color: Color(0xffEDF9FF),
+                      padding: EdgeInsets.symmetric(vertical: 10, horizontal: 24).r,
+                      child:
+                        Text(AppStrings.Salary.tr(), style: AppTextStyle.iBMP24w600),
+                        )],
+                    ),),),
             body:
             SingleChildScrollView(
               scrollDirection: Axis.vertical,
@@ -101,14 +111,7 @@ class _salaryViewState extends State<salaryView> {
                   height: MediaQuery.of(context).size.height,
                   child: Column(
                     children: [
-                      const Padding(padding: EdgeInsets.only(top: 50)),
-                      Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                        Column(
-                          children: [
-                            _getImageWidget(),
-                          ],
-                        ),
-                      ]),
+                      Padding(padding: EdgeInsets.only(top: 50)),
                       Container(child: _getSalary(snapshot.data?.salary)),
                     ],
                   ),
@@ -124,90 +127,111 @@ class _salaryViewState extends State<salaryView> {
       return Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Padding(
-                padding: EdgeInsets.fromLTRB(20, 30, 30, 30),
-                child: SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Container(
-                    width: 400,
-                    child: DataTable(
-                        headingRowColor: WidgetStateColor.resolveWith(
-                            (states) => colorManager.primary),
-                        columns:  [
-                          DataColumn(
-                              label: Text(
-                            AppStrings.Month.tr(),
-                            style: TextStyle(color: colorManager.white),
-                          )),
-                          DataColumn(
-                              label: Text(AppStrings.Salary.tr(),
-                                  style: TextStyle(color: colorManager.white))),
-                          DataColumn(
-                              label: Text("",
-                                  style: TextStyle(color: colorManager.white))),
-                        ],
-                        rows: salary
-                            .map((salary) => DataRow(cells: [
-                                  DataCell(
-                                      Text(getDate((salary.Month).toString()))),
-                                  DataCell(Text((salary.Value).toString())),
-                                  DataCell(GestureDetector(
-                                    onTap: () {
-                                      int id = salary.id;
-                                      // String url= Constants.salaryDetailsUrl;
-                                      // url=url+id.toString();
-                                      if (id == 0) {
-                                        displayDialoge(context);
-                                      } else {
-                                        Constants.salaryDetailsId =
-                                            id.toString();
-                                        initSalaryDetailsModule();
-                                        showCustomDialog(context, onValue: (_) {
-                                          setState(() {
-
-                                          });
-                                        });
-                                        // Navigator.of(context)
-                                        //     .pushReplacementNamed(
-                                        //     Routes.salaryDetails);
-                                        //displayDialoge();
-
-                                      }
-                                      //else
-                                      //   {displayDialoge();}
-                                    },
-                                    child:  Text(
-                                      AppStrings.More_Details.tr(),
-                                      style: TextStyle(
-                                          decoration: TextDecoration.underline,
-                                          color: Colors.blue),
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                  ))
-                                ]))
-                            .toList()),
+         // SingleChildScrollView(
+         //   scrollDirection: Axis.horizontal,
+         //    child: Padding(
+         //        padding: EdgeInsets.fromLTRB(20, 30, 30, 30),
+         //
+         //      child: SingleChildScrollView(
+         //       child: Column(
+         //         children: [
+         //       TitleWidget(title: AppStrings.Salary.tr()),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0).r,
+                    child: Column(
+                      children: List.generate(
+                        salary.length,
+                            (index) => Padding(
+                          padding: const EdgeInsets.only(bottom: 12.0).r,
+                          child: SalaryWidget(salaryModel: salary[index],),
+                        ),
+                      ),
+                    ),
                   ),
-                )),
-          ),
-        ],
-      );
+
+                ],
+              );
+                // child: SingleChildScrollView(
+                //   scrollDirection: Axis.horizontal,
+                //   child: Container(
+                //     width: 400,
+                //     child: DataTable(
+                //         headingRowColor: WidgetStateColor.resolveWith(
+                //             (states) => colorManager.primary),
+                //         columns:  [
+                //           DataColumn(
+                //               label: Text(
+                //             AppStrings.Month.tr(),
+                //             style: TextStyle(color: colorManager.white),
+                //           )),
+                //           DataColumn(
+                //               label: Text(AppStrings.Salary.tr(),
+                //                   style: TextStyle(color: colorManager.white))),
+                //           DataColumn(
+                //               label: Text("",
+                //                   style: TextStyle(color: colorManager.white))),
+                //         ],
+                //         rows: salary
+                //             .map((salary) => DataRow(cells: [
+                //                   DataCell(
+                //                       Text(getDate((salary.Month).toString()))),
+                //                   DataCell(Text((salary.Value).toString())),
+                //                   DataCell(GestureDetector(
+                //                     onTap: () {
+                //                       int id = salary.id;
+                //                       // String url= Constants.salaryDetailsUrl;
+                //                       // url=url+id.toString();
+                //                       if (id == 0) {
+                //                         displayDialoge(context);
+                //                       } else {
+                //                         Constants.salaryDetailsId =
+                //                             id.toString();
+                //                         initSalaryDetailsModule();
+                //                         showCustomDialog(context, onValue: (_) {
+                //                           setState(() {
+                //
+                //                           });
+                //                         });
+                //                         // Navigator.of(context)
+                //                         //     .pushReplacementNamed(
+                //                         //     Routes.salaryDetails);
+                //                         //displayDialoge();
+                //
+                //                       }
+                //                       //else
+                //                       //   {displayDialoge();}
+                //                     },
+                //                     child:  Text(
+                //                       AppStrings.More_Details.tr(),
+                //                       style: TextStyle(
+                //                           decoration: TextDecoration.underline,
+                //                           color: Colors.blue),
+                //                       overflow: TextOverflow.ellipsis,
+                //                     ),
+                //                   ))
+                //                 ]))
+                //             .toList()),
+                //   ),
+                // )),
+    //       ),
+    //      // )
+    // )],
+    //   );
     }
     return Padding(padding: const EdgeInsets.all(25.0), child: Container());
   }
 
-  Widget _getImageWidget() {
-    return ProfileWidget(imagePath: Constants.imagePath, onClicked: () {});
-  }
+  // Widget _getImageWidget() {
+  //   return ProfileWidget(imagePath: Constants.imagePath, onClicked: () {});
+  // }
 
   void displayDialoge(BuildContext context) {
     AwesomeDialog(
       context: context,
-      dialogType: DialogType.success,
+      dialogType: DialogType.info,
       animType: AnimType.scale,
       title: AppStrings.Alerts.tr(),
-      desc: AppStrings.Was_Saved_Successfully.tr(),
+      desc: AppStrings.no_salary_found.tr(),
       btnOkText: AppStrings.confirm.tr(),
       btnOkOnPress: () {
         Navigator.of(context).pop();

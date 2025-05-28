@@ -96,6 +96,11 @@ dependencies:
   flutter_typeahead: ^4.0.0
 
 
+
+  flutter_screenutil: ^5.9.3
+  file_picker: ^10.1.9
+
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -158,3 +163,22 @@ flutter:
     - assets/translations/
     - assets/Backgrounds/
     - assets/RiveAssets/
+    - assets/images/NewDesign/image/splash/
+    - assets/images/NewDesign/image/onboarding/
+    - assets/images/NewDesign/image/login/
+    - assets/images/NewDesign/image/tab/
+    - assets/images/NewDesign/image/home/
+    - assets/images/NewDesign/image/person/
+    - assets/fonts/NewDesign/font/
+
+
+  fonts:
+    - family: IBMP
+      fonts:
+        - asset: assets/fonts/NewDesign/font/IBMPlexSansArabic-ExtraLight.ttf
+        - asset: assets/fonts/NewDesign/font/IBMPlexSansArabic-Light.ttf
+          weight: 500
+
+    - family: Nunito
+      fonts:
+       - asset: assets/fonts/NewDesign/font/Nunito-Regular.ttf

@@ -29,7 +29,7 @@
   "notification": "الاشعارات",
   "Alerts": " تنبيهات",
   "search": "البحث",
-  "home": "الرىيسيه",
+  "home": "الرئيسية",
   "settings": "الاعدادات",
   "services": "الخدمات",
   "about": "عن المتجر",
@@ -133,6 +133,7 @@
   "Information": "معلومة",
   "day": "يوم",
   "Salary_Details": "تفاصيل المرتب",
+  "lastSalary": "أخر مرتب",
   "Benefits": "الاستحقاقات",
   "Deducted": "الاستقطاعات",
   "Total of Deductions": "إجمالى الاستقطاعات",
@@ -186,5 +187,14 @@
 
   "Administrative": "أدارى",
   "AdministrativeRequest":"طلب أدارى",
-  "AdministrativeType":"انواع الطلب الادارى"
+  "AdministrativeType":"انواع الطلب الادارى",
+
+  "ChangeShift": "تغيير وردية",
+  "ChangeShiftRequest":"طلب تغيير وردية",
+  "ShiftType":"وردية"
+
+
+
+
+
 }

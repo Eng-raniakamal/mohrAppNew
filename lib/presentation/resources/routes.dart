@@ -17,16 +17,22 @@ import 'package:essmohr/presentation/resources/strings_manager.dart';
 import 'package:essmohr/presentation/splash/splashScreen.dart';
 import 'package:essmohr/presentation/underConstraction.dart';
 import '../ChangePassword/layout/changePasswordLayout.dart';
+import '../Requests/Salary/View/salary_View.dart';
 import '../Requests/Vacations/Layout/vacationLayout.dart';
 import '../Requests/Vacations/view/vactions_view.dart' show vacationsView;
 import '../User/layout/employeeLayout.dart';
 import '../login/loginView.dart';
+import '../newDesign/feature/home/presentation/home_screen.dart';
+import '../newDesign/feature/layout/presentation/screen/layout_screen.dart';
+import '../newDesign/feature/onboarding/presentation/screen/onboarding_screen.dart';
+import '../newDesign/feature/salary/presentation/screen/detail_salary_screen.dart';
 import '../settings/layout/settingsLayout.dart';
 
 class Routes
 {
   static const String underConstraction="/underConstruction.dart";
-  static const String onboardingRoute="/onboarding";
+  static const String onboarding1Route="/onboarding";
+  static const String onboarding2Route="/newDesign/feature/onboarding/presentation/screen/onboarding";
   static const String splashRoute="/splash";
   static const String loginRoute="/login";
   static const String profileRoute="/user";
@@ -50,8 +56,11 @@ class Routes
 class RouteGenerator {
   static Route<dynamic> getRoute(RouteSettings settings) {
     switch (settings.name) {
-      case Routes.onboardingRoute:
-        return MaterialPageRoute(builder: (_)=> const OnboadingScreen ());
+      case Routes.onboarding1Route:
+        return MaterialPageRoute(builder: (_)=> const OnboadingScreen());
+
+      case Routes.onboarding2Route:
+        return MaterialPageRoute(builder: (_)=> const Onboarding2Screen());
 
       case Routes.splashRoute:
         return MaterialPageRoute(builder: (_)=> const splashScreen());
@@ -63,12 +72,13 @@ class RouteGenerator {
        case Routes.profileRoute:
         initUserModule();
         initUserImageModule();
-        return MaterialPageRoute(builder: (_)=>  const userView());
+        return MaterialPageRoute(builder: (_)=>  HomeScreen());
 
       case Routes.homeRoute:
         initUserModule();
         initUserImageModule();
-        return MaterialPageRoute(builder: (_)=>  Home());
+        initSalaryModule();
+        return MaterialPageRoute(builder: (_)=>   LayoutScreen(initialIndex: 0,));
 
       case Routes.notification:
 
@@ -111,12 +121,12 @@ class RouteGenerator {
 
       case Routes.salary:
         initSalaryModule();
-        return MaterialPageRoute(builder: (_)=>  SalaryScreen());
+        return MaterialPageRoute(builder: (_)=>  LayoutScreen(initialIndex: 3,));
 
 
       case Routes.salaryDetails:
         initSalaryDetailsModule();
-        return MaterialPageRoute(builder: (_)=>  salaryDetailsView());
+        return MaterialPageRoute(builder: (_)=> salaryDetailsView());
 
 
       case Routes.missionRequest:
@@ -161,6 +171,8 @@ class RouteGenerator {
               child: Text(AppStrings.noRouteFound).tr()), // todo move this string to strings manager
         ));
   }
+
+
 
 }
 
