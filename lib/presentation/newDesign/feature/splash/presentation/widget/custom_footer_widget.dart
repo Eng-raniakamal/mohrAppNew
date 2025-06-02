@@ -10,7 +10,7 @@ class CustomFooterWidget extends StatelessWidget {
       height: 16.h,
       width: 66.w,
       decoration: BoxDecoration(
-        color: AppColor.conColor,
+        color: AppColor.blue,
         borderRadius: BorderRadius.circular(5).r,
       ),
       child: Row(
@@ -27,7 +27,7 @@ class CustomFooterWidget extends StatelessWidget {
               color:
               i == currentPage
                   ? AppColor.primary
-                  : AppColor.noSelect,
+                  : AppColor.steelGrey,
               borderRadius: BorderRadius.circular(20),
             ),
           ),

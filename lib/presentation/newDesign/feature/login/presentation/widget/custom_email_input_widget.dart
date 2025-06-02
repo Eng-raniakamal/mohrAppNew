@@ -1,8 +1,8 @@
+import 'package:essmohr/presentation/newDesign/core/configure/extension/app_context_extension.dart';
 import 'package:essmohr/presentation/newDesign/core/utils/app_image.dart';
 import 'package:essmohr/presentation/newDesign/core/utils/app_text_style.dart';
 import 'package:essmohr/presentation/newDesign/core/utils/import_file.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
 class CustomInputWidget extends StatefulWidget {
   CustomInputWidget({
     super.key,
@@ -10,7 +10,7 @@ class CustomInputWidget extends StatefulWidget {
     this.hintText,
     this.obscureText = false,
     this.isPassWordInput = false,
-    this.validator
+    this.validator,
   });
 
   final TextEditingController emailControl;
@@ -18,6 +18,7 @@ class CustomInputWidget extends StatefulWidget {
   bool obscureText;
   bool isPassWordInput;
   String? Function(String?)? validator;
+
   @override
   State<CustomInputWidget> createState() => _CustomInputWidgetState();
 }
@@ -28,15 +29,16 @@ class _CustomInputWidgetState extends State<CustomInputWidget> {
     return TextFormField(
       obscureText: widget.obscureText ?? false,
       textDirection: TextDirection.rtl,
-      validator:widget.validator,
+      validator: widget.validator,
       controller: widget.emailControl,
       keyboardType:
-          widget.obscureText == false
-              ? TextInputType.emailAddress
-              : TextInputType.visiblePassword,
+      widget.obscureText == false
+          ? TextInputType.emailAddress
+          : TextInputType.visiblePassword,
       decoration: InputDecoration(
         contentPadding: EdgeInsets.symmetric(vertical: 16.h),
-        fillColor: AppColor.gray,
+        fillColor: context.color.secondary,
+        // AppColor.cloudMist,
         filled: true,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
@@ -44,11 +46,11 @@ class _CustomInputWidgetState extends State<CustomInputWidget> {
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(color: AppColor.conColor, width: 1),
+          borderSide: BorderSide(color: AppColor.iceBlue, width: 1),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(color: AppColor.primary, width: 1),
+          borderSide: BorderSide(color: context.color.primary, width: 1),
         ),
         hintText: widget.hintText,
         hintStyle: AppTextStyle.iBMP16w500,
@@ -67,25 +69,25 @@ class _CustomInputWidgetState extends State<CustomInputWidget> {
           maxHeight: 24.h,
         ),
         suffixIcon:
-            widget.isPassWordInput
-                ? GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      widget.obscureText = !widget.obscureText;
-                    });
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 8.0),
-                    child: Icon(
-                      size: 24,
-                      color: Color(0xffBEC5D2),
-                      widget.obscureText == true
-                          ? Icons.visibility_off_outlined
-                          : Icons.remove_red_eye,
-                    ),
-                  ),
-                )
-                : null,
+        widget.isPassWordInput
+            ? GestureDetector(
+          onTap: () {
+            setState(() {
+              widget.obscureText = !widget.obscureText;
+            });
+          },
+          child: Padding(
+            padding: const EdgeInsets.only(left: 8.0),
+            child: Icon(
+              size: 24,
+              color: Color(0xffBEC5D2),
+              widget.obscureText == true
+                  ? Icons.visibility_off_outlined
+                  : Icons.remove_red_eye,
+            ),
+          ),
+        )
+            : null,
       ),
     );
   }

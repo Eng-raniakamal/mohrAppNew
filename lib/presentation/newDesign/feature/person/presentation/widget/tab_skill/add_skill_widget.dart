@@ -1,15 +1,15 @@
-import 'package:essmohr/presentation/newDesign//core/utils/import_file.dart';
-import 'package:essmohr/presentation/newDesign//feature/person/control/skill_page/skill_page_cubit.dart';
-import 'package:essmohr/presentation/newDesign//core/component/custom_elevated_button_widget.dart';
-import 'package:essmohr/presentation/newDesign//feature/person/presentation/widget/tab_info_data/input_birth_day_widget.dart';
-import 'package:essmohr/presentation/newDesign//feature/person/presentation/widget/tab_skill/input_skill_data_widget.dart';
+import 'package:essmohr/presentation/newDesign/core/utils/import_file.dart';
+import 'package:essmohr/presentation/newDesign/feature/person/control/skill_page/skill_page_cubit.dart';
+import 'package:essmohr/presentation/newDesign/core/component/custom_elevated_button_widget.dart';
+import 'package:essmohr/presentation/newDesign/core/component/input_date_day_widget.dart';
+import 'package:essmohr/presentation/newDesign/core/component/input_data_widget.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AddSkillWidget extends StatelessWidget {
   AddSkillWidget({super.key});
 
- final TextEditingController skillController = TextEditingController();
- final TextEditingController degreeSkillController = TextEditingController();
+  final TextEditingController skillController = TextEditingController();
+  final TextEditingController degreeSkillController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -33,19 +33,19 @@ class AddSkillWidget extends StatelessWidget {
           ],
         ),
         SizedBox(height: 8.h),
-        InputSkillDataWidget(
+        InputDataWidget(
           title: "المهارة",
           hint: "اختر المهارة",
           controller: skillController,
         ),
         SizedBox(height: 16.h),
-        InputSkillDataWidget(
+        InputDataWidget(
           title: "الدرجة",
           hint: "اختر المهارة",
           controller: degreeSkillController,
         ),
         SizedBox(height: 16.h),
-        InputBirthDayWidget(
+        InputDateDayWidget(
           data: "التاريخ",
 
         ),

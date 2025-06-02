@@ -1,5 +1,6 @@
 import 'package:essmohr/presentation/newDesign/core/utils/app_text_style.dart';
 import 'package:essmohr/presentation/newDesign/core/utils/import_file.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../../../../application/app_prefs.dart';
@@ -7,6 +8,8 @@ import '../../../../../../application/constants.dart';
 import '../../../../../../application/di.dart';
 import '../../../../../resources/colors.dart';
 import '../../../../../resources/routes.dart';
+import '../../../notification/control/tab_notification_cubit.dart';
+import '../../../notification/presentation/screen/notification_screen.dart';
 
 class NotificationIconWidget extends StatefulWidget {
   const NotificationIconWidget({
@@ -46,7 +49,19 @@ class _NotificationIconWidgetState extends State<NotificationIconWidget> {
           IconButton(onPressed: () {
             Constants.notificationNumber=0;
             _appPreferences.setUserNotificationList(0);
-            Navigator.of(context).pushNamed(Routes.notification);
+
+
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => BlocProvider(
+                  create: (_) => TabNotificationCubit(),
+                  child: NotificationScreen(),
+                ),
+              ),
+            );
+
+           // Navigator.of(context).pushNamed(Routes.notification);
       },
               icon:  Icon(Icons.notifications_none, size: 40, color: colorManager.white)),
           //Icon(Icons.notifications_none, size: 45, color: colorManager.white),

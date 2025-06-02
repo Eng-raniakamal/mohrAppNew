@@ -24,6 +24,7 @@ import '../User/layout/employeeLayout.dart';
 import '../login/loginView.dart';
 import '../newDesign/feature/home/presentation/home_screen.dart';
 import '../newDesign/feature/layout/presentation/screen/layout_screen.dart';
+import '../newDesign/feature/notification/presentation/screen/notification_screen.dart';
 import '../newDesign/feature/onboarding/presentation/screen/onboarding_screen.dart';
 import '../newDesign/feature/salary/presentation/screen/detail_salary_screen.dart';
 import '../settings/layout/settingsLayout.dart';
@@ -37,7 +38,8 @@ class Routes
   static const String loginRoute="/login";
   static const String profileRoute="/user";
   static const String homeRoute="/home/Home.dart";
-  static const String notification="/Alert_Notification";
+  //static const String notification="/Alert_Notification";
+  static const String notification="/newDesign/feature/notification/presentation/screen/notification_Screen.dart";
   static const String editProfileRoute="/user/layout";
   static const String main="/main";
   static const String settings="/settings";
@@ -78,12 +80,23 @@ class RouteGenerator {
         initUserModule();
         initUserImageModule();
         initSalaryModule();
+        initEmployeeBasicDataModule();
+        initEmployeeBasicDataModule();
+        initEmployeeSkillsModule();
+        initDisplayEmployeeSkillsModule();
+        initSaveEmpBasicDataModule();
+        initDisplayAcademicDegreesModule();
+        initSaveAcademicDegreesModule();
+        initQualificationModule();
+        initGradeModule();
+        initDegreeModule();
+        initVacationTypeModule();
         return MaterialPageRoute(builder: (_)=>   LayoutScreen(initialIndex: 0,));
 
       case Routes.notification:
 
        // initUserImageModule();
-        return MaterialPageRoute(builder: (_)=>  AlertHome());
+        return MaterialPageRoute(builder: (_)=> NotificationScreen());
 
         case Routes.editProfileRoute:
           initUserModule();
@@ -100,7 +113,10 @@ class RouteGenerator {
           initVacationTypeModule();
 
 
-      return MaterialPageRoute(builder: (_)=>  Employee());
+      return MaterialPageRoute(builder: (_)=>
+          //Employee()
+      LayoutScreen(initialIndex: 0,)
+      );
 
       case Routes.settings:
           return MaterialPageRoute(builder: (_)=>  Settings());
@@ -121,6 +137,18 @@ class RouteGenerator {
 
       case Routes.salary:
         initSalaryModule();
+        initUserModule();
+        initUserImageModule();
+        initEmployeeBasicDataModule();
+        initEmployeeSkillsModule();
+        initDisplayEmployeeSkillsModule();
+        initSaveEmpBasicDataModule();
+        initDisplayAcademicDegreesModule();
+        initSaveAcademicDegreesModule();
+        initQualificationModule();
+        initGradeModule();
+        initDegreeModule();
+        initVacationTypeModule();
         return MaterialPageRoute(builder: (_)=>  LayoutScreen(initialIndex: 3,));
 
 

@@ -230,7 +230,7 @@ class _salaryViewState extends State<salaryView> {
       context: context,
       dialogType: DialogType.info,
       animType: AnimType.scale,
-      title: AppStrings.Alerts.tr(),
+      title: AppStrings.alerts.tr(),
       desc: AppStrings.no_salary_found.tr(),
       btnOkText: AppStrings.confirm.tr(),
       btnOkOnPress: () {
@@ -286,12 +286,4 @@ String? getMonthName(String? date) {
   return month;
 }
 
-String getDate(String date) {
-  var searchString = '-';
-  var index = date.indexOf(searchString, 0);
-  var partOfDate = date.substring(0, index);
-  var restofDate = date.substring(index, date.length);
-  String? month = getMonthName(partOfDate);
-  String Date = "${month!} $restofDate";
-  return Date;
-}
+

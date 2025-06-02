@@ -806,7 +806,7 @@ setState(() {
       context: context,
       dialogType: DialogType.success,
       animType: AnimType.scale,
-      title: AppStrings.Alerts.tr(),
+      title: AppStrings.alerts.tr(),
       desc: AppStrings.Was_Saved_Successfully.tr(),
       btnOkText: AppStrings.confirm.tr(),
       btnOkOnPress: () {
@@ -820,7 +820,7 @@ setState(() {
       context: context,
       dialogType: DialogType.error,
       animType: AnimType.scale,
-      title: AppStrings.Alerts.tr(),
+      title: AppStrings.alerts.tr(),
       desc: AppStrings.saving_Failed.tr(),
       btnOkText: AppStrings.confirm.tr(),
       btnOkOnPress: () {

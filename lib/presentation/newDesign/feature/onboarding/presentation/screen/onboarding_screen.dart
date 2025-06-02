@@ -65,7 +65,7 @@ class _Onboarding2ScreenState extends State<Onboarding2Screen> {
                                 SizedBox(
                                   width: MediaQuery.sizeOf(context).width * .35,
                                   child: CustomButtonWidget(
-                                    color: AppColor.tBlue,
+                                    color: AppColor.lightBlueBg,
                                     colorTitle: AppColor.primary,
                                     onTap: nextPage,
                                     title: "تخطي",

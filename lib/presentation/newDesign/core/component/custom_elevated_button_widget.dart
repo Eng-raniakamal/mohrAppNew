@@ -10,26 +10,31 @@ class CustomElevatedButtonWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
-      onPressed:onPressed,
-      style: ElevatedButton.styleFrom(
-        backgroundColor: AppColor.primary,
-        minimumSize: Size(double.infinity, 50),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12).r,
-        ),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text(
-            data,
-            style: AppTextStyle.iBMP14w700.copyWith(color: Colors.white),
+    return
+      GestureDetector(
+        onTap: onPressed,
+        child: Container(
+          height: 50.h,
+          alignment: Alignment.center,
+          width: double.infinity,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(12).r,
+            color: AppColor.primary,
+
           ),
-          SizedBox(width: 8.w),
-          Icon(icon, color: Colors.white),
-        ],
-      ),
-    );
+          child:Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                data,
+                style: AppTextStyle.iBMP14w700.copyWith(color: Colors.white),
+              ),
+              SizedBox(width: 8.w),
+              Icon(icon, color: Colors.white),
+            ],
+          ) ,
+        ),
+      );
+
   }
 }

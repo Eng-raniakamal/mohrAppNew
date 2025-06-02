@@ -1,12 +1,14 @@
+
+import 'package:easy_localization/easy_localization.dart';
+import 'package:essmohr/presentation/newDesign/core/component/custom_elevated_button_widget.dart';
+import 'package:essmohr/presentation/newDesign/core/component/header_core_widget.dart';
 import 'package:essmohr/presentation/newDesign/core/utils/import_file.dart';
 import 'package:essmohr/presentation/newDesign/feature/person/control/education_page/education_cubit.dart';
-import 'package:essmohr/presentation/newDesign/feature/person/control/skill_page/skill_page_cubit.dart';
 import 'package:essmohr/presentation/newDesign/feature/person/data/skill_model.dart';
-
 import 'package:essmohr/presentation/newDesign/feature/person/presentation/widget/tab_skill/item_skill_widget.dart';
+import 'package:essmohr/presentation/resources/strings_manager.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../../core/component/header_core_widget.dart';
 
 class AllEducationWidget extends StatelessWidget {
   const AllEducationWidget({super.key});
@@ -26,13 +28,14 @@ class AllEducationWidget extends StatelessWidget {
           },
         ),
 
-        // CustomElevatedButtonWidget(
-        //   icon: Icons.add,
-        //   data: "أضف",
-        //   onPressed: () {
-        //     BlocProvider.of<EducationPageCubit>(context).changePage(1);
-        //   },
-        // ),
+
+        CustomElevatedButtonWidget(
+          icon: Icons.add,
+          data: AppStrings.save.tr(),
+          onPressed: () {
+            BlocProvider.of<EducationPageCubit>(context).changePage(1);
+          },
+        ),
       ],
     );
   }

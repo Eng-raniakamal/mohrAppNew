@@ -1,18 +1,23 @@
 
-import 'package:essmohr/presentation/newDesign//core/utils/import_file.dart';
-import 'package:essmohr/presentation/newDesign//feature/person/data/skill_model.dart';
+import 'package:essmohr/presentation/newDesign/core/utils/import_file.dart';
+import 'package:essmohr/presentation/newDesign/feature/person/data/skill_model.dart';
 
+import '../../../../../../../application/di.dart';
+import '../../../../../../editEmployee/View/empSkills_view.dart';
+import '../../../../../../editEmployee/ViewModel/displayEmpSkills_viewModel.dart';
 import '../../../../../core/utils/app_message.dart';
 
 class ItemSkillWidget extends StatelessWidget {
-  const ItemSkillWidget({super.key,
-    required this.skillModel});
-  static  final IconData _moreVertRounded = IconData(
-    0xf8dc,
-    fontFamily: 'MaterialIcons',
-  );
+   ItemSkillWidget({super.key,
 
-  final EducationAndSkillModel skillModel;
+    required this.skillModel}) {
+
+   }
+  static  final IconData _moreVertRounded = IconData(0xf8dc, fontFamily: 'MaterialIcons',);
+   List<UserSkills>? skillsUpdate;
+
+  var skillModel;
+  //final EducationAndSkillModel skillModel;
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +44,7 @@ class ItemSkillWidget extends StatelessWidget {
                       SvgPicture.asset("assets/image/person/doc_text.svg"),
 
                       SizedBox(width: 8.w),
-                      Text(skillModel.date??"", style: AppTextStyle.iBMP12w500),
+                      Text(skillModel.date??"", style: AppTextStyle.iBMP14w500),
                     ],
                   ),
                   SizedBox(height: 4.h),
@@ -49,7 +54,7 @@ class ItemSkillWidget extends StatelessWidget {
                       SvgPicture.asset("assets/image/person/doc_page.svg")
                       ,
                       SizedBox(width: 8.w),
-                      Text(skillModel.degree??"", style: AppTextStyle.iBMP12w500),
+                      Text(skillModel.degree??"", style: AppTextStyle.iBMP14w500),
                     ],
                   ):
                   SizedBox.shrink(),

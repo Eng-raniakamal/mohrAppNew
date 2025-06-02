@@ -1,11 +1,13 @@
-import 'package:essmohr/presentation/newDesign//core/utils/import_file.dart';
-import 'package:essmohr/presentation/newDesign//feature/person/control/tab_person_screen_cubit/tab_cubit.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'package:essmohr/presentation/newDesign/core/utils/import_file.dart';
+import 'package:essmohr/presentation/newDesign/feature/person/control/tab_person_screen_cubit/tab_cubit.dart';
+import 'package:essmohr/presentation/resources/strings_manager.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class TabOfAppBarSwitcher extends StatelessWidget {
    TabOfAppBarSwitcher({super.key});
 
- final  List<String> tabs = ['بياناتي', 'المهارات', 'الدرجة العلمية'];
+ final  List<String> tabs = [AppStrings.myData.tr(), AppStrings.Skills.tr(), AppStrings.AcadmicDegree.tr()];
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +41,7 @@ class TabOfAppBarSwitcher extends StatelessWidget {
                   child: Center(
                     child: Text(
                       tabs[index],
-                      style: AppTextStyle.iBMP12w500.copyWith(
+                      style: AppTextStyle.iBMP14w500.copyWith(
                         color: isSelected ? Colors.white : Colors.black,
                         fontSize: 12.sp,
                       ),

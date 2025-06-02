@@ -716,7 +716,7 @@
 //       barrierDismissible: true,
 //       builder: (BuildContext context) {
 //         return ClassicGeneralDialogWidget(
-//           titleText: AppStrings.Alerts.tr(),
+//           titleText: AppStrings.alerts.tr(),
 //           contentText: AppStrings.Was_Saved_Successfully.tr(),
 //           positiveText:  AppStrings.confirm.tr(),
 //           onPositiveClick: () {

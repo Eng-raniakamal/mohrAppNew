@@ -175,7 +175,7 @@
 //       barrierDismissible: true,
 //       builder: (BuildContext context) {
 //         return ClassicGeneralDialogWidget(
-//           //titleText: AppStrings.Alerts.tr(),
+//           //titleText: AppStrings.alerts.tr(),
 //           contentText: message,
 //           positiveText: AppStrings.ok.tr(),
 //           onPositiveClick: () {
@@ -605,7 +605,7 @@ class _NotificationViewState extends State<NotificationView> {
       context: context,
       dialogType: DialogType.info,
       animType: AnimType.scale,
-      title: AppStrings.Alerts.tr(),
+      title: AppStrings.alerts.tr(),
       desc: message,
       btnOkOnPress: () {
         Navigator.of(context).pop();

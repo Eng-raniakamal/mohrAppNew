@@ -270,7 +270,7 @@ class _ChangePasswordState extends State<ChangePasswordPage> {
       context: context,
       dialogType: DialogType.error,
       animType: AnimType.scale,
-      title: AppStrings.Alerts.tr(),
+      title: AppStrings.alerts.tr(),
       desc: message,
       btnOkText: AppStrings.confirm.tr(),
       btnOkOnPress: () {

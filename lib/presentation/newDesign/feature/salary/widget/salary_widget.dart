@@ -96,7 +96,7 @@ class SalaryWidget extends StatelessWidget {
                   SizedBox(width: 8.w),
                   Text(
                     getDate(salaryModel!.Month)?? "يونيو 2024",
-                    style: AppTextStyle.iBMP12w500.copyWith(
+                    style: AppTextStyle.iBMP14w500.copyWith(
                       color: Color(0xff3D4966),
                     ),
                   ),
@@ -112,7 +112,7 @@ class SalaryWidget extends StatelessWidget {
                   SizedBox(width: 8.w),
                   Text(
                     salaryModel?.Value.toString() ?? "34" ,
-                    style: AppTextStyle.iBMP12w500.copyWith(
+                    style: AppTextStyle.iBMP14w500.copyWith(
                       color: Color(0xff3D4966),
                     ),
                   ),
@@ -144,7 +144,7 @@ class SalaryWidget extends StatelessWidget {
                   children: [
                     Text(
                       AppStrings.details.tr(),
-                      style: AppTextStyle.iBMP12w500.copyWith(
+                      style: AppTextStyle.iBMP14w500.copyWith(
                         color: Color(0xff3D4966),
                       ),
                     ),
@@ -165,7 +165,7 @@ void displayDialoge(BuildContext context) {
     context: context,
     dialogType: DialogType.info,
     animType: AnimType.scale,
-    title: AppStrings.Alerts.tr(),
+    title: AppStrings.alerts.tr(),
     desc: AppStrings.no_salary_found.tr(),
     btnOkText: AppStrings.ok.tr(),
     btnOkOnPress: () {

@@ -61,7 +61,7 @@ class HeaderReportWidget extends StatelessWidget {
             children: [
               SvgPicture.asset("assets/images/NewDesign/image/home/report_icon.svg"),
               SizedBox(width: 8.h),
-              Text(typeReport ?? "", style: AppTextStyle.iBMP12w700),
+              Text(typeReport ?? "", style: AppTextStyle.iBMP10w700),
             ],
           ),
           widget!=null? Icon(Icons.arrow_forward_outlined):SizedBox(),

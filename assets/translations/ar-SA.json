@@ -27,7 +27,7 @@
   "Login": "تسجيل الدخول",
   "email_hint": "البريد الالكتروني",
   "notification": "الاشعارات",
-  "Alerts": " تنبيهات",
+  "alerts": " تنبيهات",
   "search": "البحث",
   "home": "الرئيسية",
   "settings": "الاعدادات",
@@ -80,6 +80,7 @@
   "Attendance": "حضور وانصراف",
   "Requests": " طلبات",
   "BasicData": "بيانات أساسية",
+  "my_Data": "بياناتي",
   "Skills": "مهارات",
   "AcadmicDegree": "الدرجات العلمية",
   "ArabicName": "الأسم باللغة العربية",
@@ -157,7 +158,7 @@
   "attachments": "الوثائق",
   "canceled": "ملغي",
   "cancellation_Reason": "سبب الإلغاء",
-  "seen": "الإطلاع",
+  "seen": " تم قرأتها سابقا",
   "days_hours": "أيام/ساعات",
   "check": "اختر",
   "Action_Type": "نوع الحركة",
@@ -191,7 +192,9 @@
 
   "ChangeShift": "تغيير وردية",
   "ChangeShiftRequest":"طلب تغيير وردية",
-  "ShiftType":"وردية"
+  "ShiftType":"وردية",
+
+  "new_alerts": "جديد"
 
 
 

@@ -15,7 +15,7 @@
   "invalid_mobile_number": "Invalid Mobile Number",
   "invalid_email": "Invalid Email",
   "Invalid_Vacation": "Invalid Vacation",
-
+  "my_Data":"My Data",
   "register": "Register",
   "already_have_account": "Already have an account? login",
   "upload_profile_pictuSearchre": "profile picture",
@@ -148,6 +148,7 @@
   "Financial": "Financial",
   "Extra": "Extra",
   "Admin": "Admin ",
+  "alerts": "Alerts",
 
   "attendance_Activity": "Attendance Activity",
   "attendance_Alerts": "Attendance Alerts",
@@ -199,5 +200,8 @@
 
   "ChangeShift": "ChangeShift",
   "ChangeShiftRequest":"ChangeShift Request",
-  "ShiftType":"Shift"
+  "ShiftType":"Shift",
+
+
+  "new_alerts": "new"
 }

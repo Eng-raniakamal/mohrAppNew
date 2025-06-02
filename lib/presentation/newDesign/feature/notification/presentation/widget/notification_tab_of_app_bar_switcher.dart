@@ -1,11 +1,15 @@
-import 'package:essmohr/presentation/newDesign//core/utils/import_file.dart';
-import 'package:essmohr/presentation/newDesign//feature/person/control/tab_cubit/tab_cubit.dart';
+
+import 'package:easy_localization/easy_localization.dart';
+import 'package:essmohr/presentation/resources/strings_manager.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class TabOfAppBarSwitcher extends StatelessWidget {
-   TabOfAppBarSwitcher({super.key});
+import '../../../../core/utils/import_file.dart';
+import '../../control/tab_notification_cubit.dart';
 
- final  List<String> tabs = ['بياناتي', 'المهارات', 'الدرجة العلمية'];
+class NotificationTabOfAppBarSwitcher extends StatelessWidget {
+  NotificationTabOfAppBarSwitcher({super.key});
+
+  final List<String> tabs = [AppStrings.notifications.tr(),AppStrings.alerts.tr()];
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +23,7 @@ class TabOfAppBarSwitcher extends StatelessWidget {
             .r,
         color: Color(0xffF2F5F9),
       ),
-      child: BlocBuilder<TabCubit, int>(
+      child: BlocBuilder<TabNotificationCubit, int>(
         builder: (context, state) {
           return Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -27,7 +31,7 @@ class TabOfAppBarSwitcher extends StatelessWidget {
               bool isSelected = index == state;
               return GestureDetector(
                 onTap: () {
-                  BlocProvider.of<TabCubit>(context).changeTab(index);
+                  BlocProvider.of<TabNotificationCubit>(context).changeTab(index);
                 },
                 child: Container(
                   height: 32.h,
@@ -39,7 +43,7 @@ class TabOfAppBarSwitcher extends StatelessWidget {
                   child: Center(
                     child: Text(
                       tabs[index],
-                      style: AppTextStyle.iBMP12w500.copyWith(
+                      style: AppTextStyle.iBMP12w500MidnightBlue.copyWith(
                         color: isSelected ? Colors.white : Colors.black,
                         fontSize: 12.sp,
                       ),

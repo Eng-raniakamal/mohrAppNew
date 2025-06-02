@@ -1,74 +1,56 @@
-import 'package:essmohr/presentation/newDesign//core/utils/import_file.dart';
+import 'package:essmohr/presentation/newDesign/core/utils/import_file.dart';
 
-class InputBirthDayWidget extends StatefulWidget {
-
-
-
-  const InputBirthDayWidget({super.key, required this.data, });
+class InputDateDayWidget extends StatefulWidget {
+  const InputDateDayWidget({super.key, required this.data, this.fillColor, });
   final String data;
-
-
+  final Color? fillColor;
 
   @override
-  State<InputBirthDayWidget> createState() => _InputBirthDayWidgetState();
+  State<InputDateDayWidget> createState() => _InputDateDayWidgetState();
 }
 
-class _InputBirthDayWidgetState extends State<InputBirthDayWidget> {
+class _InputDateDayWidgetState extends State<InputDateDayWidget> {
   DateTime selectedDate = DateTime(2024, 3, 22);
 
   @override
   Widget build(BuildContext context) {
+    var colorTheme = Theme.of(context).colorScheme;
+    var textTheme = Theme.of(context).textTheme;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-
-        Text("تاريخ الميلاد",  style:AppTextStyle.iBMP14w500),
-
-        Text(widget.data,  style:AppTextStyle.iBMP14w500),
-
+        Text(widget.data,  style:textTheme.bodyMedium),
         SizedBox(height: 8.h,),
         GestureDetector(
           onTap: _pickDate,
           child: Container(
-            padding: EdgeInsets.symmetric(vertical: 14, horizontal: 12),
+            padding: EdgeInsets.symmetric(vertical: 14, horizontal: 12).r,
             decoration: BoxDecoration(
-              border: Border.all(color: Colors.grey),
+              color: widget.fillColor,
+              border: Border.all(color: colorTheme.outline),
               borderRadius: BorderRadius.circular(8),
             ),
             child: Row(
-
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  "${selectedDate.day} ${_monthName(selectedDate.month)} ${selectedDate.year}",style:
-                AppTextStyle.iBMP16w500Black
-                  ,
-                ),
-                Icon(Icons.calendar_today_outlined),
 
-
-
-                Icon(Icons.calendar_today_outlined),
+                Icon(Icons.calendar_today_outlined,size: 20.r,),
                 SizedBox(width: 8.w,),
                 Text(
                   " ${selectedDate.year}",
                   style:
-                  AppTextStyle.iBMP16w500Black
-                  ,
+                  textTheme.titleMedium                  ,
                 ),
                 Text(
                   " ${_monthName(selectedDate.month)} ",
                   style:
-                AppTextStyle.iBMP16w500Black
-                  ,
+                  textTheme.titleMedium                  ,
                 ),
                 Text(
                   "${selectedDate.day}  ",
                   style:
-                  AppTextStyle.iBMP16w500Black
-                  ,
+                  textTheme.titleMedium                  ,
                 ),
-
               ],
             ),
           ),

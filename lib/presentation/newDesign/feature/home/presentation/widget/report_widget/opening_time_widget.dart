@@ -12,7 +12,7 @@ class OpeningTimeWidget extends StatelessWidget {
         SizedBox(width: 3.w),
         Text(
           "20 مايو 2024",
-          style: AppTextStyle.iBMP12w500.copyWith(color: Color(0xff3D4966)),
+          style: AppTextStyle.iBMP14w500.copyWith(color: Color(0xff3D4966)),
         ),
       ],
     );

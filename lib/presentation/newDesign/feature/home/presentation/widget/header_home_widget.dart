@@ -21,9 +21,9 @@ class HeaderHomeWidget extends StatelessWidget {
              Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text(AppStrings.Welcome.tr(), style: AppTextStyle.iBMP12w500),
-                Text(",", style: AppTextStyle.iBMP12w500),
-                Text(title, style: AppTextStyle.iBMP12w500.copyWith(
+                Text(AppStrings.Welcome.tr(), style: AppTextStyle.iBMP14w500),
+                Text(",", style: AppTextStyle.iBMP14w500),
+                Text(title, style: AppTextStyle.iBMP14w500.copyWith(
                     color: Color(0xff0958D9)
                 )),
               ],

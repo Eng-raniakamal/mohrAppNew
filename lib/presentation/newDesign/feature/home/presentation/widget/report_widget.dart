@@ -1,4 +1,5 @@
 import 'package:essmohr/presentation/newDesign/core/utils/import_file.dart';
+import 'package:essmohr/presentation/newDesign/feature/home/data/report_model.dart';
 import 'package:essmohr/presentation/newDesign/feature/home/presentation/widget/report_widget/header_report_widget.dart';
 import 'package:essmohr/presentation/newDesign/feature/home/presentation/widget/report_widget/is_certified_or_under_review_widget.dart';
 import 'package:essmohr/presentation/newDesign/feature/home/presentation/widget/report_widget/opening_time_widget.dart';
@@ -14,7 +15,7 @@ class ReportWidget extends StatelessWidget {
     this.isCertified,
     this.isUnderReview,
     this.numberOfInstallments=0,
-    this.amount=0,
+    this.amount=0, required ReportModel reportModel,
   });
 
   final String? typeReport; //نوع التقرير سلفه - اجازة

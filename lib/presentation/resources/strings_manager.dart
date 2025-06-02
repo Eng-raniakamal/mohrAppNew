@@ -19,6 +19,7 @@ class AppStrings {
   static const String addBasicData =  "Add Data";
   static const String retry_again = "retry again";
   static const String ok = "ok";
+  static const String new_alert = "New";
   static const String close = "close";
   static const String arabicName = "Arabic Name";
   static const String englishName = "English Name";
@@ -30,6 +31,7 @@ class AppStrings {
   static const String addressText = "Address Text";
   static const String districtId = "District Id";
    static const String PoBox = "PoBox";
+   static const String myData="my_Data";
   // static const String zipCode= "zipCode";
   static const String emailHint = 'Email';
   static const String invalidEmail = "invalid_email";
@@ -43,8 +45,8 @@ class AppStrings {
   static const String register = "register";
   static const String contact_us = "Contact us";
   static const String home = "home";
-  static const String Notifications = "Notification";
-  static const String Alerts = "Alerts";
+  static const String notifications = "Notification";
+  static const String alerts = "Alerts";
   static const String search = "search";
   static const String settings = "settings";
  // static const String resetPassword = "resetPassword";

@@ -3,8 +3,8 @@ import 'package:essmohr/presentation/newDesign//core/utils/import_file.dart';
 class InputDataWidget extends StatelessWidget {
   const InputDataWidget({super.key, required this.title, required this.hint, required this.controller});
 
-  final String title;
-  final String hint;
+  final String? title;
+  final String? hint;
   final TextEditingController controller;
 
   @override
@@ -12,11 +12,11 @@ class InputDataWidget extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(title, style:AppTextStyle.iBMP14w500),
+        Text(title!, style:AppTextStyle.iBMP14w500),
         SizedBox(height: 8.h,),
         TextField(
           controller: controller,
-          style: AppTextStyle.iBMP16w500Black,
+          style: AppTextStyle.iBMP12w700Black,
           decoration: InputDecoration(
             
             hintText: hint,
