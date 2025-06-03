@@ -32,8 +32,8 @@ class _LayoutScreenState extends State<LayoutScreen> {
 
  // int currentIndex = 0;
   final List<Widget> listScreen = [
-    //HomeScreen(),
-    userView(),
+    HomeScreen(),
+    //userView(),
     Text("الطلبات"),
     Text("الاجازات"),
     salaryView(),
@@ -70,7 +70,7 @@ class _LayoutScreenState extends State<LayoutScreen> {
               });
             },
             elevation: 0,
-            selectedItemColor: Color(0xff36B0E3),
+            selectedItemColor: Color(0xffc9d1d5),
             showSelectedLabels: true,
             showUnselectedLabels: true,
             selectedLabelStyle: AppTextStyle.iBMP10w700,

@@ -7,6 +7,7 @@ import 'package:essmohr/presentation/Requests/Permissions/permissionView/permiss
 import 'package:essmohr/presentation/Requests/Vacations/view/vactionRequests_view.dart';
 import 'package:essmohr/presentation/Requests/missionRequest/missionView/missionView.dart';
 import 'package:essmohr/presentation/newDesign/core/utils/import_file.dart';
+import 'package:essmohr/presentation/newDesign/feature/home/control/home_cubit.dart';
 
 import 'package:flutter/material.dart';
 import 'package:essmohr/application/app_prefs.dart';
@@ -27,14 +28,18 @@ import 'package:essmohr/presentation/widgets/button_widget.dart';
 import 'package:essmohr/presentation/widgets/clipPathWidget.dart';
 import 'package:essmohr/presentation/widgets/navigator_bar.dart';
 import 'package:essmohr/presentation/widgets/profile_widget.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../domain/model/navigationManu.dart';
 import '../Requests/Admin_Request/AdminViews/AdminHome.dart';
 import '../Requests/ChangeShiftRequest/ChangeShiftViews/ChangeShiftHome.dart';
 import '../Requests/Financial_Requests/FinancialViews/FinancialHome.dart';
 import '../Requests/Vacations/view/VacationHome.dart' show vacationHome;
 import '../newDesign/feature/home/presentation/widget/header_home_widget.dart';
+import '../newDesign/feature/home/presentation/widget/home_body_widget.dart';
 import '../newDesign/feature/home/presentation/widget/last_salary_widget.dart';
 import '../newDesign/feature/home/presentation/widget/no_report_widget.dart';
+import '../newDesign/feature/notification/control/tab_notification_cubit.dart';
+import '../newDesign/feature/notification/presentation/screen/notification_screen.dart';
 import '../resources/assets_manager.dart';
 import '../resources/routes.dart';
 
@@ -70,9 +75,21 @@ class _userViewState extends State<userView> {
     _bind();
     super.initState();
   }
+
+  static final List<Widget> _body = [
+    HomeBodyWidget(),
+    NotificationScreen()
+  ];
+
   @override
   Widget build(BuildContext context) {
-    return ThemeSwitchingArea(
+    return MultiBlocProvider(providers: [
+        BlocProvider(
+        create: (context) => HomeCubit(),),
+   ],
+
+
+   child: ThemeSwitchingArea(
         child: Builder(
         builder: (context) =>
         Scaffold(
@@ -102,7 +119,10 @@ class _userViewState extends State<userView> {
 //-----------------------------
             }
         )
-    )));
+    )
+    )
+    )
+    );
   }
   Widget _getContentWidget() {
      return

@@ -29,10 +29,11 @@ class PersonScreenState extends State<PersonScreen> {
       create: (context) => TabCubit(),
       child: Scaffold(
         appBar: AppBar(
+
           title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(AppStrings.profile.tr(), style: AppTextStyle.iBMP24w600),
+              Text(AppStrings.profile.tr(), style: AppTextStyle.iBMP18w700),
               TabOfAppBarSwitcher(),
             ],
           ),

@@ -45,8 +45,8 @@ class AppStrings {
   static const String register = "register";
   static const String contact_us = "Contact us";
   static const String home = "home";
-  static const String notifications = "Notification";
-  static const String alerts = "Alerts";
+  static const String notifications = "notification";
+  static const String alerts = "alert";
   static const String search = "search";
   static const String settings = "settings";
  // static const String resetPassword = "resetPassword";
