@@ -412,8 +412,7 @@ skillsUpdate;
         ]))
         .toList();
   }
-  Future addingSkills() async
-  {
+  Future addingSkills() async {
     userId = await _appPreferences.getUserToken();
     empId = await _appPreferences.getEmpIdToken();
 

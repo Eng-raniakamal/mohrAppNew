@@ -56,7 +56,7 @@ class ReportWidget extends StatelessWidget {
                     isUnderReview: isUnderReview,
                     nameReport: nameReport,
                   ),
-                  OpeningTimeWidget(),
+                  OpeningTimeWidget(title: ''),
                 ],
               ),
               SizedBox(height: 12.h),

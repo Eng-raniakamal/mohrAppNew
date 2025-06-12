@@ -1,8 +1,10 @@
 import 'package:essmohr/presentation/newDesign/core/utils/import_file.dart';
 
 class OpeningTimeWidget extends StatelessWidget {
-  const OpeningTimeWidget({super.key});
-
+  const OpeningTimeWidget({super.key, this.title, this.color});
+  //const OpeningTimeWidget({super.key, required String title, this.Color color});
+  final String ? title ;
+  final Color? color ;
   @override
   Widget build(BuildContext context) {
     return Row(

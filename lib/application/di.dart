@@ -48,6 +48,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 
 //import '../presentation/editEmployee/ViewModel/saveEmpBD_viewModel.dart';
+import '../presentation/editEmployee/ViewModel/saveEmpBD_viewModel.dart';
 import 'app_prefs.dart';
 
 
@@ -137,15 +138,27 @@ initEmployeeBasicDataModule() {
 initSaveEmpBasicDataModule() {
   if (!GetIt.I.isRegistered<saveEmpBasicDataUseCase>()) {
     instance.registerFactory<saveEmpBasicDataUseCase>(() => saveEmpBasicDataUseCase(instance()));
-    // instance.registerFactory<saveBDViewModel >(() {
-    //   var item = instance<saveEmpBasicDataUseCase>();
-    //   return saveBDViewModel(item);
-  //   }
-  // );
+    instance.registerFactory<SaveBDViewModel >(() {
+      var item = instance<saveEmpBasicDataUseCase>();
+      return SaveBDViewModel(item,UserId);
+    }
+  );
   }
 }
 
+void initSave2EmpBasicDataModule() {
+  if (!GetIt.I.isRegistered<saveEmpBasicDataUseCase>()) {
+    instance.registerFactory<saveEmpBasicDataUseCase>(
+          () => saveEmpBasicDataUseCase(instance()),
+    );
+  }
 
+  if (!GetIt.I.isRegistered<SaveBDViewModel>()) {
+    instance.registerFactory<SaveBDViewModel>(
+          () => SaveBDViewModel(instance(),UserId), // مرر use case هنا فقط إذا كان هذا هو المطلوب
+    );
+  }
+}
 
 
     initEmployeeSkillsModule() {

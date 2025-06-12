@@ -13,9 +13,6 @@ import 'package:essmohr/presentation/editEmployee/ViewModel/displayEmpBasicData_
 import 'package:essmohr/presentation/editEmployee/ViewModel/saveEmpBD_viewModel.dart';
 import 'package:essmohr/presentation/resources/strings_manager.dart';
 
-
-
-
 class BasicDataView extends StatefulWidget {
   const BasicDataView({Key? key}) : super(key: key);
 
@@ -26,7 +23,7 @@ class BasicDataView extends StatefulWidget {
 class BasicDataViewState extends State<BasicDataView> {
 
   final EmployeeBasicDataViewModel displayViewModel = instance<EmployeeBasicDataViewModel>();
-  saveBDViewModel? _saveViewModel;// =instance<saveBDViewModel>();
+  SaveBDViewModel? _saveViewModel;// =instance<saveBDViewModel>();
   final AppPreferences _appPreferences = instance<AppPreferences>();
   final formKey = GlobalKey<FormState>();
   DateTime? birthDate;
@@ -58,7 +55,7 @@ class BasicDataViewState extends State<BasicDataView> {
       final useCase = instance<saveEmpBasicDataUseCase>();
       String userid= await _appPreferences.getUserToken();
       empId=await _appPreferences.getEmpIdToken();
-      _saveViewModel= saveBDViewModel(useCase,userid
+      _saveViewModel= SaveBDViewModel(useCase,userid
         //,data.employee!,data.address!
       );
     });
@@ -594,21 +591,21 @@ class BasicDataViewState extends State<BasicDataView> {
                                       ElevatedButton(
                                           child: Text(AppStrings.save.tr()),
                                           onPressed: () async {
-                                            _saveViewModel!.SaveBasicData(
-                                                empId!,
-                                                _arabicNameEditingController.text.toString(),
-                                                _englishNameEditingController.text.toString(),
-                                                date.toString(),
-                                                _nationalIdEditingController.text.toString(),
-                                                _socialIdEditingController.text.toString(),
-                                                _emailEditingController.text.toString(),
-                                                _phoneEditingController.text.toString(),
-                                                _emergencyNumberEditingController.text
-                                                    .toString(),
-                                                _addressTextEditingController.text.toString(),
-                                                2,
-                                                _pOBoxEditingController.text.toString(),
-                                                _zipCodeEditingController.text.toString());
+                                            // _saveViewModel!.SaveBasicData(
+                                            //     empId!,
+                                            //     _arabicNameEditingController.text.toString(),
+                                            //     _englishNameEditingController.text.toString(),
+                                            //     date.toString(),
+                                            //     _nationalIdEditingController.text.toString(),
+                                            //     _socialIdEditingController.text.toString(),
+                                            //     _emailEditingController.text.toString(),
+                                            //     _phoneEditingController.text.toString(),
+                                            //     _emergencyNumberEditingController.text
+                                            //         .toString(),
+                                            //     _addressTextEditingController.text.toString(),
+                                            //     2,
+                                            //     _pOBoxEditingController.text.toString(),
+                                            //     _zipCodeEditingController.text.toString());
                                             displayDialoge(context);
                                           }
                                         // : null,

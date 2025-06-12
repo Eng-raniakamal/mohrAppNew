@@ -22,6 +22,7 @@ import '../Requests/Vacations/Layout/vacationLayout.dart';
 import '../Requests/Vacations/view/vactions_view.dart' show vacationsView;
 import '../User/layout/employeeLayout.dart';
 import '../login/loginView.dart';
+import '../newDesign/core/service/dependency_injection/init_cubits.dart';
 import '../newDesign/feature/home/presentation/home_screen.dart';
 import '../newDesign/feature/layout/presentation/screen/layout_screen.dart';
 import '../newDesign/feature/notification/presentation/screen/notification_screen.dart';
@@ -124,7 +125,10 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_)=>  ChangePassword());
       case Routes.Vacations:
         initVacationModule();
-        return MaterialPageRoute(builder: (_)=> vacationsView());
+        initCubits();
+       // LayoutScreen(initialIndex: 0,)
+       // return MaterialPageRoute(builder: (_)=> vacationsView());
+        return MaterialPageRoute(builder: (_)=>  LayoutScreen(initialIndex: 2,));
 
       case Routes.attendance:
         initAttendanceModule();
@@ -133,6 +137,7 @@ class RouteGenerator {
 
       case Routes.VacationRequest:
         initVacationTypeModule();
+        initCubits();
         return MaterialPageRoute(builder: (_)=>  VacationLayout());
 
       case Routes.salary:
@@ -143,6 +148,7 @@ class RouteGenerator {
         initEmployeeSkillsModule();
         initDisplayEmployeeSkillsModule();
         initSaveEmpBasicDataModule();
+        initSave2EmpBasicDataModule();
         initDisplayAcademicDegreesModule();
         initSaveAcademicDegreesModule();
         initQualificationModule();
@@ -162,18 +168,16 @@ class RouteGenerator {
 
         return MaterialPageRoute(builder: (_)=>   MissionLayout());
 
-      case Routes.PermissionRequest:
+       case Routes.PermissionRequest:
         initVacationTypeModule();
         return MaterialPageRoute(builder: (_)=>   PermissionLayout());
 
 
-
-
-      case Routes.underConstraction:
+       case Routes.underConstraction:
         initSalaryModule();
         return MaterialPageRoute(builder: (_)=>  UnderConstructionScreen());
 
-      case Routes.employee:
+       case Routes.employee:
         initEmployeeSkillsModule();
         initDisplayEmployeeSkillsModule();
         initEmployeeBasicDataModule();

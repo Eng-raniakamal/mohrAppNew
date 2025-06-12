@@ -102,7 +102,7 @@ class _CustomImagePickWidgetState extends State<CustomImagePickWidget> {
               //     height: 48.h,
               //     child: SvgPicture.asset(
               //       fit: BoxFit.fill,
-              //       "assets/image/person/upload.svg",
+              //       "assets/images/NewDesign/image/person/upload.svg",
               //     ),
               //   ),
               // )

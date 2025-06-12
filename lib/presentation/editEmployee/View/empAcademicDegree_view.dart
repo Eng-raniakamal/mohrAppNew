@@ -1,24 +1,19 @@
 
 import 'dart:convert';
-
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:essmohr/presentation/common/state_renderer/state_render_impl.dart';
 import 'package:flutter/material.dart';
-
 import 'package:essmohr/application/constants.dart';
 import 'package:essmohr/application/di.dart';
 import 'package:essmohr/domain/model/model.dart';
 import 'package:essmohr/presentation/editEmployee/ViewModel/Degree_viewModel.dart';
 import 'package:essmohr/presentation/editEmployee/ViewModel/displayEmpAcademicDegree_ViewModel.dart';
 import 'package:http/http.dart' as http;
-
 import 'package:essmohr/presentation/editEmployee/ViewModel/grade_viewModel.dart';
-
 import 'package:essmohr/presentation/resources/colors.dart';
 import '../../../application/app_prefs.dart';
-
 import '../../resources/strings_manager.dart';
 
 
@@ -149,7 +144,10 @@ class _AcademicDegreeViewState extends State<AcademicDegreeView> {
                                         List<DegreeItem>? degrees = snapshot.data?.Degrees;
                                         return _getAcademicDegree(degrees);
                                       },
-                                    ),])),
+                                    ),
+                                  ]
+                              )
+                          ),
                           //Grade
                                 Container(
                               alignment: AlignmentDirectional.topStart,
@@ -294,7 +292,6 @@ class _AcademicDegreeViewState extends State<AcademicDegreeView> {
     //_saveviewModel.dispose();
     super.dispose();
   }
-
 
   Widget _getGrade(List<GradeItem>? grade)
   {//var  dropdownvalue;

@@ -11,13 +11,13 @@ class SickLeaveWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        SvgPicture.asset("assets/image/home/withdrawals_icon.svg"),
+        SvgPicture.asset("assets/images/NewDesign/image/home/withdrawals_icon.svg"),
         SizedBox(width: 5.w),
         TextWidget(
           title: "مسحوبات الرصيد | ${reportModel.numberOfInstallments}",
         ),
         SizedBox(width: 32.w),
-        SvgPicture.asset("assets/image/home/wave_icon.svg"),
+        SvgPicture.asset("assets/images/NewDesign/image/home/wave_icon.svg"),
         SizedBox(width: 5.w),
         TextWidget(title: "الرصيد المتاح| ${reportModel.amount}"),
       ],

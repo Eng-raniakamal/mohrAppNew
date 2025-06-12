@@ -1,11 +1,8 @@
+import 'package:essmohr/presentation/newDesign/core/utils/app_color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import 'app_color.dart';
-
 class AppTextStyle {
-
-
   static TextStyle get iBMP38w700 => TextStyle(
     fontSize: 30.sp,
     fontWeight: FontWeight.w700,

@@ -25,6 +25,7 @@ class InputDataWidget extends StatelessWidget {
               borderRadius: BorderRadius.circular(12).r,),
             contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 14).r,
           ),
+
           textAlign: TextAlign.right,
         ),
       ],

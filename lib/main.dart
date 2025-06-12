@@ -3,6 +3,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'package:essmohr/presentation/Alert_Notification/ViewModel/notificationViewModel.dart';
+import 'package:essmohr/presentation/newDesign/core/service/dependency_injection/depend_inject.dart' as di;
 import 'package:essmohr/presentation/resources/strings_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -202,6 +203,7 @@ Future<int> getUnSeenNotification(List<NotificationModel> notifiList) async {
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await initAppModule();
+  await di.init();
   Notifications.initialize(flutterLocalNotificationsPlugin);
  // await Workmanager().initialize(callbackDispatcher, isInDebugMode: false);
   await EasyLocalization.ensureInitialized();

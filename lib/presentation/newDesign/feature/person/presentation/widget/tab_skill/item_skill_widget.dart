@@ -13,7 +13,7 @@ class ItemSkillWidget extends StatelessWidget {
     required this.skillModel}) {
 
    }
-  static  final IconData _moreVertRounded = IconData(0xf8dc, fontFamily: 'MaterialIcons',);
+  static  const IconData _moreVertRounded = IconData(0xf8dc, fontFamily: 'MaterialIcons',);
    List<UserSkills>? skillsUpdate;
 
   var skillModel;
@@ -40,8 +40,8 @@ class ItemSkillWidget extends StatelessWidget {
                   Row(
                     children: [
                       skillModel.isEducation==false?
-                      SvgPicture.asset("assets/image/home/opening-times.svg"):
-                      SvgPicture.asset("assets/image/person/doc_text.svg"),
+                      SvgPicture.asset("assets/images/NewDesign/image/home/opening-times.svg"):
+                      SvgPicture.asset("assets/images/NewDesign/image/person/doc_text.svg"),
 
                       SizedBox(width: 8.w),
                       Text(skillModel.date??"", style: AppTextStyle.iBMP14w500),
@@ -50,8 +50,8 @@ class ItemSkillWidget extends StatelessWidget {
                   SizedBox(height: 4.h),
                   skillModel.degree!=null? Row(
                     children: [
-                      skillModel.isEducation==false?  SvgPicture.asset("assets/image/person/award.svg"):
-                      SvgPicture.asset("assets/image/person/doc_page.svg")
+                      skillModel.isEducation==false?  SvgPicture.asset("assets/images/NewDesign/image/person/award.svg"):
+                      SvgPicture.asset("assets/images/NewDesign/image/person/doc_page.svg")
                       ,
                       SizedBox(width: 8.w),
                       Text(skillModel.degree??"", style: AppTextStyle.iBMP14w500),

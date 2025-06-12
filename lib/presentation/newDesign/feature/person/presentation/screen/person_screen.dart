@@ -33,7 +33,7 @@ class PersonScreenState extends State<PersonScreen> {
           title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(AppStrings.profile.tr(), style: AppTextStyle.iBMP18w700),
+              Text(AppStrings.profile.tr(), style:context.text.titleLarge,),//AppTextStyle.iBMP18w700),
               TabOfAppBarSwitcher(),
             ],
           ),

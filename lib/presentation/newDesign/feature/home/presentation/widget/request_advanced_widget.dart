@@ -11,13 +11,13 @@ class RequestAdvanceWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        SvgPicture.asset("assets/image/home/money-bills.svg"),
+        SvgPicture.asset("assets/images/NewDesign/image/home/money-bills.svg"),
         SizedBox(width: 5.w),
         TextWidget(
           title: " عدد الاقساط :${reportModel.numberOfInstallments}",
         ),
         SizedBox(width: 32.w),
-        SvgPicture.asset("assets/image/home/money-bill.svg"),
+        SvgPicture.asset("assets/images/NewDesign/image/home/money-bill.svg"),
         SizedBox(width: 5.w),
         TextWidget(title: "${reportModel.amount}\$"),
       ],

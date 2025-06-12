@@ -7,7 +7,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class InfoDataWidget extends StatelessWidget {
    InfoDataWidget({super.key});
 
- final List<Widget> page = [PageOneOfInfoDataWidget(), NextPageDataWidget()];
+ final List<Widget> page =
+ [PageOneOfInfoDataWidget(), NextPageDataWidget()];
 
   @override
   Widget build(BuildContext context) {

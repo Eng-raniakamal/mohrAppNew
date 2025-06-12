@@ -11,15 +11,15 @@ class SalaryScreen extends StatelessWidget {
       child: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(8.0).r,
-          // child: Column(
-          //   children: List.generate(
-          //     SalaryWidgetModel.salaryList.length,
-          //     (index) => Padding(
-          //       padding: const EdgeInsets.only(bottom: 12.0).r,
-          //       child: SalaryWidget(salaryModel: SalaryWidgetModel.salaryList[index],),
-          //     ),
-          //   ),
-          // ),
+          child: Column(
+            children: List.generate(
+              SalaryWidgetModel.salaryList.length,
+              (index) => Padding(
+                padding: const EdgeInsets.only(bottom: 12.0).r,
+              //  child: SalaryWidget(salaryModel: SalaryWidgetModel.salaryList[index],),
+              ),
+            ),
+          ),
         ),
       ),
     );

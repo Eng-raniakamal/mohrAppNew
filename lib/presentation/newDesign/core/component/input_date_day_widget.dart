@@ -3,7 +3,7 @@ import 'package:essmohr/presentation/newDesign/core/utils/import_file.dart';
 class InputDateDayWidget extends StatefulWidget {
   const InputDateDayWidget({super.key, required this.data, this.fillColor, });
   final String data;
-  final Color? fillColor;
+ final Color? fillColor;
 
   @override
   State<InputDateDayWidget> createState() => _InputDateDayWidgetState();

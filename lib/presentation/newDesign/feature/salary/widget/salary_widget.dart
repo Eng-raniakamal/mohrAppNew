@@ -124,16 +124,17 @@ class SalaryWidget extends StatelessWidget {
     int id = salaryModel!.id;
     if (id == 0)
     {
-    displayDialoge(context);
+      showToast(context,"لا يوجد مرتب متاح");
+    //displayDialoge(context);
     }
     else {
     Constants.salaryDetailsId =
     id.toString();
     initSalaryDetailsModule();
-    showCustomDialog(context, onValue: (_) {
+    //showCustomDialog(context, onValue: (_) {
+      Navigator.of(context).pushNamed(Routes.salaryDetails);
+    //});
 
-    });
-    Navigator.of(context).pushNamed(Routes.salaryDetails);
     }},
                 // onTap: () {
                 //
@@ -159,17 +160,29 @@ class SalaryWidget extends StatelessWidget {
       ],
     );
   }
+
 }
-void displayDialoge(BuildContext context) {
-  AwesomeDialog(
-    context: context,
-    dialogType: DialogType.info,
-    animType: AnimType.scale,
-    title: AppStrings.alerts.tr(),
-    desc: AppStrings.no_salary_found.tr(),
-    btnOkText: AppStrings.ok.tr(),
-    btnOkOnPress: () {
-      Navigator.of(context).pop();
-    },
-  ).show();
+
+void showToast(BuildContext context,String message) {
+  ScaffoldMessenger.of(context).showSnackBar(
+    SnackBar(
+      content: Text(message),
+      duration: Duration(seconds: 4),
+    ),
+  );
 }
+
+
+// void displayDialoge(BuildContext context) {
+//   AwesomeDialog(
+//     context: context,
+//     dialogType: DialogType.info,
+//     animType: AnimType.scale,
+//     title: AppStrings.alerts.tr(),
+//     desc: AppStrings.no_salary_found.tr(),
+//     btnOkText: AppStrings.ok.tr(),
+//     btnOkOnPress: () {
+//       Navigator.of(context).pop();
+//     },
+//   ).show();
+// }

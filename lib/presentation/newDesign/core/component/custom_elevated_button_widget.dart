@@ -1,3 +1,4 @@
+import 'package:essmohr/presentation/newDesign/core/configure/extension/app_context_extension_theme.dart';
 import 'package:essmohr/presentation/newDesign/core/utils/import_file.dart';
 
 class CustomElevatedButtonWidget extends StatelessWidget {
@@ -12,14 +13,14 @@ class CustomElevatedButtonWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return
       GestureDetector(
-        onTap: onPressed,
+       onTap: onPressed,
         child: Container(
           height: 50.h,
           alignment: Alignment.center,
           width: double.infinity,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12).r,
-            color: AppColor.primary,
+            color:AppColor.primary,
 
           ),
           child:Row(
@@ -27,10 +28,10 @@ class CustomElevatedButtonWidget extends StatelessWidget {
             children: [
               Text(
                 data,
-                style: AppTextStyle.iBMP14w700.copyWith(color: Colors.white),
+                style:context.text.bodyLarge!.copyWith(color: context.color.surface),
               ),
               SizedBox(width: 8.w),
-              Icon(icon, color: Colors.white),
+              Icon(icon, color: context.color.surface),
             ],
           ) ,
         ),
