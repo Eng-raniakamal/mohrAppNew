@@ -20,7 +20,7 @@ class HomeBodyWidget extends StatelessWidget {
               .toList(),
         ),
         SizedBox(height: 20),
-        LastSalaryWidget(),
+       // LastSalaryWidget(),
       ],
     );
   }

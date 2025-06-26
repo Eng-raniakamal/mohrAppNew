@@ -2,6 +2,7 @@
 
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:essmohr/presentation/newDesign/core/utils/app_color.dart';
 import 'package:flutter/material.dart';
 import 'package:essmohr/application/di.dart';
 import 'package:essmohr/domain/model/model.dart';
@@ -130,7 +131,7 @@ class _salaryDetailsViewState extends State<salaryDetailsView> {
           child: Column(
             children: [
               DataTable(
-                headingRowColor: MaterialStateColor.resolveWith((states) => colorManager.primary),
+                headingRowColor: WidgetStateColor.resolveWith((states) => AppColor.lightBlueBg),
                 columns: [
                   DataColumn(label: Text(AppStrings.Benefits.tr())),
                   DataColumn(label: Text(""))],
@@ -161,7 +162,7 @@ class _salaryDetailsViewState extends State<salaryDetailsView> {
 
           child: Column(
             children: [
-              DataTable( headingRowColor: MaterialStateColor.resolveWith((states) => colorManager.primary),
+              DataTable( headingRowColor: WidgetStateColor.resolveWith((states) => AppColor.lightBlueBg),
                 columns: [
                   DataColumn(label: Text(AppStrings.Deducted.tr())),
                   DataColumn(label: Text(""))],
@@ -187,9 +188,9 @@ class _salaryDetailsViewState extends State<salaryDetailsView> {
     if (totaldeducated != null) {
       String total = totaldeducated.toString();
       return
-        Text((AppStrings.Total_of_Benefit.tr())+" : " + total,style: TextStyle(fontWeight: FontWeight.bold,fontSize: 17));
+        Text((AppStrings.Total_of_Deductions.tr())+" : " + total,style: TextStyle(fontWeight: FontWeight.bold,fontSize: 17));
     } else {
-      return Text((AppStrings.Total_of_Benefit.tr())+" : 0.0",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 17));
+      return Text((AppStrings.Total_of_Deductions.tr())+" : 0.0",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 17));
     }
   }
 

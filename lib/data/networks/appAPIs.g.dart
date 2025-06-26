@@ -13,7 +13,7 @@ class _AppServiceClient implements AppServiceClient {
     this._dio, {
     this.baseUrl,
   }) {
-    baseUrl ??= 'https://mohrapi.azurewebsites.net';
+    baseUrl ??= 'https://api.hr-sync.com';
   }
 
   final Dio _dio;
@@ -42,7 +42,7 @@ class _AppServiceClient implements AppServiceClient {
     )
             .compose(
               _dio.options,
-              'https://mohrapi.azurewebsites.net/api/Account/VerifyLogin',
+              'https://api.hr-sync.com/api/Account/VerifyLogin',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -69,7 +69,7 @@ class _AppServiceClient implements AppServiceClient {
     )
             .compose(
               _dio.options,
-              'https://mohrapi.azurewebsites.net/api/Employee',
+              'https://api.hr-sync.com/api/Employee',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -96,7 +96,7 @@ class _AppServiceClient implements AppServiceClient {
     )
             .compose(
               _dio.options,
-              'https://mohrapi.azurewebsites.net/api/Employee/Avatar',
+              'https://api.hr-sync.com/api/Employee/Avatar',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -131,7 +131,7 @@ class _AppServiceClient implements AppServiceClient {
     )
             .compose(
               _dio.options,
-              'https://mohrapi.azurewebsites.net/api/Employee/GetPersonellData',
+              'https://api.hr-sync.com/api/Employee/GetPersonellData',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -166,7 +166,7 @@ class _AppServiceClient implements AppServiceClient {
     )
             .compose(
               _dio.options,
-              'https://mohrapi.azurewebsites.net/api/Employee/GetEmployeeSkills',
+              'https://api.hr-sync.com/api/Employee/GetEmployeeSkills',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -201,7 +201,7 @@ class _AppServiceClient implements AppServiceClient {
     )
             .compose(
               _dio.options,
-              'https://mohrapi.azurewebsites.net/api/Employee/GetEmployeeAcademicDegrees',
+              'https://api.hr-sync.com/api/Employee/GetEmployeeAcademicDegrees',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -228,7 +228,7 @@ class _AppServiceClient implements AppServiceClient {
     )
             .compose(
               _dio.options,
-              'https://mohrapi.azurewebsites.net/api/Employee/GetQualificationsLookup',
+              'https://api.hr-sync.com/api/Employee/GetQualificationsLookup',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -255,7 +255,7 @@ class _AppServiceClient implements AppServiceClient {
     )
             .compose(
               _dio.options,
-              'https://mohrapi.azurewebsites.net/api/Employee/GetGradesLookup',
+              'https://api.hr-sync.com/api/Employee/GetGradesLookup',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -282,7 +282,7 @@ class _AppServiceClient implements AppServiceClient {
     )
             .compose(
               _dio.options,
-              'https://mohrapi.azurewebsites.net/api/Employee/GetAcademicDegreesLookup',
+              'https://api.hr-sync.com/api/Employee/GetAcademicDegreesLookup',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -309,7 +309,7 @@ class _AppServiceClient implements AppServiceClient {
     )
             .compose(
               _dio.options,
-              'https://mohrapi.azurewebsites.net/api/Employee/GetVacations',
+              'https://api.hr-sync.com/api/Employee/GetVacations',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -336,7 +336,7 @@ class _AppServiceClient implements AppServiceClient {
     )
             .compose(
               _dio.options,
-              'https://mohrapi.azurewebsites.net/api/Employee/GetVacationTypes',
+              'https://api.hr-sync.com/api/Employee/GetVacationTypes',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -363,7 +363,7 @@ class _AppServiceClient implements AppServiceClient {
     )
             .compose(
               _dio.options,
-              'https://mohrapi.azurewebsites.net/api/Employee/GetSalaries',
+              'https://api.hr-sync.com/api/Employee/GetSalaries',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -390,7 +390,7 @@ class _AppServiceClient implements AppServiceClient {
     )
             .compose(
               _dio.options,
-              'https://mohrapi.azurewebsites.net/api/Employee/GetSalary/'+Constants.salaryDetailsId,
+              'https://api.hr-sync.com/api/Employee/GetSalary/'+Constants.salaryDetailsId,
               queryParameters: queryParameters,
               data: _data,
             )
@@ -417,7 +417,7 @@ class _AppServiceClient implements AppServiceClient {
     )
             .compose(
               _dio.options,
-       'https://mohrapi.azurewebsites.net/api/Attendance?fromDate='+Constants.attendanceFrom.toString()+
+       'https://api.hr-sync.com/api/Attendance?fromDate='+Constants.attendanceFrom.toString()+
        '&toDate='+Constants.attendanceTo.toString(),
               queryParameters: queryParameters,
               data: _data,
@@ -453,7 +453,7 @@ class _AppServiceClient implements AppServiceClient {
     )
             .compose(
               _dio.options,
-              'https://mohrapi.azurewebsites.net/api/Employee/PersonellData',
+              'https://api.hr-sync.com/api/Employee/PersonellData',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -492,7 +492,7 @@ class _AppServiceClient implements AppServiceClient {
     )
             .compose(
               _dio.options,
-              'https://mohrapi.azurewebsites.net/api/Skills',
+              'https://api.hr-sync.com/api/Skills',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -539,7 +539,7 @@ class _AppServiceClient implements AppServiceClient {
     )
             .compose(
               _dio.options,
-              'https://mohrapi.azurewebsites.net/api/Employee/AcademicDegrees',
+              'https://api.hr-sync.com/api/Employee/AcademicDegrees',
               queryParameters: queryParameters,
               data: _data,
             )

@@ -1,0 +1,2 @@
+C:/Users/flutterProjects/essSync/android/app/.cxx/RelWithDebInfo/6o2e5l2e/x86/CMakeFiles/edit_cache.dir
+C:/Users/flutterProjects/essSync/android/app/.cxx/RelWithDebInfo/6o2e5l2e/x86/CMakeFiles/rebuild_cache.dir

@@ -7,17 +7,17 @@ class PageModel{
   static final List<PageModel> pages = [
     PageModel(
       image: "assets/images/NewDesign/image/onboarding/onb1.png",
-      title: "مرحبًا بك في مهر",
+      title: "مرحبًا بك في سينك",
       desc: "يسمح التطبيق للمسؤولين بتخزين وإدارة معلومات شاملة عن الموظفين مثل الاسم وتاريخ الميلاد",
     ),
     PageModel(
       image: "assets/images/NewDesign/image/onboarding/onb2.png",
-      title: "مرحبًا بك في مهر",
+      title: "مرحبًا بك في سينك",
       desc: "يسمح التطبيق للمسؤولين بتخزين وإدارة معلومات شاملة عن الموظفين مثل الاسم وتاريخ الميلاد",
     ),
     PageModel(
       image: "assets/images/NewDesign/image/onboarding/onb3.png",
-      title: "مرحبًا بك في مهر",
+      title: "مرحبًا بك في سينك",
       desc: "يسمح التطبيق للمسؤولين بتخزين وإدارة معلومات شاملة عن الموظفين مثل الاسم وتاريخ الميلاد",
     ) ,
   ];

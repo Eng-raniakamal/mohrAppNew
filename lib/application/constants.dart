@@ -1,6 +1,6 @@
 
   class  Constants {
-    static const String baseUrl= 'https://mohrapi.azurewebsites.net';
+    static const String baseUrl= 'https://api.hr-sync.com';
     static const String LoginUrl = '$baseUrl/api/Account/VerifyLogin';
     static const String changePassword = '$baseUrl/api/Account/ChangePassword';
     static const String EmployeeUrl='$baseUrl/api/Employee';

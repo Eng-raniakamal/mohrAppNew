@@ -91,7 +91,7 @@ class SalaryWidget extends StatelessWidget {
                 children: [
                   SvgPicture.asset(
                     "assets/images/NewDesign/image/home/opening-times.svg",
-                    color: Color(0xff0072C3),
+                    color: AppColor.primary,
                   ),
                   SizedBox(width: 8.w),
                   Text(
@@ -107,7 +107,7 @@ class SalaryWidget extends StatelessWidget {
                 children: [
                   Icon(
                     Icons.account_balance_wallet_outlined,
-                    color: Color(0xff0072C3),
+                    color: AppColor.primary,
                   ),
                   SizedBox(width: 8.w),
                   Text(
@@ -131,9 +131,9 @@ class SalaryWidget extends StatelessWidget {
     Constants.salaryDetailsId =
     id.toString();
     initSalaryDetailsModule();
-    //showCustomDialog(context, onValue: (_) {
-      Navigator.of(context).pushNamed(Routes.salaryDetails);
-    //});
+    showCustomDialog(context, onValue: (_) {
+      //Navigator.of(context).pushNamed(Routes.salaryDetails);
+    });
 
     }},
                 // onTap: () {

@@ -49,7 +49,7 @@ class _LastSalaryWidgetState extends State<LastSalaryWidget> {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              HeaderReportWidget(typeReport: AppStrings.lastSalary.tr()),
+              //HeaderReportWidget(typeReport: AppStrings.lastSalary.tr()),
               SizedBox(height: 8.h),
               Container(
                 padding: EdgeInsets.all(12).r,
@@ -58,61 +58,61 @@ class _LastSalaryWidgetState extends State<LastSalaryWidget> {
                   borderRadius: BorderRadius.circular(12).r,
                   border: Border.all(color: Colors.black12, width: 1.w),
                 ),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Container(
-                          width: 44.w,
-                          height: 44.h,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(12).r,
-                            color: Color(0xffF59E0B),
-                          ),
-                          child: Icon(Icons.credit_card, color: Colors.white),
-                        ),
-                        SizedBox(width: 22.w),
-                        SvgPicture.asset(
-                          "assets/images/NewDesign/image/home/opening-times.svg",
-                          color: Color(0xff0072C3),
-                        ),
-                        SizedBox(width: 3.w),
-                        Text(
-                          getDate(snapshot.data!.salary[lastIndex].Month.toString()),
-                          style: AppTextStyle.iBMP14w500.copyWith(color: Color(0xff3D4966)),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Icon(
-                          Icons.account_balance_wallet_outlined,
-                          color: Color(0xff0072C3),
-                        ),
-                        SizedBox(width: 8.w),
-                        Text(
-                          snapshot.data!.salary[lastIndex].Value.toString(),
-                          style: AppTextStyle.iBMP14w500.copyWith(color: Color(0xff3D4966)),
-                        ),
-                        SizedBox(width: 8.w),
-                        IconButton(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => LayoutScreen(initialIndex: 3), // Navigate to the salary tab
-                              ),
-                            );
-                          },
-                          icon: Icon(Icons.arrow_forward, size: 30, color: Colors.black),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
+                // child: Row(
+                //   crossAxisAlignment: CrossAxisAlignment.center,
+                //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //   children: [
+                //     // Row(
+                //     //   mainAxisSize: MainAxisSize.min,
+                //     //   children: [
+                //     //     Container(
+                //     //       // width: 44.w,
+                //     //       // height: 44.h,
+                //     //       decoration: BoxDecoration(
+                //     //         borderRadius: BorderRadius.circular(12).r,
+                //     //         color: Color(0xffF59E0B),
+                //     //       ),
+                //     //       child: Icon(Icons.credit_card, color: Colors.white),
+                //     //     ),
+                //     //     SizedBox(width: 22.w),
+                //     //     SvgPicture.asset(
+                //     //       "assets/images/NewDesign/image/home/opening-times.svg",
+                //     //       color: Color(0xff0072C3),
+                //     //     ),
+                //     //     SizedBox(width: 3.w),
+                //     //     // Text(
+                //     //     //   getDate(snapshot.data!.salary[lastIndex].Month.toString()),
+                //     //     //   style: AppTextStyle.iBMP14w500.copyWith(color: Color(0xff3D4966)),
+                //     //     // ),
+                //     //   ],
+                //     // ),
+                //     // Row(
+                //     //   children: [
+                //     //     Icon(
+                //     //       Icons.account_balance_wallet_outlined,
+                //     //       color: Color(0xff0072C3),
+                //     //     ),
+                //     //     SizedBox(width: 8.w),
+                //     //     Text(
+                //     //       snapshot.data!.salary[lastIndex].Value.toString(),
+                //     //       style: AppTextStyle.iBMP14w500.copyWith(color: Color(0xff3D4966)),
+                //     //     ),
+                //     //     SizedBox(width: 8.w),
+                //     //     IconButton(
+                //     //       onPressed: () {
+                //     //         Navigator.push(
+                //     //           context,
+                //     //           MaterialPageRoute(
+                //     //             builder: (context) => LayoutScreen(initialIndex: 3), // Navigate to the salary tab
+                //     //           ),
+                //     //         );
+                //     //       },
+                //     //       icon: Icon(Icons.arrow_forward, size: 30, color: Colors.black),
+                //     //     ),
+                //     //   ],
+                //     // ),
+                //   ],
+                // ),
               ),
             ],
           );

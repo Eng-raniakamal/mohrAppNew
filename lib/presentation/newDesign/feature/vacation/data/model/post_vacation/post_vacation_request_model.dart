@@ -37,7 +37,15 @@ class RequestModel {
   RequestModel({this.reviewers});
 
 
-
+factory RequestModel.fromJson(Map<String, dynamic> json) {
+    return RequestModel(
+      reviewers: json['reviewers'] != null
+          ? (json['reviewers'] as List)
+              .map((i) => DefaultReviewerModel.fromJson(i))
+              .toList()
+          : null,
+    );
+  }
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data =  <String, dynamic>{};
     if (reviewers != null) {

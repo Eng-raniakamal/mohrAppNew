@@ -1,6 +1,10 @@
-<svg width="22" height="18" viewBox="0 0 22 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-<rect x="1" y="1" width="20" height="16" rx="4" stroke="black" stroke-width="2"/>
-<path d="M4 6L7.09525 8.65307C8.95857 10.2502 9.89023 11.0488 11 11.0488C12.1098 11.0488 13.0414 10.2502 14.9047 8.65307L18 6" stroke="black" stroke-width="2" stroke-linejoin="round"/>
-<path d="M7 9L4 12" stroke="black" stroke-width="2" stroke-linejoin="round"/>
-<path d="M15 9L18 12" stroke="black" stroke-width="2" stroke-linejoin="round"/>
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Monotone telephone">
+<g id="mail">
+<rect id="Rectangle 3" x="2" y="4" width="20" height="16" rx="4" stroke="black" stroke-width="2"/>
+<path id="Vector 5" d="M5 9L8.09525 11.6531C9.95857 13.2502 10.8902 14.0488 12 14.0488C13.1098 14.0488 14.0414 13.2502 15.9047 11.6531L19 9" stroke="black" stroke-width="2" stroke-linejoin="round"/>
+<path id="Vector 6" d="M8 12L5 15" stroke="black" stroke-width="2" stroke-linejoin="round"/>
+<path id="Vector 6_2" d="M16 12L19 15" stroke="black" stroke-width="2" stroke-linejoin="round"/>
+</g>
+</g>
 </svg>

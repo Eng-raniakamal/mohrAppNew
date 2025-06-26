@@ -1,24 +1,29 @@
-import 'package:essmohr/presentation/newDesign/core/component/input_data_widget.dart';
+
+
 import 'package:essmohr/presentation/newDesign/core/utils/import_file.dart';
 import 'package:essmohr/presentation/newDesign/feature/home/data/report_model.dart';
-import 'package:essmohr/presentation/newDesign/feature/request/data/model/account_model.dart';
 import 'package:essmohr/presentation/newDesign/feature/request/presentation/widget/add_request/add_document_button_widget.dart';
-import 'package:essmohr/presentation/newDesign/feature/request/presentation/widget/request_type/management_request/details_management_request/account_widget.dart';
-import 'package:essmohr/presentation/newDesign/feature/request/presentation/widget/request_type/management_request/details_management_request/nots_details_widget.dart';
 import 'package:essmohr/presentation/newDesign/feature/request/presentation/widget/request_type/management_request/details_management_request/submission_date_widget.dart';
-import 'package:essmohr/presentation/newDesign/feature/request/presentation/widget/request_type/management_request/details_management_request/type_widget.dart';
+//import 'package:essmohr/presentation/newDesign/feature/vacation/data/model/get_employee_vacations_model/get_employee_vacations_model.dart';
 import 'package:essmohr/presentation/newDesign/feature/vacation/presentation/control/vacation_cubit/vacation_cubit.dart';
-import 'package:essmohr/presentation/newDesign/feature/vacation/presentation/widget/vacation_details/app_bar_details_vacation_widget.dart';
 import 'package:essmohr/presentation/newDesign/generated/assets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../../../../core/component/custom_app_bar_screen_details_widget.dart';
+import '../../../../../core/component/custom_from_to_date_widget.dart';
+import '../../../../../core/component/custom_nots_of_details_screen_widget.dart';
+import '../../../../../core/component/custom_reviewer_widget.dart';
+import '../../../../../core/component/custom_title_and_value_widget.dart';
+import '../../../data/model/get_employee_vacations_model/get_employee_vacations_response_model.dart';
 
 class VacationDetailsWidget extends StatelessWidget {
   const VacationDetailsWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
-    ReportModel reportModel = context.read<VacationCubit>().getReportModel();
-
+    GetEmployeeVacationsResponseModel model =
+        context.read<VacationCubit>().getEmployeeVacationsModel();
+    // List<ReviewerModel?> reviewer = model.reviewer ?? [];
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16).r,
@@ -26,53 +31,89 @@ class VacationDetailsWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(height: 16.h),
+
             // معتمده - تحت الطلب -مرفوض
-            AppBarDetailsVacationWidget(reportModel: reportModel),
+            CustomAppBarScreenWidget(
+              title: "تفاصيل أجازتى",
+              onTap: () {
+                context.read<VacationCubit>().changeTab(2);
+              },
+            ),
+
             SizedBox(height: 16.h),
-            // النوع
-            TypeWidget(reportModel: reportModel),
+            // // النوع
+            CustomTitleAndValueWidget(
+              title: "العنوان",
+              value: model.vacationTypeName,
+            ),
             SizedBox(height: 16.h),
-            //   التاريخ
+            // //   التاريخ
             SubmissionDateWidget(
-              reportModel: ReportModel(dateRequest: "22 نوفمبر2024"),
+              reportModel: ReportModel(
+                dateRequest:
+                    model.fromDate?.substring(0, 10) ?? "22 نوفمبر2024",
+              ),
             ),
             SizedBox(height: 16.h),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Expanded(
-                  child: FTDayWidget(title: "من", date: "22 نوفمبر2024"),
+                  child: CustomFromToDateWidget(
+                    title: "من",
+                    date: model.fromDate?.substring(0, 10) ?? "22 نوفمبر2024",
+                  ),
                 ),
                 SizedBox(width: 8.w),
                 Expanded(
-                  child: FTDayWidget(title: "الى", date: "22 نوفمبر2024"),
+                  child: CustomFromToDateWidget(
+                    title: "الى",
+                    date: model.toDate?.substring(0, 10) ?? "22 نوفمبر2024",
+                  ),
                 ),
               ],
             ),
             SizedBox(height: 16.h),
-            InputDataWidget(
-              controller: TextEditingController(text: reportModel.duration),
-              hint: "المدة ",
+            CustomTitleAndValueWidget(
               title: "المدة",
-              fillColor: context.color.onPrimaryContainer,
+              value: model.duration.toString(),
             ),
             SizedBox(height: 16.h),
-            InputDataWidget(
-              controller: TextEditingController(text: "محمد فتحى غانم"),
-              hint: "النائب ",
+            CustomTitleAndValueWidget(
               title: "النائب",
-              fillColor: context.color.onPrimaryContainer,
+              value: model.replacementName,
             ),
             SizedBox(height: 16.h),
+
+
+
+
             Row(
-              children:
-              AccountModel.accountList
-                  .map((e) => AccountWidget(accountModel: e))
-                  .toList(),
+              children: [
+                CustomReviewerWidget(
+                  nameReviewer: model.reviewerName!.isEmpty?"اسم": model.reviewerName,
+                  idReviewer: "كود ",
+                  statusReviewer:"حالة" ,
+
+                ),
+              ],
             ),
+
+            // if (model.reviewer.isNotEmpty)
+            //   Row(
+            //     children:
+            //         reviewer
+            //             .map(
+            //               (e) => CustomReviewerWidget(
+            //                 reviewerModel: e!,
+            //                 statusModel: StatusModel.reviewerModel(model: e),
+            //               ),
+            //             )
+            //             .toList(),
+            //   ),
             SizedBox(height: 16.h),
             AddDocumentButtonWidget(
-              onTap: (){},
+              onTap: () {},
               title: "الوثائق",
               widget: SizedBox(
                 width: 20.w,
@@ -81,51 +122,11 @@ class VacationDetailsWidget extends StatelessWidget {
               ),
             ),
             SizedBox(height: 16.h),
-            NotsDetailsWidget(reportModel: reportModel,),
-            SizedBox(height: 16.h),
+            CustomNotsOfDetailsScreenWidget(notText: "ملاحظات",),
+            // SizedBox(height: 16.h),
           ],
         ),
       ),
-    );
-  }
-}
-
-class FTDayWidget extends StatelessWidget {
-  const FTDayWidget({super.key, required this.title, required this.date});
-
-  final String title;
-  final String date;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(title, style: context.text.bodyMedium),
-        SizedBox(height: 8.h),
-        Container(
-          padding: EdgeInsets.symmetric(vertical: 14, horizontal: 12),
-          decoration: BoxDecoration(
-            border: Border.all(color: context.color.outline),
-            borderRadius: BorderRadius.circular(8).r,
-            color: context.color.onPrimaryContainer,
-          ),
-          child: Row(
-            children: [
-              Icon(
-                Icons.calendar_today_outlined,
-                color: context.color.surfaceContainer,
-                size: 22.r,
-              ),
-              SizedBox(width: 8.w),
-              Text(
-                " ${date ?? "تاريخ اليوم"}",
-                style: context.text.titleMedium,
-              ),
-            ],
-          ),
-        ),
-      ],
     );
   }
 }

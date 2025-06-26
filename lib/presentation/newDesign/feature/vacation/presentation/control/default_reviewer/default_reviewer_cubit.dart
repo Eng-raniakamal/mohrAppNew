@@ -10,10 +10,14 @@ class DefaultReviewerCubit extends Cubit<DefaultReviewerState> {
   DefaultReviewerCubit(this.getDefaultReviewerUseCase)
       : super(const DefaultReviewerState());
 
-  Future<void> fetchDefaultReviewers({
-    required RequestDefaultReviewerModel requestDefaultReviewerModel,
-  }) async {
+  Future<void> fetchDefaultReviewers() async {
     emit(state.copyWith(isLoading: true, errorMessage: null));
+
+    RequestDefaultReviewerModel requestDefaultReviewerModel = RequestDefaultReviewerModel(
+      requestType: "1",
+      date: '2025-05-12',
+      requestedTypeId: "",
+    );
 
     final result = await getDefaultReviewerUseCase(
       requestDefaultReviewerModel: requestDefaultReviewerModel,
@@ -42,5 +46,27 @@ class DefaultReviewerCubit extends Cubit<DefaultReviewerState> {
 
   void selectReviewer(DefaultReviewerModel reviewer) {
     emit(state.copyWith(selectedReviewer: reviewer));
+  }
+
+  void addReviewer(DefaultReviewerModel reviewer) {
+    if (!state.listSelectedReviewers.any((r) => r.id == reviewer.id)) {
+      final updated = [...state.listSelectedReviewers, reviewer];
+      emit(state.copyWith(listSelectedReviewers: updated));
+    }
+  }
+
+  void removeReviewer(DefaultReviewerModel reviewer) {
+    final updated = state.listSelectedReviewers
+        .where((r) => r.id != reviewer.id)
+        .toList();
+    emit(state.copyWith(listSelectedReviewers: updated));
+  }
+
+  void clearReviewers() {
+    emit(state.copyWith(listSelectedReviewers: []));
+  }
+
+  void clearState() {
+    emit(const DefaultReviewerState());
   }
 }

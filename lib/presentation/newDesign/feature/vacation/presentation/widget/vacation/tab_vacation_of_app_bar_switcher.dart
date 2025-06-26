@@ -5,11 +5,10 @@ import 'package:essmohr/presentation/newDesign/feature/vacation/presentation/con
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:essmohr/presentation/newDesign/feature/request/presentation/widget/request_type/management_request/app_bar_management_request_widget.dart';
 
-
 class TabVacationOfAppBarSwitcherWidget extends StatelessWidget {
   TabVacationOfAppBarSwitcherWidget({super.key});
 
-  final List<String> tabs = ['أجازاتى', 'اعتماد الاجازات'];//0123
+  final List<String> tabs = ['أجازاتى', 'اعتماد الاجازات']; //0123
 
   @override
   Widget build(BuildContext context) {
@@ -17,12 +16,15 @@ class TabVacationOfAppBarSwitcherWidget extends StatelessWidget {
       builder: (context, state) {
         return Column(
           children: [
-          AppBarManagementRequestWidget(title: tabs[state],onTap: (){
-            context.read<VacationCubit>().changeTab(0);
-            context.read<VacationTabCubit>().changeTab(0);
-          },),
+            AppBarManagementRequestWidget(
+              title: tabs[state],
+              onTap: () {
+                context.read<VacationCubit>().changeTab(0);
+                context.read<VacationTabCubit>().changeTab(0);
+              },
+            ),
             SizedBox(height: 12.h),
-          CustomTabSwitcherWidget(
+            CustomTabSwitcherWidget(
               listTabs: tabs,
               selectedIndex: state,
               onTabChanged: (index) {

@@ -3,7 +3,8 @@ import 'package:essmohr/presentation/newDesign/feature/vacation/presentation/con
 import 'package:essmohr/presentation/newDesign/feature/vacation/presentation/control/submit_vacation_request/submit_vacation_request_state.dart';
 import 'package:essmohr/presentation/newDesign/feature/vacation/presentation/control/vacation_cubit/vacation_cubit.dart';
 import 'package:essmohr/presentation/newDesign/feature/vacation/presentation/widget/vacation_request/vacation_request_body_widget.dart';
-import '../../../../layout/export_Layout_file.dart';
+import '../../../../layout/export_layout_file.dart';
+import '../../control/vacation_tab/vacation_tab_cubit.dart';
 
 class VacationRequestWidget extends StatelessWidget {
   const VacationRequestWidget({super.key});
@@ -11,34 +12,44 @@ class VacationRequestWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => sl<SubmitVacationRequestCubit>(),
+      create: (context) => sl<SubmitVacationRequestCubit>(),
 
-      child:
-          BlocConsumer<SubmitVacationRequestCubit, SubmitVacationRequestState>(
-            listener: (context, state) {
-              if (state is SubmitLoading) {
-                Center(child: CircularProgressIndicator());
-              } else if (state is SubmitError) {
-                context.showErrorDialog(state.message);
-              } else if (state is SubmitAlertsChecked) {
-                // context.showSnackBar(
-                //   "تم تقديم الطلب بنجاح",
-                //   backgroundColor: Colors.green,
-                // );
+      child: Builder(
+          builder: (context) {
+            return BlocConsumer<
+                SubmitVacationRequestCubit,
+                SubmitVacationRequestState
+            >(
+              listener: (context, state) {
+                if (state is SubmitLoading) {
+                  Center(child: CircularProgressIndicator());
+                }
 
-              }
-              else if (state is SubmitSuccess) {
-                context.read<VacationCubit>().changeTab(0);
-                context.showSnackBar(
-                  "تم تقديم الطلب بنجاح",
-                  backgroundColor: Colors.green,
-                );
-              }
-            },
-            builder: (context, state) {
-              return VacationRequestBodyWidget();
-            },
-          ),
+                  if (state is SubmitError) {
+                  context.showErrorDialog(state.message);
+                }
+
+                  if (state is SubmitAlertsChecked) {
+                  context.showSnackBar(
+                    "لم يتم تقديم الطلب ",
+                    backgroundColor: Colors.red,
+                  );
+                }
+
+                  if (state is SubmitSuccess) {
+                  context.read<VacationCubit>().changeTab(0);
+                  context.showSnackBar(
+                    "تم تقديم الطلب بنجاح",
+                    backgroundColor: Colors.green,
+                  );
+                }
+              },
+              builder: (context, state) {
+                return VacationRequestBodyWidget();
+              },
+            );
+          }
+      ),
     );
   }
 }

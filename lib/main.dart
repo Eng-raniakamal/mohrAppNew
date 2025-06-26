@@ -43,7 +43,7 @@ void showNotification( v, flp) async {
       priority: Priority.high, importance: Importance.max);
   var iOS = const DarwinNotificationDetails();
   var platform = NotificationDetails(android: android,iOS: iOS);
-  await flp.show(v , "MOHR ESS", '$v'+ " " + AppStrings.new_message_here.tr(), platform,
+  await flp.show(v , "Sync ESS", '$v'+ " " + AppStrings.new_message_here.tr(), platform,
       payload: 'VIS \n $v');
 }
 

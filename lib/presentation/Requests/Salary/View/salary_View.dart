@@ -61,7 +61,7 @@ class _salaryViewState extends State<salaryView> {
             //appBar: buildAppBar(context),
            // bottomNavigationBar:NavigatorBar(index: 0,notificationNumber: Constants.notificationNumber,),
             appBar: AppBar(
-              backgroundColor: Color(0xffEDF9FF),
+              backgroundColor: AppColor.primaryBlue,
                 title: SingleChildScrollView(scrollDirection: Axis.horizontal,
                     child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,

@@ -27,7 +27,7 @@ class AppTextStyle {
     fontSize: 24.sp,
     fontWeight: FontWeight.w600,
     fontFamily: "IBMP",
-    color: AppColor.blackBlue,
+    color: AppColor.primary,
   );
 
   static TextStyle get iBMP24w500 => TextStyle(

@@ -47,7 +47,7 @@ class ListReviewerWidget extends StatelessWidget {
                   children: [
 
                     // CachedNetworkImage(
-                    //   imageUrl: "https://mohrapi.azurewebsites.net/Content/Images/employeeIcon.png",
+                    //   imageUrl: "https://api.hr-sync.com/Content/Images/employeeIcon.png",
                     //   imageBuilder: (context, imageProvider) => CircleAvatar(
                     //     radius: 24.r,
                     //     backgroundImage: imageProvider,

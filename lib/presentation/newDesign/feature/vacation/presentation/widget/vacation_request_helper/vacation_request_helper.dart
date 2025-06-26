@@ -11,13 +11,16 @@ import '../../control/default_reviewer/default_reviewer_cubit.dart';
 import '../../control/post_vacation/post_vacation_cubit.dart';
 import '../../control/submit_vacation_request/submit_vacation_request_cubit.dart';
 import '../../control/vacation_type/vacation_type_cubit.dart';
+
 class VacationRequestHelper {
   static void submitVacationRequest(BuildContext context) {
-
     final dateCubit = context.read<DateCubit>().state;
-    final vacationType = context.read<VacationTypeCubit>().state.selectedVacation!;
-    final durationCount = context.read<CalculateVacationDurationCubit>().state.response?.count ?? 0;
-    final reviewers = context.read<DefaultReviewerCubit>().state.reviewers;
+    final vacationType =
+        context.read<VacationTypeCubit>().state.selectedVacation!;
+    final durationCount =
+        context.read<CalculateVacationDurationCubit>().state.response?.count ??
+        0;
+    final reviewers = context.read<DefaultReviewerCubit>().state.listSelectedReviewers;
     final note = context.read<PostVacationCubit>().noteInputController.text;
 
     final postVacationModel = PostVacationRequestModel(
@@ -27,39 +30,48 @@ class VacationRequestHelper {
       duration: durationCount.toInt(),
       notes: note,
       request: RequestModel(
-        reviewers: reviewers
-            .map((e) => DefaultReviewerModel(employeeId: e.id, name: e.name,code: e.code))
-            .toList(),
+        reviewers:
+            reviewers
+                .map(
+                  (e) => DefaultReviewerModel(
+                    employeeId: e.id,
+                    name: e.name,
+                    code: e.code,
+                  ),
+                )
+                .toList(),
       ),
     );
 
     final checkHandledAlertsRequestModel = CheckHandledAlertsRequestModel(
-      vacationTypeId: vacationType.id??0,
+      vacationTypeId: vacationType.id ?? 0,
       fromDate: dateCubit.fromDate.toString(),
       toDate: dateCubit.toDate.toString(),
       duration: durationCount.toInt(),
     );
 
     final validateVacationRequestModel = ValidateVacationRequestModel(
-      vacationTypeId: vacationType.id??0,
+      vacationTypeId: vacationType.id ?? 0,
       fromDate: dateCubit.fromDate,
       toDate: dateCubit.toDate,
       duration: durationCount.toDouble(),
       id: 0,
     );
 
-    final calculateVacationDurationRequestModel = CalculateVacationDurationRequestModel(
-      vacationTypeId: vacationType.id??0,
-      fromDate: dateCubit.fromDate,
-      toDate: dateCubit.toDate,
-      unit: 1,
-    );
+    final calculateVacationDurationRequestModel =
+        CalculateVacationDurationRequestModel(
+          vacationTypeId: vacationType.id ?? 0,
+          fromDate: dateCubit.fromDate,
+          toDate: dateCubit.toDate,
+          unit: 1,
+        );
 
     context.read<SubmitVacationRequestCubit>().submit(
       postVacationModel: postVacationModel,
       checkHandledAlertsRequestModel: checkHandledAlertsRequestModel,
       validateVacationRequestModel: validateVacationRequestModel,
-      calculateVacationDurationRequestModel: calculateVacationDurationRequestModel,
+      calculateVacationDurationRequestModel:
+          calculateVacationDurationRequestModel,
     );
   }
 }

@@ -271,7 +271,7 @@ Future <List<UserAttendance>?> getApiAttendance() async
 
   // string to uri
   //2020-9-12T11:41:47.053Z&toDate=2023-10-12T11:41:47.053Z';
-  //https://mohrapi.azurewebsites.net/api/Attendance?fromDate=01-09-2023&toDate=22-10-2023
+  //https://api.hr-sync.com/api/Attendance?fromDate=01-09-2023&toDate=22-10-2023
   var uri = Uri.parse(Constants.attendanceUrl+_startDate+'T11:41:47.053Z&toDate='+_endDate+'T11:41:47.053Z');
   List<UserAttendance>? a;
 

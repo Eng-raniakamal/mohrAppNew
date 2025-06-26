@@ -1,3 +1,5 @@
+import 'package:essmohr/presentation/newDesign/feature/vacation/presentation/control/vacation_type/vacation_type_cubit.dart';
+
 class RequestDefaultReviewerModel {
   final String requestType;
   final String date;
@@ -7,5 +9,7 @@ class RequestDefaultReviewerModel {
     required this.date,
     required this.requestedTypeId,
   });
+
+
 
 }

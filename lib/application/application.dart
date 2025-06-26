@@ -100,7 +100,7 @@ class _MyAppState extends State<MyApp> {
         if (Constants.notificationNumber != 0) {
           setBatchNumber(context, all!);
           Notifications.showBigTextNotification(
-              title: "MOHR",
+              title: "Sync",
               body:  "$all" + " " + AppStrings.new_message_here.tr(),
               fln: flutterLocalNotificationsPlugin);
           _appPreferences.setUserNotificationList(all!);

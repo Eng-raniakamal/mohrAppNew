@@ -15,29 +15,29 @@ class NotificationScreen extends StatelessWidget {
   ];
 
   @override
-  Widget build(BuildContext context) {
-    return
-
-      BlocBuilder<TabNotificationCubit, int>(
-      builder: (context, state) => listBody[state],
-    );
-  }
-
   // Widget build(BuildContext context) {
-  //   return MultiBlocProvider(
-  //     providers: [
-  //       BlocProvider<TabNotificationCubit>(
-  //         create: (_) => TabNotificationCubit(),
-  //       ),
-  //       BlocProvider<HomeCubit>(
-  //         create: (_) => HomeCubit(),
-  //       ),
-  //     ],
-  //     child: BlocBuilder<TabNotificationCubit, int>(
-  //       builder: (context, state) => listBody[state],
-  //     ),
+  //   return
+  //
+  //     BlocBuilder<TabNotificationCubit, int>(
+  //     builder: (context, state) => listBody[state],
   //   );
   // }
+
+  Widget build(BuildContext context) {
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<TabNotificationCubit>(
+          create: (_) => TabNotificationCubit(),
+        ),
+        BlocProvider<HomeCubit>(
+          create: (_) => HomeCubit(),
+        ),
+      ],
+      child: BlocBuilder<TabNotificationCubit, int>(
+        builder: (context, state) => listBody[state],
+      ),
+    );
+  }
 
 
 }

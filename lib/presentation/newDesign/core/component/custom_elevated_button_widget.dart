@@ -1,4 +1,3 @@
-import 'package:essmohr/presentation/newDesign/core/configure/extension/app_context_extension_theme.dart';
 import 'package:essmohr/presentation/newDesign/core/utils/import_file.dart';
 
 class CustomElevatedButtonWidget extends StatelessWidget {
@@ -20,7 +19,7 @@ class CustomElevatedButtonWidget extends StatelessWidget {
           width: double.infinity,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12).r,
-            color:AppColor.primary,
+            color:context.color.primary,// AppColor.primary,
 
           ),
           child:Row(

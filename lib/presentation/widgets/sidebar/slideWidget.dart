@@ -124,7 +124,7 @@ class _SideBarState extends State<SideBar> with SingleTickerProviderStateMixin<S
                               style: const TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w800),
                             ),
                             subtitle: Text(
-                              AppStrings.Mohr.tr(),
+                              AppStrings.Sync.tr(),
                               style: const TextStyle(
                                 color: Color(0xFF1BB5FD),
                                 fontSize: 20,

@@ -12,7 +12,7 @@ class HeaderWidget extends StatelessWidget {
       children: [
         Image.asset(AppImage.logo, width: 60.w, height: 73.h),
         SizedBox(height: 26.h),
-        Text("مرحبًا بك👋 في تطبيق مهر!",style: AppTextStyle.iBMP24w700Whit,),
+        Text("مرحبًا بك👋 في تطبيق سينك!",style: AppTextStyle.iBMP24w700Whit,),
         SizedBox(height: 12.h),
         Text("قم بادخال البريد الالكتروني لتتمكن من تسجيل الدخول", style: AppTextStyle.iBMP16w500,)
       ],

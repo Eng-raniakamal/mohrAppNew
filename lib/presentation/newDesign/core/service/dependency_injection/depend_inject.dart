@@ -11,5 +11,5 @@ Future<void> init() async {
   initRepositories();
   initUseCases();
   initCubits();
-  VacationCubit();
+  //VacationCubit();
 }

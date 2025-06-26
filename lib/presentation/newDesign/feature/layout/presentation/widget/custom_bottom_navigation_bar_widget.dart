@@ -15,7 +15,7 @@ class CustomBottomNavigationBarWidget extends StatelessWidget {
       currentIndex: currentIndex,
       onTap: (value) => context.read<LayoutCubit>().changeIndex(value),
       elevation: 0,
-      selectedItemColor: const Color(0xff36B0E3),
+      selectedItemColor:AppColor.primary,
       showSelectedLabels: true,
       showUnselectedLabels: true,
       selectedLabelStyle: AppTextStyle.iBMP10w700,
@@ -30,7 +30,7 @@ class CustomBottomNavigationBarWidget extends StatelessWidget {
         ),
         _navItem(
           "assets/images/NewDesign/image/tab/document-list.svg",
-          "الطلبات",
+          "التنبيهات",
           currentIndex == 1,
         ),
         _navItem(

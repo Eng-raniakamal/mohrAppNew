@@ -1,5 +1,4 @@
 
-import 'package:essmohr/presentation/newDesign/core/configure/extension/app_context_extension_theme.dart';
 import 'package:essmohr/presentation/newDesign/core/utils/import_file.dart';
 
 class CustomTabSwitcherWidget extends StatelessWidget {
@@ -22,7 +21,7 @@ class CustomTabSwitcherWidget extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: 5).r,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8).r,
-        color: context.color.outline,
+        color: AppColor.lightBlueBg,
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -34,7 +33,7 @@ class CustomTabSwitcherWidget extends StatelessWidget {
               height: 32.h,
               padding: EdgeInsets.symmetric(horizontal: 20).r,
               decoration: BoxDecoration(
-                color: isSelected ? context.color.primary : null,
+                color: isSelected ? AppColor.primary : null,
                 borderRadius: BorderRadius.circular(5).r,
               ),
               child: Center(

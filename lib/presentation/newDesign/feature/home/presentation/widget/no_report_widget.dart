@@ -10,17 +10,17 @@ class NoReportWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 50).r,
+      padding: const EdgeInsets.only(top: 20).r,
       child: SizedBox(
-          height: 356.h,
+         // height: 356.h,
           child: Column(
             children: [
-              SizedBox(height: 66.h),
+              SizedBox(height: 70.h),
               SvgPicture.asset("assets/images/NewDesign/image/home/no_report.svg"),
               SizedBox(height: 25.h),
               Text("لا يوجد تقارير", style: AppTextStyle.iBMP24w600Black),
               SizedBox(height: 12.h),
-              Text("هل بك في نظام مهر لادارة الموارد البشرية", style: AppTextStyle.iBMP16w500Gray)
+              Text("اهلا بك في نظام سينك لادارة الموارد البشرية", style: AppTextStyle.iBMP16w500Gray)
             ],
           )),
     );

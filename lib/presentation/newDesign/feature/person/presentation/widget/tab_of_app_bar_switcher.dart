@@ -35,7 +35,7 @@ class TabOfAppBarSwitcher extends StatelessWidget {
                   height: 32.h,
                   padding: EdgeInsets.symmetric(horizontal: 5.w),
                   decoration: BoxDecoration(
-                    color: isSelected ? Colors.lightBlue : null,
+                    color: isSelected ? AppColor.primary: null,
                     borderRadius: BorderRadius.circular(5),
                   ),
                   child: Center(

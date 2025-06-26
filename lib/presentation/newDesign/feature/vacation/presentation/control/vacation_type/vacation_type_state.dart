@@ -1,9 +1,10 @@
+import 'package:essmohr/presentation/newDesign/feature/vacation/data/model/vacation_type/vacation_type_model.dart';
 import 'package:equatable/equatable.dart';
 import '../../../domain/entity/vacation_type_entity.dart';
 
 class VacationTypeState extends Equatable {
-  final List<VacationTypeEntity> vacationTypes;
-  final VacationTypeEntity? selectedVacation;
+  final List<VacationTypeModel> vacationTypes;
+  final VacationTypeModel? selectedVacation;
   final bool isLoading;
   final String? errorMessage;
 
@@ -15,8 +16,8 @@ class VacationTypeState extends Equatable {
   });
 
   VacationTypeState copyWith({
-    List<VacationTypeEntity>? vacationTypes,
-    VacationTypeEntity? selectedVacation,
+    List<VacationTypeModel>? vacationTypes,
+    VacationTypeModel? selectedVacation,
     bool? isLoading,
     String? errorMessage,
   }) {

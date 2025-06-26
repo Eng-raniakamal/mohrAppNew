@@ -168,7 +168,7 @@ class AppStrings {
       //
 //slide menu
   static const String Welcome = "Welcome";
-  static const String Mohr = "Mohr";
+  static const String Sync = "Sync";
 
   static const String Home= "Home";
   static const String profile= "profile";

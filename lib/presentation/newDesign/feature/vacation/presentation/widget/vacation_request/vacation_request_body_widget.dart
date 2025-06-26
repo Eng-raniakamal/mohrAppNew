@@ -4,13 +4,14 @@ import 'package:essmohr/presentation/newDesign/feature/request/presentation/widg
 import 'package:essmohr/presentation/newDesign/feature/request/presentation/widget/notes_input_field.dart';
 import 'package:essmohr/presentation/newDesign/feature/request/presentation/widget/request_type/management_request/app_bar_management_request_widget.dart';
 import 'package:essmohr/presentation/newDesign/feature/vacation/presentation/control/vacation_cubit/vacation_cubit.dart';
+import 'package:essmohr/presentation/newDesign/feature/vacation/presentation/control/vacation_tab/vacation_tab_cubit.dart';
 import 'package:essmohr/presentation/newDesign/feature/vacation/presentation/control/vacation_type/vacation_type_state.dart';
 import 'package:essmohr/presentation/newDesign/feature/vacation/presentation/widget/vacation_request/from_to_date_widget.dart';
 import 'package:essmohr/presentation/newDesign/feature/vacation/presentation/widget/vacation_request/input_duration_widget.dart';
 import 'package:essmohr/presentation/newDesign/feature/vacation/presentation/widget/vacation_request/reviewer_widget.dart';
 import 'package:essmohr/presentation/newDesign/feature/vacation/presentation/widget/vacation_request/vacation_dropdown_widget.dart';
 
-import '../../../../layout/export_Layout_file.dart';
+import '../../../../layout/export_layout_file.dart';
 import 'button_post_vacation_widget.dart';
 import 'file_picker_widget.dart';
 
@@ -25,6 +26,7 @@ class VacationRequestBodyWidget extends StatelessWidget {
       children: [
         SizedBox(height: 12.h),
         AppBarManagementRequestWidget(
+          icon: Icons.close,
           title: "طلب اجازة",
           onTap: () {
             context.read<VacationCubit>().changeTab(0);
@@ -56,6 +58,7 @@ class VacationRequestBodyWidget extends StatelessWidget {
           },
         ),
         ReviewerWidget(),
+        // AddReviewerDropdown(),
         SizedBox(height: 16.h),
         ListReviewerWidget(),
         SizedBox(height: 16.h),

@@ -1,14 +1,20 @@
-import 'package:essmohr/presentation/newDesign/feature/vacation/domain/entity/vacation_type_entity.dart';
+import 'package:equatable/equatable.dart';
 
-class VacationTypeModel extends VacationTypeEntity {
+class VacationTypeModel extends Equatable {
+  final int? id;
+  final String? name;
+  final int? type;
+  final int? balance;
+  final int? limit;
+  final bool? requiredAttachment;
 
   const VacationTypeModel({
-    super.id,
-    super.name,
-    super.type,
-    super.balance,
-    super.limit,
-    super.requiredAttachment,
+    this.id,
+    this.name,
+    this.type,
+    this.balance,
+    this.limit,
+    this.requiredAttachment,
   });
 
   factory VacationTypeModel.fromJson(Map<String, dynamic> json) {
@@ -33,10 +39,18 @@ class VacationTypeModel extends VacationTypeEntity {
     };
   }
 
-
   @override
   String toString() {
     return 'VacationTypeModel(id: $id, name: $name)';
   }
 
+  @override
+  List<Object?> get props => [
+    id,
+    name,
+    type,
+    balance,
+    limit,
+    requiredAttachment,
+  ];
 }

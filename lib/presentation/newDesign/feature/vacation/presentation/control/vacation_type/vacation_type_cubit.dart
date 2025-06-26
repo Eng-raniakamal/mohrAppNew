@@ -1,3 +1,4 @@
+import 'package:essmohr/presentation/newDesign/feature/vacation/data/model/vacation_type/vacation_type_model.dart';
 import 'package:essmohr/presentation/newDesign/feature/vacation/domain/entity/vacation_type_entity.dart';
 import 'package:essmohr/presentation/newDesign/feature/vacation/presentation/control/file_picker/file_picker_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -8,7 +9,7 @@ class VacationTypeCubit extends Cubit<VacationTypeState> {
   final GetVacationTypeUseCase getVacationTypeUseCase;
   final FilePickerCubit filePickerCubit;
 
-  List<VacationTypeEntity>? _cachedVacationTypes; // كاش داخلي
+  List<VacationTypeModel>? _cachedVacationTypes; // كاش داخلي
 
   VacationTypeCubit(this.getVacationTypeUseCase, this.filePickerCubit)
       : super(const VacationTypeState());
@@ -49,7 +50,7 @@ class VacationTypeCubit extends Cubit<VacationTypeState> {
     );
   }
 
-  void selectVacation(VacationTypeEntity vacation) {
+  void selectVacation(VacationTypeModel vacation) {
     emit(state.copyWith(selectedVacation: vacation));
     filePickerCubit.clearFile();
 

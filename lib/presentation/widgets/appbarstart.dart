@@ -8,6 +8,8 @@ import 'package:essmohr/presentation/resources/colors.dart';
 import 'package:essmohr/presentation/resources/themes.dart';
 import 'package:essmohr/presentation/settings/settings_Screen.dart';
 import 'package:essmohr/presentation/widgets/clipPathWidget.dart';
+
+import '../resources/routes.dart';
 //import 'package:essmohr/themes/themes.dart';
 //import 'package:essmohr/model/user_preferences.dart';
 
@@ -21,7 +23,9 @@ AppBar buildAppBarstart(BuildContext context) {
     leading: BackButton(
       color: colorManager.primary,
 
-        onPressed: () =>Navigator.of(context, rootNavigator: true).pop()
+        onPressed: () =>
+            Navigator.pushReplacementNamed(context, Routes.homeRoute)
+            //Navigator.of(context, rootNavigator: true).pop()
             //Navigator.of(context).pop()
       ),
 

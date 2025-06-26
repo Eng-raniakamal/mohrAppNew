@@ -1,20 +1,22 @@
-
-import 'package:essmohr/presentation/newDesign/feature/home/data/report_model.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../../data/model/get_employee_vacations_model/get_employee_vacations_model.dart';
+import '../../../data/model/get_employee_vacations_model/get_employee_vacations_response_model.dart';
 
 class VacationCubit extends Cubit<int> {
   VacationCubit() : super(0);
-  late ReportModel _reportModel;
+  late GetEmployeeVacationsResponseModel _getEmployeeVacationsModel;
 
   changeTab(int index) {
     emit(index);
   }
 
-  setReportModel(ReportModel model){
-    _reportModel = model;
+  setEmployeeVacationsModel(GetEmployeeVacationsResponseModel model){
+    _getEmployeeVacationsModel = model;
   }
-  getReportModel(){
-    return _reportModel;
+
+  getEmployeeVacationsModel(){
+    return _getEmployeeVacationsModel;
   }
 
 }

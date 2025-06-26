@@ -79,3 +79,52 @@ extension AppContextSnackExtension on BuildContext {
     ScaffoldMessenger.of(this).showSnackBar(snackBar);
   }
 }
+
+
+
+extension ContextExtensions on BuildContext {
+  void showLoadingDialog() {
+    showDialog(
+      context: this,
+      // barrierDismissible: false,
+      builder: (_) => const Center(
+        child: CircularProgressIndicator(),
+      ),
+    );
+  }
+
+  void hideLoadingDialog() {
+    if (Navigator.canPop(this)) {
+      Navigator.of(this, rootNavigator: true).pop();
+    }
+  }
+
+  void viewSnackBar({required String message, Color? color}) {
+    ScaffoldMessenger.of(this).showSnackBar(
+      SnackBar(
+        content: Text(message),
+        backgroundColor: color ?? Colors.black,
+        duration: const Duration(seconds: 2),
+      ),
+    );
+  }
+
+
+  void viewErrorDialog(String message) {
+    showDialog(
+      context: this,
+      builder: (context) => AlertDialog(
+        title: const Text("حدث خطأ"),
+        content: Text(message),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: const Text("موافق"),
+          ),
+        ],
+      ),
+    );
+  }
+
+}
+
