@@ -10,9 +10,7 @@ import '../../../../../core/utils/app_message.dart';
 class ItemSkillWidget extends StatelessWidget {
    ItemSkillWidget({super.key,
 
-    required this.skillModel}) {
-
-   }
+    required this.skillModel});
   static  const IconData _moreVertRounded = IconData(0xf8dc, fontFamily: 'MaterialIcons',);
    List<UserSkills>? skillsUpdate;
 

@@ -9,6 +9,7 @@ class EndPoint {
   static const String checkHandledAlerts = "/api/Vacation/CheckForHandledAlerts";
   static const String getBalance = "/api/Vacation/getBalance";
   static const String getVacations = "/api/Vacation/GetVacations";
+  static const String getVacationTypesBalances = "/api/Vacation/VacationTypesBalances";
   static const String getVacationRequests = "/api/Vacation/Requests/Reviewer/true";
   static const String approveCancelRequest = "/Api/Requests";
 

@@ -45,6 +45,7 @@
     static const String getReviewPermission='$baseUrl/Api/Permission/Requests/Reviewer/false';
     static const String getReviewedPermission='$baseUrl/Api/Permission/Requests/Reviewer/true';
     static const String getViewVacations='$baseUrl/api/Vacation/Requests/Reviewer/true';
+    static const String getVacationTypesBalances='$baseUrl/api/Vacation/VacationTypesBalances';
     //financial
     static const String getFinancialTypes='$baseUrl/Api/Requests/GetRequestTypes?requestType=6';
     static const String saveFinancial ='$baseUrl/Api/Requests';

@@ -12,10 +12,10 @@ class OpeningTimeWidget extends StatelessWidget {
       children: [
         SvgPicture.asset("assets/images/NewDesign/image/home/opening-times.svg"),
         SizedBox(width: 3.w),
-        Text(
-          "20 مايو 2024",
-          style: AppTextStyle.iBMP14w500.copyWith(color: Color(0xff3D4966)),
-        ),
+        // Text(
+        //   //"20 مايو 2024",
+        //   style: AppTextStyle.iBMP14w500.copyWith(color: Color(0xff3D4966)),
+        // ),
       ],
     );
   }

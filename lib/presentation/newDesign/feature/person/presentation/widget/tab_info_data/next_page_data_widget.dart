@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:essmohr/presentation/newDesign//core/utils/import_file.dart';
+import 'package:essmohr/presentation/newDesign/feature/person/presentation/widget/tab_info_data/page_one_of_info_data_widget.dart';
 import 'package:essmohr/presentation/resources/strings_manager.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:essmohr/presentation/newDesign/feature/person/control/tab_person_screen_cubit/tab_cubit.dart';
@@ -199,6 +200,7 @@ class NextPageDataWidget extends StatefulWidget {
 
 class _NextPageDataWidgetState extends State<NextPageDataWidget> {
   final formKey = GlobalKey<FormState>();
+  final EmployeeBasicDataViewModel displayViewModel = instance<EmployeeBasicDataViewModel>();
   final SaveBDViewModel _saveViewModel = instance<SaveBDViewModel>();
   final EmployeeBasicDataViewModel _displayViewModel = instance<EmployeeBasicDataViewModel>();
   final TextEditingController controllerCity = TextEditingController();
@@ -212,6 +214,7 @@ class _NextPageDataWidgetState extends State<NextPageDataWidget> {
   @override
   void initState() {
     super.initState();
+    displayViewModel.start();
     initSave2EmpBasicDataModule();
 
     // controllerCity.addListener(() {
@@ -243,104 +246,256 @@ class _NextPageDataWidgetState extends State<NextPageDataWidget> {
     });
   }
 
+  // @override
+  // Widget build(BuildContext context) {
+  //   return Form(
+  //     key: formKey,
+  //     child: Column(
+  //       crossAxisAlignment: CrossAxisAlignment.start,
+  //       children: [
+  //         Text(AppStrings.addressText.tr(), style: AppTextStyle.iBMP16w700Black),
+  //         SizedBox(height: 16.h),
+  //         Row(
+  //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //           children: [
+  //             SizedBox(
+  //               width: MediaQuery.sizeOf(context).width * .45,
+  //               child: InputDataWidget(
+  //                 title: AppStrings.Country.tr(),
+  //                 hint: "مثال: مصر",
+  //                 controller: controllerCity, readOnly: null,
+  //               ),
+  //             ),
+  //             SizedBox(
+  //               width: MediaQuery.sizeOf(context).width * .45,
+  //               child: InputDataWidget(
+  //                 title: AppStrings.Governorate.tr(),
+  //                 hint: "مثال: القاهرة",
+  //                 controller: govController,
+  //               ),
+  //             ),
+  //           ],
+  //         ),
+  //         SizedBox(height: 16.h),
+  //         InputDataWidget(
+  //           title: AppStrings.Replacement.tr(),
+  //           hint: "مثال: مدينة نصر",
+  //           controller: controllerAreaCity,
+  //         ),
+  //         SizedBox(height: 16.h),
+  //         StreamBuilder<BasicDataModel>(
+  //           stream: _displayViewModel.outputEmpBasicData,
+  //           builder: (context, snapshot) {
+  //             return InputDataWidget(
+  //               title: AppStrings.addressText.tr(),
+  //               hint: snapshot.data?.address?.addressText ?? "مثال: شارع عباس العقاد",
+  //               controller: controllerAddressCity,
+  //             );
+  //           },
+  //         ),
+  //
+  //         SizedBox(height: 16.h),
+  //         InputDataWidget(
+  //           title: AppStrings.PoBox.tr(),
+  //           hint: "مثال: 54321",
+  //           controller: numberBoxControl,
+  //         ),
+  //         SizedBox(height: 16.h),
+  //         InputDataWidget(
+  //           title: AppStrings.zipCode.tr(),
+  //           hint: "مثال: 11765",
+  //           controller: zipCodeEditingController,
+  //         ),
+  //         SizedBox(height: 24.h),
+  //         ElevatedButton(
+  //           onPressed: () async {
+  //             if (formKey.currentState!.validate()) {
+  //               final result = await _saveViewModel.saveBasicData();
+  //
+  //               if(result==false)
+  //               {
+  //                      showToast("فشل في الحفظ");
+  //               }
+  //                     showToast("تم الحفظ بنجاح");
+  //
+  //               // يمكنك هنا تنفيذ حفظ البيانات النهائي إن رغبت
+  //               BlocProvider.of<TabCubit>(context).changeTab(0);
+  //             }
+  //           },
+  //           style: ElevatedButton.styleFrom(
+  //             backgroundColor: AppColor.primary,
+  //             minimumSize: const Size(double.infinity, 50),
+  //             shape: RoundedRectangleBorder(
+  //               borderRadius: BorderRadius.circular(12).r,
+  //             ),
+  //           ),
+  //           child: Row(
+  //             mainAxisSize: MainAxisSize.min,
+  //             children: [
+  //               Text(
+  //                 AppStrings.save.tr(),
+  //                 style: AppTextStyle.iBMP14w700.copyWith(color: Colors.white),
+  //               ),
+  //               const Icon(Icons.arrow_forward, color: Colors.white),
+  //             ],
+  //           ),
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
+
+
+
+
   @override
   Widget build(BuildContext context) {
-    return Form(
-      key: formKey,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(AppStrings.addressText.tr(), style: AppTextStyle.iBMP16w700Black),
-          SizedBox(height: 16.h),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return StreamBuilder<BasicDataModel?>(
+      stream: _displayViewModel.outputEmpBasicData,
+      builder: (context, snapshot) {
+        //final allowEdit = snapshot.data?.allowEdit ?? true;
+
+        return Form(
+          key: formKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(
-                width: MediaQuery.sizeOf(context).width * .45,
-                child: InputDataWidget(
-                  title: AppStrings.Country.tr(),
-                  hint: "مثال: مصر",
-                  controller: controllerCity,
+              // Text(AppStrings.addressText.tr(), style: AppTextStyle.iBMP16w700Black),
+              // SizedBox(height: 16.h),
+
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  SizedBox(
+                    width: MediaQuery.sizeOf(context).width * .45,
+                    child: InputDataWidget(
+                      title: AppStrings.Country.tr(),
+                      hint: "مثال: المملكة العربية السعودية",
+                      controller: controllerCity,
+                      readOnly: !allowEdit!,
+                    ),
+                  ),
+                  SizedBox(
+                    width: MediaQuery.sizeOf(context).width * .45,
+                    child: InputDataWidget(
+                      title: AppStrings.Governorate.tr(),
+                      hint: "مثال:الرياض ",
+                      controller: govController,
+                      readOnly: !allowEdit!,
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 16.h),
+
+              InputDataWidget(
+                title: AppStrings.Replacement.tr(),
+                hint: "",
+                controller: controllerAreaCity,
+                readOnly: !allowEdit!,
+              ),
+              SizedBox(height: 16.h),
+
+              InputDataWidget(
+                title: AppStrings.addressText.tr(),
+                hint: snapshot.data?.address?.addressText ?? "مثال: شارع الهدى",
+                controller: controllerAddressCity,
+                readOnly: !allowEdit!,
+              ),
+              SizedBox(height: 16.h),
+
+              InputDataWidget(
+                title: AppStrings.PoBox.tr(),
+                hint: " ",
+                controller: numberBoxControl,
+                readOnly: !allowEdit!,
+              ),
+              SizedBox(height: 16.h),
+
+              InputDataWidget(
+                title: AppStrings.zipCode.tr(),
+                hint: " ",
+                controller: zipCodeEditingController,
+                readOnly: !allowEdit!,
+              ),
+              SizedBox(height: 24.h),
+
+              // ElevatedButton(
+              //   onPressed: allowEdit
+              //       ? () async {
+              //     if (formKey.currentState!.validate()) {
+              //       final result = await _saveViewModel.saveBasicData();
+              //       if (result == false) {
+              //         showToast("فشل في الحفظ");
+              //       } else {
+              //         showToast("تم الحفظ بنجاح");
+              //         BlocProvider.of<TabCubit>(context).changeTab(0);
+              //       }
+              //     }
+              //   }
+              //       : null,
+              //   style: ElevatedButton.styleFrom(
+              //     backgroundColor: AppColor.primary,
+              //     minimumSize: const Size(double.infinity, 50),
+              //     shape: RoundedRectangleBorder(
+              //       borderRadius: BorderRadius.circular(12).r,
+              //     ),
+              //   ),
+              //   child: Row(
+              //     mainAxisSize: MainAxisSize.min,
+              //     children: [
+              //       Text(
+              //         AppStrings.save.tr(),
+              //         style: AppTextStyle.iBMP14w700.copyWith(color: Colors.white),
+              //       ),
+              //       const Icon(Icons.arrow_forward, color: Colors.white),
+              //     ],
+              //   ),
+              // ),
+
+              ElevatedButton(
+                onPressed: () async {
+                  if (!allowEdit!) {
+                    showToast("هذا الموظف لا يمكنه تعديل البيانات الخاصة به");
+                    return;
+                  }
+                  if (formKey.currentState!.validate()) {
+                    final result = await _saveViewModel.saveBasicData();
+                    if (result == false) {
+                      showToast("فشل في الحفظ");
+                    } else {
+                      showToast("تم الحفظ بنجاح");
+                      BlocProvider.of<TabCubit>(context).changeTab(0);
+                    }
+                  }
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppColor.primary,
+                  minimumSize: const Size(double.infinity, 50),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12).r,
+                  ),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      AppStrings.save.tr(),
+                      style: AppTextStyle.iBMP14w700.copyWith(color: Colors.white),
+                    ),
+                    const Icon(Icons.arrow_forward, color: Colors.white),
+                  ],
                 ),
               ),
-              SizedBox(
-                width: MediaQuery.sizeOf(context).width * .45,
-                child: InputDataWidget(
-                  title: AppStrings.Governorate.tr(),
-                  hint: "مثال: القاهرة",
-                  controller: govController,
-                ),
-              ),
+
             ],
           ),
-          SizedBox(height: 16.h),
-          InputDataWidget(
-            title: AppStrings.Replacement.tr(),
-            hint: "مثال: مدينة نصر",
-            controller: controllerAreaCity,
-          ),
-          SizedBox(height: 16.h),
-          StreamBuilder<BasicDataModel>(
-            stream: _displayViewModel.outputEmpBasicData,
-            builder: (context, snapshot) {
-              return InputDataWidget(
-                title: AppStrings.addressText.tr(),
-                hint: snapshot.data?.address?.addressText ?? "مثال: شارع عباس العقاد",
-                controller: controllerAddressCity,
-              );
-            },
-          ),
-
-          SizedBox(height: 16.h),
-          InputDataWidget(
-            title: AppStrings.PoBox.tr(),
-            hint: "مثال: 54321",
-            controller: numberBoxControl,
-          ),
-          SizedBox(height: 16.h),
-          InputDataWidget(
-            title: AppStrings.zipCode.tr(),
-            hint: "مثال: 11765",
-            controller: zipCodeEditingController,
-          ),
-          SizedBox(height: 24.h),
-          ElevatedButton(
-            onPressed: () async {
-              if (formKey.currentState!.validate()) {
-                final result = await _saveViewModel.saveBasicData();
-
-                if(result==false)
-                {
-                       showToast("فشل في الحفظ");
-                }
-                      showToast("تم الحفظ بنجاح");
-
-                // يمكنك هنا تنفيذ حفظ البيانات النهائي إن رغبت
-                BlocProvider.of<TabCubit>(context).changeTab(0);
-              }
-            },
-            style: ElevatedButton.styleFrom(
-              backgroundColor: AppColor.primary,
-              minimumSize: const Size(double.infinity, 50),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12).r,
-              ),
-            ),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  AppStrings.save.tr(),
-                  style: AppTextStyle.iBMP14w700.copyWith(color: Colors.white),
-                ),
-                const Icon(Icons.arrow_forward, color: Colors.white),
-              ],
-            ),
-          ),
-        ],
-      ),
+        );
+      },
     );
   }
+
+
 
   void showToast(String message) {
     ScaffoldMessenger.of(context).showSnackBar(

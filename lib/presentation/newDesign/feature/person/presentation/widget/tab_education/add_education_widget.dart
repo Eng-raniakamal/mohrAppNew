@@ -151,13 +151,13 @@ class _AddEducationWidgetState extends State<AddEducationWidget> {
         InputDataWidget(
           title: "جامعة/معهد",
           hint: "اكتب اسم الجامعة/ المعهد",
-          controller: nameUnvController,
+          controller: nameUnvController, readOnly: null,
         ),
         SizedBox(height: 16.h),
         InputDataWidget(
           title: "التخصص",
           hint: "اكتب اسم التخصص",
-          controller: filedEduController,
+          controller: filedEduController, readOnly: null,
         ),
         SizedBox(height: 16.h),
         InputDateDayWidget(

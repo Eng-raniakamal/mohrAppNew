@@ -15,7 +15,8 @@ class CustomNotsOfDetailsScreenWidget extends StatelessWidget {
           width: double.infinity,
           padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8).r,
           decoration: BoxDecoration(
-            color: Theme.of(context).colorScheme.onPrimaryContainer,
+            color:AppColor.lightBlueBg,
+            //Theme.of(context).colorScheme.onPrimaryContainer,
             borderRadius: BorderRadius.circular(12).r,
             border: Border.all(color: Theme.of(context).colorScheme.outline),
           ),

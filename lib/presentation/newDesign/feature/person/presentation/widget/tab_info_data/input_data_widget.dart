@@ -1,11 +1,12 @@
 import 'package:essmohr/presentation/newDesign//core/utils/import_file.dart';
 
 class InputDataWidget extends StatelessWidget {
-  const InputDataWidget({super.key, required this.title, required this.hint, required this.controller});
+  const InputDataWidget({super.key, required this.title, required this.hint, required this.controller, required this.readOnly});
 
   final String? title;
   final String? hint;
   final TextEditingController controller;
+  final bool? readOnly;
 
   @override
   Widget build(BuildContext context) {
@@ -17,6 +18,7 @@ class InputDataWidget extends StatelessWidget {
         TextField(
           controller: controller,
           style: AppTextStyle.iBMP12w700Black,
+          readOnly: readOnly!,
           decoration: InputDecoration(
             
             hintText: hint,

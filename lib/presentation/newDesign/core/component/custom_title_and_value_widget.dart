@@ -21,7 +21,7 @@ class CustomTitleAndValueWidget extends StatelessWidget {
           decoration: BoxDecoration(
             border: Border.all(color: colorTheme.outline),
             borderRadius: BorderRadius.circular(8),
-            color: colorTheme.onPrimaryContainer,
+            color: AppColor.lightBlueBg,
           ),
           child: Text(
             " ${value ?? "قيمة"}",

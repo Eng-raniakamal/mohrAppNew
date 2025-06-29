@@ -1506,3 +1506,68 @@ class ReviewedChangeShiftModel {
   }
 }
 
+class VacationTypeBalancs {
+  final String employeeName;
+  final int employeeId;
+  final String employeeCode;
+  final String jobTitle;
+  final String vacationTypeName;
+  final int vacationTypeId;
+  final double vacationTypeDuration;
+  final double transferred;
+  final double total;
+  final double consumed;
+  final double pending;
+  final double postConsumed;
+  final double available;
+  final double totalView;
+  final double settlemented;
+  final int type;
+  final bool isAnnual;
+  final bool hideBalance;
+
+  VacationTypeBalancs({
+    required this.employeeName,
+    required this.employeeId,
+    required this.employeeCode,
+    required this.jobTitle,
+    required this.vacationTypeName,
+    required this.vacationTypeId,
+    required this.vacationTypeDuration,
+    required this.transferred,
+    required this.total,
+    required this.consumed,
+    required this.pending,
+    required this.postConsumed,
+    required this.available,
+    required this.totalView,
+    required this.settlemented,
+    required this.type,
+    required this.isAnnual,
+    required this.hideBalance
+  });
+
+  factory VacationTypeBalancs.fromJson(Map<String, dynamic> json) {
+    return VacationTypeBalancs(
+
+      employeeName: json["employeeName"],
+      employeeId: json["employeeId"],
+      employeeCode: json["employeeCode"],
+      jobTitle: json["JobTitle"],
+      vacationTypeName: json["VacationTypeName"],
+      vacationTypeId: json["VacationTypeId"],
+      vacationTypeDuration: json["VacationTypeDuration"],
+      transferred: json["Transferred"],
+      total: json["Total"],
+      consumed: json["Consumed"],
+      pending: json["Pending"],
+      postConsumed: json["PostConsumed"],
+      available: json["Available"],
+      totalView: json["TotalView"],
+      settlemented: json["Settlemented"],
+      type: json["Type"],
+      isAnnual: json["IsAnnual"],
+      hideBalance: json["HideBalance"],
+    );
+  }
+}

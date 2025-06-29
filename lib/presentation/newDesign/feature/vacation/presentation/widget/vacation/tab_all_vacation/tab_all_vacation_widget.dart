@@ -18,7 +18,8 @@ class TabAllVacationWidget extends StatelessWidget {
       create: (context) => sl<GetEmployeeVacationsCubit>()..getEmployeeVacations(),
       child: Column(
         children: [
-          HeaderCoreWidget(title: "جميع الاجازات", subTitle: "الترتيب حسب"),
+          HeaderCoreWidget(title: "جميع الاجازات",subTitle:""),
+              //subTitle: "الترتيب حسب"),
           SizedBox(height: 12.h),
           BlocBuilder<GetEmployeeVacationsCubit, GetEmployeeVacationsState>(
             builder: (context, state) {

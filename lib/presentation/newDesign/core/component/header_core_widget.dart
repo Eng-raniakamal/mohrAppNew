@@ -42,22 +42,22 @@ class HeaderCoreWidget extends StatelessWidget {
                 ),
 
                 SizedBox(height: 10.w),
-                Stack(
-                  children: [
-                    Icon(
-                      Icons.keyboard_arrow_up_rounded,
-                      color: context.color.onSecondaryFixed,
-                    ),
-                    // AppColor.black64A,),
-                    Positioned(
-                      bottom: -11.h,
-                      child: Icon(
-                        Icons.keyboard_arrow_down_rounded,
-                        color: context.color.onSecondaryFixed,
-                      ), //
-                    ),
-                  ],
-                ),
+                // Stack(
+                //   children: [
+                //     Icon(
+                //       Icons.keyboard_arrow_up_rounded,
+                //       color: context.color.onSecondaryFixed,
+                //     ),
+                //     // AppColor.black64A,),
+                //     Positioned(
+                //       bottom: -11.h,
+                //       child: Icon(
+                //         Icons.keyboard_arrow_down_rounded,
+                //         color: context.color.onSecondaryFixed,
+                //       ), //
+                //     ),
+                //   ],
+                // ),
               ],
             ),
           ),

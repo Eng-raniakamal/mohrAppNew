@@ -391,7 +391,7 @@ class _userViewState extends State<userView> {
           //   amount: 20,
           // ),
           SizedBox(height: 20),
-          LastSalaryWidget()
+          //LastSalaryWidget()
           // Text(name, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: colorManager.white)),
           // const SizedBox(height: 3),
           // Text(email, style: const TextStyle(color: colorManager.white)),

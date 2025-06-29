@@ -18,7 +18,8 @@ class CustomFromToDateWidget extends StatelessWidget {
           decoration: BoxDecoration(
             border: Border.all(color: context.color.outline),
             borderRadius: BorderRadius.circular(8).r,
-            color: context.color.onPrimaryContainer,
+              color: AppColor.lightBlueBg
+            //color: context.color.onPrimaryContainer,
           ),
           child: Row(
             children: [

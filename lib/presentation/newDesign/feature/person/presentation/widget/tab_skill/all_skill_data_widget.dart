@@ -14,6 +14,7 @@ import '../../../../../../../domain/model/model.dart';
 import '../../../../../../editEmployee/View/empSkills_view.dart';
 import '../../../../../../editEmployee/ViewModel/displayEmpSkills_viewModel.dart';
 
+
 class AllSkillDataWidget extends StatefulWidget {
   const AllSkillDataWidget({super.key});
 
@@ -31,35 +32,35 @@ class _AllSkillDataWidgetState extends State<AllSkillDataWidget> {
   DateTime date = DateTime(2023);
   String? userId;
   List<UserSkills> skillsUpdate=[];
+  bool? allowEdit;
 
 
   @override
   void initState() {
 
     super.initState();
-    //_blind();
+    _displayViewModel.start();
     setState(() {
       skillsUpdate;
     });
   }
   @override
   void dispose() {
-    _displayViewModel.dispose();
-   // _saveviewModel.dispose();
+    //_displayViewModel.dispose();
     super.dispose();
   }
-
-
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        HeaderCoreWidget(title:AppStrings.Skills.tr(),subTitle: "الترتيب حسب",),
+        HeaderCoreWidget(title:AppStrings.Skills.tr(),subTitle: "",),
+          //subTitle: "الترتيب حسب",),
         SizedBox(height: 16.h),
     StreamBuilder<getEmpSkillsModel>(
     stream: _displayViewModel.outputEmpSkill,
     builder: (context, snapshot) {
+      allowEdit=snapshot.data?.allowEdit;
 
 
     return ListView.builder(
@@ -72,19 +73,41 @@ class _AllSkillDataWidgetState extends State<AllSkillDataWidget> {
     );
     }),
 
+        // CustomElevatedButtonWidget(
+        //   icon: Icons.add,
+        //   data: AppStrings.Add.tr(),
+        //   onPressed: () {
+        //     BlocProvider.of<SkillPageCubit>(context).changePage(1);
+        //   },
+        // ),
+
         CustomElevatedButtonWidget(
           icon: Icons.add,
           data: AppStrings.Add.tr(),
           onPressed: () {
+            if (!allowEdit!) {
+               showToast("هذا الموظف لا يمكنه أضافة مهارة جديدة له");
+              return;
+            }
             BlocProvider.of<SkillPageCubit>(context).changePage(1);
           },
         ),
       ],
     );
   }
+
+
+
+
+void showToast(String message) {
+  ScaffoldMessenger.of(context).showSnackBar(
+    SnackBar(
+      content: Text(message),
+      duration: Duration(seconds: 4),
+    ),
+  );
 }
 
 
 
-
-
+  }
