@@ -38,6 +38,9 @@ class NotesInputFieldState extends State<NotesInputField> {
                 maxLength: maxLength,
                 decoration:  InputDecoration(
                   hintText: 'نص الملاحظات',
+                  hintStyle: TextStyle(
+                    color: Colors.grey.shade500,
+                    fontSize: 14,),
                   border: InputBorder.none,
                   counterText: '',
                   // isDense: true,

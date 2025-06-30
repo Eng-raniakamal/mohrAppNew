@@ -16,56 +16,73 @@ class SalaryWidget extends StatelessWidget {
 
   final SalaryItems? salaryModel;
 
-  String? getMonthName(String? date) {
-    String? month;
-    // String? partOfDate= getString(date!);
-    switch (date) {
-      case '1 ':
-        return month = "January";
+  // String? getMonthName(String? date) {
+  //   String? month;
+  //   // String? partOfDate= getString(date!);
+  //   switch (date) {
+  //     case '1 ':
+  //       return month = "January";
+  //
+  //     case '2 ':
+  //       return month = "February";
+  //
+  //     case '3 ':
+  //       return month = "March";
+  //
+  //     case '4 ':
+  //       return month = "April";
+  //
+  //     case '5 ':
+  //       return month = "May";
+  //
+  //     case '6 ':
+  //       return month = "June";
+  //
+  //     case '7 ':
+  //       return month = "July";
+  //
+  //     case '8 ':
+  //       return month = "August";
+  //
+  //     case '9 ':
+  //       return month = "September";
+  //
+  //     case '10 ':
+  //       return month = "October";
+  //
+  //     case '11 ':
+  //       return month = "November";
+  //
+  //     case '12 ':
+  //       return month = "December";
+  //   }
+  //   return month;
+  // }
 
-      case '2 ':
-        return month = "February";
-
-      case '3 ':
-        return month = "March";
-
-      case '4 ':
-        return month = "April";
-
-      case '5 ':
-        return month = "May";
-
-      case '6 ':
-        return month = "June";
-
-      case '7 ':
-        return month = "July";
-
-      case '8 ':
-        return month = "August";
-
-      case '9 ':
-        return month = "September";
-
-      case '10 ':
-        return month = "October";
-
-      case '11 ':
-        return month = "November";
-
-      case '12 ':
-        return month = "December";
+  String getMonthName(BuildContext context, String? date) {
+    // نحذف أي فراغات حول الرقم
+    final key = date?.trim();
+    final monthNumber = int.tryParse(key ?? '');
+    if (monthNumber == null || monthNumber < 1 || monthNumber > 12) {
+      return '';
     }
-    return month;
-  }
 
-  String getDate(String date) {
+    // ننشئ DateTime من الشهر فقط (اليوم والسنة مؤقتان)
+    final dt = DateTime(0, monthNumber);
+
+    // نحصل على رمز اللغة الحالي، مثل 'ar' أو 'en'
+    final localeCode = context.locale.languageCode;
+
+    // ننسق التاريخ ليعرض اسم الشهر كاملاً بحسب اللغة
+    return DateFormat.MMMM(localeCode).format(dt);
+  }
+  String getDate(BuildContext context,String date) {
     var searchString = '-';
     var index = date.indexOf(searchString, 0);
     var partOfDate = date.substring(0, index);
     var restofDate = date.substring(index, date.length);
-    String? month = getMonthName(partOfDate);
-    String Date = "${month!} $restofDate";
+    String? month = getMonthName(context ,partOfDate);
+    String Date = "${month} $restofDate";
     return Date;
   }
 
@@ -95,7 +112,7 @@ class SalaryWidget extends StatelessWidget {
                   ),
                   SizedBox(width: 8.w),
                   Text(
-                    getDate(salaryModel!.Month)?? "يونيو 2024",
+                    getDate(context,salaryModel!.Month)?? "يونيو 2024",
                     style: AppTextStyle.iBMP14w500.copyWith(
                       color: Color(0xff3D4966),
                     ),

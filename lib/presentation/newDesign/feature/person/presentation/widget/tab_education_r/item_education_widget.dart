@@ -9,9 +9,7 @@ import '../../../../../../editEmployee/ViewModel/displayEmpSkills_viewModel.dart
 import '../../../../../core/utils/app_message.dart';
 @immutable
 class ItemEducationWidget extends StatelessWidget {
-  ItemEducationWidget({super.key,
-
-    required this.academicDegreeModel});
+  ItemEducationWidget({super.key,});
   static  const IconData _moreVertRounded = IconData(0xf8dc, fontFamily: 'MaterialIcons',);
   List<UserAcademicDegree>? academicDegree;
 
@@ -83,9 +81,9 @@ class ItemEducationWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // حماية: إذا كانت البيانات null، اعرض عنصر فارغ
-    if (academicDegreeModel == null) {
-      return const SizedBox.shrink();
-    }
+    // if (academicDegreeModel == null) {
+    //   return const SizedBox.shrink();
+    // }
 
     return Padding(
       padding: const EdgeInsets.only(bottom: 16.0).r,

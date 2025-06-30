@@ -41,7 +41,8 @@ class VacationRequestBodyWidget extends StatelessWidget {
         SizedBox(height: 16.h),
         InputDataWidget(
           title: "الموظف البديل",
-          hint: "مهدى غانم",
+          hint: "",
+
           controller: context.read<PostVacationCubit>().employSecondController,
         ),
         SizedBox(height: 16.h),

@@ -243,47 +243,110 @@ class _salaryViewState extends State<salaryView> {
 }
 
 
-String? getMonthName(String? date) {
-  String? month;
-  // String? partOfDate= getString(date!);
-  switch (date) {
-    case '1 ':
-      return month = "January";
-
-    case '2 ':
-      return month = "February";
-
-    case '3 ':
-      return month = "March";
-
-    case '4 ':
-      return month = "April";
-
-    case '5 ':
-      return month = "May";
-
-    case '6 ':
-      return month = "June";
-
-    case '7 ':
-      return month = "July";
-
-    case '8 ':
-      return month = "August";
-
-    case '9 ':
-      return month = "September";
-
-    case '10 ':
-      return month = "October";
-
-    case '11 ':
-      return month = "November";
-
-    case '12 ':
-      return month = "December";
+String getMonthName(BuildContext context, String? date) {
+  // نحذف أي فراغات حول الرقم
+  final key = date?.trim();
+  final monthNumber = int.tryParse(key ?? '');
+  if (monthNumber == null || monthNumber < 1 || monthNumber > 12) {
+    return '';
   }
-  return month;
+
+  // ننشئ DateTime من الشهر فقط (اليوم والسنة مؤقتان)
+  final dt = DateTime(0, monthNumber);
+
+  // نحصل على رمز اللغة الحالي، مثل 'ar' أو 'en'
+  final localeCode = context.locale.languageCode;
+
+  // ننسق التاريخ ليعرض اسم الشهر كاملاً بحسب اللغة
+  return DateFormat.MMMM(localeCode).format(dt);
 }
+// String getMonthName(BuildContext context, String? date) {
+//   // نزيل أي فراغات قبل أو بعد الرقم
+//   final key = date?.trim();
+//
+//   // خريطة الشهور بالإنجليزية
+//   const monthsEn = {
+//     '1': 'January',
+//     '2': 'February',
+//     '3': 'March',
+//     '4': 'April',
+//     '5': 'May',
+//     '6': 'June',
+//     '7': 'July',
+//     '8': 'August',
+//     '9': 'September',
+//     '10': 'October',
+//     '11': 'November',
+//     '12': 'December',
+//   };
+//
+//   // خريطة الشهور بالعربية
+//   const monthsAr = {
+//     '1': 'يناير',
+//     '2': 'فبراير',
+//     '3': 'مارس',
+//     '4': 'أبريل',
+//     '5': 'مايو',
+//     '6': 'يونيو',
+//     '7': 'يوليو',
+//     '8': 'أغسطس',
+//     '9': 'سبتمبر',
+//     '10': 'أكتوبر',
+//     '11': 'نوفمبر',
+//     '12': 'ديسمبر',
+//   };
+//
+//   // نقرأ لغة التطبيق من الـ BuildContext باستخدام easy_localization
+//   final lang = context.locale.languageCode;
+//
+//   // نختار الخريطة المناسبة
+//   final monthsMap = lang == 'ar' ? monthsAr : monthsEn;
+//
+//   // نرجع اسم الشهر أو سلسلة فارغة لو المفتاح غير موجود
+//   return monthsMap[key] ?? '';
+// }
+
+// String? getMonthName(String? date) {
+//   String? month;
+//   // String? partOfDate= getString(date!);
+//   switch (date) {
+//     case '1 ':
+//       return month = "January";
+//
+//     case '2 ':
+//       return month = "February";
+//
+//     case '3 ':
+//       return month = "March";
+//
+//     case '4 ':
+//       return month = "April";
+//
+//     case '5 ':
+//       return month = "May";
+//
+//     case '6 ':
+//       return month = "June";
+//
+//     case '7 ':
+//       return month = "July";
+//
+//     case '8 ':
+//       return month = "August";
+//
+//     case '9 ':
+//       return month = "September";
+//
+//     case '10 ':
+//       return month = "October";
+//
+//     case '11 ':
+//       return month = "November";
+//
+//     case '12 ':
+//       return month = "December";
+//   }
+//   return month;
+// }
 
 

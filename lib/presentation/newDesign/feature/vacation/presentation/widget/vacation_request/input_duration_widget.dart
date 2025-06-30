@@ -37,7 +37,8 @@ class DurationWidget extends StatelessWidget {
                 return Text(state.errorMessage!);
               }
               if (state.response == null) {
-                return Text("لم يتم حساب المدة بعد");
+                return Text("لم يتم حساب المدة بعد",style: TextStyle(color:Colors.grey.shade500),
+                  );
               }
               if(state.response!.isValid==false){
                 return  Text(

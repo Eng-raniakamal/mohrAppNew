@@ -9,6 +9,7 @@ class InputDataWidget extends StatelessWidget {
     this.suffixIcon,
     this.fillColor,
     this.prefixIcon,
+
   });
 
   final String? title;
@@ -33,6 +34,8 @@ class InputDataWidget extends StatelessWidget {
             fillColor: fillColor,
             filled: fillColor == null ? false : true,
             hintText: hint,
+    hintStyle: TextStyle(
+    color: Colors.grey.shade400,),
             border:
                 title != null
                     ? OutlineInputBorder(

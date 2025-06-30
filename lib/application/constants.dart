@@ -69,6 +69,7 @@
 
     //1982-10-12T11:41:47.053Z&toDate=2023-10-12T11:41:47.053Z';
     static int notificationNumber = 0 ;
+    static bool allowEdit=false;
     static List<dynamic>? salary;
     static  List<dynamic>? vacation;
     static String salaryDetailsId="";

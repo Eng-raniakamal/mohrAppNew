@@ -397,7 +397,7 @@ class _NextPageDataWidgetState extends State<NextPageDataWidget> {
               SizedBox(height: 16.h),
 
               InputDataWidget(
-                title: AppStrings.addressText.tr(),
+                title: AppStrings.Address.tr(),
                 hint: snapshot.data?.address?.addressText ?? "مثال: شارع الهدى",
                 controller: controllerAddressCity,
                 readOnly: !allowEdit!,

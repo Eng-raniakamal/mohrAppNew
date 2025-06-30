@@ -14,6 +14,7 @@ import '../../../../../core/component/custom_from_to_date_widget.dart';
 import '../../../../../core/component/custom_nots_of_details_screen_widget.dart';
 import '../../../../../core/component/custom_reviewer_widget.dart';
 import '../../../../../core/component/custom_title_and_value_widget.dart';
+import '../../../../../core/model/reviewer_model.dart';
 import '../../../data/model/get_employee_vacations_model/get_employee_vacations_response_model.dart';
 
 class VacationDetailsWidget extends StatelessWidget {
@@ -23,7 +24,7 @@ class VacationDetailsWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     GetEmployeeVacationsResponseModel model =
         context.read<VacationCubit>().getEmployeeVacationsModel();
-    // List<ReviewerModel?> reviewer = model.reviewer ?? [];
+     Object reviewer = model.reviewerName ?? [];
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16).r,
@@ -91,9 +92,9 @@ class VacationDetailsWidget extends StatelessWidget {
             Row(
               children: [
                 CustomReviewerWidget(
-                  nameReviewer: model.reviewerName!.isEmpty?"اسم": model.reviewerName,
-                  idReviewer: "كود ",
-                  statusReviewer:"حالة" ,
+                  nameReviewer: model.reviewerName!.isEmpty?"لم يتم اضافة مراجع": model.reviewerName,
+                  idReviewer: " ",
+                  statusReviewer:"" ,
 
                 ),
               ],
@@ -118,7 +119,7 @@ class VacationDetailsWidget extends StatelessWidget {
               widget: SizedBox(
                 width: 20.w,
                 height: 25.h,
-                child: Image.asset(Assets.requestPdf),
+                child: SvgPicture.asset(Assets.requestPdf),
               ),
             ),
             SizedBox(height: 16.h),

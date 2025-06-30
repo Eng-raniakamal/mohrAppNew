@@ -3,9 +3,11 @@
 import 'package:essmohr/presentation/newDesign/core/utils/import_file.dart';
 
 class TextWidget extends StatelessWidget {
-  const TextWidget({super.key, required this.title});
+  const TextWidget({super.key, required this.title, this.overflow});
 
   final String title;
+
+  final dynamic overflow;
 
   @override
   Widget build(BuildContext context) {

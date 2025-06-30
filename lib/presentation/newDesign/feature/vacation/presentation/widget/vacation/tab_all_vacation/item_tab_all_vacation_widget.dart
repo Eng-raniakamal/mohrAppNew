@@ -51,7 +51,8 @@ class ItemTabAllVacationWidget extends StatelessWidget {
                     ),
                   ),
                   Spacer(),
-                  OpeningTimeWidget(title: "المدة : $duration  أيام"),
+    OpeningTimeWidget(title:employeeVacationsModel.fromDate!.substring(0,10) ?? " ",)
+                  ,//OpeningTimeWidget(title: "المدة : $duration  أيام"),
                 ],
               ),
               SizedBox(height: 12.h),
@@ -64,23 +65,64 @@ class ItemTabAllVacationWidget extends StatelessWidget {
                   color: AppColor.lightBlueBg,
                   borderRadius: BorderRadius.circular(8).r,
                 ),
+                // child: Row(
+                //   children: [
+                //     SvgPicture.asset("assets/images/NewDesign/image/home/withdrawals_icon.svg"),
+                //     SizedBox(width: 5.w),
+                //     TextWidget(
+                //       title:
+                //           "مسحوبات الرصيد | "  + getConsumedForTypeName(vacationTypeName).toString(),
+                //     ),
+                //     SizedBox(width: 61.w),
+                //     SvgPicture.asset("assets/images/NewDesign/image/home/wave_icon.svg"),
+                //     SizedBox(width: 5.w),
+                //     TextWidget(
+                //       title:
+                //           "الرصيد المتاح| "+  getAvailableForTypeName(vacationTypeName).toString(),
+                //     ),
+                //   ],
+                // ),
+
+
                 child: Row(
                   children: [
                     SvgPicture.asset("assets/images/NewDesign/image/home/withdrawals_icon.svg"),
                     SizedBox(width: 5.w),
-                    TextWidget(
-                      title:
-                          "مسحوبات الرصيد | "  + getConsumedForTypeName(vacationTypeName).toString(),
+
+                    // مسحوبات الرصيد ضمن Expanded
+                    Expanded(
+                      child: FutureBuilder<String>(
+                        future: getConsumedForTypeName(vacationTypeName),
+                        builder: (context, snapshot) {
+                          final consumed = snapshot.data ?? '0';
+                          return TextWidget(
+                            title: "مسحوبات الرصيد | $consumed",
+                            overflow: TextOverflow.ellipsis,  // ← اقتصاص بنقاط النهاية
+                          );
+                        },
+                      ),
                     ),
-                    SizedBox(width: 61.w),
+
+                    SizedBox(width: 8.w),  // قلَّلنا المسافة بدل 61.w
                     SvgPicture.asset("assets/images/NewDesign/image/home/wave_icon.svg"),
                     SizedBox(width: 5.w),
-                    TextWidget(
-                      title:
-                          "الرصيد المتاح| "+ getAvailableForTypeName(vacationTypeName).toString(),
+
+                    // الرصيد المتاح ضمن Expanded
+                    Expanded(
+                      child: FutureBuilder<String>(
+                        future: getAvailableForTypeName(vacationTypeName),
+                        builder: (context, snapshot) {
+                          final available = snapshot.data ?? '0';
+                          return TextWidget(
+                            title: "الرصيد المتاح | $available",
+                            overflow: TextOverflow.ellipsis,  // ← اقتصاص
+                          );
+                        },
+                      ),
                     ),
                   ],
                 ),
+
               ),
 
               SizedBox(height: 12.h),
@@ -90,7 +132,7 @@ class ItemTabAllVacationWidget extends StatelessWidget {
                   Expanded(
                     child: ItemOfFromToWidget(
                       title: "من",
-                      date: employeeVacationsModel.fromDate!.substring(0,10) ?? "22 نوفمبر 2024",
+                      date: employeeVacationsModel.fromDate!.substring(0,10) ?? " ",
                     ),
                   ),
                   SizedBox(width: 8.w),
@@ -135,7 +177,7 @@ class ItemTabAllVacationWidget extends StatelessWidget {
     return [];
   }
 
-  Future<double> getConsumedForTypeName(String wantedTypeName) async {
+  Future<String> getConsumedForTypeName(String wantedTypeName) async {
     // أولاً تجلب القائمة كاملة
     final List<VacationTypeBalancs> b = await getVacationTypeBalances();
 
@@ -149,11 +191,13 @@ class ItemTabAllVacationWidget extends StatelessWidget {
       }),
     );
 
+    double x =match.consumed;
     // عدِل حسب حقل الـ balance في الموديل عندك
-    return match.consumed;
+    return x.toString()
+    ;
   }
 
-  Future<double> getAvailableForTypeName(String wantedTypeName) async {
+  Future<String> getAvailableForTypeName(String wantedTypeName) async {
     // أولاً تجلب القائمة كاملة
     final List<VacationTypeBalancs> b = await getVacationTypeBalances();
 
@@ -167,8 +211,11 @@ class ItemTabAllVacationWidget extends StatelessWidget {
       }),
     );
 
+    double x =match.available;
     // عدِل حسب حقل الـ balance في الموديل عندك
-    return match.available;
+    return x.toString();
+    // عدِل حسب حقل الـ balance في الموديل عندك
+
   }
 
 

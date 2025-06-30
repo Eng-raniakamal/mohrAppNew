@@ -65,25 +65,52 @@ class PersonScreenState extends State<PersonScreen> {
     EducationDataWidget(),
   ];
 
+  // @override
+  // Widget build(BuildContext context) {
+  //   return BlocProvider(
+  //     create: (_) => TabCubit(),
+  //     child: Scaffold(
+  //       appBar: AppBar(
+  //         title: Text(
+  //           AppStrings.profile.tr(),
+  //           style: context.text.titleLarge,
+  //         ),
+  //         bottom: PreferredSize(
+  //           // حجم الـ Switcher
+  //           preferredSize: Size(double.infinity, 48.h),
+  //           child: Padding(
+  //             padding: EdgeInsets.only(bottom: 8.h),
+  //             child: Center(
+  //               child: TabOfAppBarSwitcher(),
+  //             ),
+  //           ),
+  //         ),
+  //       ),
+  //       body: BlocBuilder<TabCubit, int>(
+  //         builder: (context, state) {
+  //           return listBody[state];
+  //         },
+  //       ),
+  //     ),
+  //   );
+  // }
+
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => TabCubit(),
+      create: (context) => TabCubit(),
       child: Scaffold(
         appBar: AppBar(
-          title: Text(
-            AppStrings.profile.tr(),
-            style: context.text.titleLarge,
-          ),
-          bottom: PreferredSize(
-            // حجم الـ Switcher
-            preferredSize: Size(double.infinity, 48.h),
-            child: Padding(
-              padding: EdgeInsets.only(bottom: 8.h),
-              child: Center(
-                child: TabOfAppBarSwitcher(),
-              ),
-            ),
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                        AppStrings.profile.tr(),
+                        style: context.text.titleLarge,
+                      ),//AppTextStyle.iBMP24w600),
+              TabOfAppBarSwitcher(),
+            ],
           ),
         ),
         body: BlocBuilder<TabCubit, int>(
@@ -95,3 +122,7 @@ class PersonScreenState extends State<PersonScreen> {
     );
   }
 }
+
+
+
+

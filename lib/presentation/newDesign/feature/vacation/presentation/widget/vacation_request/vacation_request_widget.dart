@@ -27,14 +27,18 @@ class VacationRequestWidget extends StatelessWidget {
 
                   if (state is SubmitError) {
                   context.showErrorDialog(state.message);
+                      // context.showSnackBar(
+                      //   "لم يتم تقديم الطلب ",
+                      //   backgroundColor: Colors.red,
+                      // );
                 }
 
-                  if (state is SubmitAlertsChecked) {
-                  context.showSnackBar(
-                    "لم يتم تقديم الطلب ",
-                    backgroundColor: Colors.red,
-                  );
-                }
+                //   if (state is SubmitAlertsChecked) {
+                //   context.showSnackBar(
+                //     "لم يتم تقديم الطلب ",
+                //     backgroundColor: Colors.red,
+                //   );
+                // }
 
                   if (state is SubmitSuccess) {
                   context.read<VacationCubit>().changeTab(0);
