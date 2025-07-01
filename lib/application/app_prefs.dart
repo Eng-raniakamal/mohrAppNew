@@ -16,20 +16,23 @@ class AppPreferences {
   AppPreferences(this._sharedPreferences);
 
   Future<String> getAppLanguage() async {
-    String? language = _sharedPreferences.getString(PREFS_KEY_LANG);
-//language=null mean the user didn't save lang in shared preference
-    if (language != null && language.isNotEmpty) {
-      return language;
-    } else {
-      // return default language considering it is english
-      return LanguageType.ENGLISH.getValue();
-    }
+//     String? language = _sharedPreferences.getString(PREFS_KEY_LANG);
+// //language=null mean the user didn't save lang in shared preference
+//     if (language != null && language.isNotEmpty) {
+//       return language;
+//     } else {
+//       // return default language considering it is english
+//       return LanguageType.ENGLISH.getValue();
+//     }
+//THE APP LANG  IS ARABIC
+    return LanguageType.ARABIC.getValue();
   }
 
 
 
    String? getLanguage()  {
-    String? lang = _sharedPreferences.getString(PREFS_KEY_LANG);
+    String? lang =LanguageType.ARABIC.getValue();
+    //_sharedPreferences.getString(PREFS_KEY_LANG);
 //language=null mean the user didn't save lang in shared preference
       return lang;
 
@@ -40,7 +43,8 @@ class AppPreferences {
     if(currentLange==LanguageType.ARABIC.getValue())
       {
         //set engilsh
-        _sharedPreferences.setString(PREFS_KEY_LANG, LanguageType.ENGLISH.getValue());
+        //_sharedPreferences.setString(PREFS_KEY_LANG, LanguageType.ENGLISH.getValue());
+        _sharedPreferences.setString(PREFS_KEY_LANG, LanguageType.ARABIC.getValue());
 
       }
     else

@@ -85,4 +85,5 @@
     static String EmpCode="";
     static List<String> Rlist =['Vacation Request','Errands Request','Permissions Request','Extra Request','Financial Request','Admin Request'];
     static const Duration apitimeout=Duration(milliseconds: 60000);
+    static String userId="";
   }

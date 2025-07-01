@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:essmohr/application/constants.dart';
 import 'package:essmohr/presentation/newDesign/core/service/api_service/dio_helper.dart';
 import '../../../../../application/app_prefs.dart';
 import '../../../../../application/di.dart';
@@ -15,13 +16,12 @@ void initCore() {
 
 
 
-  sl.registerLazySingleton<String>(() => "cf92e40e-1bff-4b40-886e-badb7bebe638");
+  sl.registerLazySingleton<String>(() => "5428d833-0d7d-43d1-84fc-1ace00723492");
  // sl.registerLazySingleton<String>(() => userId!);
+ // sl.registerLazySingleton<String>(() => Constants.userId);
 
   sl.registerLazySingleton<DioHelper>(
         () => DioHelper(userId: sl<String>(), dio: sl<Dio>()),
  );
-
-
 
 }

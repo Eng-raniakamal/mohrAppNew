@@ -80,11 +80,12 @@ class VacationScreen extends StatelessWidget {
                           return VacationRequestWidget();
                         } else if (stateIndex == 3) {
                           return VacationDetailsWidget();
-                        } else if (vacations.isEmpty) {
-                          return NoVacationWidget();
-                        } else {
-                          return const BodyTabWidget();
                         }
+                        // else if (vacations.isEmpty) {
+                        //   return NoVacationWidget();
+                        // } else {
+                          return const BodyTabWidget();
+
                       }(),
                     );
                   },

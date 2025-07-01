@@ -370,7 +370,7 @@ class _NextPageDataWidgetState extends State<NextPageDataWidget> {
                     width: MediaQuery.sizeOf(context).width * .45,
                     child: InputDataWidget(
                       title: AppStrings.Country.tr(),
-                      hint: "مثال: المملكة العربية السعودية",
+                      hint: "مثال:الرياض ",
                       controller: controllerCity,
                       readOnly: !allowEdit!,
                     ),
@@ -379,7 +379,7 @@ class _NextPageDataWidgetState extends State<NextPageDataWidget> {
                     width: MediaQuery.sizeOf(context).width * .45,
                     child: InputDataWidget(
                       title: AppStrings.Governorate.tr(),
-                      hint: "مثال:الرياض ",
+                      hint: "مثال:القصيم ",
                       controller: govController,
                       readOnly: !allowEdit!,
                     ),

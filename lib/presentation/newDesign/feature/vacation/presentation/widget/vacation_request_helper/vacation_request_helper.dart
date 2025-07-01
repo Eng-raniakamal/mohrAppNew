@@ -15,8 +15,21 @@ import '../../control/vacation_type/vacation_type_cubit.dart';
 class VacationRequestHelper {
   static void submitVacationRequest(BuildContext context) {
     final dateCubit = context.read<DateCubit>().state;
-    final vacationType =
-        context.read<VacationTypeCubit>().state.selectedVacation!;
+    final vacationState = context.read<VacationTypeCubit>().state;
+
+    if (vacationState.selectedVacation == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("الرجاء اختيار نوع الإجازة أولاً"),
+          duration: Duration(seconds: 3),
+        ),
+      );
+      return; // إيقاف التنفيذ إذا لم يتم اختيار نوع الإجازة
+    }
+
+    final vacationType = vacationState.selectedVacation!;
+
+    //final vacationType = context.read<VacationTypeCubit>().state.selectedVacation!;
     final durationCount =
         context.read<CalculateVacationDurationCubit>().state.response?.count ??
         0;

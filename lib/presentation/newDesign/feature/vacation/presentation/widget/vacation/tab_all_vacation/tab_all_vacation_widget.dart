@@ -9,6 +9,79 @@ import 'package:essmohr/presentation/newDesign/feature/vacation/presentation/con
 import 'package:essmohr/presentation/newDesign/feature/vacation/presentation/widget/vacation/tab_all_vacation/item_tab_all_vacation_widget.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../no_vacation_widget/no_vacation_widget.dart';
+
+// class TabAllVacationWidget extends StatelessWidget {
+//   const TabAllVacationWidget({super.key});
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return BlocProvider(
+//       create: (context) => sl<GetEmployeeVacationsCubit>()..getEmployeeVacations(),
+//       child: Column(
+//         children: [
+//           HeaderCoreWidget(title: "جميع الاجازات",subTitle:""),
+//               //subTitle: "الترتيب حسب"),
+//           SizedBox(height: 12.h),
+//           BlocBuilder<GetEmployeeVacationsCubit, GetEmployeeVacationsState>(
+//             builder: (context, state) {
+//             List response=  state.response?? [];
+//               if (state.isLoading==true) {
+//                 return  Center(child: Column(
+//                   children: [
+//                     SizedBox(height: context.height * 0.25,),
+//                     CircularProgressIndicator(),
+//                   ],
+//                 ));
+//               }
+//               if (state.errorMessage?.isNotEmpty?? false) {
+//                 return Center(child: Text(state.errorMessage??"Error"));
+//               }
+//               return Column(
+//                 children:
+//                 response
+//                     .map(
+//                       (e) =>
+//                       GestureDetector(
+//                         onTap: () {
+//                           context.read<VacationCubit>().changeTab(3);
+//                           context.read<VacationCubit>().setEmployeeVacationsModel(e);
+//                           log("AAA");
+//                         },
+//                         child: ItemTabAllVacationWidget(employeeVacationsModel: e),
+//                       ),
+//                 )
+//                     .toList(),
+//               );
+//             },
+//           ),
+//           Align(
+//             alignment: AlignmentDirectional.bottomEnd,
+//             child: GestureDetector(
+//               onTap: () {
+//                 context.read<VacationCubit>().changeTab(1);
+//                 log("ccc");
+//               },
+//               child: Container(
+//                 width: 60.w,
+//                 height: 60.h,
+//                 decoration: BoxDecoration(
+//                   color: AppColor.primary,
+//                   borderRadius: BorderRadius.circular(12).r,
+//                 ),
+//                 child: const Icon(
+//                   Icons.add,
+//                   color: Colors.white,
+//                   size: 30,
+//                 ),
+//               ),
+//             ),
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+// }
 class TabAllVacationWidget extends StatelessWidget {
   const TabAllVacationWidget({super.key});
 
@@ -18,36 +91,42 @@ class TabAllVacationWidget extends StatelessWidget {
       create: (context) => sl<GetEmployeeVacationsCubit>()..getEmployeeVacations(),
       child: Column(
         children: [
-          HeaderCoreWidget(title: "جميع الاجازات",subTitle:""),
-              //subTitle: "الترتيب حسب"),
+          HeaderCoreWidget(title: "جميع الاجازات", subTitle: ""),
           SizedBox(height: 12.h),
           BlocBuilder<GetEmployeeVacationsCubit, GetEmployeeVacationsState>(
             builder: (context, state) {
-            List response=  state.response?? [];
-              if (state.isLoading==true) {
-                return  Center(child: Column(
-                  children: [
-                    SizedBox(height: context.height * 0.25,),
-                    CircularProgressIndicator(),
-                  ],
-                ));
+              List response = state.response ?? [];
+
+              if (state.isLoading == true) {
+                return Center(
+                  child: Column(
+                    children: [
+                      SizedBox(height: context.height * 0.25),
+                      CircularProgressIndicator(),
+                    ],
+                  ),
+                );
               }
-              if (state.errorMessage?.isNotEmpty?? false) {
-                return Center(child: Text(state.errorMessage??"Error"));
+
+              if (state.errorMessage?.isNotEmpty ?? false) {
+                return Center(child: Text(state.errorMessage ?? "Error"));
               }
+
+              if (response.isEmpty) {
+                return const NoVacationWidget();
+              }
+
               return Column(
-                children:
-                response
+                children: response
                     .map(
-                      (e) =>
-                      GestureDetector(
-                        onTap: () {
-                          context.read<VacationCubit>().changeTab(3);
-                          context.read<VacationCubit>().setEmployeeVacationsModel(e);
-                          log("AAA");
-                        },
-                        child: ItemTabAllVacationWidget(employeeVacationsModel: e),
-                      ),
+                      (e) => GestureDetector(
+                    onTap: () {
+                      context.read<VacationCubit>().changeTab(3);
+                      context.read<VacationCubit>().setEmployeeVacationsModel(e);
+                      log("AAA");
+                    },
+                    child: ItemTabAllVacationWidget(employeeVacationsModel: e),
+                  ),
                 )
                     .toList(),
               );

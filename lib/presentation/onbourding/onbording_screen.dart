@@ -106,21 +106,21 @@ class _OnboadingScreenState extends State<OnboadingScreen> {
                     ),
 
                     const Spacer(flex: 1),
-                ToggleSwitch(
-                  minWidth: 90.0,
-                  initialLabelIndex: 1,
-                  cornerRadius: 20.0,
-                  activeFgColor: Colors.white,
-                  inactiveBgColor: Colors.grey,
-                  inactiveFgColor: Colors.white,
-                  totalSwitches: 2,
-                  labels: ['English', 'عربى'],
-                  activeBgColors: [[Colors.blue],[Colors.blue]],
-                  onToggle: (index) {
-                   // print('switched to: $index');
-                    changeLanguage();
-                  },),
-                    const Spacer(flex: 1),
+                // ToggleSwitch(
+                //   minWidth: 90.0,
+                //   initialLabelIndex: 1,
+                //   cornerRadius: 20.0,
+                //   activeFgColor: Colors.white,
+                //   inactiveBgColor: Colors.grey,
+                //   inactiveFgColor: Colors.white,
+                //   totalSwitches: 2,
+                //   labels: ['English', 'عربى'],
+                //   activeBgColors: [[Colors.blue],[Colors.blue]],
+                //   onToggle: (index) {
+                //    // print('switched to: $index');
+                //     changeLanguage();
+                //   },),
+                    //const Spacer(flex: 1),
                     AnimatedBtn(
                       btnAnimationController: _btnAnimationController,
                       press: () {

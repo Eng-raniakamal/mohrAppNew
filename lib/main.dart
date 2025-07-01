@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:essmohr/presentation/Alert_Notification/ViewModel/notificationViewModel.dart';
 import 'package:essmohr/presentation/newDesign/core/service/dependency_injection/depend_inject.dart' as di;
+import 'package:essmohr/presentation/newDesign/core/service/dependency_injection/depend_inject.dart';
 import 'package:essmohr/presentation/resources/strings_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -19,6 +20,8 @@ import 'package:essmohr/presentation/Notification.dart';
 import 'package:essmohr/presentation/resources/language_manager.dart';
 //import 'package:workmanager/workmanager.dart';
 import 'package:http/http.dart' as http;
+
+
 
 
 final FlutterLocalNotificationsPlugin  flutterLocalNotificationsPlugin=FlutterLocalNotificationsPlugin();
@@ -127,6 +130,7 @@ Future <List<NotificationModel>?> getApiNotification() async
   try
   {
     String userId = await _appPreferences.getUserToken();
+    Constants.userId=userId;
     var uri = Uri.parse(Constants.getNotificationUrl);
     List<NotificationModel>? a;
 
@@ -203,7 +207,7 @@ Future<int> getUnSeenNotification(List<NotificationModel> notifiList) async {
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await initAppModule();
-  await di.init();
+  await init();
   Notifications.initialize(flutterLocalNotificationsPlugin);
  // await Workmanager().initialize(callbackDispatcher, isInDebugMode: false);
   await EasyLocalization.ensureInitialized();
@@ -215,7 +219,8 @@ Future<void> main() async {
   //await initializeService();
 
   runApp(EasyLocalization
-    (supportedLocales: const [ARABIC_LOCAL,ENGLISH_LOCAL],
+    (supportedLocales: const [ARABIC_LOCAL,],
+    //ENGLISH_LOCAL],
       path: ASSETS_PATH_LOCALISATIONS,
       child: Phoenix(
           child:MyApp()))
