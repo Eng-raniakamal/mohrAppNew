@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:essmohr/application/constants.dart';
 import 'package:essmohr/presentation/newDesign/core/utils/end_point.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
@@ -14,7 +15,7 @@ class DioHelper {
       headers: {
         "Content-Type": "application/json",
         "Accept": "application/json",
-        "userId": userId,
+        "userId": Constants.userId,
         "Accept-Language":'ar' //---------- app language -------------------
       },
     );

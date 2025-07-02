@@ -1,5 +1,6 @@
 import 'package:essmohr/presentation/newDesign/feature/vacation/presentation/control/get_employee_vacations/get_employee_vacations_cubit.dart';
 import 'package:essmohr/presentation/newDesign/feature/vacation/presentation/control/get_vacation_requests/get_vacation_requests_cubit.dart';
+import '../../../../../../application/di.dart';
 import '../../data/model/get_employee_vacations_model/get_employee_vacations_response_model.dart';
 import '../control/approve_cancel_request/approve_cancel_request_cubit.dart';
 import '../control/get_employee_vacations/get_employee_vacations_state.dart';
@@ -100,33 +101,33 @@ class VacationScreen extends StatelessWidget {
 
   functionBlocProvider() {
     return [
-      BlocProvider(create: (context) => sl<VacationCubit>()),
+      BlocProvider(create: (context) => instance<VacationCubit>()),
       BlocProvider(create: (context) => VacationTabCubit()),
       BlocProvider(
         create: (context) => sl<VacationTypeCubit>()..fetchVacationTypes(),
       ),
       BlocProvider(
         create:
-            (context) => sl<DefaultReviewerCubit>()..fetchDefaultReviewers(),
+            (context) => instance<DefaultReviewerCubit>()..fetchDefaultReviewers(),
       ),
-      BlocProvider(create: (context) => sl<PostVacationCubit>()),
-      BlocProvider(create: (context) => sl<CalculateVacationDurationCubit>()),
-      BlocProvider(create: (context) => sl<DateCubit>()),
-      BlocProvider(create: (context) => sl<ValidateVacationCubit>()),
-      BlocProvider(create: (context) => sl<CheckHandledAlertsCubit>()),
+      BlocProvider(create: (context) => instance<PostVacationCubit>()),
+      BlocProvider(create: (context) => instance<CalculateVacationDurationCubit>()),
+      BlocProvider(create: (context) =>instance<DateCubit>()),
+      BlocProvider(create: (context) => instance<ValidateVacationCubit>()),
+      BlocProvider(create: (context) => instance<CheckHandledAlertsCubit>()),
       BlocProvider(
         create:
             (context) {
-              return sl<GetEmployeeVacationsCubit>()..getEmployeeVacations();
+              return instance<GetEmployeeVacationsCubit>()..getEmployeeVacations();
             },
       ),
       BlocProvider(
         create:
-            (context) => sl<GetVacationRequestsCubit>()..getVacationRequests(),
+            (context) => instance<GetVacationRequestsCubit>()..getVacationRequests(),
       ),
       BlocProvider(
         create:
-            (context) => sl<ApproveCancelRequestCubit>(),
+            (context) => instance<ApproveCancelRequestCubit>(),
       ),
 
     ];

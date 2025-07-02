@@ -1,10 +1,11 @@
+import '../../../../../application/di.dart';
 import 'export_file/package_export.dart';
 import 'depend_inject.dart';
 
 void initRepositories() {
-  sl.registerLazySingleton<VacationRepository>(
+  instance.registerLazySingleton<VacationRepository>(
         () => VacationRepositoryImpl(
-      vacationRemoteDataSource: sl(),
-    ),
-  );
+      vacationRemoteDataSource: instance(),
+   ),
+ );
 }

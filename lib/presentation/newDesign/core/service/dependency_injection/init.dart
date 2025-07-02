@@ -7,9 +7,7 @@ import 'init_data_sources.dart';
 import 'init_repositories.dart';
 import 'init_use_cases.dart';
 
-final sl = GetIt.instance;
-
-Future<void> init() async {
+Future<void> initNewModules() async {
   // 🧱 تهيئة الطبقات الأساسية (مثلاً SharedPreferences, Dio, Logger, إلخ)
   initCore();
 

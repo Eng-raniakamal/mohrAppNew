@@ -207,7 +207,7 @@ Future<int> getUnSeenNotification(List<NotificationModel> notifiList) async {
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await initAppModule();
-  await init();
+ // await init();
   Notifications.initialize(flutterLocalNotificationsPlugin);
  // await Workmanager().initialize(callbackDispatcher, isInDebugMode: false);
   await EasyLocalization.ensureInitialized();

@@ -20,29 +20,29 @@ class BodyNoVacationWidget extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              "لا يوجد اي طلبات",
-              style: context.text.displayMedium!.copyWith(
+              "لا يوجد أى طلبات أجازة",
+              style: context.text.displaySmall!.copyWith(
                 fontWeight: FontWeight.w700,
               ),
             ),
             SizedBox(height: 12.h),
-            Text(
-              "يتم اخد اجازة لاسباب صحية او اضطرارية",
-              style: context.text.titleMedium,
-            ),
-            Text("فقط", style: context.text.titleMedium),
-            SizedBox(height: 12.h),
-            SizedBox(
-              width: 150,
-              child: CustomElevatedButtonWidget(
-                data: "طلب اجازة",
-                icon: Icons.add,
-                onPressed: (){
-                  context.read<VacationCubit>().changeTab(1);
-
-                },
-              ),
-            ),
+            // Text(
+            //   "يتم اخد اجازة لاسباب صحية او اضطرارية",
+            //   style: context.text.titleMedium,
+            // ),
+            // Text("فقط", style: context.text.titleMedium),
+            // SizedBox(height: 12.h),
+            // SizedBox(
+            //   width: 150,
+            //   child: CustomElevatedButtonWidget(
+            //     data: "طلب اجازة",
+            //     icon: Icons.add,
+            //     onPressed: (){
+            //       context.read<VacationCubit>().changeTab(1);
+            //
+            //     },
+            //   ),
+            // ),
           ],
         ),
       ),

@@ -49,16 +49,19 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 //import '../presentation/editEmployee/ViewModel/saveEmpBD_viewModel.dart';
 import '../presentation/editEmployee/ViewModel/saveEmpBD_viewModel.dart';
+import '../presentation/newDesign/core/service/dependency_injection/init.dart';
+import '../presentation/newDesign/core/service/dependency_injection/init_api.dart';
+import '../presentation/newDesign/core/service/dependency_injection/init_core.dart';
+import '../presentation/newDesign/core/service/dependency_injection/init_cubits.dart';
+import '../presentation/newDesign/core/service/dependency_injection/init_data_sources.dart';
+import '../presentation/newDesign/core/service/dependency_injection/init_repositories.dart';
+import '../presentation/newDesign/core/service/dependency_injection/init_use_cases.dart';
 import 'app_prefs.dart';
 
 
 final  instance = GetIt.instance;
 
 Future<void> initAppModule() async {
-
-
-
-
 
 
 
@@ -102,6 +105,9 @@ Future<void> initAppModule() async {
   // local data source
   instance.registerLazySingleton<LocalDataSource>(
           () => LocalDataSourceImplementer());
+
+
+  await initNewModules();
 
 }
 
@@ -327,6 +333,7 @@ void initSave2EmpBasicDataModule() {
       initQualificationModule();
       initGradeModule();
       initDegreeModule();
+
 
     }
 

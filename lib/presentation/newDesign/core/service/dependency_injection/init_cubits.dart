@@ -1,46 +1,48 @@
+import '../../../../../application/di.dart';
 import '../../../feature/vacation/presentation/control/get_employee_vacations/get_employee_vacations_cubit.dart';
 import '../../../feature/vacation/presentation/control/get_vacation_requests/get_vacation_requests_cubit.dart';
 import 'export_file/package_export.dart';
 import 'depend_inject.dart';
 
 void initCubits() {
-  sl.registerFactory(() => FilePickerCubit());
-  sl.registerFactory(() => VacationCubit());
-  sl.registerFactory(() => VacationTypeCubit(sl(), sl()));
-  sl.registerFactory(() => DefaultReviewerCubit(sl()));
-  sl.registerFactory(() => PostVacationCubit(sl()));
-  sl.registerFactory(() => CalculateVacationDurationCubit(sl()));
-  sl.registerFactory(() => DateCubit());
-  sl.registerFactory(() => ValidateVacationCubit(sl()));
-  sl.registerFactory(() => CheckHandledAlertsCubit(sl()));
-  //sl.registerFactory(() => VacationCubit());
-  sl.registerFactory<GetEmployeeVacationsCubit>(
-        () {
-          print('✅ GetEmployeeVacationsCubit registered');
-          return GetEmployeeVacationsCubit(getEmployeeVacationsUseCase: sl());
-        },
-  );
+  instance.registerFactory(() => FilePickerCubit());
+  instance.registerFactory(() => VacationCubit());
+  instance.registerFactory(() => VacationTypeCubit(instance(), instance()));
+  instance.registerFactory(() => DefaultReviewerCubit(instance()));
+  instance.registerFactory(() => PostVacationCubit(instance()));
+  instance.registerFactory(() => CalculateVacationDurationCubit(instance()));
+  instance.registerFactory(() => DateCubit());
+  instance.registerFactory(() => ValidateVacationCubit(instance()));
+  instance.registerFactory(() => CheckHandledAlertsCubit(instance()));
+  //instance.registerFactory(() => VacationCubit());
+  instance.registerFactory<GetEmployeeVacationsCubit>(() {
+    return GetEmployeeVacationsCubit(
+      getEmployeeVacationsUseCase: instance(),
+      appPreferences: instance(), // ← أضف هذا السطر
+    );
+  });
+
 
   // تسجيل GetVacationRequestsCubit
-  sl.registerFactory<GetVacationRequestsCubit>(
+  instance.registerFactory<GetVacationRequestsCubit>(
         () => GetVacationRequestsCubit(
-      getVacationRequestsUseCase: sl(), // تأكد أن UseCase مسجل في initUseCases()
+      getVacationRequestsUseCase: instance(), // تأكد أن UseCase مسجل في initUseCases()
     ),
   );
 
-  // sl.registerFactory<GetEmployeeVacationsCubit>(
+  // instance.registerFactory<GetEmployeeVacationsCubit>(
   //       () {
   //     print('✅ GetEmployeeVacationsCubit registered');
-  //     GetEmployeeVacationsCubit(getEmployeeVacationsUseCase: sl());
+  //     GetEmployeeVacationsCubit(getEmployeeVacationsUseCase: instance());
   //   },
   // );
- // sl.registerFactory(() => GetEmployeeVacationsCubit(sl(), getEmployeeVacationsUseCase: null));
-  sl.registerFactory(() => VacationBalanceCubit(sl()));
-  sl.registerFactory(() => SubmitVacationRequestCubit(
-    calculateVacationDurationCubit: sl(),
-    validateCubit: sl(),
-    alertsCubit: sl(),
-    postVacationCubit: sl(),
+ // instance.registerFactory(() => GetEmployeeVacationsCubit(instance(), getEmployeeVacationsUseCase: null));
+  instance.registerFactory(() => VacationBalanceCubit(instance()));
+  instance.registerFactory(() => SubmitVacationRequestCubit(
+    calculateVacationDurationCubit: instance(),
+    validateCubit: instance(),
+    alertsCubit: instance(),
+    postVacationCubit: instance(),
   ));
-  sl.registerFactory(() => ConnectInternetCubit());
+  instance.registerFactory(() => ConnectInternetCubit());
 }

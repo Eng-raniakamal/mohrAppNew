@@ -1,11 +1,12 @@
+import '../../../../../application/di.dart';
 import 'export_file/package_export.dart';
 import 'depend_inject.dart';
 
 
 
 void initDataSources() {
-  sl.registerLazySingleton<VacationRemoteDataSource>(
-        () => VacationRemoteImplDio(apiService: sl<ApiService>()),
+  instance.registerLazySingleton<VacationRemoteDataSource>(
+        () => VacationRemoteImplDio(apiService: instance<ApiService>()),
   );
 
 }

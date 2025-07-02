@@ -10,10 +10,10 @@ class NoVacationWidget extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text("الاجازات", style: context.text.displayMedium),
-        SizedBox(height: 20.h),
-        // VacationYearCurrentWidget(),
-        SizedBox(height: 36.h),
+        // Text("الاجازات", style: context.text.displayMedium),
+        // SizedBox(height: 20.h),
+        // // VacationYearCurrentWidget(),
+        // SizedBox(height: 36.h),
         const BodyNoVacationWidget(),
 
       ],
