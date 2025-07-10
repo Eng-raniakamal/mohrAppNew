@@ -61,6 +61,7 @@ import 'app_prefs.dart';
 
 final  instance = GetIt.instance;
 
+
 Future<void> initAppModule() async {
 
 
@@ -95,6 +96,7 @@ Future<void> initAppModule() async {
   // remote data source
   instance.registerLazySingleton<RemoteDataSource>(
           () => RemoteDataSourceImplementer(instance()));
+
 
 
   // repository

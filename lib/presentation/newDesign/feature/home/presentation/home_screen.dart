@@ -13,29 +13,64 @@ import '../../notification/control/tab_notification_cubit.dart';
 import '../../notification/presentation/screen/notification_screen.dart';
 import '../control/home_cubit.dart';
 
-class HomeScreen extends StatelessWidget {
+// class HomeScreen extends StatelessWidget {
+//   const HomeScreen({super.key});
+//
+//   static final List<Widget> _body = [
+//     userView(),
+//     NotificationScreen()
+//   ];
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return MultiBlocProvider(providers: [
+//       BlocProvider(
+//         create: (context) => HomeCubit(),),
+//
+//     ], child:  SafeArea(
+//      // child: SingleChildScrollView(
+//         child: Padding(
+//             padding: const EdgeInsets.symmetric(
+//                 horizontal: 20.0, vertical: 25).r,
+//             child: BlocBuilder<HomeCubit,int>(builder: (context, state) => _body[state],)
+//         ),
+//      // ),
+//     ),
+//     );
+//   }
+// }
+
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMixin {
   static final List<Widget> _body = [
     userView(),
     NotificationScreen()
   ];
 
   @override
-  Widget build(BuildContext context) {
-    return MultiBlocProvider(providers: [
-      BlocProvider(
-        create: (context) => HomeCubit(),),
+  bool get wantKeepAlive => true;
 
-    ], child:  SafeArea(
-     // child: SingleChildScrollView(
+  @override
+  Widget build(BuildContext context) {
+    super.build(context); // مهم جدًا عشان التفعيل
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (_) => HomeCubit()),
+      ],
+      child: SafeArea(
         child: Padding(
-            padding: const EdgeInsets.symmetric(
-                horizontal: 20.0, vertical: 25).r,
-            child: BlocBuilder<HomeCubit,int>(builder: (context, state) => _body[state],)
+          padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 25).r,
+          child: BlocBuilder<HomeCubit, int>(
+            builder: (context, state) => _body[state],
+          ),
         ),
-     // ),
-    ),
+      ),
     );
   }
 }

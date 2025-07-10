@@ -15,6 +15,7 @@ import 'package:essmohr/presentation/newDesign/feature/vacation/data/model/post_
 import 'package:essmohr/presentation/newDesign/feature/vacation/data/model/vacation_type/vacation_type_model.dart';
 import 'package:essmohr/presentation/newDesign/feature/vacation/data/model/validate_vacation/validate_vacation_request_model.dart';
 import 'package:essmohr/presentation/newDesign/feature/vacation/data/model/validate_vacation/validate_vacation_response_model.dart';
+import '../../../../../../domain/model/model.dart';
 import '../../data/model/get_employee_vacations_model/get_employee_vacations_response_model.dart';
 
 abstract class VacationRepository {
@@ -45,6 +46,8 @@ abstract class VacationRepository {
   });
 
   Future<Either<Failure, List<GetEmployeeVacationsResponseModel>>> getEmployeeVacations();
+
+   Future<Either<Failure, List<VacationTypeBalancs>>> getVacationEntitlements();
 
   Future<Either<Failure, List<GetVacationRequestsResponseModel>>> getVacationRequests();
 

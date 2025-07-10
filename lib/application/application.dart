@@ -1,269 +1,33 @@
 import 'dart:async';
-import 'dart:convert';
+
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
+import 'package:background_fetch/background_fetch.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_app_badger/flutter_app_badger.dart';
-//import 'package:flutter_dynamic_icon/flutter_dynamic_icon.dart';
+
 import 'package:essmohr/application/app_prefs.dart';
-import 'package:essmohr/application/constants.dart';
+
 import 'package:essmohr/application/di.dart';
-import 'package:essmohr/domain/model/model.dart';
+
 import 'package:essmohr/domain/model/user_preferences.dart';
-import 'package:essmohr/main.dart';
-import 'package:essmohr/presentation/Notification.dart';
+
 import 'package:essmohr/presentation/resources/themes.dart';
 import 'package:essmohr/presentation/resources/routes.dart';
 import 'package:essmohr/presentation/splash/splash.dart';
-//import 'package:workmanager/workmanager.dart';
-import 'package:http/http.dart' as http;
+
 import '../presentation/newDesign/core/utils/import_file.dart';
-import '../presentation/resources/strings_manager.dart';
+import '../presentation/resources/background_worker.dart';
+import '../presentation/resources/notification_helper.dart';
+
 //
 
 
 // ignore: must_be_immutable
-class MyApp extends StatefulWidget {
-  // const MyApp({Key? key}) : super(key: key); //default constructor
-
-  //named constructor
-  MyApp._internal();
-  int appState = 0;
-  static final MyApp instance = MyApp._internal(); //single instance
-  factory MyApp() => instance; //factory for the class instance
-
-  @override
-  _MyAppState createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
-  final AppPreferences _appPreferences = instance<AppPreferences>();
-  Timer? timer;
-  List<NotificationModel>? notifications;
-  int? lengthOfList = 0;
-  List<AlertModel>? noOfAlert;
-  int? alertNumber = 0;
-  int?all=0;
-  int different = 0;
-  int differentflag = 0;
-  bool checked = false;
-  int? storedDataLength = 0;
-
-  @override
-  void didChangeDependencies() {
-    _appPreferences.getLocal().then((local) => {context.setLocale(local)});
-    super.didChangeDependencies();
-  }
-
-  @override
-  void initState() {
-    //_bind();
-
-    Notifications.initialize(flutterLocalNotificationsPlugin);
-    super.initState();
-    if (mounted) {
-
-      timer = Timer.periodic(const Duration(minutes: 3),
-              (Timer t) async => await checkNewNotifications());
-    }
-    // Workmanager().registerPeriodicTask("1", AppStrings.new_message_here.tr(),
-    //     existingWorkPolicy: ExistingWorkPolicy.replace,
-    //     frequency: const Duration(minutes: 15), //when should it check the link
-    //     initialDelay: const Duration(
-    //         seconds: 1), //duration before showing the notification
-    //     constraints: Constraints(
-    //         networkType: NetworkType.connected, requiresCharging: false));
-  }
-  @override
-  void dispose() {
-    timer?.cancel();
-    super.dispose();
-  }
-
-  Future<void> checkNewNotifications() async {
-    // notifications = await getApiNotification();
-    // lengthOfList = await getUnSeenNotification(notifications!);
-    all=await getUnSeenNotificationAndAlerts();
-
-    setState(() {
-      Constants.notificationNumber = all!;
-    });
-
-    if (all != null) {
-      storedDataLength = await _appPreferences.getUserNotificationList();
-
-      if (all != storedDataLength) {
-        setState(() {
-          Constants.notificationNumber = all!;
-        });
-        if (Constants.notificationNumber != 0) {
-          setBatchNumber(context, all!);
-          Notifications.showBigTextNotification(
-              title: "Sync",
-              body:  "$all" + " " + AppStrings.new_message_here.tr(),
-              fln: flutterLocalNotificationsPlugin);
-          _appPreferences.setUserNotificationList(all!);
-        }
-      } else {
-        setState(() {
-          Constants.notificationNumber = all!;
-        });
-
-        _appPreferences.setUserNotificationList(all!);
-      }
-    }
-  }
-
-  Future<List<NotificationModel>?> getApiNotification() async {
-    String userId = await _appPreferences.getUserToken();
-    var uri = Uri.parse(Constants.getNotificationUrl);
-    List<dynamic>? a;
-
-    var response = await http.get(uri, headers: <String, String>{
-      'Content-Type': 'application/json; charset=UTF-8',
-      'userId': userId
-    });
-//fromJson(jsonresponse[0]);
-    final responseData = json.decode(response.body);
-    if (responseData != null) {
-      var userNotifications = responseData! ;
-
-      a = userNotifications
-          .map((data) {
-            return NotificationModel.fromJson(data as Map<String, dynamic>);
-          })
-          .toList();
-      var notifications = List<NotificationModel>.from(a as Iterable);
-      return notifications;
-    }
-    return null;
-  }
-
-  Future<List<AlertModel>?> getApiAlerts() async {
-    String userId = await _appPreferences.getUserToken();
-    var uri = Uri.parse(Constants.getAlertUrl);
-    List<AlertModel>? a;
-
-    var response = await http.get(uri, headers: <String, String>{
-      'Content-Type': 'application/json; charset=UTF-8',
-      'userId': userId
-    });
-
-    final responseData = json.decode(response.body);
-    if (responseData != null) {
-      var userNotifications = responseData as List;
-      a = userNotifications
-          .map((data) => AlertModel.fromJson(data))
-          .toList();
-      var Alerts = List<AlertModel>.from(a as Iterable);
-      return Alerts;
-    }
-    return null;
-  }
-
-  Future<int> getUnSeenNotification(List<NotificationModel> notifiList) async {
-    int unSeenMessage = 0;
-
-    for (var i = 0; i < notifiList.length; i++) {
-      if (notifiList[i].seen == false) {
-        unSeenMessage++;
-      }
-    }
-
-    return unSeenMessage;
-  }
-
-  Future<int> getNumberOfAlerts(List<AlertModel> alertList) async {
-    int numberOfAlert = alertList.length ;
-
-    // setState(() {
-    //   Constants.notificationNumber = numberOfAlert;
-    // });
-    // if (Constants.notificationNumber != 0) {
-    //   setBatchNumber(context, numberOfAlert);
-    // }
-
-    return numberOfAlert;
-  }
-
-  Future<int?> getUnSeenNotificationAndAlerts()async
-  {
-    notifications = await getApiNotification();
-    lengthOfList = await getUnSeenNotification(notifications!);
-    noOfAlert= await getApiAlerts();
-    alertNumber=await getNumberOfAlerts(noOfAlert!);
-
-     all=  lengthOfList! + alertNumber!;
-    setState(() {
-      Constants.notificationNumber = all!;
-    });
-    if (Constants.notificationNumber != 0) {
-      setBatchNumber(context, all!);
-    }
-    return all;
-  }
-
-  setBatchNumber(BuildContext context, int num) async  {
-    try {
-      if (num != 0) {
-        //await FlutterDynamicIcon.setApplicationIconBadgeNumber(num);
-        await FlutterAppBadger.updateBadgeCount(num);
-      }
-    } on PlatformException {
-     print('Exception:Platform not supported');
-    }
-    catch (e) {
-      print(e);
-    }
-  }
-
-  @override
-  Widget build(BuildContext? context) {
-    const user = UserPreferences.myUser;
-    //bool darkMode= false;
-
-    return ThemeProvider(
-      initTheme: user.isDarkMode! ? MyThemes.darkTheme : MyThemes.lightTheme,
-      child: Builder(
-          builder: (context) {
-
-            return  ScreenUtilInit(
-                designSize: Size(375, 812), // or your UI's design size
-                builder: (context, child)
-                {
-                  return  MaterialApp(
-                localizationsDelegates: context.localizationDelegates,
-                debugShowCheckedModeBanner: false,
-                supportedLocales: context.supportedLocales,
-                locale: context.locale,
-                onGenerateRoute: RouteGenerator.getRoute,
-                home:  SplashView(),
-                title: "Mohr",
-
-                );
-                }
-            );}
-          ),
-
-    );
-  }
-}
-class LocaleModel extends ChangeNotifier {
-  Locale? _locale;
-  Locale? get locale => _locale;
-
-  void set(Locale locale) {
-    _locale = locale;
-    notifyListeners();
-  }
-}
-
-//import 'package:flutter_background_service/flutter_background_service.dart';
-
-
 // class MyApp extends StatefulWidget {
-//   // named constructor
+//   // const MyApp({Key? key}) : super(key: key); //default constructor
+//
+//   //named constructor
 //   MyApp._internal();
 //   int appState = 0;
 //   static final MyApp instance = MyApp._internal(); //single instance
@@ -280,7 +44,7 @@ class LocaleModel extends ChangeNotifier {
 //   int? lengthOfList = 0;
 //   List<AlertModel>? noOfAlert;
 //   int? alertNumber = 0;
-//   int? all = 0;
+//   int?all=0;
 //   int different = 0;
 //   int differentflag = 0;
 //   bool checked = false;
@@ -294,74 +58,32 @@ class LocaleModel extends ChangeNotifier {
 //
 //   @override
 //   void initState() {
-//     super.initState();
+//     //_bind();
 //
-//     // Initialize the background service
-//     _initializeBackgroundService();
-//
-//     // Initialize Flutter Local Notifications
 //     Notifications.initialize(flutterLocalNotificationsPlugin);
-//
-//     // Start a timer to periodically check for new notifications
+//     super.initState();
 //     if (mounted) {
+//
 //       timer = Timer.periodic(const Duration(minutes: 3),
 //               (Timer t) async => await checkNewNotifications());
 //     }
+//     Workmanager().registerPeriodicTask("1", AppStrings.new_message_here.tr(),
+//         existingWorkPolicy: ExistingWorkPolicy.replace,
+//         frequency: const Duration(minutes: 15), //when should it check the link
+//         initialDelay: const Duration(
+//             seconds: 1), //duration before showing the notification
+//         constraints: Constraints(
+//             networkType: NetworkType.connected, requiresCharging: false));
 //   }
-//
 //   @override
 //   void dispose() {
 //     timer?.cancel();
 //     super.dispose();
 //   }
 //
-//
-//   void _initializeBackgroundService() {
-//     // Configure the background service
-//     FlutterBackgroundService().configure(
-//       androidConfiguration: AndroidConfiguration(
-//         // When service starts
-//         onStart: _onBackgroundServiceStarted, // Pass function that matches the signature
-//         initialNotificationTitle: 'Background Service',
-//         initialNotificationContent: 'Service is running in the background',
-//        // notificationIcon: 'resource_icon', // Replace with your own notification icon
-//         isForegroundMode: true,  // This is the important parameter to make the service run in the foreground
-//       ),
-//       iosConfiguration: IosConfiguration(
-//         onForeground: _onBackgroundServiceStarted,  // Running when the app is in the foreground
-//         onBackground: _onBackgroundServiceStarted,
-//
-//         // Running when the app is in the background
-//         autoStart: true,  // Ensure iOS also runs the service in the foreground
-//       ),
-//     );
-//
-//     // Start the service
-//     FlutterBackgroundService().startService();
-//   }
-//
-// // This function now returns Future<bool> (as required)
-//   Future<bool> _onBackgroundServiceStarted(ServiceInstance service) async {
-//     // This is where you define what the service will do in the background
-//     service.onDataReceived.listen((event) {
-//       // Handle data or actions when received in background
-//       print("Background service is running");
-//
-//       // Add your periodic tasks here, e.g., checking notifications
-//       Timer.periodic(Duration(minutes: 15), (timer) async {
-//         print("Checking notifications...");
-//         await checkNewNotifications(); // Call your function to check for notifications
-//       });
-//     });
-//
-//     // Return true to indicate that the service has started successfully
-//     return true;
-//   }
-//
-//
-//
 //   Future<void> checkNewNotifications() async {
-//     all = await getUnSeenNotificationAndAlerts();
+//
+//     all=await getUnSeenNotificationAndAlerts();
 //
 //     setState(() {
 //       Constants.notificationNumber = all!;
@@ -377,8 +99,8 @@ class LocaleModel extends ChangeNotifier {
 //         if (Constants.notificationNumber != 0) {
 //           setBatchNumber(context, all!);
 //           Notifications.showBigTextNotification(
-//               title: "MOHR",
-//               body: "$all" + " " + AppStrings.new_message_here.tr(),
+//               title: "Sync",
+//               body:  "$all" + " " + AppStrings.new_message_here.tr(),
 //               fln: flutterLocalNotificationsPlugin);
 //           _appPreferences.setUserNotificationList(all!);
 //         }
@@ -392,22 +114,6 @@ class LocaleModel extends ChangeNotifier {
 //     }
 //   }
 //
-//   Future<int?> getUnSeenNotificationAndAlerts() async {
-//     notifications = await getApiNotification();
-//     lengthOfList = await getUnSeenNotification(notifications!);
-//     noOfAlert = await getApiAlerts();
-//     alertNumber = await getNumberOfAlerts(noOfAlert!);
-//
-//     all = lengthOfList! + alertNumber!;
-//     setState(() {
-//       Constants.notificationNumber = all!;
-//     });
-//     if (Constants.notificationNumber != 0) {
-//       setBatchNumber(context, all!);
-//     }
-//     return all;
-//   }
-//
 //   Future<List<NotificationModel>?> getApiNotification() async {
 //     String userId = await _appPreferences.getUserToken();
 //     var uri = Uri.parse(Constants.getNotificationUrl);
@@ -417,15 +123,15 @@ class LocaleModel extends ChangeNotifier {
 //       'Content-Type': 'application/json; charset=UTF-8',
 //       'userId': userId
 //     });
-//
+// //fromJson(jsonresponse[0]);
 //     final responseData = json.decode(response.body);
 //     if (responseData != null) {
-//       var userNotifications = responseData!;
+//       var userNotifications = responseData! ;
 //
 //       a = userNotifications
 //           .map((data) {
-//         return NotificationModel.fromJson(data as Map<String, dynamic>);
-//       })
+//             return NotificationModel.fromJson(data as Map<String, dynamic>);
+//           })
 //           .toList();
 //       var notifications = List<NotificationModel>.from(a as Iterable);
 //       return notifications;
@@ -468,19 +174,45 @@ class LocaleModel extends ChangeNotifier {
 //   }
 //
 //   Future<int> getNumberOfAlerts(List<AlertModel> alertList) async {
-//     int numberOfAlert = alertList.length;
+//     int numberOfAlert = alertList.length ;
+//
+//     // setState(() {
+//     //   Constants.notificationNumber = numberOfAlert;
+//     // });
+//     // if (Constants.notificationNumber != 0) {
+//     //   setBatchNumber(context, numberOfAlert);
+//     // }
+//
 //     return numberOfAlert;
 //   }
 //
-//   setBatchNumber(BuildContext context, int num) async {
+//   Future<int?> getUnSeenNotificationAndAlerts()async
+//   {
+//     notifications = await getApiNotification();
+//     lengthOfList = await getUnSeenNotification(notifications!);
+//     noOfAlert= await getApiAlerts();
+//     alertNumber=await getNumberOfAlerts(noOfAlert!);
+//
+//      all=  lengthOfList! + alertNumber!;
+//     setState(() {
+//       Constants.notificationNumber = all!;
+//     });
+//     if (Constants.notificationNumber != 0) {
+//       setBatchNumber(context, all!);
+//     }
+//     return all;
+//   }
+//
+//   setBatchNumber(BuildContext context, int num) async  {
 //     try {
 //       if (num != 0) {
 //         //await FlutterDynamicIcon.setApplicationIconBadgeNumber(num);
 //         await FlutterAppBadger.updateBadgeCount(num);
 //       }
 //     } on PlatformException {
-//       print('Exception: Platform not supported');
-//     } catch (e) {
+//      print('Exception:Platform not supported');
+//     }
+//     catch (e) {
 //       print(e);
 //     }
 //   }
@@ -488,29 +220,445 @@ class LocaleModel extends ChangeNotifier {
 //   @override
 //   Widget build(BuildContext? context) {
 //     const user = UserPreferences.myUser;
+//     //bool darkMode= false;
 //
 //     return ThemeProvider(
 //       initTheme: user.isDarkMode! ? MyThemes.darkTheme : MyThemes.lightTheme,
 //       child: Builder(
 //           builder: (context) {
-//             return MaterialApp(
-//               localizationsDelegates: context.localizationDelegates,
-//               debugShowCheckedModeBanner: false,
-//               supportedLocales: context.supportedLocales,
-//               locale: context.locale,
-//               onGenerateRoute: RouteGenerator.getRoute,
-//               home: SplashView(),
-//               title: "Mohr",
-//             );
-//           }),
+//
+//             return  ScreenUtilInit(
+//                 designSize: Size(375, 812), // or your UI's design size
+//                 builder: (context, child)
+//                 {
+//                   return  MaterialApp(
+//                 localizationsDelegates: context.localizationDelegates,
+//                 debugShowCheckedModeBanner: false,
+//                 supportedLocales: context.supportedLocales,
+//                 locale: context.locale,
+//                 onGenerateRoute: RouteGenerator.getRoute,
+//                 home:  SplashView(),
+//                 title: "Mohr",
+//
+//                 );
+//                 }
+//             );}
+//           ),
+//
 //     );
 //   }
 // }
+// class LocaleModel extends ChangeNotifier {
+//   Locale? _locale;
+//   Locale? get locale => _locale;
+//
+//   void set(Locale locale) {
+//     _locale = locale;
+//     notifyListeners();
+//   }
+// }
+//
+// //import 'package:flutter_background_service/flutter_background_service.dart';
 //
 //
+// // class MyApp extends StatefulWidget {
+// //   // named constructor
+// //   MyApp._internal();
+// //   int appState = 0;
+// //   static final MyApp instance = MyApp._internal(); //single instance
+// //   factory MyApp() => instance; //factory for the class instance
+// //
+// //   @override
+// //   _MyAppState createState() => _MyAppState();
+// // }
+// //
+// // class _MyAppState extends State<MyApp> {
+// //   final AppPreferences _appPreferences = instance<AppPreferences>();
+// //   Timer? timer;
+// //   List<NotificationModel>? notifications;
+// //   int? lengthOfList = 0;
+// //   List<AlertModel>? noOfAlert;
+// //   int? alertNumber = 0;
+// //   int? all = 0;
+// //   int different = 0;
+// //   int differentflag = 0;
+// //   bool checked = false;
+// //   int? storedDataLength = 0;
+// //
+// //   @override
+// //   void didChangeDependencies() {
+// //     _appPreferences.getLocal().then((local) => {context.setLocale(local)});
+// //     super.didChangeDependencies();
+// //   }
+// //
+// //   @override
+// //   void initState() {
+// //     super.initState();
+// //
+// //     // Initialize the background service
+// //     _initializeBackgroundService();
+// //
+// //     // Initialize Flutter Local Notifications
+// //     Notifications.initialize(flutterLocalNotificationsPlugin);
+// //
+// //     // Start a timer to periodically check for new notifications
+// //     if (mounted) {
+// //       timer = Timer.periodic(const Duration(minutes: 3),
+// //               (Timer t) async => await checkNewNotifications());
+// //     }
+// //   }
+// //
+// //   @override
+// //   void dispose() {
+// //     timer?.cancel();
+// //     super.dispose();
+// //   }
+// //
+// //
+// //   void _initializeBackgroundService() {
+// //     // Configure the background service
+// //     FlutterBackgroundService().configure(
+// //       androidConfiguration: AndroidConfiguration(
+// //         // When service starts
+// //         onStart: _onBackgroundServiceStarted, // Pass function that matches the signature
+// //         initialNotificationTitle: 'Background Service',
+// //         initialNotificationContent: 'Service is running in the background',
+// //        // notificationIcon: 'resource_icon', // Replace with your own notification icon
+// //         isForegroundMode: true,  // This is the important parameter to make the service run in the foreground
+// //       ),
+// //       iosConfiguration: IosConfiguration(
+// //         onForeground: _onBackgroundServiceStarted,  // Running when the app is in the foreground
+// //         onBackground: _onBackgroundServiceStarted,
+// //
+// //         // Running when the app is in the background
+// //         autoStart: true,  // Ensure iOS also runs the service in the foreground
+// //       ),
+// //     );
+// //
+// //     // Start the service
+// //     FlutterBackgroundService().startService();
+// //   }
+// //
+// // // This function now returns Future<bool> (as required)
+// //   Future<bool> _onBackgroundServiceStarted(ServiceInstance service) async {
+// //     // This is where you define what the service will do in the background
+// //     service.onDataReceived.listen((event) {
+// //       // Handle data or actions when received in background
+// //       print("Background service is running");
+// //
+// //       // Add your periodic tasks here, e.g., checking notifications
+// //       Timer.periodic(Duration(minutes: 15), (timer) async {
+// //         print("Checking notifications...");
+// //         await checkNewNotifications(); // Call your function to check for notifications
+// //       });
+// //     });
+// //
+// //     // Return true to indicate that the service has started successfully
+// //     return true;
+// //   }
+// //
+// //
+// //
+// //   Future<void> checkNewNotifications() async {
+// //     all = await getUnSeenNotificationAndAlerts();
+// //
+// //     setState(() {
+// //       Constants.notificationNumber = all!;
+// //     });
+// //
+// //     if (all != null) {
+// //       storedDataLength = await _appPreferences.getUserNotificationList();
+// //
+// //       if (all != storedDataLength) {
+// //         setState(() {
+// //           Constants.notificationNumber = all!;
+// //         });
+// //         if (Constants.notificationNumber != 0) {
+// //           setBatchNumber(context, all!);
+// //           Notifications.showBigTextNotification(
+// //               title: "MOHR",
+// //               body: "$all" + " " + AppStrings.new_message_here.tr(),
+// //               fln: flutterLocalNotificationsPlugin);
+// //           _appPreferences.setUserNotificationList(all!);
+// //         }
+// //       } else {
+// //         setState(() {
+// //           Constants.notificationNumber = all!;
+// //         });
+// //
+// //         _appPreferences.setUserNotificationList(all!);
+// //       }
+// //     }
+// //   }
+// //
+// //   Future<int?> getUnSeenNotificationAndAlerts() async {
+// //     notifications = await getApiNotification();
+// //     lengthOfList = await getUnSeenNotification(notifications!);
+// //     noOfAlert = await getApiAlerts();
+// //     alertNumber = await getNumberOfAlerts(noOfAlert!);
+// //
+// //     all = lengthOfList! + alertNumber!;
+// //     setState(() {
+// //       Constants.notificationNumber = all!;
+// //     });
+// //     if (Constants.notificationNumber != 0) {
+// //       setBatchNumber(context, all!);
+// //     }
+// //     return all;
+// //   }
+// //
+// //   Future<List<NotificationModel>?> getApiNotification() async {
+// //     String userId = await _appPreferences.getUserToken();
+// //     var uri = Uri.parse(Constants.getNotificationUrl);
+// //     List<dynamic>? a;
+// //
+// //     var response = await http.get(uri, headers: <String, String>{
+// //       'Content-Type': 'application/json; charset=UTF-8',
+// //       'userId': userId
+// //     });
+// //
+// //     final responseData = json.decode(response.body);
+// //     if (responseData != null) {
+// //       var userNotifications = responseData!;
+// //
+// //       a = userNotifications
+// //           .map((data) {
+// //         return NotificationModel.fromJson(data as Map<String, dynamic>);
+// //       })
+// //           .toList();
+// //       var notifications = List<NotificationModel>.from(a as Iterable);
+// //       return notifications;
+// //     }
+// //     return null;
+// //   }
+// //
+// //   Future<List<AlertModel>?> getApiAlerts() async {
+// //     String userId = await _appPreferences.getUserToken();
+// //     var uri = Uri.parse(Constants.getAlertUrl);
+// //     List<AlertModel>? a;
+// //
+// //     var response = await http.get(uri, headers: <String, String>{
+// //       'Content-Type': 'application/json; charset=UTF-8',
+// //       'userId': userId
+// //     });
+// //
+// //     final responseData = json.decode(response.body);
+// //     if (responseData != null) {
+// //       var userNotifications = responseData as List;
+// //       a = userNotifications
+// //           .map((data) => AlertModel.fromJson(data))
+// //           .toList();
+// //       var Alerts = List<AlertModel>.from(a as Iterable);
+// //       return Alerts;
+// //     }
+// //     return null;
+// //   }
+// //
+// //   Future<int> getUnSeenNotification(List<NotificationModel> notifiList) async {
+// //     int unSeenMessage = 0;
+// //
+// //     for (var i = 0; i < notifiList.length; i++) {
+// //       if (notifiList[i].seen == false) {
+// //         unSeenMessage++;
+// //       }
+// //     }
+// //
+// //     return unSeenMessage;
+// //   }
+// //
+// //   Future<int> getNumberOfAlerts(List<AlertModel> alertList) async {
+// //     int numberOfAlert = alertList.length;
+// //     return numberOfAlert;
+// //   }
+// //
+// //   setBatchNumber(BuildContext context, int num) async {
+// //     try {
+// //       if (num != 0) {
+// //         //await FlutterDynamicIcon.setApplicationIconBadgeNumber(num);
+// //         await FlutterAppBadger.updateBadgeCount(num);
+// //       }
+// //     } on PlatformException {
+// //       print('Exception: Platform not supported');
+// //     } catch (e) {
+// //       print(e);
+// //     }
+// //   }
+// //
+// //   @override
+// //   Widget build(BuildContext? context) {
+// //     const user = UserPreferences.myUser;
+// //
+// //     return ThemeProvider(
+// //       initTheme: user.isDarkMode! ? MyThemes.darkTheme : MyThemes.lightTheme,
+// //       child: Builder(
+// //           builder: (context) {
+// //             return MaterialApp(
+// //               localizationsDelegates: context.localizationDelegates,
+// //               debugShowCheckedModeBanner: false,
+// //               supportedLocales: context.supportedLocales,
+// //               locale: context.locale,
+// //               onGenerateRoute: RouteGenerator.getRoute,
+// //               home: SplashView(),
+// //               title: "Mohr",
+// //             );
+// //           }),
+// //     );
+// //   }
+// // }
+// //
+// //
+// //
+// // extension on ServiceInstance {
+// //   get onDataReceived => null;
+// // }
+// //
+// // class LocaleModel extends ChangeNotifier {
+// //   Locale? _locale;
+// //   Locale? get locale => _locale;
+// //
+// //   void set(Locale locale) {
+// //     _locale = locale;
+// //     notifyListeners();
+// //   }
+// // }
+
+
+
+// class MyApp extends StatefulWidget {
+//   MyApp._internal();
+//   int appState = 0;
+//   static final MyApp instance = MyApp._internal();
+//   factory MyApp() => instance;
 //
-// extension on ServiceInstance {
-//   get onDataReceived => null;
+//
+//   @override
+//   _MyAppState createState() => _MyAppState();
+//
+//   /// Static background callback for alarm manager
+//   static Future<void> backgroundCheck() async {
+//     try {
+//       // ✅ تأكد من تهيئة GetIt داخل isolate
+//       if (!GetIt.I.isRegistered<AppPreferences>()) {
+//         final sharedPrefs = await SharedPreferences.getInstance();
+//         GetIt.I.registerLazySingleton(() => sharedPrefs);
+//         GetIt.I.registerLazySingleton(() => AppPreferences(GetIt.I()));
+//       }
+//
+//       final AppPreferences _appPreferences = GetIt.I<AppPreferences>();
+//       final userId = await _appPreferences.getUserToken();
+//
+//       final uriNoti = Uri.parse(Constants.getNotificationUrl);
+//       final uriAlert = Uri.parse(Constants.getAlertUrl);
+//
+//       final notiResponse = await http.get(uriNoti, headers: {
+//         'Content-Type': 'application/json; charset=UTF-8',
+//         'userId': userId,
+//       });
+//
+//       final alertResponse = await http.get(uriAlert, headers: {
+//         'Content-Type': 'application/json; charset=UTF-8',
+//         'userId': userId,
+//       });
+//
+//       final notiData = json.decode(notiResponse.body);
+//       final alertData = json.decode(alertResponse.body);
+//
+//       final notifications = (notiData as List)
+//           .map((e) => NotificationModel.fromJson(e))
+//           .toList();
+//       final alerts = (alertData as List)
+//           .map((e) => AlertModel.fromJson(e))
+//           .toList();
+//
+//       final unseen = notifications.where((n) => n.seen == false).length;
+//       final total = unseen + alerts.length;
+//
+//       final storedCount = await _appPreferences.getUserNotificationList();
+//
+//       if (total != storedCount) {
+//         await _appPreferences.setUserNotificationList(total);
+//         if (total > 0) {
+//
+//           //await flp.show(v, "Sync ESS", '$v' + " " + AppStrings.new_message_here.tr(), platform);
+//           await Notifications.showBigTextNotification(
+//             title: "Sync",
+//             body: "$total ${AppStrings.new_message_here.tr()}",
+//             fln: flutterLocalNotificationsPlugin,
+//           );
+//
+//           await FlutterAppBadger.updateBadgeCount(total);
+//         }
+//       }
+//     } catch (e) {
+//       print("Error during background check: $e");
+//     }
+//   }
+// }
+// class _MyAppState extends State<MyApp> {
+//   final AppPreferences _appPreferences = instance<AppPreferences>();
+//   Timer? timer;
+//
+//   @override
+//   void didChangeDependencies() {
+//     _appPreferences.getLocal().then((locale) => context.setLocale(locale));
+//     super.didChangeDependencies();
+//   }
+//
+//   @override
+//   void initState() {
+//     super.initState();
+//
+//     Notifications.initialize(flutterLocalNotificationsPlugin);
+//
+//     // Optional: trigger every 3 minutes in foreground
+//     timer = Timer.periodic(const Duration(minutes: 3), (Timer t) async {
+//       await MyApp.backgroundCheck();
+//     });
+//
+//     // Register background alarm every 15 minutes
+//     AndroidAlarmManager.periodic(
+//       const Duration(minutes: 15),
+//       // Unique ID for alarm
+//       0,
+//       MyApp.backgroundCheck,
+//       wakeup: true,
+//       exact: true,
+//       rescheduleOnReboot: true,
+//     );
+//   }
+//
+//   @override
+//   void dispose() {
+//     timer?.cancel();
+//     super.dispose();
+//   }
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     const user = UserPreferences.myUser;
+//
+//     return ThemeProvider(
+//       initTheme: user.isDarkMode! ? MyThemes.darkTheme : MyThemes.lightTheme,
+//       child: Builder(
+//         builder: (context) {
+//           return ScreenUtilInit(
+//             designSize: const Size(375, 812),
+//             builder: (_, __) {
+//               return MaterialApp(
+//                 debugShowCheckedModeBanner: false,
+//                 title: "sync",
+//                 locale: context.locale,
+//                 localizationsDelegates: context.localizationDelegates,
+//                 supportedLocales: context.supportedLocales,
+//                 onGenerateRoute: RouteGenerator.getRoute,
+//                 home: const SplashView(),
+//               );
+//             },
+//           );
+//         },
+//       ),
+//     );
+//   }
 // }
 //
 // class LocaleModel extends ChangeNotifier {
@@ -523,3 +671,97 @@ class LocaleModel extends ChangeNotifier {
 //   }
 // }
 
+class MyApp extends StatefulWidget {
+  MyApp._internal();
+  int appState = 0;
+  static final MyApp instance = MyApp._internal();
+  factory MyApp() => instance;
+
+  static Future<void> backgroundCheck() async {
+    await BackgroundWorker.backgroundCheck();
+  }
+
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  final AppPreferences _appPreferences = instance<AppPreferences>();
+  Timer? timer;
+
+  @override
+  void didChangeDependencies() {
+    _appPreferences.getLocal().then((locale) => context.setLocale(locale));
+    super.didChangeDependencies();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    NotificationsHelper.initialize(flutterLocalNotificationsPlugin);
+
+    // التحقق كل 3 دقائق في الواجهة الأمامية
+    timer = Timer.periodic(const Duration(minutes: 3), (_) async {
+      await MyApp.backgroundCheck();
+    });
+
+    _initBackgroundFetch();
+  }
+
+  Future<void> _initBackgroundFetch() async {
+    await BackgroundFetch.configure(
+      BackgroundFetchConfig(
+        minimumFetchInterval: 15,
+        stopOnTerminate: false,
+        enableHeadless: true,
+        requiresBatteryNotLow: false,
+        requiresCharging: false,
+        requiresStorageNotLow: false,
+        requiredNetworkType: NetworkType.ANY,
+      ),
+          (taskId) async {
+        debugPrint("[BackgroundFetch] Event: $taskId");
+        await MyApp.backgroundCheck();
+        BackgroundFetch.finish(taskId);
+      },
+          (taskId) async {
+        debugPrint("[BackgroundFetch] TIMEOUT: $taskId");
+        BackgroundFetch.finish(taskId);
+      },
+    );
+  }
+
+  @override
+  void dispose() {
+    timer?.cancel();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    const user = UserPreferences.myUser;
+
+    return ThemeProvider(
+      initTheme: user.isDarkMode! ? MyThemes.darkTheme : MyThemes.lightTheme,
+      child: Builder(
+        builder: (context) {
+          return ScreenUtilInit(
+            designSize: const Size(375, 812),
+            builder: (_, __) {
+              return MaterialApp(
+                debugShowCheckedModeBanner: false,
+                title: "sync",
+                locale: context.locale,
+                localizationsDelegates: context.localizationDelegates,
+                supportedLocales: context.supportedLocales,
+                onGenerateRoute: RouteGenerator.getRoute,
+                home: const SplashView(),
+              );
+            },
+          );
+        },
+      ),
+    );
+  }
+}

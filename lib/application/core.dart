@@ -16,6 +16,8 @@ import 'package:essmohr/presentation/Notification.dart';
 //import 'package:flutter_dynamic_icon/flutter_dynamic_icon.dart';
 import 'package:path/path.dart';
 
+import '../presentation/resources/notification_helper.dart';
+
 
 
 AppPreferences _appPreferences = instance<AppPreferences>();
@@ -50,8 +52,8 @@ NotificationData _notificationData = NotificationData();
           if (lengthOfList! > 0) {
              //FlutterAppBadger.updateBadgeCount(lengthOfList);
             setBatchNumber(context as BuildContext, Constants.notificationNumber);
-            Notifications.showBigTextNotification(
-                title: "MOHR", body: "$lengthOfList New notification here",
+            NotificationsHelper.showBigTextNotification(
+                title: "Sync", body: "$lengthOfList New notification here",
                 fln: flutterLocalNotificationsPlugin);
 
             //  _appPreferences.setUserNotificationList(lengthOfList);

@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:essmohr/domain/model/model.dart';
 import 'package:essmohr/presentation/newDesign/core/service/api_service/api_service.dart';
 import 'package:essmohr/presentation/newDesign/core/utils/end_point.dart';
 import 'package:essmohr/presentation/newDesign/feature/vacation/data/data_source/remote/vacation_remote_data_source.dart';
@@ -16,7 +19,12 @@ import 'package:essmohr/presentation/newDesign/feature/vacation/data/model/post_
 import 'package:essmohr/presentation/newDesign/feature/vacation/data/model/vacation_type/vacation_type_model.dart';
 import 'package:essmohr/presentation/newDesign/feature/vacation/data/model/validate_vacation/validate_vacation_request_model.dart';
 import 'package:essmohr/presentation/newDesign/feature/vacation/data/model/validate_vacation/validate_vacation_response_model.dart';
+import '../../../../../../../application/app_prefs.dart';
+import '../../../../../../../application/constants.dart';
+import '../../../../../../../application/di.dart';
 import '../../model/get_employee_vacations_model/get_employee_vacations_response_model.dart';
+import 'package:http/http.dart' as http;
+
 
 class VacationRemoteImplDio implements VacationRemoteDataSource {
   final ApiService apiService;
@@ -164,4 +172,32 @@ class VacationRemoteImplDio implements VacationRemoteDataSource {
 
   }
 
+  @override
+  Future<List<VacationTypeBalancs>> getVacationEntitlements() async {
+
+      final AppPreferences _appPreferences = instance<AppPreferences>();
+      String userId = await _appPreferences.getUserToken();
+
+      final response = await http.get(
+        Uri.parse(Constants.getVacationTypesBalances),
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8',
+          'userId': userId,
+        },
+      );
+
+      final responseData = json.decode(response.body);
+      if (responseData != null) {
+        final vacationTypesBalances = responseData as List;
+        final List<VacationTypeBalancs> b = vacationTypesBalances
+            .map((jsonData) => VacationTypeBalancs.fromJson(jsonData))
+            .toList();
+        return b;
+      }
+
+      // لو لم يكن هناك بيانات رجع قائمة فارغة
+      return [];
+    }
 }
+
+

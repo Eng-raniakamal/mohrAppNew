@@ -423,7 +423,7 @@ class _PageOneOfInfoDataWidgetState extends State<PageOneOfInfoDataWidget> {
               child: Column(crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(AppStrings.BirthData.tr(), textAlign: TextAlign.start,),
-                  StreamBuilder<BasicDataModel?>(
+                  StreamBuilder<BasicDataModel>(
                     stream: displayViewModel.outputEmpBasicData,
                     builder: (context, snapshot) {
                       String? dateString = snapshot.data?.employee

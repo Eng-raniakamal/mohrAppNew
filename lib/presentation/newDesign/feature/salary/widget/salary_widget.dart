@@ -16,48 +16,6 @@ class SalaryWidget extends StatelessWidget {
 
   final SalaryItems? salaryModel;
 
-  // String? getMonthName(String? date) {
-  //   String? month;
-  //   // String? partOfDate= getString(date!);
-  //   switch (date) {
-  //     case '1 ':
-  //       return month = "January";
-  //
-  //     case '2 ':
-  //       return month = "February";
-  //
-  //     case '3 ':
-  //       return month = "March";
-  //
-  //     case '4 ':
-  //       return month = "April";
-  //
-  //     case '5 ':
-  //       return month = "May";
-  //
-  //     case '6 ':
-  //       return month = "June";
-  //
-  //     case '7 ':
-  //       return month = "July";
-  //
-  //     case '8 ':
-  //       return month = "August";
-  //
-  //     case '9 ':
-  //       return month = "September";
-  //
-  //     case '10 ':
-  //       return month = "October";
-  //
-  //     case '11 ':
-  //       return month = "November";
-  //
-  //     case '12 ':
-  //       return month = "December";
-  //   }
-  //   return month;
-  // }
 
   String getMonthName(BuildContext context, String? date) {
     // نحذف أي فراغات حول الرقم

@@ -85,7 +85,7 @@ abstract class AppServiceClient{
   @GET(Constants.AttendanceUrl)
   Future<AttendanceResponse> getAttendance
       (@Field("UserId") String userId);
-  // 'https://api.hr-sync.com/api/Attendance?fromDate='+Constants.attendanceFrom.toString()+
+  // 'https://mohrapi.azurewebsites.net/api/Attendance?fromDate='+Constants.attendanceFrom.toString()+
   // '&toDate='+Constants.attendanceTo.toString(),
 
   @POST(Constants.SaveEmployeeBasicDataUrl)

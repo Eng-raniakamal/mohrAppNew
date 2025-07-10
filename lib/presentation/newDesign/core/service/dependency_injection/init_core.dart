@@ -21,7 +21,7 @@ void initCore() {
 
   //instance.registerLazySingleton<String>(() => "5428d833-0d7d-43d1-84fc-1ace00723492");
   // instance.registerLazySingleton<String>(() => userId!);
-  instance.registerLazySingleton<String>(() => Constants.userId);
+  instance.registerLazySingleton<String>(() => userId!);
 
   instance.registerLazySingleton<DioHelper>(
         () => DioHelper(userId: instance<String>(), dio: instance<Dio>()),

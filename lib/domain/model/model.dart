@@ -8,36 +8,54 @@ class DeviceInfo {
   DeviceInfo(this.name, this.identifier, this.version);
 }
 
-class UserDataModel
-{
-   String UserId;
-   String UserName;
-   String Device;
-   String TenantName;
-   int EmployeeId;
-   String EmployeeCode;
-   String FullName;
-   String ArabicName;
-   String EnglishName;
-   String CompanyLogo;
-   String CompanyName;
-   String FacePersonGroupId;
-   String FacePersonId;
-   String RecognitionModel;
-   dynamic masterImage;
-   int ImageVerificationMode;
-   int LocationVerificationMode;
-   bool SupportGroupAttendance;
-   UserDataModel(this.UserId, this.UserName, this.Device, this.EmployeeId,this.TenantName,
-   this.EmployeeCode, this.FullName,
-   this.ArabicName, this.EnglishName, this.CompanyLogo, this.CompanyName,
-   this.FacePersonGroupId, this.FacePersonId,
-   this.RecognitionModel,
-   this.masterImage,
-   this.ImageVerificationMode,
-   this.LocationVerificationMode,
-   this.SupportGroupAttendance)  ;
+
+
+
+class UserDataModel{
+  String UserId;
+  String UserName;
+  String Device;
+  String TenantName;
+  int EmployeeId;
+  String EmployeeCode;
+  String FullName;
+  String ArabicName;
+  String EnglishName;
+  String CompanyLogo;
+  String CompanyName;
+  String FacePersonGroupId;
+  String FacePersonId;
+  String RecognitionModel;
+  dynamic masterImage;
+  int ImageVerificationMode;
+  int LocationVerificationMode;
+  bool SupportGroupAttendance;
+
+  UserDataModel(
+      this.UserId,
+      this.UserName,
+      this.Device,
+      this.EmployeeId,
+      this.TenantName,
+      this.EmployeeCode,
+      this.FullName,
+      this.ArabicName,
+      this.EnglishName,
+      this.CompanyLogo,
+      this.CompanyName,
+      this.FacePersonGroupId,
+      this.FacePersonId,
+      this.RecognitionModel,
+      this.masterImage,
+      this.ImageVerificationMode,
+      this.LocationVerificationMode,
+      this.SupportGroupAttendance,
+      );
+
 }
+
+
+
 class UserImageModel
 {
   String userId;
@@ -164,6 +182,7 @@ class BasicDataModel{
   BasicDataModel(this.employee,this.allowEdit,this.country,this.selectedcountry
       ,this.governorate,this.selectedgovernorate,this.district,this.selecteddistrict,
       this.address);
+
 }
 //__________Skills--------------------------------
 
@@ -477,14 +496,7 @@ class EmployeeReviewers {
   final int? order;
   final bool? singleApprovalEnabled;
   final bool? isCurrent;
-  // "Id": 19775,
-  // "EmployeeId": 19775,
-  // "Name": "menna khaled fathy",
-  // "Code": "0000",
-  // "PicPath": "/Content/Images/employeeIcon.png",
-  // "Order": 1,
-  // "SingleApprovalEnabled": false,
-  //"IsCurrent": true
+
 
   EmployeeReviewers(
       {
@@ -1544,30 +1556,80 @@ class VacationTypeBalancs {
     required this.settlemented,
     required this.type,
     required this.isAnnual,
-    required this.hideBalance
+    required this.hideBalance,
   });
 
   factory VacationTypeBalancs.fromJson(Map<String, dynamic> json) {
     return VacationTypeBalancs(
-
-      employeeName: json["employeeName"],
-      employeeId: json["employeeId"],
-      employeeCode: json["employeeCode"],
-      jobTitle: json["JobTitle"],
-      vacationTypeName: json["VacationTypeName"],
-      vacationTypeId: json["VacationTypeId"],
-      vacationTypeDuration: json["VacationTypeDuration"],
-      transferred: json["Transferred"],
-      total: json["Total"],
-      consumed: json["Consumed"],
-      pending: json["Pending"],
-      postConsumed: json["PostConsumed"],
-      available: json["Available"],
-      totalView: json["TotalView"],
-      settlemented: json["Settlemented"],
-      type: json["Type"],
-      isAnnual: json["IsAnnual"],
-      hideBalance: json["HideBalance"],
+      employeeName: json["employeeName"] ?? '',
+      employeeId: json["employeeId"] ?? 0,
+      employeeCode: json["employeeCode"] ?? '',
+      jobTitle: json["JobTitle"] ?? '',
+      vacationTypeName: json["VacationTypeName"] ?? '',
+      vacationTypeId: json["VacationTypeId"] ?? 0,
+      vacationTypeDuration: (json["VacationTypeDuration"] as num?)?.toDouble() ?? 0.0,
+      transferred: (json["Transferred"] as num?)?.toDouble() ?? 0.0,
+      total: (json["Total"] as num?)?.toDouble() ?? 0.0,
+      consumed: (json["Consumed"] as num?)?.toDouble() ?? 0.0,
+      pending: (json["Pending"] as num?)?.toDouble() ?? 0.0,
+      postConsumed: (json["PostConsumed"] as num?)?.toDouble() ?? 0.0,
+      available: (json["Available"] as num?)?.toDouble() ?? 0.0,
+      totalView: (json["TotalView"] as num?)?.toDouble() ?? 0.0,
+      settlemented: (json["Settlemented"] as num?)?.toDouble() ?? 0.0,
+      type: json["Type"] ?? 0,
+      isAnnual: json["IsAnnual"] ?? false,
+      hideBalance: json["HideBalance"] ?? false,
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      "employeeName": employeeName,
+      "employeeId": employeeId,
+      "employeeCode": employeeCode,
+      "JobTitle": jobTitle,
+      "VacationTypeName": vacationTypeName,
+      "VacationTypeId": vacationTypeId,
+      "VacationTypeDuration": vacationTypeDuration,
+      "Transferred": transferred,
+      "Total": total,
+      "Consumed": consumed,
+      "Pending": pending,
+      "PostConsumed": postConsumed,
+      "Available": available,
+      "TotalView": totalView,
+      "Settlemented": settlemented,
+      "Type": type,
+      "IsAnnual": isAnnual,
+      "HideBalance": hideBalance,
+    };
+  }
 }
+class RequestReviewers {
+  final String? name;
+  final String? status;
+  final String? note;
+
+  RequestReviewers({this.name, this.status, this.note});
+
+  factory RequestReviewers.fromJson(Map<String, dynamic> json) {
+    return RequestReviewers(
+      name: json['Name'],
+      status: json['Status'],
+      note: json['Note'],
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'Name': name,
+      'Status': status,
+      'Note': note,
+    };
+  }
+}
+
+
+
+
+

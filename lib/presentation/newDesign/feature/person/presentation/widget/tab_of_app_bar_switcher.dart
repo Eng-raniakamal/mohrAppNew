@@ -12,9 +12,9 @@ class TabOfAppBarSwitcher extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 208.w,
+     //width: 220.w,
       height: 40.h,
-      padding: EdgeInsets.symmetric(horizontal: 8.w),
+      //padding: EdgeInsets.symmetric(horizontal: 8.w),
       decoration: BoxDecoration(
         borderRadius: BorderRadius
             .circular(8)
@@ -23,33 +23,36 @@ class TabOfAppBarSwitcher extends StatelessWidget {
       ),
       child: BlocBuilder<TabCubit, int>(
         builder: (context, state) {
-          return Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: List.generate(tabs.length, (index) {
-              bool isSelected = index == state;
-              return GestureDetector(
-                onTap: () {
-                  BlocProvider.of<TabCubit>(context).changeTab(index);
-                },
-                child: Container(
-                  height: 32.h,
-                  padding: EdgeInsets.symmetric(horizontal: 5.w),
-                  decoration: BoxDecoration(
-                    color: isSelected ? AppColor.primary: null,
-                    borderRadius: BorderRadius.circular(5),
-                  ),
-                  child: Center(
-                    child: Text(
-                      tabs[index],
-                      style: AppTextStyle.iBMP14w500.copyWith(
-                        color: isSelected ? Colors.white : Colors.black,
-                        fontSize: 12.sp,
+          return SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: List.generate(tabs.length, (index) {
+                bool isSelected = index == state;
+                return GestureDetector(
+                  onTap: () {
+                    BlocProvider.of<TabCubit>(context).changeTab(index);
+                  },
+                  child: Container(
+                    height: 32.h,
+                    padding: EdgeInsets.symmetric(horizontal: 5.w),
+                    decoration: BoxDecoration(
+                      color: isSelected ? AppColor.primary: null,
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                    child: Center(
+                      child: Text(
+                        tabs[index],
+                        style: AppTextStyle.iBMP14w500.copyWith(
+                          color: isSelected ? Colors.white : Colors.black,
+                          fontSize: 12.sp,
+                        ),
                       ),
                     ),
                   ),
-                ),
-              );
-            }),
+                );
+              }),
+            ),
           );
         },
       ),

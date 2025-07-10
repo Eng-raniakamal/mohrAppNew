@@ -1,6 +1,7 @@
 
 
 import 'dart:async';
+import 'dart:convert';
 import 'package:essmohr/application/app_prefs.dart';
 import 'package:essmohr/application/di.dart';
 import 'package:essmohr/domain/model/model.dart';
@@ -9,135 +10,183 @@ import 'package:rxdart/rxdart.dart';
 import 'package:essmohr/presentation/common/state_renderer/state_render_impl.dart';
 import 'package:essmohr/presentation/common/state_renderer/state_renderer.dart';
 import '../../../domain/usecase/empBD_useCase.dart';
-import 'package:essmohr/presentation/common/freezed_data_classes.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 
-class EmployeeBasicDataViewModel extends BaseViewModel implements
-    EmpBasicDataViewModelInputs,EmpBasicDataViewModelOutputs {
+class EmployeeBasicDataViewModel extends BaseViewModel
+    implements EmpBasicDataViewModelInputs, EmpBasicDataViewModelOutputs {
+  final StreamController _userIdStreamController = StreamController<String>.broadcast();
+  final _basicDataStreamController = BehaviorSubject<BasicDataModel>();
 
-  final StreamController _UserIdStreamController= StreamController<String>.broadcast();
-  final StreamController _EmpIdStreamController= StreamController<int>.broadcast();
-
-  //from rxdart
-  final _BasicDataStreamController = BehaviorSubject<BasicDataModel>();
   final AppPreferences _appPreferences = instance<AppPreferences>();
-  final BasicDataUseCase _BasicDataUseCase;
-  EmployeeBasicDataViewModel ( this._BasicDataUseCase);
+  final BasicDataUseCase _basicDataUseCase;
+  final String _cacheKey = 'cached_basic_data';
+
+  EmployeeBasicDataViewModel(this._basicDataUseCase);
+
   String? uId;
   int? empId;
-  var empObject;
-  //empObject("",0);
+  bool _isDisposed = false;
 
-  //---Inputs
   @override
-  void start() {
-    getEmpBasicData();
+  void start() async {
+    final cachedData = await _getCachedBasicData();
+    if (cachedData != null) {
+      inputBasicData.add(cachedData);
+    }
+    await getEmpBasicData();
   }
 
-bool _isdispose=false;
   @override
-  void dispose()
-  {
-    _UserIdStreamController.close();
-    _EmpIdStreamController.close();
-    _isdispose=true;
+  void dispose() {
+    _userIdStreamController.close();
+    _basicDataStreamController.close();
+    _isDisposed = true;
     super.dispose();
   }
 
-
-  getEmpBasicData() async {
+  Future<void> getEmpBasicData() async {
     uId = await _appPreferences.getUserToken();
     empId = await _appPreferences.getEmpIdToken();
-    var empObject = EmpBasicDataObject(uId!, empId!);
-    if (_isdispose) { return;}
-    else {
-      if (empObject.empId != 0) {
-        inputState.add(LoadingState(
-            stateRendererType: StateRendererType.POPUP_LOADING_STATE)
-        );
-        (await _BasicDataUseCase.execute(
-            BasicdataInput(empObject.userID, empObject.empId)))
-            .fold((failure) =>
-        {
-          inputState.add(ErrorState(
-              StateRendererType.POPUP_ERROR_STATE, failure.message))
-        }, (data) {
-          if (_isdispose) { return;}
-          inputState.add(ContentState());
-          EmpBasicData.add(BasicDataModel(
-              data.employee,
-              data.allowEdit,
-              data.country,
-              data.selectedcountry,
-              data.governorate,
-              data.selectedgovernorate,
-              data.district,
-              data.selectedgovernorate,
-              data.address));
-        });
-      }
-      else {
-        empObject.userID;
-        empObject.empId;
-        inputState.add(
-            LoadingState(
-                stateRendererType: StateRendererType.POPUP_LOADING_STATE)
-        );
-        (await _BasicDataUseCase.execute
 
-          (BasicdataInput(empObject.userID, empObject.empId))).fold(
-                (failure) =>
-            { inputState.add
-              (ErrorState(StateRendererType.POPUP_ERROR_STATE, failure.message))
-            },
-                (data) {
-              inputState.add(ContentState());
-              EmpBasicData.add(BasicDataModel(
-                  data.employee,
-                  data.allowEdit,
-                  data.country,
-                  data.selectedcountry,
-                  data.governorate,
-                  data.selectedgovernorate
-                  ,
-                  data.district,
-                  data.selectedgovernorate,
-                  data.address));
-            }
-        );
-      }
-    }
+    if (_isDisposed || empId == null || empId == 0) return;
+
+    inputState.add(LoadingState(stateRendererType: StateRendererType.POPUP_LOADING_STATE));
+
+    final result = await _basicDataUseCase.execute(BasicdataInput(uId!, empId!));
+    result.fold(
+          (failure) {
+        if (!_isDisposed) {
+          inputState.add(ErrorState(StateRendererType.POPUP_ERROR_STATE, failure.message));
+        }
+      },
+          (data) async {
+        if (!_isDisposed) {
+          inputState.add(ContentState());
+
+          final model = BasicDataModel(
+            data.employee,
+            data.allowEdit,
+            data.country,
+            data.selectedcountry,
+            data.governorate,
+            data.selectedgovernorate,
+            data.district,
+            data.selecteddistrict,
+            data.address,
+          );
+
+          inputBasicData.add(model);
+          await _cacheBasicData(model);
+        }
+      },
+    );
   }
 
+  // --------- Caching -------------
+  Future<void> _cacheBasicData(BasicDataModel model) async {
+    final prefs = await SharedPreferences.getInstance();
+    final jsonString = jsonEncode(_basicDataToJson(model));
+    await prefs.setString(_cacheKey, jsonString);
+  }
+
+  Future<BasicDataModel?> _getCachedBasicData() async {
+    final prefs = await SharedPreferences.getInstance();
+    final jsonString = prefs.getString(_cacheKey);
+    if (jsonString != null) {
+      final jsonMap = jsonDecode(jsonString);
+      return _basicDataFromJson(jsonMap);
+    }
+    return null;
+  }
+
+  // ---------- Serialization Manual (BasicDataModel needs this since it has no toJson/fromJson directly) ------------
+  Map<String, dynamic> _basicDataToJson(BasicDataModel model) {
+    return {
+      'employee': {
+        'empId': model.employee?.empId,
+        'arabicName': model.employee?.arabicName,
+        'englishName': model.employee?.englishName,
+        'birthDate': model.employee?.birthdate,
+        'nationalId': model.employee?.nationalId,
+        'socialId': model.employee?.socialId,
+        'email': model.employee?.email,
+        'phone': model.employee?.phone,
+        'emergencyNumber': model.employee?.emergency_Number,
+        'address': {
+          'addressText': model.employee?.address?.addressText,
+          'districtId': model.employee?.address?.districtId,
+          'zipCode': model.employee?.address?.zipCode,
+        },
+      },
+      'allowEdit': model.allowEdit,
+      'selectedcountry': model.selectedcountry,
+      'selectedgovernorate': model.selectedgovernorate,
+      'selecteddistrict': model.selecteddistrict,
+      'address': {
+        'addressText': model.address?.addressText,
+        'districtId': model.address?.districtId,
+        'zipCode': model.address?.zipCode,
+      },
+    };
+  }
+
+  BasicDataModel _basicDataFromJson(Map<String, dynamic> json) {
+    final emp = json['employee'];
+    final empAddress = emp['address'];
+    final address = json['address'];
+
+    return BasicDataModel(
+      EmployeeModel(
+        emp['empId'] ?? 0,
+        emp['arabicName'] ?? '',
+        emp['englishName'] ?? '',
+        emp['birthDate'] ?? '',
+        emp['nationalId'] ?? '',
+        emp['socialId'] ?? '',
+        emp['email'] ?? '',
+        emp['phone'] ?? '',
+        emp['emergencyNumber'] ?? '',
+        AddressModel(
+          empAddress['addressText'] ?? '',
+          empAddress['districtId'] ?? 0,
+          empAddress['zipCode'] ?? '',
+        ),
+      ),
+      json['allowEdit'] ?? false,
+      [], // You can ignore full lists for cache, or implement same idea for Country/Gov/District if needed.
+      json['selectedcountry'] ?? 0,
+      [],
+      json['selectedgovernorate'] ?? 0,
+      [],
+      json['selecteddistrict'] ?? 0,
+      AddressModel(
+        address['addressText'] ?? '',
+        address['districtId'] ?? 0,
+        address['zipCode'] ?? '',
+      ),
+    );
+  }
+
+  // -------- Inputs / Outputs --------
   @override
-  Sink get inputUserId => _UserIdStreamController.sink;
+  Sink get inputUserId => _userIdStreamController.sink;
 
   @override
-  Sink get inputEmpId => _EmpIdStreamController.sink;
-
-
-  Sink get EmpBasicData => _BasicDataStreamController.sink;
-
-
+  Sink get inputBasicData => _basicDataStreamController.sink;
 
   @override
-  Stream<BasicDataModel>? get outputEmpBasicData => _BasicDataStreamController.stream
-      .map((data) => data);
+  Stream<BasicDataModel> get outputEmpBasicData => _basicDataStreamController.stream;
 }
 
-abstract class EmpBasicDataViewModelInputs{
+// ----- Interfaces ------
+abstract class EmpBasicDataViewModelInputs {
   Sink get inputUserId;
-  Sink get inputEmpId;
+  Sink get inputBasicData;
 }
 
-abstract class EmpBasicDataViewModelOutputs{
-  Stream<BasicDataModel>? get outputEmpBasicData;
-
+abstract class EmpBasicDataViewModelOutputs {
+  Stream<BasicDataModel> get outputEmpBasicData;
 }
-class  EmpBasicDataViewObject {
-  BasicDataModel employeeBasicData;
-  EmpBasicDataViewObject(this.employeeBasicData);
-}
-
 
 

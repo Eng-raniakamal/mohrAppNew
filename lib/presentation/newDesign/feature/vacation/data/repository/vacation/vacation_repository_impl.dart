@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
+import 'package:essmohr/domain/model/model.dart';
 import 'package:essmohr/presentation/newDesign/core/error/failure.dart';
 import 'package:essmohr/presentation/newDesign/feature/vacation/data/data_source/remote/vacation_remote_data_source.dart';
 import 'package:essmohr/presentation/newDesign/feature/vacation/data/model/approve_cancel/approve_cancel_request_model.dart';
@@ -188,4 +189,17 @@ try {
     }
 
   }
+
+  @override
+
+  Future<Either<Failure, List<VacationTypeBalancs>>> getVacationEntitlements() async {
+    try {
+      final result = await vacationRemoteDataSource.getVacationEntitlements();
+      return right(result);
+    } catch (e) {
+      return left(ServerFailure("${e.toString()}حدث خطأ في الخادم approveCancelRequest"),);
+    }
+  }
 }
+
+

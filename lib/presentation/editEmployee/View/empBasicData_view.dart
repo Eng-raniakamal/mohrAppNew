@@ -163,7 +163,7 @@ class BasicDataViewState extends State<BasicDataView> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(AppStrings.ArabicName.tr(), textAlign: TextAlign.start,),
-                            StreamBuilder<BasicDataModel?>(
+                            StreamBuilder<BasicDataModel>(
                               stream: displayViewModel.outputEmpBasicData,
                               builder: (context, snapshot) {
                                 return TextFormField(

@@ -53,7 +53,6 @@ class _salaryViewState extends State<salaryView> {
 
   @override
   Widget build(BuildContext context) {
-
     return ThemeSwitchingArea(
         child: Builder(
         builder: (context) =>
@@ -127,15 +126,7 @@ class _salaryViewState extends State<salaryView> {
       return Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-         // SingleChildScrollView(
-         //   scrollDirection: Axis.horizontal,
-         //    child: Padding(
-         //        padding: EdgeInsets.fromLTRB(20, 30, 30, 30),
-         //
-         //      child: SingleChildScrollView(
-         //       child: Column(
-         //         children: [
-         //       TitleWidget(title: AppStrings.Salary.tr()),
+
                   Padding(
                     padding: const EdgeInsets.all(8.0).r,
                     child: Column(
@@ -239,9 +230,7 @@ class _salaryViewState extends State<salaryView> {
     ).show();
   }
 
-
 }
-
 
 String getMonthName(BuildContext context, String? date) {
   // نحذف أي فراغات حول الرقم

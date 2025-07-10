@@ -12,9 +12,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../../resources/routes.dart';
 import '../../../../request/presentation/widget/request_type/management_request/app_bar_management_request_widget.dart';
-//import '../../../../requests/presentation/widget/app_bar_managment_request_widget.dart';
-
-//import '../../../../request/presentation/widget/request_type/management_request/app_bar_management_request_widget.dart';
 
 class TabEmployeeNotificationWidget extends StatefulWidget {
   const TabEmployeeNotificationWidget({super.key});
@@ -29,12 +26,7 @@ class _TabEmployeeNotificationWidgetState extends State<TabEmployeeNotificationW
 
   @override
   Widget build(BuildContext context) {
-    var colorTheme = Theme
-        .of(context)
-        .colorScheme;
-    var textTheme = Theme
-        .of(context)
-        .textTheme;
+
     return Container(color: AppColor.white,
       child: Padding(
         padding: EdgeInsets.all(10),
@@ -64,10 +56,9 @@ class _TabEmployeeNotificationWidgetState extends State<TabEmployeeNotificationW
       ),
     );
   }
-
   Widget getAlertData() {
-    return FutureBuilder<List<AlertModel>?>(
-      future: _getAlertData.getApiAlert(),
+    return StreamBuilder<List<AlertModel>?>(
+      stream: Stream.fromFuture(_getAlertData.getApiAlert()),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(child: CircularProgressIndicator());
@@ -77,35 +68,19 @@ class _TabEmployeeNotificationWidgetState extends State<TabEmployeeNotificationW
           return const Center(child: Text('لا توجد إشعارات'));
         } else {
           final alerts = snapshot.data!;
-          // final unseen = alerts.where((n) => n.seen == false).toList();
-          // final seen = alerts.where((n) => n.seen == true).toList();
 
           return ListView(
             padding: const EdgeInsets.all(10),
             children: [
-              if (alerts.isNotEmpty) ...[
-                ...alerts.map((alert) => ItemNotificationWidget(
+              ...alerts.map(
+                    (alert) => ItemNotificationWidget(
                   title: '',
                   notificationTitle: alert.link ?? 'بدون عنوان',
                   notificationDescription: alert.content ?? 'بدون تفاصيل',
                   date: '',
                   backGround: AppColor.coolBlue,
-                )),
-              ],
-              // if (seen.isNotEmpty) ...[
-              //   const SizedBox(height: 5),
-              //   Text(
-              //     AppStrings.seen.tr(),
-              //     style: Theme.of(context).textTheme.titleLarge,
-              //   ),
-              //   ...seen.map((notif) => ItemNotificationWidget(
-              //     title: '',
-              //     notificationTitle: notif.title ?? 'بدون عنوان',
-              //     notificationDescription: notif.details ?? 'بدون تفاصيل',
-              //     date: _formattingDate(notif.date)?? '',
-              //     backGround:  AppColor.softStone,
-              //   )),
-              // ],
+                ),
+              ),
             ],
           );
         }

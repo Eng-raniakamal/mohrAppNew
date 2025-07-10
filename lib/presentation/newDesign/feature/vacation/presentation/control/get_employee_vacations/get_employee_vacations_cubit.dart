@@ -48,17 +48,49 @@ class GetEmployeeVacationsCubit extends Cubit<GetEmployeeVacationsState> {
 
   static const _vacationsCacheKey = "CACHED_EMPLOYEE_VACATIONS";
 
+  // Future<void> getEmployeeVacations() async {
+  //   if (isClosed) return;
+  //   emit(state.copyWith(isLoading: true));
+  //
+  //   // 1. قراءة من الكاش باستخدام appPreferences
+  //   final cachedData = await appPreferences.getCachedVacations(_vacationsCacheKey);
+  //   if (cachedData != null) {
+  //     emit(state.copyWith(response: cachedData, isLoading: false));
+  //   }
+  //
+  //   // 2. جلب من API وتحديث الكاش
+  //   final response = await getEmployeeVacationsUseCase();
+  //   if (isClosed) return;
+  //
+  //   response.fold(
+  //         (failure) {
+  //       if (isClosed) return;
+  //       emit(state.copyWith(isLoading: false, errorMessage: failure.message));
+  //     },
+  //         (vacations) async {
+  //       if (isClosed) return;
+  //       emit(state.copyWith(isLoading: false, response: vacations));
+  //       await appPreferences.setCachedVacations(_vacationsCacheKey, vacations);
+  //     },
+  //   );
+  // }
+
   Future<void> getEmployeeVacations() async {
     if (isClosed) return;
     emit(state.copyWith(isLoading: true));
 
-    // 1. قراءة من الكاش باستخدام appPreferences
+    // التحقق من الكاش والتوقيت
     final cachedData = await appPreferences.getCachedVacations(_vacationsCacheKey);
-    if (cachedData != null) {
+    final cachedTime = await appPreferences.getCachedVacationsTime();
+    final isCacheValid = cachedTime != null &&
+        DateTime.now().difference(cachedTime).inMinutes < 5; // صلاحية الكاش 5 دقايق
+
+    if (cachedData != null && isCacheValid) {
       emit(state.copyWith(response: cachedData, isLoading: false));
+      return; // ✅ استخدام الكاش فقط
     }
 
-    // 2. جلب من API وتحديث الكاش
+    // ❌ الكاش غير صالح، جلب البيانات من الـ API
     final response = await getEmployeeVacationsUseCase();
     if (isClosed) return;
 
@@ -70,8 +102,9 @@ class GetEmployeeVacationsCubit extends Cubit<GetEmployeeVacationsState> {
           (vacations) async {
         if (isClosed) return;
         emit(state.copyWith(isLoading: false, response: vacations));
-        await appPreferences.setCachedVacations(_vacationsCacheKey, vacations);
+        await appPreferences.setCachedVacations(_vacationsCacheKey, vacations); // ✅ تحديث الكاش والوقت
       },
     );
   }
+
 }

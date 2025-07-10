@@ -20,6 +20,8 @@ import 'package:flutter_app_badger/flutter_app_badger.dart';
 import 'package:http/http.dart' as http;
 import 'package:essmohr/presentation/resources/strings_manager.dart';
 
+import '../resources/notification_helper.dart';
+
 
 // ignore: must_be_immutable
 class NavigatorBar extends StatefulWidget {

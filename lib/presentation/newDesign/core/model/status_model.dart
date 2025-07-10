@@ -36,4 +36,6 @@ class StatusModel extends Equatable {
   }
   @override
   List<Object?> get props => [isCertified, isUnderReview, isRejected, name];
+
+
 }

@@ -265,7 +265,7 @@ android {
     }
 
     defaultConfig {
-        applicationId  "com.mohr.ESSMOHR"
+        applicationId  "com.mohr.essmohr"
         minSdk  24
         targetSdk 35
         versionCode  flutter.versionCode

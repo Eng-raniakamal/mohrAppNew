@@ -21,7 +21,7 @@ class StatusWidget extends StatelessWidget {
           decoration: BoxDecoration(
             color: context.color.onSecondary,
           ),
-          child: Text("معتمدة", style: context.text.labelMedium),
+          child: Text("موافقة", style: context.text.labelMedium),
         )
             : SizedBox(),
         //قيد التدقيق
@@ -31,7 +31,7 @@ class StatusWidget extends StatelessWidget {
           decoration: BoxDecoration(
             color: context.color.secondaryFixed,
           ),
-          child: Text("قيد التدقيق",
+          child: Text("قيد الأعتماد",
             style: context.text.labelMedium?.copyWith(
                 color: context.color.primaryFixed
             ),

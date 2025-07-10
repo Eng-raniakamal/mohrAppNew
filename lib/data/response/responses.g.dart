@@ -7,7 +7,7 @@ part of 'responses.dart';
 // **************************************************************************
 
 BaseResponse _$BaseResponseFromJson(Map<String, dynamic> json) => BaseResponse()
-  ..code = json['code'] as int?
+  ..code = (json['code'] as num?)?.toInt()
   ..status = json['status'] as String?;
 
 Map<String, dynamic> _$BaseResponseToJson(BaseResponse instance) =>
@@ -51,7 +51,7 @@ UserDataResponse _$UserDataResponseFromJson(Map<String, dynamic> json) =>
       json['UserName'] as String?,
       json['Device'] as String?,
       json['TenantName'] as String?,
-      json['EmployeeId'] as int?,
+      (json['EmployeeId'] as num?)?.toInt(),
       json['EmployeeCode'] as String?,
       json['FullName'] as String?,
       json['ArabicName'] as String?,
@@ -62,8 +62,8 @@ UserDataResponse _$UserDataResponseFromJson(Map<String, dynamic> json) =>
       json['FacePersonId'] as String?,
       json['RecognitionModel'] as String?,
       json['MasterImage'] as Map<String, dynamic>?,
-      json['ImageVerificationMode'] as int?,
-      json['LocationVerificationMode'] as int?,
+      (json['ImageVerificationMode'] as num?)?.toInt(),
+      (json['LocationVerificationMode'] as num?)?.toInt(),
       json['SupportGroupAttendance'] as bool?,
     );
 
@@ -111,7 +111,7 @@ AuthenticationResponse _$AuthenticationResponseFromJson(
           ? null
           : UserDataResponse.fromJson(json['data'] as Map<String, dynamic>),
     )
-      ..code = json['code'] as int?
+      ..code = (json['code'] as num?)?.toInt()
       ..status = json['status'] as String?;
 
 Map<String, dynamic> _$AuthenticationResponseToJson(
@@ -129,7 +129,7 @@ UserProfileResponse _$UserProfileResponseFromJson(Map<String, dynamic> json) =>
           ? null
           : UserDataResponse.fromJson(json['data'] as Map<String, dynamic>),
     )
-      ..code = json['code'] as int?
+      ..code = (json['code'] as num?)?.toInt()
       ..status = json['status'] as String?;
 
 Map<String, dynamic> _$UserProfileResponseToJson(
@@ -153,7 +153,7 @@ Map<String, dynamic> _$ResultResponseToJson(ResultResponse instance) =>
 
 EmployeeResponse _$EmployeeResponseFromJson(Map<String, dynamic> json) =>
     EmployeeResponse(
-      json['Id'] as int?,
+      (json['Id'] as num?)?.toInt(),
       json['ArabicName'] as String?,
       json['EnglishName'] as String?,
       json['BirthDate'] as String?,
@@ -184,7 +184,7 @@ Map<String, dynamic> _$EmployeeResponseToJson(EmployeeResponse instance) =>
 EmployeeSaveResponse _$EmployeeSaveResponseFromJson(
         Map<String, dynamic> json) =>
     EmployeeSaveResponse(
-      json['Id'] as int?,
+      (json['Id'] as num?)?.toInt(),
       json['ArabicName'] as String?,
       json['EnglishName'] as String?,
       json['BirthDate'] as String?,
@@ -212,7 +212,7 @@ Map<String, dynamic> _$EmployeeSaveResponseToJson(
 AddressSaveResponse _$AddressSaveResponseFromJson(Map<String, dynamic> json) =>
     AddressSaveResponse(
       json['AddressText'] as String?,
-      json['DistrictId'] as int?,
+      (json['DistrictId'] as num?)?.toInt(),
       json['ZipCode'] as String?,
       json['POBox'] as String?,
     );
@@ -229,7 +229,7 @@ Map<String, dynamic> _$AddressSaveResponseToJson(
 AddressResponse _$AddressResponseFromJson(Map<String, dynamic> json) =>
     AddressResponse(
       json['AddressText'] as String?,
-      json['DistrictId'] as int?,
+      (json['DistrictId'] as num?)?.toInt(),
       json['ZipCode'] as String?,
     );
 
@@ -242,7 +242,7 @@ Map<String, dynamic> _$AddressResponseToJson(AddressResponse instance) =>
 
 CountriesResponse _$CountriesResponseFromJson(Map<String, dynamic> json) =>
     CountriesResponse(
-      json['Id'] as int?,
+      (json['Id'] as num?)?.toInt(),
       json['Name'] as String?,
     );
 
@@ -254,9 +254,9 @@ Map<String, dynamic> _$CountriesResponseToJson(CountriesResponse instance) =>
 
 GovernoratyResponse _$GovernoratyResponseFromJson(Map<String, dynamic> json) =>
     GovernoratyResponse(
-      json['Id'] as int?,
+      (json['Id'] as num?)?.toInt(),
       json['Name'] as String?,
-      json['CountryId'] as int?,
+      (json['CountryId'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$GovernoratyResponseToJson(
@@ -264,21 +264,21 @@ Map<String, dynamic> _$GovernoratyResponseToJson(
     <String, dynamic>{
       'Id': instance.governoratyId,
       'Name': instance.governoratyname,
-      'CountryId':instance.countryId
+      'CountryId': instance.countryId,
     };
 
 DistrictResponse _$DistrictResponseFromJson(Map<String, dynamic> json) =>
     DistrictResponse(
-      json['Id'] as int?,
+      (json['Id'] as num?)?.toInt(),
       json['Name'] as String?,
-      json['GovernrateId'] as int?,
+      (json['GovernrateId'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$DistrictResponseToJson(DistrictResponse instance) =>
     <String, dynamic>{
       'Id': instance.districtId,
       'Name': instance.districtname,
-      'GovernrateId':instance.governoratyId
+      'GovernrateId': instance.governoratyId,
     };
 
 DisplayBasicDataResponse _$DisplayBasicDataResponseFromJson(
@@ -302,15 +302,15 @@ BasicDataResponse _$BasicDataResponseFromJson(Map<String, dynamic> json) =>
       (json['countries'] as List<dynamic>?)
           ?.map((e) => CountriesResponse.fromJson(e as Map<String, dynamic>))
           .toList(),
-      json['selectedCountry'] as int?,
+      (json['selectedCountry'] as num?)?.toInt(),
       (json['governorates'] as List<dynamic>?)
           ?.map((e) => GovernoratyResponse.fromJson(e as Map<String, dynamic>))
           .toList(),
-      json['selectedGovernorate'] as int?,
+      (json['selectedGovernorate'] as num?)?.toInt(),
       (json['districts'] as List<dynamic>?)
           ?.map((e) => DistrictResponse.fromJson(e as Map<String, dynamic>))
           .toList(),
-      json['selecteddistrict'] as int?,
+      (json['selecteddistrict'] as num?)?.toInt(),
       json['address'] == null
           ? null
           : AddressResponse.fromJson(json['address'] as Map<String, dynamic>),
@@ -382,9 +382,9 @@ saveEmpSkillsResponse _$saveEmpSkillsResponseFromJson(
     saveEmpSkillsResponse(
       json['UserId'] as String?,
       json['Date'] as String?,
-      json['GradeId'] as int?,
-      json['QualificationTypeId'] as int?,
-      json['EmployeeId'] as int?,
+      (json['GradeId'] as num?)?.toInt(),
+      (json['QualificationTypeId'] as num?)?.toInt(),
+      (json['EmployeeId'] as num?)?.toInt(),
     )
       ..isValid = json['IsValid'] as bool?
       ..message = json['Message'] as String?;
@@ -403,12 +403,12 @@ Map<String, dynamic> _$saveEmpSkillsResponseToJson(
 
 SkillsResponse _$SkillsResponseFromJson(Map<String, dynamic> json) =>
     SkillsResponse(
-      json['Id'] as int?,
+      (json['Id'] as num?)?.toInt(),
       json['TypeName'] as String?,
       json['GradeName'] as String?,
-      json['QualificationTypeId'] as int?,
+      (json['QualificationTypeId'] as num?)?.toInt(),
       json['Date'] as String?,
-      json['GradeId'] as int?,
+      (json['GradeId'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$SkillsResponseToJson(SkillsResponse instance) =>
@@ -441,13 +441,13 @@ saveAcademicDegreeResponse _$saveAcademicDegreeResponseFromJson(
         Map<String, dynamic> json) =>
     saveAcademicDegreeResponse(
       json['UserId'] as String?,
-      json['Id'] as int?,
+      (json['Id'] as num?)?.toInt(),
       json['Major'] as String?,
       json['University'] as String?,
       json['Notes'] as String?,
-      json['EmployeeId'] as int?,
-      json['AcademicDegreeTypeId'] as int?,
-      json['GradeId'] as int?,
+      (json['EmployeeId'] as num?)?.toInt(),
+      (json['AcademicDegreeTypeId'] as num?)?.toInt(),
+      (json['GradeId'] as num?)?.toInt(),
       json['DegreeDate'] as String?,
     )
       ..isValid = json['IsValid'] as bool?
@@ -489,12 +489,12 @@ Map<String, dynamic> _$GetAcademicDegreeResponseToJson(
 AcademicDegreeResponse _$AcademicDegreeResponseFromJson(
         Map<String, dynamic> json) =>
     AcademicDegreeResponse(
-      json['Id'] as int?,
+      (json['Id'] as num?)?.toInt(),
       json['TypeName'] as String?,
       json['GradeName'] as String?,
-      json['AcademicDegreeTypeId'] as int?,
+      (json['AcademicDegreeTypeId'] as num?)?.toInt(),
       json['DegreeDate'] as String?,
-      json['GradeId'] as int?,
+      (json['GradeId'] as num?)?.toInt(),
       json['Major'] as String?,
       json['University'] as String?,
     );
@@ -514,7 +514,7 @@ Map<String, dynamic> _$AcademicDegreeResponseToJson(
 
 GradeItemResponse _$GradeItemResponseFromJson(Map<String, dynamic> json) =>
     GradeItemResponse(
-      json['Value'] as int?,
+      (json['Value'] as num?)?.toInt(),
       json['Text'] as String?,
     );
 
@@ -539,7 +539,7 @@ Map<String, dynamic> _$GradesResponseToJson(GradesResponse instance) =>
 AcademicItemResponse _$AcademicItemResponseFromJson(
         Map<String, dynamic> json) =>
     AcademicItemResponse(
-      json['Value'] as int?,
+      (json['Value'] as num?)?.toInt(),
       json['Text'] as String?,
     );
 
@@ -565,7 +565,7 @@ Map<String, dynamic> _$AcademicResponseToJson(AcademicResponse instance) =>
 QualificationItemResponse _$QualificationItemResponseFromJson(
         Map<String, dynamic> json) =>
     QualificationItemResponse(
-      json['Value'] as int?,
+      (json['Value'] as num?)?.toInt(),
       json['Text'] as String?,
     );
 
@@ -595,7 +595,7 @@ VacationItemResponse _$VacationItemResponseFromJson(
         Map<String, dynamic> json) =>
     VacationItemResponse(
       json['employeeName'] as String?,
-      json['employeeId'] as int?,
+      (json['employeeId'] as num?)?.toInt(),
       json['employeeCode'] as String?,
       json['VacationTypeName'] as String?,
       (json['VacationTypeDuration'] as num?)?.toDouble(),
@@ -638,7 +638,7 @@ Map<String, dynamic> _$VacationsResponseToJson(VacationsResponse instance) =>
 VacationTypeItemResponse _$VacationTypeItemResponseFromJson(
         Map<String, dynamic> json) =>
     VacationTypeItemResponse(
-      json['Id'] as int?,
+      (json['Id'] as num?)?.toInt(),
       json['Name'] as String?,
     );
 
@@ -666,7 +666,7 @@ Map<String, dynamic> _$VacationTypeResponseToJson(
 
 SalaryItemResponse _$SalaryItemResponseFromJson(Map<String, dynamic> json) =>
     SalaryItemResponse(
-      json['Id'] as int?,
+      (json['Id'] as num?)?.toInt(),
       json['Month'] as String?,
       (json['Value'] as num?)?.toDouble(),
     );
@@ -759,7 +759,7 @@ Map<String, dynamic> _$SalaryDetailsResponseToJson(
 AttendanceItemResponse _$AttendanceItemResponseFromJson(
         Map<String, dynamic> json) =>
     AttendanceItemResponse(
-      json['Id'] as int?,
+      (json['Id'] as num?)?.toInt(),
       json['Mode'] as String?,
       json['Action'] as String?,
       json['ActionTime'] == null

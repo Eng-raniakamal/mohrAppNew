@@ -1,5 +1,6 @@
 
 
+import 'package:essmohr/domain/model/model.dart';
 import 'package:essmohr/presentation/newDesign/core/utils/import_file.dart';
 import 'package:essmohr/presentation/newDesign/feature/home/data/report_model.dart';
 import 'package:essmohr/presentation/newDesign/feature/request/presentation/widget/add_request/add_document_button_widget.dart';
@@ -15,6 +16,7 @@ import '../../../../../core/component/custom_nots_of_details_screen_widget.dart'
 import '../../../../../core/component/custom_reviewer_widget.dart';
 import '../../../../../core/component/custom_title_and_value_widget.dart';
 import '../../../../../core/model/reviewer_model.dart';
+import '../../../../../core/model/status_model.dart';
 import '../../../data/model/get_employee_vacations_model/get_employee_vacations_response_model.dart';
 
 class VacationDetailsWidget extends StatelessWidget {
@@ -24,7 +26,7 @@ class VacationDetailsWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     GetEmployeeVacationsResponseModel model =
         context.read<VacationCubit>().getEmployeeVacationsModel();
-     Object reviewer = model.reviewerName ?? [];
+    // RequestReviewers reviewer = (model.reviewers?? []) ;
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16).r,
@@ -91,16 +93,21 @@ class VacationDetailsWidget extends StatelessWidget {
 
             Row(
               children: [
-                CustomReviewerWidget(
-                  nameReviewer: model.reviewerName!.isEmpty?"لم يتم اضافة مراجع": model.reviewerName,
-                  idReviewer: " ",
-                  statusReviewer:"" ,
+                // CustomReviewerWidget(
+                //   nameReviewer: model.reviewerName?.isNotEmpty == true
+                //       ? model.reviewerName!
+                //       : "لم يتم اضافة مراجع",
+                //
+                // ),
 
-                ),
+                if ((model.reviewers?.isNotEmpty ?? false))
+                  CustomReviewerWidget(
+                    reviewerList: model.reviewers!,
+                  ),
               ],
             ),
 
-            // if (model.reviewer.isNotEmpty)
+            // if (model.reviewers.isNotEmpty)
             //   Row(
             //     children:
             //         reviewer
@@ -112,6 +119,11 @@ class VacationDetailsWidget extends StatelessWidget {
             //             )
             //             .toList(),
             //   ),
+            // if ((model.reviewers?.isNotEmpty ?? false))
+            //   CustomReviewerWidget(
+            //     reviewerList: model.reviewers!,
+            //   ),
+
             SizedBox(height: 16.h),
             AddDocumentButtonWidget(
               onTap: () {},

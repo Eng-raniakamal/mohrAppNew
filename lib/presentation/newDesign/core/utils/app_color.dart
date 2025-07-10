@@ -23,7 +23,8 @@ class AppColor {
   static const Color goldTransparent = Color.fromRGBO(255, 215, 5, 0.1);
   static const Color deepBlueGlass = Color.fromRGBO(9, 14, 29, 0.64);
 
-  static const Color orange = Color(0xfffcff34);
+  static const Color Yellow = Color(0xfffcff34);
+  static const Color orange = Colors.orange;
 
   static const Color red = Color(0xffFF375E);
   static const Color darkRed = Color.fromRGBO(255, 120, 117, 0.24);

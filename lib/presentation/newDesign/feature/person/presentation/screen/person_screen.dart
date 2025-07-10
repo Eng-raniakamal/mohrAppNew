@@ -102,16 +102,33 @@ class PersonScreenState extends State<PersonScreen> {
       create: (context) => TabCubit(),
       child: Scaffold(
         appBar: AppBar(
-          title: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                        AppStrings.profile.tr(),
-                        style: context.text.titleLarge,
-                      ),//AppTextStyle.iBMP24w600),
-              TabOfAppBarSwitcher(),
-            ],
-          ),
+          // title: Row(
+          //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //   children: [
+          //     Text(
+          //               AppStrings.profile.tr(),
+          //               style: context.text.titleLarge,
+          //             ),//AppTextStyle.iBMP24w600),
+          //     TabOfAppBarSwitcher(),
+          //   ],
+          // ),
+        //  appBar: AppBar(
+            title: Row(
+              children: [
+                Flexible(
+                  child: Text(
+                    AppStrings.profile.tr(),
+                    style: context.text.titleLarge,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+                SizedBox(width: 8), // مسافة بسيطة بين النص و التبويبات
+                Flexible( // اجعل الـ TabOfAppBarSwitcher مرنًا
+                  child: TabOfAppBarSwitcher(),
+                ),
+              ],
+            ),
+         // ),
         ),
         body: BlocBuilder<TabCubit, int>(
           builder: (context, state) {

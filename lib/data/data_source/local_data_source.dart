@@ -16,6 +16,7 @@ abstract class LocalDataSource {
 
    Future<UserProfileResponse> getUserData();
    Future<void> saveUserToCache(UserProfileResponse UserdataResponse);
+
    void clearCache();
    void removeFromCache(String key);
 
@@ -27,12 +28,14 @@ class LocalDataSourceImplementer implements LocalDataSource {
 
   @override
   //runtime casche
-  Future<UserProfileResponse> getUserData() {
+  Future<UserProfileResponse> getUserData() async{
     CachedItem? cacheditem = cacheMap[CACHE_User_KEY];
 
-    if (cacheditem != null && cacheditem.isValid(CACHE_USER_INTERVAL)) {
+    if (cacheditem?.data.userdata != null )
+       // && cacheditem!.isValid(CACHE_USER_INTERVAL))
+    {
       //return the response from cache
-      return cacheditem.data;
+      return cacheditem!.data;
     }
     else {
       //return the erroe that cache is not there or it's not valid
@@ -58,7 +61,7 @@ class LocalDataSourceImplementer implements LocalDataSource {
 }
 
 class CachedItem {
-  dynamic data;
+  UserProfileResponse data;
   //the time that i created an instance from the class
   int cacheTime = DateTime.now().millisecondsSinceEpoch;
   CachedItem(this.data);

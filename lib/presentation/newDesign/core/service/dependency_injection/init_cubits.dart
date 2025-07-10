@@ -1,5 +1,6 @@
 import '../../../../../application/di.dart';
 import '../../../feature/vacation/presentation/control/get_employee_vacations/get_employee_vacations_cubit.dart';
+import '../../../feature/vacation/presentation/control/get_employee_vacations/vacation_entitlement_cubit.dart';
 import '../../../feature/vacation/presentation/control/get_vacation_requests/get_vacation_requests_cubit.dart';
 import 'export_file/package_export.dart';
 import 'depend_inject.dart';
@@ -38,6 +39,7 @@ void initCubits() {
   // );
  // instance.registerFactory(() => GetEmployeeVacationsCubit(instance(), getEmployeeVacationsUseCase: null));
   instance.registerFactory(() => VacationBalanceCubit(instance()));
+
   instance.registerFactory(() => SubmitVacationRequestCubit(
     calculateVacationDurationCubit: instance(),
     validateCubit: instance(),
@@ -45,4 +47,8 @@ void initCubits() {
     postVacationCubit: instance(),
   ));
   instance.registerFactory(() => ConnectInternetCubit());
+  instance.registerFactory(() => VacationEntitlementCubit(
+    getVacationEntitlementsUseCase: instance(),
+    appPreferences: instance(),
+  ));
 }

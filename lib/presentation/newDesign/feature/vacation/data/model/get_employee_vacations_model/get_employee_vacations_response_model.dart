@@ -1,3 +1,5 @@
+import 'package:essmohr/domain/model/model.dart';
+
 class GetEmployeeVacationsResponseModel {
   String? fromDate;
   String? toDate;
@@ -7,7 +9,9 @@ class GetEmployeeVacationsResponseModel {
   String? replacementName;
   int? actualDuration;
   bool? isCanceled;
+  String? status;
   String? modifiedBy;
+  List<RequestReviewers>? reviewers;
 
   GetEmployeeVacationsResponseModel(
       {this.fromDate,
@@ -18,7 +22,10 @@ class GetEmployeeVacationsResponseModel {
         this.replacementName,
         this.actualDuration,
         this.isCanceled,
-        this.modifiedBy});
+        this.status,
+        this.modifiedBy,
+        this.reviewers
+      });
 
   GetEmployeeVacationsResponseModel.fromJson(Map<String, dynamic> json) {
     fromDate = json['FromDate'];
@@ -29,7 +36,12 @@ class GetEmployeeVacationsResponseModel {
     replacementName = json['ReplacementName'];
     actualDuration = json['ActualDuration'];
     isCanceled = json['IsCanceled'];
+    status=json['Status'];
     modifiedBy = json['ModifiedBy'];
+    //reviewers=json["Reviewers"];
+    reviewers = (json["Reviewers"] as List<dynamic>?)
+        ?.map((e) => RequestReviewers.fromJson(e as Map<String, dynamic>))
+        .toList();
   }
 
   Map<String, dynamic> toJson() {
@@ -42,7 +54,9 @@ class GetEmployeeVacationsResponseModel {
     data['ReplacementName'] = replacementName;
     data['ActualDuration'] = actualDuration;
     data['IsCanceled'] = isCanceled;
+    data['Status'] = status;
     data['ModifiedBy'] = modifiedBy;
+    data["Reviewers"] = reviewers?.map((e) => e.toJson()).toList();
     return data;
   }
 }

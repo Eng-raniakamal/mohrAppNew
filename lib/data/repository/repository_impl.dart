@@ -79,23 +79,22 @@ class RepositoryImpl extends Repository {
   @override
   Future<Either<Failure, EmployeeDataModel>> getUserData(UserRequest userRequest)
   async {
+
+
+
     try {
       if (userRequest.userId == null) {
-
         userRequest.userId = await _appPreferences.getUserToken();
-
       }
-      // get from cache
+      final response = await _localDataSource.getUserData();
 
-      final response = await _remoteDataSource.getUserData(userRequest);
-      //final response2 = await _localDataSource.getUserData();
       return Right(response.toDomain());
     } catch (cacheError) {
-      // we have cache error so we should call API
+
 
       if (await _networkInfo.isConnected) {
         try {
-          // its safe to call the API
+
           final response = await _remoteDataSource.getUserData(userRequest);
 
           if (response.userdata?.UserId.toString() != null) // success

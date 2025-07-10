@@ -164,10 +164,12 @@
 import 'dart:convert';
 
 import 'package:essmohr/application/constants.dart';
+import 'package:essmohr/data/mapper/mapper.dart';
 import 'package:essmohr/presentation/resources/language_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../domain/model/model.dart';
 import '../presentation/newDesign/feature/vacation/data/model/get_employee_vacations_model/get_employee_vacations_response_model.dart';
 
 const String PREFS_KEY_LANG = "PREFS_KEY_LANG";
@@ -178,6 +180,12 @@ const String PREFS_USERNAME_TOKEN = "PREFS_USERNAME_TOKEN";
 const String PREFS_ID_TOKEN = "PREFS_ID_TOKEN";
 const String PREFS_List_Notification = "PREFS_List_Notification";
 const String PREFS_KEY_CACHED_VACATIONS = "PREFS_KEY_CACHED_VACATIONS"; // ✅ الكاش الجديد
+const String _vacationsCacheTimeKey = "CACHED_EMPLOYEE_VACATIONS_TIMESTAMP";//لوقت الكاش
+const String _cachedBalancesKey = "CACHED_VACATION_BALANCES";
+const String _cachedBalancesTimeKey = "CACHED_VACATION_BALANCES_TIME";
+const String PREF_KEY_USER_DATA = "PREF_KEY_USER_DATA";
+ const String _cachedVacationTypesKey = "CACHED_VACATION_TYPES";
+ const String _cachedVacationTypesTimeKey = "CACHED_VACATION_TYPES_TIME";
 
 class AppPreferences {
   final SharedPreferences _sharedPreferences;
@@ -281,9 +289,25 @@ class AppPreferences {
 
 
 
-  Future<void> setCachedVacations(String key, List<GetEmployeeVacationsResponseModel> data) async {
-    final encoded = jsonEncode(data.map((e) => e.toJson()).toList());
-    _sharedPreferences.setString(key, encoded);
+  // Future<void> setCachedVacations(String key, List<GetEmployeeVacationsResponseModel> data) async {
+  //   final encoded = jsonEncode(data.map((e) => e.toJson()).toList());
+  //   _sharedPreferences.setString(key, encoded);
+  // }
+
+
+  Future<void> setCachedVacations(String key, List<GetEmployeeVacationsResponseModel> vacations) async {
+    final jsonString = jsonEncode(vacations.map((e) => e.toJson()).toList());
+    await _sharedPreferences.setString(key, jsonString);
+    await _sharedPreferences.setInt(_vacationsCacheTimeKey, DateTime.now().millisecondsSinceEpoch);
+  }
+
+  // وقت الكاش
+  Future<DateTime?> getCachedVacationsTime() async {
+    final timestamp = _sharedPreferences.getInt(_vacationsCacheTimeKey);
+    if (timestamp != null) {
+      return DateTime.fromMillisecondsSinceEpoch(timestamp);
+    }
+    return null;
   }
 
   Future<List<GetEmployeeVacationsResponseModel>?> getCachedVacations(String key) async {
@@ -304,8 +328,119 @@ class AppPreferences {
     await _sharedPreferences.setString(PREFS_KEY_CACHED_VACATIONS, vacationsJson);
   }
 
+  Future<void> setCachedBalances(
+      String key,
+      List<VacationTypeBalancs> balances,
+      ) async {
+    final jsonList = balances.map((e) => e.toJson()).toList();
+    await _sharedPreferences.setString(key, jsonEncode(jsonList));
+  }
 
+  Future<void> setCachedBalancesTime(String key, DateTime dateTime) async {
+    await _sharedPreferences.setString(key, dateTime.toIso8601String());
+  }
+
+  Future<DateTime?> getCachedBalancesTime(String key) async {
+    final timeStr = _sharedPreferences.getString(key);
+    if (timeStr == null) return null;
+    return DateTime.tryParse(timeStr);
+  }
+
+  Future<List<VacationTypeBalancs>?> getCachedBalances(String key) async {
+    final jsonString = _sharedPreferences.getString(key);
+    if (jsonString == null) return null;
+
+    final List<dynamic> decoded = jsonDecode(jsonString);
+    return decoded.map((e) => VacationTypeBalancs.fromJson(e)).toList();
+  }
   Future<void> clearCachedVacations() async {
     await _sharedPreferences.remove(PREFS_KEY_CACHED_VACATIONS);
   }
+
+  Future<void> setCachedEntitlements(String key, List<VacationTypeBalancs> entitlements) async {
+    final jsonList = entitlements.map((e) => e.toJson()).toList();
+    await _sharedPreferences.setString(key, jsonEncode(jsonList));
+  }
+
+  Future<List<VacationTypeBalancs>?> getCachedEntitlements(String key) async {
+    final jsonString = _sharedPreferences.getString(key);
+    if (jsonString == null) return null;
+
+    final List<dynamic> decoded = jsonDecode(jsonString);
+    return decoded.map((e) => VacationTypeBalancs.fromJson(e)).toList();
+  }
+
+  Future<void> setCachedEntitlementsTime(String key, DateTime dateTime) async {
+    await _sharedPreferences.setString(key, dateTime.toIso8601String());
+  }
+
+  Future<DateTime?> getCachedEntitlementsTime(String key) async {
+    final timeStr = _sharedPreferences.getString(key);
+    if (timeStr == null) return null;
+    return DateTime.tryParse(timeStr);
+  }
+
+
+
+  Future<void> setCachedSalaryTime(String key, DateTime time) async {
+    await _sharedPreferences.setString(key, time.toIso8601String());
+  }
+
+  Future<DateTime?> getCachedSalaryTime(String key) async {
+    final timeStr = _sharedPreferences.getString(key);
+    if (timeStr == null) return null;
+    return DateTime.tryParse(timeStr);
+  }
+
+
+  Future<void> saveCachedUserData(UserDataModel userData) async {
+    final jsonString = jsonEncode(userData.toJson());
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString(PREF_KEY_USER_DATA, jsonString);
+  }
+
+  // Future<UserDataModel?> getCachedUserData() async {
+  //   final prefs = await SharedPreferences.getInstance();
+  //   final jsonString = prefs.getString(PREF_KEY_USER_DATA);
+  //
+  //   if (jsonString != null && jsonString.isNotEmpty) {
+  //     final jsonMap = jsonDecode(jsonString);
+  //     return UserDataModel.fromJson(jsonMap);
+  //   }
+  //
+  //   return null; // No data
+  // }
+
+  Future<void> clearCachedUserData() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.remove(PREF_KEY_USER_DATA);
+  }
+
+
+
+
+
+  Future<void> saveCachedVacationTypes(String data) async {
+    await _sharedPreferences.setString(_cachedVacationTypesKey, data);
+  }
+
+  Future<String?> getCachedVacationTypes() async {
+    return _sharedPreferences.getString(_cachedVacationTypesKey);
+  }
+
+  Future<void> setVacationTypesCacheTime(DateTime time) async {
+    await _sharedPreferences.setString(_cachedVacationTypesTimeKey, time.toIso8601String());
+  }
+
+  Future<DateTime?> getVacationTypesCacheTime() async {
+    final timeString = _sharedPreferences.getString(_cachedVacationTypesTimeKey);
+    if (timeString != null) {
+      return DateTime.tryParse(timeString);
+    }
+    return null;
+  }
 }
+
+
+
+

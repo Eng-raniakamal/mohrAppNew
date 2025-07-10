@@ -15,6 +15,7 @@ import 'package:essmohr/presentation/newDesign/feature/vacation/data/model/vacat
 import 'package:essmohr/presentation/newDesign/feature/vacation/data/model/validate_vacation/validate_vacation_request_model.dart';
 import 'package:essmohr/presentation/newDesign/feature/vacation/data/model/validate_vacation/validate_vacation_response_model.dart';
 
+import '../../../../../../../domain/model/model.dart';
 import '../../model/get_employee_vacations_model/get_employee_vacations_model.dart';
 
 abstract class VacationRemoteDataSource {
@@ -41,6 +42,9 @@ abstract class VacationRemoteDataSource {
 
 
   Future<List<GetVacationRequestsResponseModel>> getVacationRequests();
+
+  Future<List<VacationTypeBalancs>> getVacationEntitlements();
+
 
   Future<bool> approveCancelRequest({required ApproveCancelRequestModel approveCancelRequestModel}) ;
 }

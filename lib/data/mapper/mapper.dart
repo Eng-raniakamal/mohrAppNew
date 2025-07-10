@@ -50,6 +50,56 @@ extension DataResponseMapper on UserDataResponse? {
 
 }
 
+extension UserDataModelMapper on UserDataModel {
+  Map<String, dynamic> toJson() {
+    return {
+      'UserId': this.UserId,
+      'UserName': this.UserName,
+      'Device': this.Device,
+      'TenantName': this.TenantName,
+      'EmployeeId': this.EmployeeId,
+      'EmployeeCode': this.EmployeeCode,
+      'FullName': this.FullName,
+      'ArabicName': this.ArabicName,
+      'EnglishName': this.EnglishName,
+      'CompanyLogo': this.CompanyLogo,
+      'CompanyName': this.CompanyName,
+      'FacePersonGroupId': this.FacePersonGroupId,
+      'FacePersonId': this.FacePersonId,
+      'RecognitionModel': this.RecognitionModel,
+      'MasterImage': this.masterImage,
+      'ImageVerificationMode': this.ImageVerificationMode,
+      'LocationVerificationMode': this.LocationVerificationMode,
+      'SupportGroupAttendance': this.SupportGroupAttendance,
+    };
+  }
+
+ UserDataModel fromJson(Map<String, dynamic> json) {
+    return UserDataModel(
+      json['UserId'] ?? EMPTY,
+      json['UserName'] ?? EMPTY,
+      json['Device'] ?? EMPTY,
+      json['EmployeeId'] ?? ZERO,
+      json['TenantName'] ?? EMPTY,
+      json['EmployeeCode'] ?? EMPTY,
+      json['FullName'] ?? EMPTY,
+      json['ArabicName'] ?? EMPTY,
+      json['EnglishName'] ?? EMPTY,
+      json['CompanyLogo'] ?? EMPTY,
+      json['CompanyName'] ?? EMPTY,
+      json['FacePersonGroupId'] ?? EMPTY,
+      json['FacePersonId'] ?? EMPTY,
+      json['RecognitionModel'] ?? EMPTY,
+      json['MasterImage'],
+      json['ImageVerificationMode'] ?? ZERO,
+      json['LocationVerificationMode'] ?? ZERO,
+      json['SupportGroupAttendance'] ?? FALSE,
+    );
+  }
+}
+
+
+
 extension ImageResponseMapper on UserImageResponse? {
   UserImageModel toDomain() {
     return UserImageModel(
