@@ -38,11 +38,16 @@ import '../newDesign/feature/home/presentation/widget/header_home_widget.dart';
 import '../newDesign/feature/home/presentation/widget/home_body_widget.dart';
 import '../newDesign/feature/home/presentation/widget/last_salary_widget.dart';
 import '../newDesign/feature/home/presentation/widget/no_report_widget.dart';
+import '../newDesign/feature/login/presentation/screen/login_screen.dart';
+import '../newDesign/feature/login/presentation/widget/logout_loading.dart';
 import '../newDesign/feature/notification/control/tab_notification_cubit.dart';
 import '../newDesign/feature/notification/presentation/screen/notification_screen.dart';
+import '../newDesign/feature/splash/presentation/widget/custom_button_widget.dart';
 import '../newDesign/feature/vacation/presentation/widget/vacation_type_widget/Vacation_Carousel_Widget.dart';
 import '../resources/assets_manager.dart';
 import '../resources/routes.dart';
+import '../resources/values.dart';
+import '../splash/splash.dart';
 
 
 // final items=<Widget>
@@ -60,16 +65,17 @@ class userView extends StatefulWidget implements NavigationStates{
 class _userViewState extends State<userView> {
 
   final EmployeeViewModel _viewModel = instance<EmployeeViewModel>();
-  final EmployeeImageViewModel _imageViewModel = instance<EmployeeImageViewModel>();
+  final EmployeeImageViewModel _imageViewModel = instance<
+      EmployeeImageViewModel>();
   final AppPreferences _appPreferences = instance<AppPreferences>();
-  //LocalDataSource _localDataSource = instance<LocalDataSource>();
-  bool canEditImage=true;
+  LocalDataSource _localDataSource = instance<LocalDataSource>();
+  bool canEditImage = true;
 
-  _bind(){
-
+  _bind() {
     _viewModel.start();
     _imageViewModel.start();
   }
+
   @override
   void initState() {
     checkNewNotifications();
@@ -85,98 +91,98 @@ class _userViewState extends State<userView> {
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(providers: [
-        BlocProvider(
+      BlocProvider(
         create: (context) => HomeCubit(),),
-   ],
+    ],
 
 
-   child: ThemeSwitchingArea(
-        child: Builder(
-        builder: (context) =>
-        Scaffold(
-            extendBodyBehindAppBar: true,
-          //  appBar: buildAppBar(context),
-          //   bottomNavigationBar:
-          //    NavigatorBar(index: 1,notificationNumber: Constants.notificationNumber),
-            body:
-        StreamBuilder<FlowState>(
-            stream: _viewModel.outputState,
-            builder: (context, snapshot) {
-
-              final data = snapshot.data;
-              if (data is FlowState) {
-                return data.getScreenWidget(
-                  context,
-                  _getContentWidget(),
-                  _viewModel.start,
-                      () {}, // onPopupClick
-                );
-              } else {
-                // Log or handle unexpected types safely
-                return _getContentWidget(); // fallback UI
-              }
+        child: ThemeSwitchingArea(
+            child: Builder(
+                builder: (context) =>
+                    Scaffold(
+                        extendBodyBehindAppBar: true,
+                        //  appBar: buildAppBar(context),
+                        //   bottomNavigationBar:
+                        //    NavigatorBar(index: 1,notificationNumber: Constants.notificationNumber),
+                        body:
+                        StreamBuilder<FlowState>(
+                            stream: _viewModel.outputState,
+                            builder: (context, snapshot) {
+                              final data = snapshot.data;
+                              if (data is FlowState) {
+                                return data.getScreenWidget(
+                                  context,
+                                  _getContentWidget(),
+                                  _viewModel.start,
+                                      () {}, // onPopupClick
+                                );
+                              } else {
+                                // Log or handle unexpected types safely
+                                return _getContentWidget(); // fallback UI
+                              }
 
 
 //-----------------------------
-            }
+                            }
+                        )
+                    )
+            )
         )
-    )
-    )
-    )
     );
   }
+
   Widget _getContentWidget() {
-     return
-       StreamBuilder<EmployeeDataModel>(
-           stream: _viewModel.outputUserData,
-           builder: (context, snapshot) {
-             return
-               Container(
+    return
+      StreamBuilder<EmployeeDataModel>(
+          stream: _viewModel.outputUserData,
+          builder: (context, snapshot) {
+            return
+              Container(
+                  child: SingleChildScrollView(
+                    child:
+                    Column(
+                        children: [
+                          StreamBuilder<EmployeeDataModel>(
+                              stream: _viewModel.outputUserData,
+                              builder: (context, snapshot) {
+                                return
+                                  _getEmployeeDataWidget(snapshot.data)
 
-                   child: SingleChildScrollView(
-                       child:
-                         Column(
-                             children: [
+                                ;
+                              })
 
-                               StreamBuilder<EmployeeDataModel>(
-                                   stream: _viewModel.outputUserData,
-                                   builder: (context, snapshot) {
-                                     return
-                                       _getEmployeeDataWidget(snapshot.data)
-
-                                   ;})
-
-                             ]),
+                        ]),
 
 
-                       )
+                  )
 
-               );
-           });
-             }
+              );
+          });
+  }
+
   Widget buildCountaner(String reqName) {
     return
-    Container(
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Hero(
-            tag:reqName,
-            child:
-            ButtonWidget(buttonBgColor: colorManager.lightprimary,
-              text: reqName,
-              onClicked: () {
+      Container(
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Hero(
+              tag: reqName,
+              child:
+              ButtonWidget(buttonBgColor: colorManager.lightprimary,
+                text: reqName,
+                onClicked: () {
 
-              },
-            ),
+                },
+              ),
 
-          )
-        ],
-      ),
-    );
+            )
+          ],
+        ),
+      );
   }
-  Widget _getEmployeeDataWidget(EmployeeDataModel? userData) {
 
+  Widget _getEmployeeDataWidget(EmployeeDataModel? userData) {
     if (userData != null) {
       var empData = userData.userDataModel;
       Constants.canUpload = empData.masterImage["CanUploadMasterImage"];
@@ -188,57 +194,44 @@ class _userViewState extends State<userView> {
       // String code = empData.EmployeeCode.toString();
 
       return SafeArea(
-          child: SingleChildScrollView(
+        child: SingleChildScrollView(
           child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 25).r,
-    child: Column(
+            padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 25)
+                .r,
+            child: Column(
 
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          HeaderHomeWidget(title: name),
-          SizedBox(height: 200,),
-          VacationCarouselWidget(),
-          //NoReportWidget(),
-          // ReportWidget(
-          //   typeReport: "تقرير الطلبات",
-          //   nameReport: "طلب سلفة",
-          //   isRequestAdvance: true,
-          //   isCertified: true,
-          //   numberOfInstallments: 3,
-          //   amount: 234,
-          //   not: "تقبل الله منكم الحج وقد تم اعتماد الاجازة",
-          // ),
-          // ReportWidget(
-          //   typeReport: "تقرير الاجازات",
-          //   nameReport: "اجازة مرضية",
-          //   isUnderReview: true,
-          //   isSickLeave: true,
-          //   numberOfInstallments: 2,
-          //   amount: 20,
-          // ),
-         // SizedBox(height: 20),
-          //LastSalaryWidget()
-          // Text(name, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: colorManager.white)),
-          // const SizedBox(height: 3),
-          // Text(email, style: const TextStyle(color: colorManager.white)),
-          // const SizedBox(height: 3),
-          // Text(code, style: const TextStyle(color: colorManager.white)),
-        ],
-    ),
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                HeaderHomeWidget(title: name),
+                SizedBox(height: 170,),
+                VacationCarouselWidget(),
+                SizedBox(height: 100,),
+                CustomButtonWidget(
+                  onTap: () {
+                    _logout();
+                  },
+                  title: "تسجيل الخروج",
+                  colorTitle: AppColor.primary,
+                  color: AppColor.white,
+                  icon: Icon(Icons.logout_outlined, color: AppColor.primary),)
+
+
+              ],
+            ),
           ),
-          ),
+        ),
       );
     }
     return Container();
+  }
 
-    }
   Widget _getImageWidget(UserImageModel? userImage) {
-    String? URLimage ;
+    String? URLimage;
     if (userImage != null) {
-       URLimage = userImage.data;
+      URLimage = userImage.data;
 
-    Constants.imagePath=URLimage;
-     return ProfileWidget(
+      Constants.imagePath = URLimage;
+      return ProfileWidget(
           imagePath: URLimage,
           isEdit: false,
           onClicked: () {
@@ -248,11 +241,11 @@ class _userViewState extends State<userView> {
       );
     }
     else {
-          URLimage=ImageAssets.noPhoto;
-          Constants.imagePath= URLimage;
-          return ProfileWidget(
-          //imagePath: ImageAssets.noPhoto,
-            imagePath: Constants.imagePath,
+      URLimage = ImageAssets.noPhoto;
+      Constants.imagePath = URLimage;
+      return ProfileWidget(
+        //imagePath: ImageAssets.noPhoto,
+          imagePath: Constants.imagePath,
           isEdit: false,
           onClicked: () {
             resetModules();
@@ -262,18 +255,19 @@ class _userViewState extends State<userView> {
       );
     }
   }
+
   Widget _buildItemList(BuildContext context, int index) {
     return Container(
 
-        child:Column(
-           mainAxisAlignment: MainAxisAlignment.end,
-            children:[
+        child: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
               Container(
-                  color:Colors.orange,
-                  width:50,
-                  height:50,
-                  child:Center(
-                      child:Text("${Constants.Rlist[index]}")
+                  color: Colors.orange,
+                  width: 50,
+                  height: 50,
+                  child: Center(
+                      child: Text("${Constants.Rlist[index]}")
                   )
               )
             ]
@@ -289,12 +283,12 @@ class _userViewState extends State<userView> {
 
   final List<Map<String, dynamic>> screens =
   [
-    {'title': AppStrings.Vacation.tr(), 'screen':  vacationHome()},
+    {'title': AppStrings.Vacation.tr(), 'screen': vacationHome()},
     {'title': AppStrings.Permissions.tr(), 'screen': PermissionView(),},
-    {'title': AppStrings.missions.tr(), 'screen': MissionView (), },
-    {'title': AppStrings.Financial.tr(), 'screen': FinancialHome (), },
-    {'title': AppStrings.Admin.tr(), 'screen': AdminHome (), },
-    {'title': AppStrings.ChangeShift.tr(), 'screen': ChangeShiftHome (), },
+    {'title': AppStrings.missions.tr(), 'screen': MissionView(),},
+    {'title': AppStrings.Financial.tr(), 'screen': FinancialHome(),},
+    {'title': AppStrings.Admin.tr(), 'screen': AdminHome(),},
+    {'title': AppStrings.ChangeShift.tr(), 'screen': ChangeShiftHome(),},
     // {'title': AppStrings.TimeSheet.tr(), 'screen': TimeSheetHome (), },
     // {'title': AppStrings.overTime.tr(), 'screen': overTimeHome (), },
   ];
@@ -302,7 +296,8 @@ class _userViewState extends State<userView> {
   void showCustomDropdown(BuildContext context, Offset position) {
     showMenu(
       context: context,
-      position: RelativeRect.fromLTRB(position.dx, position.dy, position.dx + 50, position.dy + 50),
+      position: RelativeRect.fromLTRB(
+          position.dx, position.dy, position.dx + 50, position.dy + 50),
       items: screens.map((item) {
         return PopupMenuItem<Map<String, dynamic>>(
           value: item,
@@ -314,20 +309,43 @@ class _userViewState extends State<userView> {
           ),
         );
       }).toList(),
-    ).then((selectedScreen) async{
+    ).then((selectedScreen) async {
       if (selectedScreen != null) {
-
         Future.microtask(() {
           Navigator.push(context, MaterialPageRoute(
               builder: (context) => selectedScreen['screen']));
         });
-
-        }
-        //);
       }
-    );}
+      //);
+    }
+    );
+  }
 
+  void _logout() async {
+    _appPreferences.logout(); // clear login flag from app prefs
+    _localDataSource.clearCache();
+
+    // Optional: عرض شاشة loading باستخدام Dialog بدل التنقل لصفحة
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (_) => const Center(child: CircularProgressIndicator()),
+    );
+
+    await Future.delayed(const Duration(milliseconds: 700));
+
+    if (mounted) {
+      //Navigator.of(context, rootNavigator: true).pop(); // اغلق الـ dialog
+      Navigator.pushReplacementNamed(context, Routes.splashRoute);
+      // Navigator.pushAndRemoveUntil(
+      //   context,
+      //   MaterialPageRoute(builder: (_) => const SplashView()),
+      //       (route) => false,
+      // );
+    }
+  }
 }
+
 
 
 

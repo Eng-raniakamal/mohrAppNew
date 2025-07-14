@@ -23,28 +23,65 @@ class GetNotificationData
   List<NotificationModel>? notifications;
   Notifications notify = Notifications();
 
+  // Future<List<NotificationModel>?> getApiNotification() async {
+  //   userId = await _appPreferences.getUserToken();
+  //   var uri = Uri.parse(Constants.getNotificationUrl);
+  //   List<NotificationModel>? a;
+  //
+  //   var response = await http.get(
+  //       uri, headers: <String, String>{
+  //     'Content-Type': 'application/json; charset=UTF-8',
+  //     'userId': userId!
+  //   });
+  //
+  //   final responseData = json.decode(response.body);
+  //   if (responseData != null) {
+  //     var userNotifications = responseData as List;
+  //     a = userNotifications.map((data) => NotificationModel.fromJson(data)).toList();
+  //     notifications = List<NotificationModel>.from(a as Iterable);
+  //     if (notifications != null) {
+  //       await getUnseenNotificationId(notifications!);
+  //     }
+  //     return notifications;
+  //   }
+  //   return null;
+  // }
 
   Future<List<NotificationModel>?> getApiNotification() async {
     userId = await _appPreferences.getUserToken();
-    var uri = Uri.parse(Constants.getNotificationUrl);
-    List<NotificationModel>? a;
 
+    // ✅ Step 1: Check cache validity
+    if (await AppPreferences.isCacheValid()) {
+      notifications = await AppPreferences.getFromCache();
+      return notifications;
+    }
+
+    // ✅ Step 2: Get from API if no valid cache
+    var uri = Uri.parse(Constants.getNotificationUrl);
     var response = await http.get(
-        uri, headers: <String, String>{
-      'Content-Type': 'application/json; charset=UTF-8',
-      'userId': userId!
-    });
+      uri,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'userId': userId!
+      },
+    );
 
     final responseData = json.decode(response.body);
     if (responseData != null) {
       var userNotifications = responseData as List;
-      a = userNotifications.map((data) => NotificationModel.fromJson(data)).toList();
-      notifications = List<NotificationModel>.from(a as Iterable);
-      if (notifications != null) {
-        await getUnseenNotificationId(notifications!);
-      }
+      final a = userNotifications.map((data) => NotificationModel.fromJson(data)).toList();
+
+      notifications = List<NotificationModel>.from(a);
+
+      // ✅ Step 3: Save to cache
+      await AppPreferences.saveToCache(notifications!);
+
+      // ✅ Step 4: Mark unseen notifications
+      await getUnseenNotificationId(notifications!);
+
       return notifications;
     }
+
     return null;
   }
 

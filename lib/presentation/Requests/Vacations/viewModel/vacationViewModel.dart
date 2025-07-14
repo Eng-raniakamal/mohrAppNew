@@ -48,9 +48,9 @@ class VacationViewModel extends BaseViewModel implements
      VacationObject.userID;
     if(VacationObject.userID!=null)
     {
-      inputState.add(LoadingState(
-          stateRendererType:StateRendererType.POPUP_LOADING_STATE)
-      );
+      // inputState.add(LoadingState(
+      //     stateRendererType:StateRendererType.POPUP_LOADING_STATE)
+      // );
       (await _VacationUseCase.execute
         (VacationUseCaseInput(VacationObject.userID)))
           .fold(
@@ -67,9 +67,9 @@ class VacationViewModel extends BaseViewModel implements
     else
     {
       VacationObject;
-      inputState.add(
-          LoadingState(stateRendererType:StateRendererType.POPUP_LOADING_STATE)
-      );
+      // inputState.add(
+      //     LoadingState(stateRendererType:StateRendererType.POPUP_LOADING_STATE)
+      // );
       (await _VacationUseCase.execute
         (VacationUseCaseInput(VacationObject.userID))).fold(
               (failure) =>{ inputState.add

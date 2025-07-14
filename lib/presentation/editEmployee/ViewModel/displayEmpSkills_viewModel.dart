@@ -53,9 +53,9 @@ class DisplayEmpSkillsViewModel extends BaseViewModel implements
     empObject.empId;
     if(empObject.userID != null && empObject.empId !=0)
     {
-      inputState.add(LoadingState(
-          stateRendererType:StateRendererType.POPUP_LOADING_STATE)
-      );
+      // inputState.add(LoadingState(
+      //     stateRendererType:StateRendererType.POPUP_LOADING_STATE)
+      // );
       (await _SkillsUseCase.execute
         (displaySkillsInput(empObject.userID,empObject.empId))).fold(
               (failure) =>{

@@ -51,7 +51,7 @@ class EmployeeBasicDataViewModel extends BaseViewModel
 
     if (_isDisposed || empId == null || empId == 0) return;
 
-    inputState.add(LoadingState(stateRendererType: StateRendererType.POPUP_LOADING_STATE));
+   // inputState.add(LoadingState(stateRendererType: StateRendererType.POPUP_LOADING_STATE));
 
     final result = await _basicDataUseCase.execute(BasicdataInput(uId!, empId!));
     result.fold(

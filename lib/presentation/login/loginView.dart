@@ -73,13 +73,7 @@ class _LoginViewState extends State<LoginView> {
       child: Builder(
           builder: (context) =>
        Scaffold(
-         //bottomSheet:
 
-      // Image.asset("assets/Backgrounds/countries.png"),
-        //fit: BoxFit.cover,
-
-         //appBar: buildAppBarMain(context),
-        //backgroundColor: colorManager.white,
          body: StreamBuilder<FlowState>(
 
         stream: _viewModel.outputState,
@@ -120,34 +114,12 @@ class _LoginViewState extends State<LoginView> {
                          SizedBox(height: 50, width: double.infinity),
                          HeaderWidget(),
                          SizedBox(height: 24),
-                      //    ClipPath(
-                      //      clipper: CustomClipPathOpecity(),
-                      //      child: Container(
-                      //        width: MediaQuery.of(context).size.width,
-                      //        height: 170,
-                      //        decoration:  BoxDecoration(color:Colors.grey[300],
-                      //        ),
-                      //      ),),
-                      //    ClipPath(
-                      //      clipper: CustomClipPath(),
-                      //      child: Container(
-                      //   width: MediaQuery.of(context).size.width,
-                      //   height: 150,
-                      //   decoration:  BoxDecoration(
-                      //     gradient: LinearGradient(
-                      //         colors: [colorManager.primary, colorManager.lightprimary, colorManager.grey],
-                      //         begin: Alignment.topRight,
-                      //         end: Alignment.bottomLeft),
-                      //   ),
-                      // ),),
-                      //
+
 
                        ])
 ///////////////////////////////////////////////////////
                          ),
-//delete the  log
-               //   const Image(image: AssetImage(ImageAssets.startLogo),width: 180,),
-                // const SizedBox(height: AppSize.s28),
+
 
                 Container(
                     padding: const EdgeInsets.all(15.0),
@@ -247,7 +219,7 @@ class _LoginViewState extends State<LoginView> {
                               (snapshot.data ?? false)
                                   ? () {
                                 _viewModel.login();
-                                //
+
                               }
                                   : null,
                               child: Text(AppStrings.login.tr())),

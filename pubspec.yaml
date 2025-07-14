@@ -129,7 +129,7 @@ flutter:
   assets:
     - assets/icons/AppIcon.png
     - assets/jsonFiles/error.json
-    - assets/jsonFiles/loading.json
+    - assets/jsonFiles/loading1.json
     - assets/jsonFiles/empty.json
     - assets/jsonFiles/success.json
     - assets/jsonFiles/loadingcircles.json

@@ -417,20 +417,92 @@ class SalaryDetailsObject
  SalaryDetailsObject(this.data);
 }
 
+// class AlertModel {
+//   String content;
+//   String link;
+//
+//   AlertModel({required this.content,required this.link});
+//
+//   factory AlertModel.fromJson(Map<String, dynamic> json) {
+//     return AlertModel(
+//       content: json["Content"],
+//       link: json["Link"],
+//
+//     );
+//   }
+// }
+
+
+
 class AlertModel {
   String content;
   String link;
 
-  AlertModel({required this.content,required this.link});
+  AlertModel({required this.content, required this.link});
 
   factory AlertModel.fromJson(Map<String, dynamic> json) {
     return AlertModel(
       content: json["Content"],
       link: json["Link"],
-
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      "Content": content,
+      "Link": link,
+    };
+  }
 }
+
+// class NotificationModel {
+//   int? id;
+//   String? date;
+//   String? title;
+//   String? details;
+//   String? notes;
+//   String? attachments;
+//   bool? isCanceled;
+//   bool? seen;
+//   String? cancellationReason;
+//   int? employeeId;
+//   String? name;
+//   String? executionDate;
+//   double? value;
+//   NotificationModel({ this.id,
+//      this.date,
+//      this.title,
+//      this.details,
+//      this.notes,
+//      this.attachments,
+//      this.isCanceled,required this.seen,
+//      this.cancellationReason,
+//      this.employeeId,
+//      this.name,
+//      this.executionDate,
+//      this.value,
+//   });
+//
+//   factory NotificationModel.fromJson(Map<String, dynamic> json) {
+//     return NotificationModel(
+//       id: json["Id"],
+//       date: json["Date"],
+//       title: json["Title"],
+//       details: json["Details"],
+//       notes: json["Notes"],
+//       attachments:json["Attachments"],
+//       isCanceled: json["IsCanceled"],
+//       seen: json["Seen"],
+//       cancellationReason:json["CancellationReason"],
+//       employeeId: json["EmployeeId"],
+//       name: json["Name"],
+//       executionDate:json["ExecutionDate"],
+//       value:json["Value"]
+//
+//     );
+//   }
+// }
+
 
 class NotificationModel {
   int? id;
@@ -440,24 +512,27 @@ class NotificationModel {
   String? notes;
   String? attachments;
   bool? isCanceled;
-  bool? seen;
+  bool seen; // required
   String? cancellationReason;
   int? employeeId;
   String? name;
   String? executionDate;
   double? value;
-  NotificationModel({ this.id,
-     this.date,
-     this.title,
-     this.details,
-     this.notes,
-     this.attachments,
-     this.isCanceled,required this.seen,
-     this.cancellationReason,
-     this.employeeId,
-     this.name,
-     this.executionDate,
-     this.value,
+
+  NotificationModel({
+    this.id,
+    this.date,
+    this.title,
+    this.details,
+    this.notes,
+    this.attachments,
+    this.isCanceled,
+    required this.seen,
+    this.cancellationReason,
+    this.employeeId,
+    this.name,
+    this.executionDate,
+    this.value,
   });
 
   factory NotificationModel.fromJson(Map<String, dynamic> json) {
@@ -467,18 +542,36 @@ class NotificationModel {
       title: json["Title"],
       details: json["Details"],
       notes: json["Notes"],
-      attachments:json["Attachments"],
+      attachments: json["Attachments"],
       isCanceled: json["IsCanceled"],
       seen: json["Seen"],
-      cancellationReason:json["CancellationReason"],
+      cancellationReason: json["CancellationReason"],
       employeeId: json["EmployeeId"],
       name: json["Name"],
-      executionDate:json["ExecutionDate"],
-      value:json["Value"]
-
+      executionDate: json["ExecutionDate"],
+      value: (json["Value"] as num?)?.toDouble(),
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      "Id": id,
+      "Date": date,
+      "Title": title,
+      "Details": details,
+      "Notes": notes,
+      "Attachments": attachments,
+      "IsCanceled": isCanceled,
+      "Seen": seen,
+      "CancellationReason": cancellationReason,
+      "EmployeeId": employeeId,
+      "Name": name,
+      "ExecutionDate": executionDate,
+      "Value": value,
+    };
+  }
 }
+
 
 class Reviewers{
   final int employeeId;
@@ -668,8 +761,6 @@ class VacationsType {
     );
   }
 }
-
-
 class Permissions {
   final String? requestDate;
   final String? permissionTypeName;
@@ -832,8 +923,6 @@ class ReviewedPermissions {
     );
   }
 }
-
-
 class Missions {
   final String? requestDate;
   final String? from;
@@ -993,8 +1082,6 @@ class ValidationMissionModel {
 
   }
 }
-
-
 class FinancialType {
   final int? id;
   final String? name;
@@ -1171,8 +1258,6 @@ class ReviewedFinancialModel {
     );
   }
 }
-
-
 class AdminType {
   final int? id;
   final String? name;
@@ -1517,7 +1602,6 @@ class ReviewedChangeShiftModel {
     );
   }
 }
-
 class VacationTypeBalancs {
   final String employeeName;
   final int employeeId;

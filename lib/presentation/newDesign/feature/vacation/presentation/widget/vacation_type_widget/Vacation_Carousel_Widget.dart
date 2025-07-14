@@ -109,7 +109,7 @@ class _VacationCarouselWidgetState extends State<VacationCarouselWidget> {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(16),
                     ),
-                    color: Colors.purple[100],
+                    color: AppColor.primary,
                     child: Padding(
                       padding: const EdgeInsets.all(16.0),
                       child: Column(
@@ -117,12 +117,24 @@ class _VacationCarouselWidgetState extends State<VacationCarouselWidget> {
                         children: [
                           Text(
                             vacation.name.toString(),
-                            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                            style: const TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
                             textAlign: TextAlign.center,
                           ),
                           const SizedBox(height: 10),
-                          Text('الرصيد المتاح: ${vacation.balance}'),
-                          Text('الؤصيد الكلى: ${vacation.limit}'),
+                          Text('الرصيد المتاح: ${vacation.balance}', style: const TextStyle(
+                            //fontSize: 20,
+                           // fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),),
+                          Text('الرصيد الكلى: ${vacation.limit}', style: const TextStyle(
+                           // fontSize: 20,
+                            //fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          )),
                         ],
                       ),
                     ),

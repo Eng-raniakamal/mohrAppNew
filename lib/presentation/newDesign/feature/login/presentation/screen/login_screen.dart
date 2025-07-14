@@ -69,7 +69,9 @@ class _LoginScreenState extends State<LoginScreen> {
                       // if (!formKey.currentState!.validate()) {
                       //   return;
                       // }
+
 Navigator.pushReplacementNamed(context, AppRoute.layout);
+
                     },
                     title: "تسجيل الدخول",
                     colorTitle: AppColor.titleButton,

@@ -183,3 +183,102 @@ extension FlowStateExtension on FlowState {
             )));
   }
 }
+
+
+// extension FlowStateExtension on FlowState {
+//   Widget getScreenWidget(BuildContext context, Widget contentScreenWidget,
+//       Function retryActionFunction, Function onPopupClick) {
+//
+//     // تأجيل تنفيذ dismissDialog بشكل آمن
+//     Future.microtask(() => dismissDialog(context));
+//
+//     switch (runtimeType) {
+//       case LoadingState:
+//         {
+//           if (getStateRendererType() == StateRendererType.POPUP_LOADING_STATE) {
+//             // عرض الـ popup بشكل آمن بعد frame
+//             Future.microtask(() => showPopUp(context, getStateRendererType(), getMessage(), onPopupClick));
+//             return contentScreenWidget;
+//           } else {
+//             return StateRenderer(
+//               stateRendererType: getStateRendererType(),
+//               message: getMessage(),
+//               retryActionFunction: retryActionFunction,
+//               onPopupClick: onPopupClick,
+//             );
+//           }
+//         }
+//
+//       case ErrorState:
+//         {
+//           if (getStateRendererType() == StateRendererType.POPUP_ERROR_STATE) {
+//             Future.microtask(() => showPopUp(context, getStateRendererType(), getMessage(), onPopupClick));
+//             return contentScreenWidget;
+//           } else {
+//             return StateRenderer(
+//               stateRendererType: getStateRendererType(),
+//               message: getMessage(),
+//               retryActionFunction: retryActionFunction,
+//               onPopupClick: onPopupClick,
+//             );
+//           }
+//         }
+//
+//       case ContentState:
+//         {
+//           return contentScreenWidget;
+//         }
+//
+//       case EmptyState:
+//         {
+//           return StateRenderer(
+//             stateRendererType: getStateRendererType(),
+//             message: getMessage(),
+//             retryActionFunction: retryActionFunction,
+//             onPopupClick: onPopupClick,
+//           );
+//         }
+//
+//       case SuccessState:
+//         {
+//           Future.microtask(() => showPopUp(
+//             context,
+//             StateRendererType.POPUP_SUCCESS,
+//             getMessage(),
+//             onPopupClick,
+//             title: AppStrings.success.tr(),
+//           ));
+//           return contentScreenWidget;
+//         }
+//
+//       default:
+//         {
+//           return contentScreenWidget;
+//         }
+//     }
+//   }
+//
+//   _isThereCurrentDialogShowing(BuildContext context) =>
+//       ModalRoute.of(context)?.isCurrent != true;
+//
+//   dismissDialog(BuildContext context) {
+//     if (_isThereCurrentDialogShowing(context)) {
+//       Navigator.of(context, rootNavigator: true).pop();
+//     }
+//   }
+//
+//   showPopUp(BuildContext context, StateRendererType stateRendererType,
+//       String message, Function onPopupClick,
+//       {String title = EMPTY}) {
+//     showDialog(
+//       context: context,
+//       builder: (BuildContext context) => StateRenderer(
+//         stateRendererType: stateRendererType,
+//         message: message,
+//         title: title,
+//         retryActionFunction: () {},
+//         onPopupClick: onPopupClick,
+//       ),
+//     );
+//   }
+// }

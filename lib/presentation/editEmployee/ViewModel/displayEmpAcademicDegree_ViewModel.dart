@@ -54,9 +54,9 @@ class DisplayAcademicDegreeViewModel extends BaseViewModel implements
     empObject.empId;
     if(empObject.userID != null && empObject.empId !=0)
     {
-      inputState.add(LoadingState(
-          stateRendererType:StateRendererType.POPUP_LOADING_STATE)
-      );
+      // inputState.add(LoadingState(
+      //     stateRendererType:StateRendererType.POPUP_LOADING_STATE)
+      // );
       (await _AcademicDegreeUseCase.execute
         (getAcademicDegreeUseCaseInput(empObject.userID,empObject.empId))).fold(
               (failure) =>{
@@ -72,9 +72,9 @@ class DisplayAcademicDegreeViewModel extends BaseViewModel implements
     {
       empObject.userID;
       empObject.empId;
-      inputState.add(
-          LoadingState(stateRendererType:StateRendererType.POPUP_LOADING_STATE)
-      );
+      // inputState.add(
+      //     LoadingState(stateRendererType:StateRendererType.POPUP_LOADING_STATE)
+      // );
       (await _AcademicDegreeUseCase.execute
 
         (getAcademicDegreeUseCaseInput(empObject.userID,empObject.empId))).fold(

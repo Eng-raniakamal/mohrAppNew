@@ -439,6 +439,43 @@ class AppPreferences {
     }
     return null;
   }
+
+
+  static const _cacheKey = 'cached_notifications';
+  static const _cacheTimeKey = 'cached_notifications_time';
+
+
+  static Future<void> saveToCache(List<NotificationModel> list) async {
+    final prefs = await SharedPreferences.getInstance();
+    final jsonList = list.map((n) => jsonEncode(n.toJson())).toList();
+    await prefs.setStringList(_cacheKey, jsonList);
+    await prefs.setInt(_cacheTimeKey, DateTime.now().millisecondsSinceEpoch);
+  }
+
+  static Future<List<NotificationModel>> getFromCache() async {
+    final prefs = await SharedPreferences.getInstance();
+    final jsonList = prefs.getStringList(_cacheKey) ?? [];
+    return jsonList.map((item) => NotificationModel.fromJson(jsonDecode(item))).toList();
+  }
+
+  static Future<bool> isCacheValid({Duration duration = const Duration(minutes: 5)}) async {
+    final prefs = await SharedPreferences.getInstance();
+    final cacheTime = prefs.getInt(_cacheTimeKey);
+    if (cacheTime == null) return false;
+    final currentTime = DateTime.now().millisecondsSinceEpoch;
+    return (currentTime - cacheTime) < duration.inMilliseconds;
+  }
+
+
+
+
+
+
+
+
+
+
+
 }
 
 

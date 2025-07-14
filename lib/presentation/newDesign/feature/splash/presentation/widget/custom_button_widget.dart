@@ -8,12 +8,14 @@ class CustomButtonWidget extends StatelessWidget {
     required this.title,
     this.color,
     this.colorTitle,
+    this.icon
   });
 
   final void Function() onTap;
   final String title;
   final Color? color;
   final Color? colorTitle;
+  final Icon? icon;
 
   @override
   Widget build(BuildContext context) {

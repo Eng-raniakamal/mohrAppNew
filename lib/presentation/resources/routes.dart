@@ -29,6 +29,7 @@ import '../newDesign/feature/notification/presentation/screen/notification_scree
 import '../newDesign/feature/onboarding/presentation/screen/onboarding_screen.dart';
 import '../newDesign/feature/salary/presentation/screen/detail_salary_screen.dart';
 import '../settings/layout/settingsLayout.dart';
+import '../splash/splash.dart';
 
 class Routes
 {
@@ -66,7 +67,7 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_)=> const Onboarding2Screen());
 
       case Routes.splashRoute:
-        return MaterialPageRoute(builder: (_)=> const splashScreen());
+        return MaterialPageRoute(builder: (_)=> const SplashView());
 
       case Routes.loginRoute:
         initLoginModule();

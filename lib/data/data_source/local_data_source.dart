@@ -17,8 +17,8 @@ abstract class LocalDataSource {
    Future<UserProfileResponse> getUserData();
    Future<void> saveUserToCache(UserProfileResponse UserdataResponse);
 
-   void clearCache();
-   void removeFromCache(String key);
+   Future<void> clearCache();
+   Future<void> removeFromCache(String key);
 
 }
 
@@ -50,12 +50,12 @@ class LocalDataSourceImplementer implements LocalDataSource {
   }
 
   @override
-  void clearCache() {
+  Future<void> clearCache() async {
     cacheMap.clear();
   }
 
   @override
-  void removeFromCache(String key) {
+  Future<void> removeFromCache(String key) async {
     cacheMap.remove(key);
   }
 }
