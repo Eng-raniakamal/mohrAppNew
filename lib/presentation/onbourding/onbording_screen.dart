@@ -4,13 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:essmohr/presentation/resources/assets_manager.dart';
 import 'package:essmohr/presentation/resources/routes.dart';
 import 'package:essmohr/presentation/widgets/components/animated_btn.dart';
-import 'package:rive/rive.dart 'as Rive;
 import 'package:essmohr/presentation/resources/strings_manager.dart';
+import 'package:rive/rive.dart' hide Image;
 import 'package:toggle_switch/toggle_switch.dart';
 import 'package:easy_localization/easy_localization.dart';
 import '../../application/app_prefs.dart';
 import '../../application/di.dart';
-
 
 class OnboadingScreen extends StatefulWidget {
   const OnboadingScreen({super.key});
@@ -19,17 +18,14 @@ class OnboadingScreen extends StatefulWidget {
 }
 
 class _OnboadingScreenState extends State<OnboadingScreen> {
-  late Rive.RiveAnimationController _btnAnimationController;
+  late RiveAnimationController _btnAnimationController;
 
   bool isShowSignInDialog = false;
   final AppPreferences _appPreferences = instance<AppPreferences>();
 
-  _bind()
-  {
+  _bind() {
     _appPreferences.setOnBoardingScreenViewed();
-
   }
-
 
   @override
   void didChangeDependencies() {
@@ -41,7 +37,7 @@ class _OnboadingScreenState extends State<OnboadingScreen> {
   @override
   void initState() {
     _bind();
-    _btnAnimationController = Rive.OneShotAnimation(
+    _btnAnimationController = OneShotAnimation(
       "active",
       autoplay: false,
     );
@@ -67,7 +63,7 @@ class _OnboadingScreenState extends State<OnboadingScreen> {
               child: const SizedBox(),
             ),
           ),
-          const Rive.RiveAnimation.asset(
+          const RiveAnimation.asset(
             "assets/RiveAssets/shapes.riv",
           ),
           Positioned.fill(
@@ -92,13 +88,11 @@ class _OnboadingScreenState extends State<OnboadingScreen> {
                       width: 260,
                       child: SingleChildScrollView(
                         child: Column(
-                          children:   [
-
-                             Center(child: Image(image: AssetImage(ImageAssets.startLogo)))
-
-                            ,Text(AppStrings.spalshText.tr()
-
-                            ),
+                          children: [
+                            Center(
+                                child: Image(
+                                    image: AssetImage(ImageAssets.startLogo))),
+                            Text(AppStrings.spalshText.tr()),
                             SizedBox(height: 16),
                           ],
                         ),
@@ -106,49 +100,52 @@ class _OnboadingScreenState extends State<OnboadingScreen> {
                     ),
 
                     const Spacer(flex: 1),
-                // ToggleSwitch(
-                //   minWidth: 90.0,
-                //   initialLabelIndex: 1,
-                //   cornerRadius: 20.0,
-                //   activeFgColor: Colors.white,
-                //   inactiveBgColor: Colors.grey,
-                //   inactiveFgColor: Colors.white,
-                //   totalSwitches: 2,
-                //   labels: ['English', 'عربى'],
-                //   activeBgColors: [[Colors.blue],[Colors.blue]],
-                //   onToggle: (index) {
-                //    // print('switched to: $index');
-                //     changeLanguage();
-                //   },),
+                    // ToggleSwitch(
+                    //   minWidth: 90.0,
+                    //   initialLabelIndex: 1,
+                    //   cornerRadius: 20.0,
+                    //   activeFgColor: Colors.white,
+                    //   inactiveBgColor: Colors.grey,
+                    //   inactiveFgColor: Colors.white,
+                    //   totalSwitches: 2,
+                    //   labels: ['English', 'عربى'],
+                    //   activeBgColors: [[Colors.blue],[Colors.blue]],
+                    //   onToggle: (index) {
+                    //    // print('switched to: $index');
+                    //     changeLanguage();
+                    //   },),
                     //const Spacer(flex: 1),
                     AnimatedBtn(
-                      btnAnimationController: _btnAnimationController,
-                      press: () {
+                        btnAnimationController: _btnAnimationController,
+                        press: () {
+                          _btnAnimationController.isActive = true;
 
-                        _btnAnimationController.isActive = true;
-
-                        Future.delayed(
-                          const Duration(milliseconds: 800),
-                              () {
-                            setState(() {
-                             // isShowSignInDialog = true;
-                            });
-                            _appPreferences.isUserLoggedIn().then
-                              ((isUserLoggedIn)=>{
-             // if user is already logged go to the home directly
-                               if(isUserLoggedIn)
-                                 {
-                                Navigator.of(context).pushReplacementNamed(Routes.homeRoute)
-                              }
-                            else
-                               {
-                                Navigator.of(context).pushReplacementNamed(Routes.onboarding2Route)
-                                }
-
-                          },
-                        );
-                      },
-    );}),
+                          Future.delayed(
+                            const Duration(milliseconds: 800),
+                            () {
+                              setState(() {
+                                // isShowSignInDialog = true;
+                              });
+                              _appPreferences.isUserLoggedIn().then(
+                                    (isUserLoggedIn) => {
+                                      // if user is already logged go to the home directly
+                                      if (isUserLoggedIn)
+                                        {
+                                          Navigator.of(context)
+                                              .pushReplacementNamed(
+                                                  Routes.homeRoute)
+                                        }
+                                      else
+                                        {
+                                          Navigator.of(context)
+                                              .pushReplacementNamed(
+                                                  Routes.onboarding2Route)
+                                        }
+                                    },
+                                  );
+                            },
+                          );
+                        }),
                     // const Padding(
                     //   padding: EdgeInsets.symmetric(vertical: 24),
                     //   child: Text(
@@ -164,8 +161,7 @@ class _OnboadingScreenState extends State<OnboadingScreen> {
     );
   }
 
-  void changeLanguage() async{
-
+  void changeLanguage() async {
     await _appPreferences.setLanguageChanged();
     Navigator.of(context).pushReplacementNamed(Routes.onboarding1Route);
     //Phoenix.rebirth(context);
