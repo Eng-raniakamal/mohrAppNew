@@ -2,10 +2,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
-import 'package:mohr_hr/application/application.dart';
-import 'package:mohr_hr/application/di.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:mohr_hr/presentation/resources/language_manager.dart';
+
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
